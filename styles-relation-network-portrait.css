@@ -1,0 +1,905 @@
+/* ============================================
+   竖屏关系网 - Portrait Relationship Network
+   侦探档案板风格 / 纯黑白灰 / 无渐变无emoji
+   ============================================ */
+
+/* === 主容器 - 竖屏全屏 === */
+#layer-relation-network-portrait {
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: #000;
+    z-index: 10000;
+    display: none;
+    flex-direction: column;
+    overflow: hidden;
+}
+#layer-relation-network-portrait.active {
+    display: flex;
+}
+
+/* === 顶部导航栏 === */
+.rnp-navbar {
+    position: relative;
+    z-index: 10;
+    display: flex;
+    align-items: center;
+    padding: 8px 12px;
+    background: #000;
+    border-bottom: 1px solid #333;
+    flex-shrink: 0;
+}
+.rnp-navbar .rnp-back {
+    width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #999;
+    font-size: 15px;
+    cursor: pointer;
+}
+.rnp-navbar .rnp-back:active {
+    color: #fff;
+}
+.rnp-navbar .rnp-title {
+    flex: 1;
+    text-align: center;
+    color: #999;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    font-family: 'Courier New', 'Consolas', monospace;
+}
+.rnp-navbar .rnp-switch-btn {
+    width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #666;
+    font-size: 14px;
+    cursor: pointer;
+}
+.rnp-navbar .rnp-switch-btn:active {
+    color: #fff;
+}
+.rnp-navbar .rnp-add-btn {
+    width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #999;
+    font-size: 16px;
+    cursor: pointer;
+}
+.rnp-navbar .rnp-add-btn:active {
+    color: #fff;
+}
+
+/* === 主调查板 - 可滚动+可缩放 === */
+.rnp-board {
+    flex: 1;
+    overflow: auto;
+    -webkit-overflow-scrolling: touch;
+    position: relative;
+    touch-action: pan-x pan-y;
+}
+.rnp-board-inner {
+    transform-origin: 0 0;
+    min-height: 100%;
+    padding-bottom: 20px;
+    transition: transform 0.05s linear;
+}
+
+/* === 核心人物区 === */
+.rnp-protagonists {
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    gap: 0;
+    padding: 24px 16px 20px;
+    position: relative;
+}
+
+.rnp-protag-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    width: 110px;
+    cursor: pointer;
+}
+.rnp-protag-photo {
+    width: 72px;
+    height: 90px;
+    object-fit: cover;
+    border: 2px solid #555;
+    background: #111;
+    display: block;
+}
+.rnp-protag-name {
+    color: #fff;
+    font-size: 12px;
+    font-weight: 700;
+    text-align: center;
+    letter-spacing: 0.5px;
+    max-width: 100px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+.rnp-protag-tag {
+    color: #555;
+    font-size: 8px;
+    letter-spacing: 3px;
+    font-family: 'Courier New', monospace;
+    font-weight: 700;
+    text-transform: uppercase;
+}
+.rnp-protag-id {
+    color: #333;
+    font-size: 8px;
+    letter-spacing: 2px;
+    font-family: 'Courier New', monospace;
+}
+
+/* 核心人物之间的连接线 */
+.rnp-protag-link {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 30px 0 0;
+    min-width: 60px;
+}
+.rnp-protag-line {
+    width: 60px;
+    height: 0;
+    border-top: 1px dashed #444;
+}
+.rnp-protag-rel-label {
+    color: #666;
+    font-size: 9px;
+    margin-top: 4px;
+    font-family: 'Courier New', monospace;
+    letter-spacing: 1px;
+    white-space: nowrap;
+}
+
+/* === 分节标题 === */
+.rnp-section-title {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 16px 16px 8px;
+    color: #555;
+    font-size: 9px;
+    font-weight: 800;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    font-family: 'Courier New', monospace;
+}
+.rnp-section-title::before,
+.rnp-section-title::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: #222;
+}
+
+/* === 关系线索面板 === */
+.rnp-threads {
+    padding: 0 16px 8px;
+}
+.rnp-thread-item {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 0;
+    border-bottom: 1px solid #111;
+    font-size: 11px;
+    cursor: pointer;
+}
+.rnp-thread-item:last-child {
+    border-bottom: none;
+}
+.rnp-thread-item:active {
+    background: #111;
+}
+.rnp-thread-dot {
+    width: 6px;
+    height: 6px;
+    background: #555;
+    border-radius: 50%;
+    flex-shrink: 0;
+}
+.rnp-thread-from {
+    color: #ccc;
+    font-weight: 700;
+    min-width: 50px;
+    text-align: right;
+    flex-shrink: 0;
+}
+.rnp-thread-line {
+    flex: 1;
+    height: 0;
+    border-top: 1px dashed #333;
+    min-width: 20px;
+}
+.rnp-thread-label {
+    color: #888;
+    font-size: 10px;
+    flex-shrink: 0;
+    padding: 0 4px;
+    font-family: 'Courier New', monospace;
+}
+.rnp-thread-to {
+    color: #ccc;
+    font-weight: 700;
+    min-width: 50px;
+    flex-shrink: 0;
+}
+.rnp-thread-dot-end {
+    width: 6px;
+    height: 6px;
+    background: #555;
+    border-radius: 50%;
+    flex-shrink: 0;
+}
+
+/* 无关系时的提示 */
+.rnp-threads-empty {
+    text-align: center;
+    color: #333;
+    font-size: 10px;
+    padding: 12px 0;
+    font-family: 'Courier New', monospace;
+    letter-spacing: 1px;
+}
+
+/* === 嫌疑人档案列表 === */
+.rnp-dossier-list {
+    padding: 0 12px;
+}
+
+/* 档案卡 */
+.rnp-dossier-card {
+    background: #0a0a0a;
+    border: 1px solid #333;
+    margin-bottom: 12px;
+    position: relative;
+    overflow: hidden;
+}
+
+/* CLASSIFIED 印章 */
+.rnp-dossier-card::before {
+    content: 'CLASSIFIED';
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    color: #1a1a1a;
+    font-size: 9px;
+    font-weight: 900;
+    letter-spacing: 3px;
+    transform: rotate(-5deg);
+    border: 1.5px solid #1a1a1a;
+    padding: 1px 6px;
+    font-family: 'Courier New', monospace;
+    pointer-events: none;
+    z-index: 1;
+}
+
+/* 档案卡头部（折叠态可见） */
+.rnp-dossier-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px;
+    cursor: pointer;
+}
+.rnp-dossier-header:active {
+    background: #111;
+}
+
+.rnp-dossier-thumb {
+    width: 48px;
+    height: 60px;
+    object-fit: cover;
+    border: 1.5px solid #444;
+    background: #111;
+    flex-shrink: 0;
+}
+
+.rnp-dossier-summary {
+    flex: 1;
+    min-width: 0;
+}
+.rnp-dossier-file-tag {
+    color: #444;
+    font-size: 8px;
+    letter-spacing: 3px;
+    font-family: 'Courier New', monospace;
+    font-weight: 700;
+    text-transform: uppercase;
+    margin-bottom: 2px;
+}
+.rnp-dossier-name {
+    color: #fff;
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+.rnp-dossier-brief {
+    color: #666;
+    font-size: 10px;
+    margin-top: 2px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    font-family: 'Courier New', monospace;
+}
+
+.rnp-dossier-expand-icon {
+    color: #444;
+    font-size: 12px;
+    flex-shrink: 0;
+    transition: transform 0.2s;
+}
+.rnp-dossier-card.expanded .rnp-dossier-expand-icon {
+    transform: rotate(180deg);
+}
+
+/* 档案卡展开区域 */
+.rnp-dossier-body {
+    display: none;
+    border-top: 1px solid #222;
+}
+.rnp-dossier-card.expanded .rnp-dossier-body {
+    display: block;
+}
+
+/* 展开后的详细信息区 */
+.rnp-dossier-detail {
+    display: flex;
+    gap: 14px;
+    padding: 14px;
+}
+
+.rnp-dossier-photo-area {
+    flex-shrink: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+}
+.rnp-dossier-photo {
+    width: 88px;
+    height: 110px;
+    object-fit: cover;
+    border: 2px solid #555;
+    background: #111;
+    display: block;
+    cursor: pointer;
+}
+.rnp-dossier-photo-id {
+    color: #333;
+    font-size: 7px;
+    letter-spacing: 3px;
+    font-family: 'Courier New', monospace;
+    font-weight: 700;
+}
+
+.rnp-dossier-fields {
+    flex: 1;
+    min-width: 0;
+}
+
+.rnp-dossier-field {
+    display: flex;
+    align-items: baseline;
+    padding: 3px 0;
+    font-size: 11px;
+    line-height: 1.4;
+}
+.rnp-dossier-field-label {
+    color: #555;
+    font-size: 9px;
+    font-weight: 800;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    min-width: 58px;
+    flex-shrink: 0;
+    font-family: 'Courier New', monospace;
+}
+.rnp-dossier-field-dots {
+    color: #333;
+    font-size: 9px;
+    margin: 0 4px;
+    letter-spacing: 1px;
+    flex-shrink: 0;
+    font-family: 'Courier New', monospace;
+}
+.rnp-dossier-field-value {
+    color: #fff;
+    font-weight: 600;
+    word-break: break-all;
+}
+
+/* 信息块 - 性格/外貌/经历等 */
+.rnp-dossier-info-block {
+    margin: 8px 14px;
+    padding-left: 12px;
+    border-left: 2px solid #333;
+}
+.rnp-dossier-info-title {
+    color: #555;
+    font-size: 8px;
+    font-weight: 800;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    font-family: 'Courier New', monospace;
+    margin-bottom: 4px;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+.rnp-dossier-info-title::before {
+    content: '>';
+    color: #444;
+}
+.rnp-dossier-info-text {
+    color: #999;
+    font-size: 11px;
+    line-height: 1.6;
+}
+
+/* 档案卡内的关系列表 */
+.rnp-dossier-connections {
+    margin: 8px 14px;
+    padding: 8px 0 0;
+    border-top: 1px solid #222;
+}
+.rnp-dossier-conn-title {
+    color: #555;
+    font-size: 8px;
+    font-weight: 800;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    font-family: 'Courier New', monospace;
+    margin-bottom: 6px;
+}
+.rnp-dossier-conn-item {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 3px 0;
+    cursor: pointer;
+    font-size: 11px;
+}
+.rnp-dossier-conn-item:active {
+    background: #111;
+}
+.rnp-dossier-conn-bullet {
+    color: #444;
+    font-size: 10px;
+    flex-shrink: 0;
+    font-family: 'Courier New', monospace;
+}
+.rnp-dossier-conn-name {
+    color: #ccc;
+    font-weight: 700;
+}
+.rnp-dossier-conn-dots {
+    color: #333;
+    font-size: 9px;
+    letter-spacing: 1px;
+    font-family: 'Courier New', monospace;
+}
+.rnp-dossier-conn-label {
+    color: #888;
+    font-size: 10px;
+}
+
+/* 档案卡操作栏 */
+.rnp-dossier-actions {
+    display: flex;
+    border-top: 1px solid #222;
+    background: #050505;
+}
+.rnp-dossier-act {
+    flex: 1;
+    padding: 10px 0;
+    border: none;
+    border-right: 1px solid #1a1a1a;
+    background: transparent;
+    color: #555;
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    font-family: 'Courier New', monospace;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+}
+.rnp-dossier-act:last-child {
+    border-right: none;
+}
+.rnp-dossier-act:active {
+    background: #1a1a1a;
+    color: #fff;
+}
+.rnp-dossier-act i {
+    font-size: 11px;
+}
+.rnp-dossier-act-del {
+    color: #555;
+}
+.rnp-dossier-act-del:active {
+    color: #aaa;
+    background: #1a1a1a;
+}
+
+/* === 空状态 === */
+.rnp-empty {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 60px 20px;
+    text-align: center;
+}
+.rnp-empty-icon {
+    font-size: 36px;
+    color: #1a1a1a;
+    margin-bottom: 16px;
+}
+.rnp-empty-title {
+    color: #444;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    font-family: 'Courier New', monospace;
+    margin-bottom: 8px;
+}
+.rnp-empty-desc {
+    color: #333;
+    font-size: 10px;
+    line-height: 1.6;
+    font-family: 'Courier New', monospace;
+}
+
+/* === 竖屏模式下弹窗配色覆盖 === */
+body.rnp-active .rn-card-overlay,
+body.rnp-active .rn-form-overlay,
+body.rnp-active .rn-link-overlay {
+    /* 不旋转 - 竖屏模式 */
+    transform: none !important;
+    width: 100% !important;
+    height: 100% !important;
+    top: 0 !important;
+    left: 0 !important;
+}
+
+/* 卡片颜色覆盖 - 去掉蓝色，用灰白 */
+body.rnp-active .idc-card {
+    background: #0a0a0a;
+    background-image: none;
+    border-color: #333;
+    box-shadow: 0 8px 40px rgba(0,0,0,0.9);
+}
+body.rnp-active .idc-photo {
+    border-color: #555;
+    box-shadow: none;
+}
+body.rnp-active .idc-header-title {
+    color: #444;
+}
+body.rnp-active .idc-info-side {
+    background: rgba(255,255,255,0.02);
+    border-color: #222;
+}
+body.rnp-active .idc-label {
+    color: #555;
+}
+body.rnp-active .idc-value {
+    color: #fff;
+    text-shadow: none;
+}
+body.rnp-active .idc-signature {
+    color: #333;
+    border-top-color: #222;
+}
+body.rnp-active .idc-body {
+    border-bottom-color: #222;
+    background: none;
+}
+body.rnp-active .idc-sticky {
+    background: rgba(255,255,255,0.02);
+    border-color: #333;
+    border-left-color: #555;
+}
+body.rnp-active .idc-tape {
+    background: rgba(255,255,255,0.04);
+}
+body.rnp-active .idc-sticky-label {
+    color: #555;
+}
+body.rnp-active .idc-sticky-body {
+    color: #999;
+}
+body.rnp-active .idc-rel-section {
+    border-top-color: #222;
+}
+body.rnp-active .idc-rel-title {
+    color: #444;
+}
+body.rnp-active .idc-rel-item {
+    background: rgba(255,255,255,0.02);
+    border-color: #333;
+}
+body.rnp-active .idc-rel-item:active {
+    background: rgba(255,255,255,0.06);
+    border-color: #555;
+}
+body.rnp-active .idc-rel-name {
+    color: #ccc;
+}
+body.rnp-active .idc-rel-tag {
+    color: #666;
+}
+body.rnp-active .idc-actions {
+    border-top-color: #333;
+    background: #050505;
+}
+body.rnp-active .idc-act {
+    color: #555;
+    border-right-color: #1a1a1a;
+}
+body.rnp-active .idc-act:active {
+    background: #1a1a1a;
+    color: #fff;
+}
+body.rnp-active .idc-act-del {
+    color: #555;
+}
+body.rnp-active .idc-act-del:active {
+    color: #aaa;
+}
+
+/* 编辑表单颜色覆盖 */
+body.rnp-active .rn-form-panel {
+    background: #0a0a0a;
+    border-color: #333;
+}
+body.rnp-active .rn-form-header {
+    border-bottom-color: #222;
+}
+body.rnp-active .rn-form-header .rn-form-title {
+    color: #ccc;
+}
+body.rnp-active .rn-form-header .rn-form-close {
+    color: #555;
+}
+body.rnp-active .rn-form-tab {
+    color: #555;
+}
+body.rnp-active .rn-form-tab.active {
+    color: #ccc;
+    border-bottom-color: #ccc;
+}
+body.rnp-active .rn-form-group label {
+    color: #666;
+}
+body.rnp-active .rn-form-group input,
+body.rnp-active .rn-form-group textarea,
+body.rnp-active .rn-form-group select {
+    background: rgba(255,255,255,0.03);
+    border-color: #333;
+    color: #fff;
+}
+body.rnp-active .rn-form-group input:focus,
+body.rnp-active .rn-form-group textarea:focus,
+body.rnp-active .rn-form-group select:focus {
+    border-color: #666;
+    background: rgba(255,255,255,0.05);
+}
+body.rnp-active .rn-form-group input::placeholder,
+body.rnp-active .rn-form-group textarea::placeholder {
+    color: #333;
+}
+body.rnp-active .rn-form-footer .rn-form-btn {
+    color: #555;
+    border-right-color: #1a1a1a;
+}
+body.rnp-active .rn-form-footer .rn-form-btn.save {
+    background: #1a1a1a;
+    color: #fff;
+}
+body.rnp-active .rn-form-footer .rn-form-btn.save:active {
+    background: #333;
+}
+body.rnp-active .rn-form-mode-btn {
+    border-color: #333;
+    background: rgba(255,255,255,0.02);
+    color: #555;
+}
+body.rnp-active .rn-form-mode-btn.active {
+    background: rgba(255,255,255,0.08);
+    color: #ccc;
+    border-color: #666;
+}
+body.rnp-active .rn-form-section-title {
+    color: #ccc;
+    border-top-color: #222;
+}
+body.rnp-active .rn-role-chip {
+    background: rgba(255,255,255,0.04);
+    color: #666;
+    border-color: #333;
+}
+body.rnp-active .rn-role-chip:hover {
+    background: rgba(255,255,255,0.08);
+    color: #ccc;
+    border-color: #555;
+}
+body.rnp-active .rn-role-chip-active,
+body.rnp-active .rn-role-chip-active:hover {
+    background: rgba(255,255,255,0.12);
+    color: #fff;
+    border-color: #888;
+}
+body.rnp-active .rn-ai-generate-btn {
+    border-color: #444;
+    background: rgba(255,255,255,0.03);
+    color: #999;
+}
+body.rnp-active .rn-ai-generate-btn:active {
+    background: rgba(255,255,255,0.08);
+}
+body.rnp-active .rn-avatar-upload .rn-avatar-btn {
+    background: rgba(255,255,255,0.04);
+    border-color: #333;
+    color: #999;
+}
+body.rnp-active .rn-avatar-preview {
+    border-color: #333;
+}
+
+/* 建立关系弹窗颜色覆盖 */
+body.rnp-active .rn-link-panel {
+    background: #0a0a0a;
+    border-color: #333;
+}
+body.rnp-active .rn-link-item {
+    border-color: transparent;
+}
+body.rnp-active .rn-link-item:active {
+    background: rgba(255,255,255,0.03);
+}
+body.rnp-active .rn-link-item.selected {
+    background: rgba(255,255,255,0.05);
+    border-color: #444;
+}
+body.rnp-active .rn-link-item img {
+    border-color: #333;
+}
+body.rnp-active .rn-link-item .rn-link-name {
+    color: #ccc;
+}
+body.rnp-active .rn-link-relation-input {
+    border-top-color: #222;
+}
+body.rnp-active .rn-link-relation-input input {
+    background: rgba(255,255,255,0.03);
+    border-color: #333;
+    color: #fff;
+}
+body.rnp-active .rn-link-relation-input input:focus {
+    border-color: #666;
+}
+body.rnp-active .rn-link-relation-input input::placeholder {
+    color: #333;
+}
+
+/* === 缩放指示器 === */
+.rnp-zoom-indicator {
+    position: fixed;
+    bottom: 60px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #111;
+    color: #666;
+    font-size: 10px;
+    padding: 3px 12px;
+    z-index: 10001;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.3s;
+    border: 1px solid #333;
+    letter-spacing: 2px;
+    font-family: 'Courier New', monospace;
+}
+.rnp-zoom-indicator.show {
+    opacity: 1;
+}
+
+/* === 底部工具栏 === */
+.rnp-toolbar {
+    position: relative;
+    z-index: 10;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0;
+    background: #000;
+    border-top: 1px solid #222;
+    flex-shrink: 0;
+}
+.rnp-tool-btn {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2px;
+    color: #555;
+    font-size: 8px;
+    cursor: pointer;
+    padding: 8px 10px;
+    font-family: 'Courier New', monospace;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+}
+.rnp-tool-btn i {
+    font-size: 14px;
+    color: #666;
+}
+.rnp-tool-btn:active {
+    background: #111;
+    color: #ccc;
+}
+.rnp-tool-btn:active i {
+    color: #ccc;
+}
+
+/* === 响应式 === */
+@media (max-width: 360px) {
+    .rnp-protag-card {
+        width: 90px;
+    }
+    .rnp-protag-photo {
+        width: 60px;
+        height: 75px;
+    }
+    .rnp-dossier-thumb {
+        width: 42px;
+        height: 52px;
+    }
+    .rnp-dossier-photo {
+        width: 72px;
+        height: 90px;
+    }
+}
+
+@media (min-width: 500px) {
+    .rnp-dossier-list {
+        max-width: 480px;
+        margin: 0 auto;
+    }
+    .rnp-protagonists {
+        max-width: 480px;
+        margin: 0 auto;
+    }
+    .rnp-threads {
+        max-width: 480px;
+        margin: 0 auto;
+    }
+}

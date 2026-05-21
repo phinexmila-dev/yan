@@ -1,0 +1,330 @@
+/* ===== 日程 & 课表模块样式 ===== */
+
+/* 日程主容器 */
+.schedule-container { height:100%; display:flex; flex-direction:column; background:#f5f5f7; }
+.schedule-tabs { display:flex; background:#fff; border-bottom:1px solid #eee; flex-shrink:0; }
+.schedule-tab { flex:1; text-align:center; padding:12px 0; font-size:14px; color:#999; cursor:pointer; position:relative; transition:all .2s; }
+.schedule-tab.active { color:var(--primary, #ff6b8a); font-weight:600; }
+.schedule-tab.active::after { content:''; position:absolute; bottom:0; left:30%; right:30%; height:3px; background:var(--primary, #ff6b8a); border-radius:3px; }
+
+/* 日历头部 */
+.sch-cal-header { display:flex; align-items:center; justify-content:space-between; padding:12px 16px; background:#fff; }
+.sch-cal-title { font-size:16px; font-weight:600; color:#333; }
+.sch-cal-arrows { display:flex; gap:12px; }
+.sch-cal-arrows i { font-size:16px; color:#666; cursor:pointer; padding:4px; }
+
+/* 周日历条 */
+.sch-week-strip { display:flex; background:#fff; padding:8px 8px 12px; gap:4px; }
+.sch-week-day { flex:1; text-align:center; cursor:pointer; border-radius:12px; padding:6px 0; transition:all .2s; }
+.sch-week-day .sch-wd-label { font-size:11px; color:#999; margin-bottom:4px; }
+.sch-week-day .sch-wd-num { font-size:15px; font-weight:500; color:#333; width:32px; height:32px; line-height:32px; margin:0 auto; border-radius:50%; transition:all .2s; }
+.sch-week-day.today .sch-wd-num { background:var(--primary, #ff6b8a); color:#fff; }
+.sch-week-day.selected .sch-wd-num { outline:2px solid var(--primary, #ff6b8a); }
+.sch-week-day.has-event .sch-wd-num::after { content:''; display:block; width:4px; height:4px; background:var(--primary, #ff6b8a); border-radius:50%; margin:2px auto 0; }
+
+/* 日程列表 */
+.sch-list { flex:1; overflow-y:auto; padding:12px 16px; -webkit-overflow-scrolling:touch; }
+.sch-empty { text-align:center; padding:40px 20px; color:#bbb; font-size:14px; }
+.sch-empty i { font-size:40px; margin-bottom:12px; display:block; opacity:.5; }
+
+/* 日程项 */
+.sch-item { background:#fff; border-radius:14px; padding:14px 16px; margin-bottom:10px; box-shadow:0 1px 4px rgba(0,0,0,.05); position:relative; }
+.sch-item-header { display:flex; align-items:center; gap:8px; margin-bottom:6px; }
+.sch-item-time { font-size:12px; color:#999; font-weight:500; }
+.sch-item-badge { font-size:10px; padding:2px 8px; border-radius:10px; background:#f0f0f0; color:#888; }
+.sch-item-badge.auto { background:#fff0f3; color:#ff6b8a; }
+.sch-item-badge.manual { background:#f0f5ff; color:#5b8def; }
+.sch-item-title { font-size:15px; font-weight:600; color:#333; margin-bottom:4px; }
+.sch-item-desc { font-size:13px; color:#888; line-height:1.5; }
+.sch-item-stickers { display:flex; gap:6px; margin-top:8px; flex-wrap:wrap; }
+.sch-sticker { font-size:20px; cursor:pointer; transition:transform .2s; user-select:none; }
+.sch-sticker:hover { transform:scale(1.2); }
+.sch-sticker.mine { background:rgba(255,107,138,.1); border-radius:8px; padding:2px 4px; }
+.sch-sticker.partner { background:rgba(91,141,239,.1); border-radius:8px; padding:2px 4px; }
+.sch-sticker-label { font-size:10px; color:#bbb; display:block; text-align:center; }
+.sch-item-actions { position:absolute; top:10px; right:12px; display:flex; gap:8px; }
+.sch-item-actions i { font-size:14px; color:#ccc; cursor:pointer; padding:4px; }
+.sch-item-actions i:hover { color:#ff6b8a; }
+
+/* 贴纸选择器 */
+.sticker-picker-overlay {
+    position:fixed; top:0; left:0; right:0; bottom:0;
+    background:rgba(0,0,0,.0); z-index:10002;
+    display:flex; align-items:flex-end; justify-content:center;
+    transition: background 0.25s;
+}
+.sticker-picker-overlay.show {
+    background:rgba(0,0,0,.4);
+}
+.sticker-picker {
+    background:#fff; border-radius:20px 20px 0 0; padding:20px;
+    width:100%; max-width:420px; max-height:50vh;
+    transform: translateY(100%);
+    transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.sticker-picker-overlay.show .sticker-picker {
+    transform: translateY(0);
+}
+.sticker-picker-title { font-size:15px; font-weight:600; color:#333; margin-bottom:12px; text-align:center; }
+.sticker-picker-grid { display:grid; grid-template-columns:repeat(6, 1fr); gap:8px; padding:8px 0; }
+.sticker-picker-item { font-size:28px; text-align:center; cursor:pointer; padding:8px; border-radius:12px; transition:all .15s; user-select:none; }
+.sticker-picker-item:hover { background:#f5f5f5; transform:scale(1.15); }
+.sticker-picker-item:active { transform:scale(0.95); background:#fff0f3; }
+.sticker-picker-item.selected { background:#fff0f3; outline:2px solid #ff6b8a; }
+.sticker-picker-label { font-size:10px; color:#999; display:block; margin-top:2px; }
+.sticker-picker-close { text-align:center; margin-top:12px; color:#999; font-size:14px; cursor:pointer; padding:8px; }
+
+/* 添加日程浮动按钮 */
+.sch-fab { position:absolute; bottom:20px; right:20px; width:52px; height:52px; border-radius:50%; background:var(--primary, #ff6b8a); color:#fff; display:flex; align-items:center; justify-content:center; font-size:22px; box-shadow:0 4px 12px rgba(255,107,138,.4); cursor:pointer; z-index:10; transition:transform .2s; }
+.sch-fab:active { transform:scale(.9); }
+
+/* 添加日程表单 */
+.sch-add-form { background:#fff; border-radius:16px; padding:16px; margin:12px 16px; box-shadow:0 2px 8px rgba(0,0,0,.08); }
+.sch-add-form input, .sch-add-form textarea { width:100%; border:1px solid #eee; border-radius:10px; padding:10px 12px; font-size:14px; margin-bottom:8px; outline:none; box-sizing:border-box; font-family:inherit; }
+.sch-add-form input:focus, .sch-add-form textarea:focus { border-color:var(--primary, #ff6b8a); }
+.sch-add-form textarea { resize:none; height:60px; }
+.sch-add-btns { display:flex; gap:8px; justify-content:flex-end; }
+.sch-add-btns button { padding:8px 18px; border:none; border-radius:10px; font-size:13px; cursor:pointer; }
+.sch-add-btns .sch-btn-cancel { background:#f0f0f0; color:#666; }
+.sch-add-btns .sch-btn-save { background:var(--primary, #ff6b8a); color:#fff; }
+
+/* ===== 课表样式 ===== */
+.tt-container { flex:1; overflow-y:auto; -webkit-overflow-scrolling:touch; }
+.tt-week-nav { display:flex; align-items:center; justify-content:space-between; padding:10px 16px; background:#fff; border-bottom:1px solid #f0f0f0; }
+.tt-week-label { font-size:15px; font-weight:600; color:#333; }
+.tt-week-arrows { display:flex; gap:16px; }
+.tt-week-arrows i { font-size:16px; color:#666; cursor:pointer; padding:4px; }
+
+/* 课表网格 */
+.tt-grid { display:grid; grid-template-columns:40px repeat(7, 1fr); min-height:100%; background:#fff; }
+.tt-corner { background:#fafafa; border-right:1px solid #f0f0f0; border-bottom:1px solid #f0f0f0; }
+.tt-day-header { text-align:center; padding:8px 2px; font-size:11px; color:#666; border-bottom:1px solid #f0f0f0; border-right:1px solid #f0f0f0; background:#fafafa; }
+.tt-day-header.today { color:var(--primary, #ff6b8a); font-weight:600; }
+.tt-day-header .tt-dh-date { font-size:10px; color:#bbb; }
+.tt-period-label { display:flex; align-items:center; justify-content:center; font-size:11px; color:#999; border-right:1px solid #f0f0f0; border-bottom:1px solid #f0f0f0; background:#fafafa; padding:2px; min-height:55px; }
+.tt-cell { border-right:1px solid #f0f0f0; border-bottom:1px solid #f0f0f0; min-height:55px; position:relative; padding:2px; }
+.tt-course-block { position:absolute; left:2px; right:2px; border-radius:8px; padding:4px 5px; font-size:10px; overflow:hidden; cursor:pointer; z-index:1; line-height:1.3; }
+.tt-course-name { font-weight:600; color:#fff; margin-bottom:2px; word-break:break-all; }
+.tt-course-loc { color:rgba(255,255,255,.85); font-size:9px; }
+
+/* 课表工具栏 */
+.tt-toolbar { display:flex; gap:8px; padding:10px 16px; background:#fff; border-bottom:1px solid #f0f0f0; flex-wrap:wrap; }
+.tt-tool-btn { padding:6px 14px; border-radius:20px; font-size:12px; border:1px solid #eee; background:#fafafa; color:#666; cursor:pointer; display:flex; align-items:center; gap:4px; transition:all .2s; }
+.tt-tool-btn:active { background:#f0f0f0; }
+.tt-tool-btn i { font-size:12px; }
+
+/* 课表设置面板 */
+.tt-settings-overlay { position:fixed; top:0; left:0; right:0; bottom:0; background:rgba(0,0,0,.4); z-index:999; display:flex; align-items:center; justify-content:center; }
+.tt-settings-panel { background:#fff; border-radius:16px; padding:20px; width:90%; max-width:380px; max-height:80vh; overflow-y:auto; }
+.tt-settings-title { font-size:16px; font-weight:600; color:#333; margin-bottom:16px; text-align:center; }
+.tt-settings-group { margin-bottom:16px; }
+.tt-settings-label { font-size:13px; font-weight:500; color:#666; margin-bottom:8px; }
+.tt-settings-row { display:flex; align-items:center; gap:8px; margin-bottom:8px; }
+.tt-settings-row label { font-size:13px; color:#555; min-width:80px; }
+.tt-settings-row input { flex:1; border:1px solid #eee; border-radius:8px; padding:8px 10px; font-size:13px; outline:none; }
+.tt-settings-row input:focus { border-color:var(--primary, #ff6b8a); }
+.tt-settings-btns { display:flex; gap:8px; justify-content:flex-end; margin-top:16px; }
+.tt-settings-btns button { padding:8px 20px; border:none; border-radius:10px; font-size:13px; cursor:pointer; }
+
+/* 课程编辑弹窗 */
+.tt-course-edit-overlay { position:fixed; top:0; left:0; right:0; bottom:0; background:rgba(0,0,0,.4); z-index:999; display:flex; align-items:center; justify-content:center; }
+.tt-course-edit-panel { background:#fff; border-radius:16px; padding:20px; width:90%; max-width:380px; max-height:80vh; overflow-y:auto; }
+.tt-course-edit-title { font-size:16px; font-weight:600; color:#333; margin-bottom:16px; text-align:center; }
+.tt-ce-row { margin-bottom:10px; }
+.tt-ce-row label { display:block; font-size:12px; color:#888; margin-bottom:4px; }
+.tt-ce-row input, .tt-ce-row select { width:100%; border:1px solid #eee; border-radius:8px; padding:8px 10px; font-size:13px; outline:none; box-sizing:border-box; }
+.tt-ce-row input:focus, .tt-ce-row select:focus { border-color:var(--primary, #ff6b8a); }
+.tt-ce-weeks { display:flex; flex-wrap:wrap; gap:4px; margin-top:4px; }
+.tt-ce-week-chip { padding:4px 8px; border-radius:12px; font-size:11px; border:1px solid #eee; cursor:pointer; transition:all .15s; user-select:none; }
+.tt-ce-week-chip.active { background:var(--primary, #ff6b8a); color:#fff; border-color:var(--primary, #ff6b8a); }
+
+/* 课表颜色预设 */
+.tt-color-row { display:flex; gap:6px; flex-wrap:wrap; margin-top:4px; }
+.tt-color-dot { width:24px; height:24px; border-radius:50%; cursor:pointer; transition:transform .15s; border:2px solid transparent; }
+.tt-color-dot:hover { transform:scale(1.15); }
+.tt-color-dot.selected { border-color:#333; }
+
+/* Excel导入提示 */
+.tt-import-zone { border:2px dashed #ddd; border-radius:14px; padding:30px 20px; text-align:center; margin:16px; cursor:pointer; transition:all .2s; }
+.tt-import-zone:hover { border-color:var(--primary, #ff6b8a); background:#fff5f7; }
+.tt-import-zone i { font-size:36px; color:#ccc; margin-bottom:10px; display:block; }
+.tt-import-zone p { font-size:13px; color:#999; margin:0; }
+
+/* 生成中的加载动画 */
+.sch-generating { text-align:center; padding:20px; }
+.sch-generating .sch-gen-dots { display:inline-flex; gap:4px; }
+.sch-generating .sch-gen-dots span { width:8px; height:8px; border-radius:50%; background:var(--primary, #ff6b8a); animation:schDotPulse .6s infinite alternate; }
+.sch-generating .sch-gen-dots span:nth-child(2) { animation-delay:.2s; }
+.sch-generating .sch-gen-dots span:nth-child(3) { animation-delay:.4s; }
+@keyframes schDotPulse { from{opacity:.3;transform:scale(.8)} to{opacity:1;transform:scale(1.1)} }
+
+/* ===== 日程页面悬浮球 ===== */
+#sch-float-ball-wrap {
+    position: fixed;
+    z-index: 10001;
+    bottom: 100px;
+    left: 16px;
+    pointer-events: none;
+}
+
+/* 悬浮球本体 */
+.sch-float-ball {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    overflow: hidden;
+    box-shadow: 0 4px 16px rgba(0,0,0,.15), 0 0 0 2.5px rgba(255,107,138,.3);
+    cursor: pointer;
+    pointer-events: auto;
+    transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.3s;
+    animation: schFbPulse 3s ease-in-out infinite;
+    position: relative;
+}
+.sch-float-ball:hover {
+    transform: scale(1.1);
+    box-shadow: 0 6px 20px rgba(0,0,0,.2), 0 0 0 3px rgba(255,107,138,.5);
+}
+.sch-float-ball:active {
+    transform: scale(0.95);
+}
+.sch-float-ball img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 50%;
+    pointer-events: none;
+}
+
+/* 悬浮球首字母（无头像时） */
+.sch-fb-initial {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #ff6b8a, #ff8fa0);
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 22px;
+    font-weight: 700;
+    user-select: none;
+}
+
+@keyframes schFbPulse {
+    0%, 100% { box-shadow: 0 4px 16px rgba(0,0,0,.15), 0 0 0 2.5px rgba(255,107,138,.3); }
+    50% { box-shadow: 0 4px 16px rgba(0,0,0,.15), 0 0 0 4px rgba(255,107,138,.15); }
+}
+
+/* 悬浮球上方提示/反应弹窗 */
+.sch-fb-tip {
+    position: absolute;
+    bottom: 60px;
+    left: 0;
+    min-width: 180px;
+    max-width: 260px;
+    padding: 0;
+    pointer-events: none;
+    opacity: 0;
+    transform: translateY(8px) scale(0.95);
+    transition: opacity 0.3s, transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+.sch-fb-tip.show {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    pointer-events: auto;
+}
+
+/* 加载状态 */
+.sch-fb-tip-loading {
+    background: rgba(255,255,255,0.95);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-radius: 16px;
+    padding: 10px 14px;
+    box-shadow: 0 4px 20px rgba(0,0,0,.1);
+    border: 1px solid rgba(255,107,138,.15);
+    font-size: 12px;
+    color: #666;
+    line-height: 1.6;
+}
+.sch-fb-tip-name {
+    color: var(--primary, #ff6b8a);
+    font-weight: 600;
+    font-size: 13px;
+}
+.sch-fb-tip-text {
+    color: #999;
+    font-size: 11px;
+}
+.sch-fb-tip-dots {
+    display: inline-flex;
+    gap: 3px;
+    margin-left: 4px;
+    vertical-align: middle;
+}
+.sch-fb-tip-dots span {
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: var(--primary, #ff6b8a);
+    animation: schFbDots 0.8s infinite alternate;
+    display: inline-block;
+}
+.sch-fb-tip-dots span:nth-child(2) { animation-delay: 0.2s; }
+.sch-fb-tip-dots span:nth-child(3) { animation-delay: 0.4s; }
+
+@keyframes schFbDots {
+    from { opacity: 0.3; transform: scale(0.8); }
+    to { opacity: 1; transform: scale(1.2); }
+}
+
+/* 反应消息 */
+.sch-fb-tip-reaction {
+    background: rgba(255,255,255,0.95);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-radius: 16px;
+    padding: 10px 14px;
+    box-shadow: 0 4px 20px rgba(0,0,0,.1);
+    border: 1px solid rgba(255,107,138,.15);
+    font-size: 13px;
+    color: #333;
+    line-height: 1.6;
+    position: relative;
+}
+.sch-fb-tip-reaction::after {
+    content: '';
+    position: absolute;
+    bottom: -6px;
+    left: 18px;
+    width: 12px;
+    height: 12px;
+    background: rgba(255,255,255,0.95);
+    border: 1px solid rgba(255,107,138,.15);
+    border-top: none;
+    border-left: none;
+    transform: rotate(45deg);
+    box-shadow: 2px 2px 4px rgba(0,0,0,.03);
+}
+.sch-fb-tip-reaction .sch-fb-tip-name {
+    color: var(--primary, #ff6b8a);
+    font-weight: 600;
+    font-size: 12px;
+    display: block;
+    margin-bottom: 2px;
+}
+.sch-fb-tip-reaction .sch-fb-tip-msg {
+    color: #444;
+    font-size: 13px;
+    line-height: 1.5;
+    display: block;
+}
+
+/* 悬浮球进入动画 */
+#sch-float-ball-wrap {
+    animation: schFbEnter 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+@keyframes schFbEnter {
+    from { opacity: 0; transform: translateX(-30px) scale(0.5); }
+    to { opacity: 1; transform: translateX(0) scale(1); }
+}

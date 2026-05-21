@@ -1,0 +1,638 @@
+/* ====== 沉浸式触摸互动模块样式 (浅色温暖风格) ====== */
+
+/* 整体容器 */
+.touch-page {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    background: #f8f0f0;
+}
+
+/* 导航栏 */
+.touch-nav-bar {
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    z-index: 20;
+    display: flex;
+    align-items: center;
+    padding: 10px 12px;
+    background: linear-gradient(180deg, rgba(255,240,243,0.95) 0%, rgba(255,240,243,0.6) 60%, transparent 100%);
+}
+.touch-nav-bar .nav-icon {
+    width: 34px; height: 34px;
+    display: flex; align-items: center; justify-content: center;
+    color: #c44569;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.85);
+    box-shadow: 0 2px 8px rgba(196,69,105,0.15);
+}
+.touch-nav-bar .nav-icon:active { background: rgba(255,220,230,0.9); }
+.touch-nav-actions {
+    display: flex; gap: 8px; margin-left: auto;
+}
+.touch-nav-btn {
+    width: 34px; height: 34px;
+    display: flex; align-items: center; justify-content: center;
+    color: #c44569;
+    font-size: 14px;
+    cursor: pointer;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.85);
+    box-shadow: 0 2px 8px rgba(196,69,105,0.15);
+    transition: all 0.2s;
+}
+.touch-nav-btn:active { background: rgba(255,220,230,0.9); }
+
+/* 背景图区域 - 全屏 */
+.touch-bg-area {
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    background: linear-gradient(135deg, #fff5f7 0%, #ffeef2 50%, #fff0f5 100%);
+    will-change: transform;
+    transform: translateZ(0);
+}
+.touch-bg-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    user-select: none;
+    -webkit-user-select: none;
+    pointer-events: none;
+    will-change: transform;
+    transform: translateZ(0);
+}
+
+/* 触摸区域层 */
+.touch-zones-layer {
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    z-index: 10;
+    will-change: transform;
+    transform: translateZ(0);
+}
+
+/* 单个触摸区域 - 非编辑模式下透明不可见，仅作为触摸热区 */
+.touch-zone {
+    position: absolute;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    /* 非编辑模式：完全透明，不显示圆圈 */
+    background: transparent;
+    border: 2px solid transparent;
+    box-shadow: none;
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
+    cursor: pointer;
+    will-change: transform;
+    transform: translateZ(0);
+    /* 使用 GPU 加速的 transition，只对 transform 做动画 */
+    transition: transform 0.12s ease;
+}
+/* 扩大触摸热区 - 用伪元素在原始区域外扩展点击范围 */
+.touch-zone::after {
+    content: '';
+    position: absolute;
+    top: -12px;
+    left: -12px;
+    right: -12px;
+    bottom: -12px;
+    border-radius: inherit;
+}
+.touch-zone.shape-rect {
+    border-radius: 12px;
+}
+.touch-zone.shape-ellipse {
+    border-radius: 50%;
+}
+.touch-zone.shape-circle {
+    border-radius: 50%;
+}
+.touch-zone:active {
+    transform: translateZ(0) scale(0.95);
+    background: rgba(255, 105, 180, 0.25);
+}
+/* 非编辑模式下隐藏标签 */
+.touch-zone-label {
+    color: #c44569;
+    font-size: 11px;
+    text-shadow: 0 1px 3px rgba(255,255,255,0.9);
+    pointer-events: none;
+    white-space: nowrap;
+    font-weight: 600;
+    display: none;
+}
+/* 编辑模式下才显示标签 */
+.touch-zone.editing .touch-zone-label {
+    display: block;
+}
+
+/* 编辑模式下的区域样式 */
+.touch-zone.editing {
+    border: 2px dashed #e8a43a;
+    background: rgba(232, 164, 58, 0.15);
+    /* 用 opacity 动画替代 box-shadow 动画，减少重绘开销 */
+    animation: touch-zone-pulse 1.5s infinite;
+}
+.touch-zone.editing.shape-rect {
+    border-radius: 12px;
+}
+@keyframes touch-zone-pulse {
+    0%, 100% { opacity: 0.7; }
+    50% { opacity: 1; }
+}
+
+/* 删除按钮 */
+.touch-zone-drag-handle {
+    position: absolute;
+    top: -8px; right: -8px;
+    width: 22px; height: 22px;
+    background: #ff6b6b;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 10px;
+    color: #fff;
+    z-index: 5;
+    box-shadow: 0 2px 6px rgba(255,107,107,0.4);
+    -webkit-tap-highlight-color: transparent;
+}
+
+/* 缩放手柄 */
+.touch-zone-resize-handle {
+    position: absolute;
+    bottom: -6px; right: -6px;
+    width: 18px; height: 18px;
+    background: #64b5f6;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 9px;
+    color: #fff;
+    z-index: 5;
+    box-shadow: 0 2px 6px rgba(100,181,246,0.4);
+    -webkit-tap-highlight-color: transparent;
+}
+
+/* 旋转手柄 */
+.touch-zone-rotate-handle {
+    position: absolute;
+    bottom: -6px; left: -6px;
+    width: 18px; height: 18px;
+    background: #81c784;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 9px;
+    color: #fff;
+    z-index: 5;
+    box-shadow: 0 2px 6px rgba(129,199,132,0.4);
+    -webkit-tap-highlight-color: transparent;
+}
+
+/* 浮现对话文字 */
+.touch-speech-bubble {
+    position: fixed;
+    left: 50%;
+    bottom: 100px;
+    transform: translateX(-50%);
+    z-index: 10600;
+    max-width: 82%;
+    padding: 14px 20px;
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 18px;
+    border: 1px solid rgba(255, 182, 210, 0.5);
+    color: #333;
+    font-size: 15px;
+    line-height: 1.6;
+    text-align: center;
+    animation: touch-speech-in 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    pointer-events: none;
+    box-shadow: 0 6px 24px rgba(196,69,105,0.15), 0 2px 8px rgba(0,0,0,0.06);
+}
+.touch-speech-bubble.fade-out {
+    animation: touch-speech-out 0.5s ease forwards;
+}
+@keyframes touch-speech-in {
+    0% { opacity: 0; transform: translateX(-50%) translateY(20px) scale(0.85); }
+    100% { opacity: 1; transform: translateX(-50%) translateY(0) scale(1); }
+}
+@keyframes touch-speech-out {
+    0% { opacity: 1; transform: translateX(-50%) translateY(0) scale(1); }
+    100% { opacity: 0; transform: translateX(-50%) translateY(-15px) scale(0.9); }
+}
+.touch-speech-name {
+    font-size: 12px;
+    color: #c44569;
+    margin-bottom: 4px;
+    font-weight: 600;
+}
+.touch-speech-text {
+    font-size: 15px;
+    color: #333;
+    line-height: 1.5;
+}
+
+/* 涟漪效果 - GPU加速 */
+.touch-ripple {
+    position: absolute;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(255, 105, 180, 0.4) 0%, transparent 70%);
+    animation: touch-ripple-anim 0.6s ease-out forwards;
+    pointer-events: none;
+    z-index: 15;
+    will-change: transform, opacity;
+    transform: translateZ(0);
+}
+@keyframes touch-ripple-anim {
+    0% { transform: translateZ(0) scale(0); opacity: 1; }
+    100% { transform: translateZ(0) scale(3); opacity: 0; }
+}
+
+/* 上传引导页面 - 浅色温暖风格 */
+.touch-upload-guide {
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    z-index: 10;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, #fff5f7 0%, #ffeef2 50%, #fff0f5 100%);
+    padding: 30px;
+}
+.touch-upload-icon {
+    font-size: 56px;
+    color: #f48fb1;
+    margin-bottom: 20px;
+    animation: touch-upload-float 3s ease-in-out infinite;
+}
+@keyframes touch-upload-float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-8px); }
+}
+.touch-upload-title {
+    font-size: 21px;
+    color: #c44569;
+    font-weight: 600;
+    margin-bottom: 10px;
+}
+.touch-upload-desc {
+    font-size: 14px;
+    color: #999;
+    text-align: center;
+    line-height: 1.7;
+    margin-bottom: 30px;
+}
+.touch-upload-btn {
+    padding: 13px 38px;
+    background: linear-gradient(135deg, #ff6b9d, #c44569);
+    color: #fff;
+    border: none;
+    border-radius: 28px;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    box-shadow: 0 4px 16px rgba(255, 107, 157, 0.35);
+    transition: all 0.3s;
+    -webkit-tap-highlight-color: transparent;
+}
+.touch-upload-btn:active {
+    transform: scale(0.95);
+    box-shadow: 0 2px 8px rgba(255, 107, 157, 0.25);
+}
+
+/* 加载状态 - 降低backdrop-filter开销 */
+.touch-loading-overlay {
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    z-index: 50;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: rgba(255, 245, 247, 0.92);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+    will-change: transform;
+    transform: translateZ(0);
+}
+.touch-loading-spinner {
+    width: 44px; height: 44px;
+    border: 3px solid rgba(255,105,180,0.2);
+    border-top-color: #ff69b4;
+    border-radius: 50%;
+    animation: touch-spin 0.8s linear infinite;
+    margin-bottom: 14px;
+}
+@keyframes touch-spin {
+    to { transform: rotate(360deg); }
+}
+.touch-loading-text {
+    color: #c44569;
+    font-size: 14px;
+    font-weight: 500;
+}
+.touch-loading-progress {
+    color: #e8889a;
+    font-size: 12px;
+    margin-top: 6px;
+}
+
+/* 添加部位弹窗 - 改用较高z-index并使用浅色 */
+.touch-add-zone-modal {
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    z-index: 10800;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    background: rgba(0,0,0,0.35);
+}
+.touch-add-zone-sheet {
+    width: 100%;
+    max-width: 500px;
+    background: #fff;
+    border-radius: 20px 20px 0 0;
+    padding: 22px 18px;
+    padding-bottom: 22px;
+    animation: touch-sheet-up 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    max-height: 70vh;
+    overflow-y: auto;
+}
+@keyframes touch-sheet-up {
+    from { transform: translateY(100%); }
+    to { transform: translateY(0); }
+}
+.touch-sheet-title {
+    font-size: 17px;
+    color: #333;
+    font-weight: 600;
+    margin-bottom: 16px;
+    text-align: center;
+}
+.touch-sheet-input-group {
+    margin-bottom: 14px;
+}
+.touch-sheet-label {
+    font-size: 13px;
+    color: #999;
+    margin-bottom: 6px;
+    display: block;
+}
+.touch-sheet-input {
+    width: 100%;
+    padding: 11px 14px;
+    background: #f8f8fa;
+    border: 1px solid #e8e8ec;
+    border-radius: 12px;
+    color: #333;
+    font-size: 15px;
+    outline: none;
+    box-sizing: border-box;
+    -webkit-appearance: none;
+}
+.touch-sheet-input:focus {
+    border-color: #f48fb1;
+    background: #fff;
+}
+.touch-sheet-size-row {
+    display: flex;
+    gap: 12px;
+}
+.touch-sheet-size-row .touch-sheet-input-group {
+    flex: 1;
+}
+.touch-sheet-btn-row {
+    display: flex;
+    gap: 10px;
+    margin-top: 18px;
+}
+.touch-sheet-btn {
+    flex: 1;
+    padding: 13px;
+    border: none;
+    border-radius: 14px;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+    -webkit-tap-highlight-color: transparent;
+}
+.touch-sheet-btn.primary {
+    background: linear-gradient(135deg, #ff6b9d, #c44569);
+    color: #fff;
+}
+.touch-sheet-btn.secondary {
+    background: #f0f0f2;
+    color: #666;
+}
+.touch-sheet-btn:active { transform: scale(0.96); }
+
+/* 预设部位快选 */
+.touch-preset-zones {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 14px;
+}
+.touch-preset-tag {
+    padding: 6px 13px;
+    background: #f8f0f2;
+    border: 1px solid #f0d5dc;
+    border-radius: 20px;
+    color: #c44569;
+    font-size: 13px;
+    cursor: pointer;
+    transition: all 0.2s;
+    -webkit-tap-highlight-color: transparent;
+}
+.touch-preset-tag:active,
+.touch-preset-tag.active {
+    background: #fce4ec;
+    border-color: #f48fb1;
+    color: #c44569;
+    font-weight: 600;
+}
+
+/* 历史留存管理弹窗 */
+.touch-history-modal {
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    z-index: 10800;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    background: rgba(0,0,0,0.35);
+}
+.touch-history-sheet {
+    width: 100%;
+    max-width: 500px;
+    background: #fff;
+    border-radius: 20px 20px 0 0;
+    padding: 18px;
+    padding-bottom: 18px;
+    max-height: 75vh;
+    overflow-y: auto;
+    animation: touch-sheet-up 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+.touch-history-item {
+    display: flex;
+    align-items: center;
+    padding: 11px;
+    background: #fdf5f7;
+    border-radius: 12px;
+    margin-bottom: 8px;
+    transition: all 0.2s;
+}
+.touch-history-item:active {
+    background: #fce4ec;
+}
+.touch-history-zone-name {
+    font-size: 12px;
+    color: #c44569;
+    font-weight: 600;
+    min-width: 42px;
+    text-align: center;
+    padding: 3px 8px;
+    background: #fce4ec;
+    border-radius: 10px;
+}
+.touch-history-text {
+    flex: 1;
+    font-size: 13px;
+    color: #555;
+    margin: 0 10px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+.touch-history-time {
+    font-size: 11px;
+    color: #bbb;
+    white-space: nowrap;
+}
+.touch-history-actions {
+    display: flex;
+    gap: 6px;
+    margin-left: 8px;
+}
+.touch-history-action-btn {
+    width: 28px; height: 28px;
+    display: flex; align-items: center; justify-content: center;
+    border-radius: 50%;
+    background: #f0f0f2;
+    color: #888;
+    font-size: 11px;
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+}
+.touch-history-action-btn.delete {
+    color: #ff6b6b;
+    background: #fff0f0;
+}
+
+/* 设置菜单 */
+.touch-settings-overlay {
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    z-index: 10800;
+    display: none;
+    align-items: flex-end;
+    justify-content: center;
+    background: rgba(0,0,0,0.35);
+}
+.touch-settings-overlay.show {
+    display: flex;
+}
+.touch-settings-sheet {
+    width: 100%;
+    max-width: 500px;
+    background: #fff;
+    border-radius: 20px 20px 0 0;
+    padding: 22px 18px;
+    padding-bottom: 22px;
+    animation: touch-sheet-up 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+.touch-settings-item {
+    display: flex;
+    align-items: center;
+    padding: 14px 4px;
+    border-bottom: 1px solid #f0f0f2;
+    cursor: pointer;
+    color: #333;
+    font-size: 15px;
+    -webkit-tap-highlight-color: transparent;
+}
+.touch-settings-item:last-child { border-bottom: none; }
+.touch-settings-item i {
+    width: 22px;
+    margin-right: 12px;
+    color: #c44569;
+    text-align: center;
+    font-size: 14px;
+}
+.touch-settings-item:active {
+    background: #fdf5f7;
+    border-radius: 8px;
+}
+.touch-settings-item.danger { color: #ff6b6b; }
+.touch-settings-item.danger i { color: #ff6b6b; }
+
+/* 心形粒子效果 - GPU加速 */
+.touch-heart-particle {
+    position: absolute;
+    z-index: 16;
+    pointer-events: none;
+    font-size: 16px;
+    will-change: transform, opacity;
+    transform: translateZ(0);
+}
+@keyframes touch-heart-float {
+    0% { opacity: 1; transform: translateZ(0) translateY(0) scale(0.5); }
+    50% { opacity: 0.8; transform: translateZ(0) translateY(-25px) scale(1); }
+    100% { opacity: 0; transform: translateZ(0) translateY(-50px) scale(0.3); }
+}
+
+/* 部位编辑模式提示条 */
+.touch-edit-hint {
+    position: absolute;
+    bottom: 28px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 30;
+    padding: 9px 20px;
+    background: rgba(255, 255, 255, 0.92);
+    border: 1px solid #f0d5dc;
+    border-radius: 20px;
+    color: #c44569;
+    font-size: 12px;
+    box-shadow: 0 4px 12px rgba(196,69,105,0.12);
+    white-space: nowrap;
+}
+
+/* 空状态 */
+.touch-empty-hint {
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 12;
+    text-align: center;
+    color: #c98;
+    font-size: 14px;
+    line-height: 1.8;
+}
+.touch-empty-hint i {
+    display: block;
+    font-size: 38px;
+    margin-bottom: 10px;
+    color: #f48fb1;
+}

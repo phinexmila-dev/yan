@@ -1,0 +1,2303 @@
+/* ===== 全局主题：白色圆角可爱风 ===== */
+/* 当 body 添加 .theme-cute 类时激活此主题 */
+
+/* ===== 全局基础变量覆盖 ===== */
+body.theme-cute {
+    --cute-bg: #faf9fc;
+    --cute-card: #ffffff;
+    --cute-border: rgba(220, 210, 230, 0.4);
+    --cute-shadow: rgba(200, 190, 210, 0.12);
+    --cute-accent: #e8a0b8;
+    --cute-accent-light: #fdf0f4;
+    --cute-pink: #f2a5b8;
+    --cute-text: #3d3a42;
+    --cute-text-light: #9590a0;
+    --cute-radius: 16px;
+    --cute-radius-sm: 12px;
+    --cute-radius-xs: 8px;
+}
+
+/* ===== 聊天界面 ===== */
+
+/* 聊天导航栏 — 支持CSS变量自定义 */
+body.theme-cute #layer-chat > .nav-bar#chat-nav-bar {
+    background: var(--chat-nav-bg, rgba(255,255,255,0.95)) !important;
+    border-bottom: var(--chat-nav-border, 1px solid var(--cute-border)) !important;
+    box-shadow: var(--chat-nav-shadow, 0 2px 10px var(--cute-shadow)) !important;
+    backdrop-filter: blur(20px) !important;
+    -webkit-backdrop-filter: blur(20px) !important;
+}
+body.theme-cute #layer-chat > .nav-bar#chat-nav-bar .nav-title {
+    font-family: var(--chat-nav-font, inherit) !important;
+    font-weight: var(--chat-nav-font-weight, 700) !important;
+    letter-spacing: 0.5px !important;
+    color: var(--chat-nav-color, var(--cute-text)) !important;
+    font-size: var(--chat-nav-font-size, 17px) !important;
+}
+body.theme-cute #layer-chat > .nav-bar#chat-nav-bar .nav-icon {
+    color: var(--chat-nav-icon-color, var(--cute-accent)) !important;
+}
+body.theme-cute #layer-chat > .nav-bar#chat-nav-bar .nav-icon:active {
+    opacity: 0.6 !important;
+    transform: scale(0.92) !important;
+}
+
+/* 聊天历史背景 */
+body.theme-cute #chat-history:not(.has-custom-bg) {
+    background: var(--cute-bg) !important;
+    background-image: none !important;
+}
+body.theme-cute #chat-history.has-custom-bg {
+    background-color: transparent !important;
+    background-image: none;
+}
+/* [FIX-悬浮底栏白色] 让layer-chat背景与chat-history同步，用户做悬浮底栏时底部不露白 */
+body.theme-cute #layer-chat {
+    background: var(--cute-bg) !important;
+}
+
+/* 聊天气泡 - 当用户有自定义气泡CSS时让步 */
+body.theme-cute:not(.has-custom-bubble-css) #layer-chat .bubble {
+    border: 1px solid var(--cute-border) !important;
+    border-radius: var(--cute-radius) !important;
+    box-shadow: 0 2px 8px var(--cute-shadow) !important;
+    font-family: inherit !important;
+    color: var(--cute-text) !important;
+    position: relative;
+    transition: transform 0.15s, box-shadow 0.15s;
+    overflow: visible !important;
+}
+/* 对方气泡 */
+body.theme-cute:not(.has-custom-bubble-css) #layer-chat .msg-row:not(.me) .bubble {
+    background: #ffffff !important;
+    border: 1px solid var(--cute-border) !important;
+}
+body.theme-cute:not(.has-custom-bubble-css) #layer-chat .msg-row:not(.me) .bubble::before {
+    border-right-color: #ffffff !important;
+}
+/* 自己气泡 */
+body.theme-cute:not(.has-custom-bubble-css) #layer-chat .msg-row.me .bubble {
+    background: linear-gradient(135deg, #fdf0f4, #fce8ef) !important;
+    border: 1px solid rgba(232, 160, 184, 0.25) !important;
+}
+body.theme-cute:not(.has-custom-bubble-css) #layer-chat .msg-row.me .bubble::after {
+    border-left-color: #fdf0f4 !important;
+}
+/* 气泡按压效果 */
+body.theme-cute:not(.has-custom-bubble-css) #layer-chat .bubble:active {
+    transform: scale(0.98) !important;
+    box-shadow: 0 1px 4px var(--cute-shadow) !important;
+}
+/* 气泡内图片 */
+body.theme-cute:not(.has-custom-bubble-css) #layer-chat .bubble img:not(.emoji-img) {
+    border: 1px solid var(--cute-border) !important;
+    border-radius: var(--cute-radius-sm) !important;
+    filter: none !important;
+}
+/* 图片气泡特殊处理 */
+body.theme-cute:not(.has-custom-bubble-css) #layer-chat .bubble:has(img:not(.emoji-img)):not(.voice) {
+    background: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+    padding: 0 !important;
+}
+body.theme-cute:not(.has-custom-bubble-css) #layer-chat .msg-row:not(.me) .bubble:has(img):not(.voice) {
+    margin-left: 6px;
+}
+body.theme-cute:not(.has-custom-bubble-css) #layer-chat .msg-row.me .bubble:has(img):not(.voice) {
+    margin-right: 6px;
+}
+
+/* 头像 */
+body.theme-cute:not(.has-custom-bubble-css) #layer-chat .avatar-wrapper-chat .avatar,
+body.theme-cute:not(.has-custom-bubble-css) #layer-chat .msg-row .avatar {
+    border: 2px solid var(--cute-border) !important;
+    box-shadow: 0 2px 8px var(--cute-shadow) !important;
+    filter: none !important;
+}
+
+/* 时间分隔线 */
+body.theme-cute:not(.has-custom-bubble-css) #layer-chat .time-divider,
+body.theme-cute:not(.has-custom-bubble-css) #layer-chat .msg-row .time-label {
+    font-family: inherit !important;
+    color: var(--cute-text-light) !important;
+    letter-spacing: 0.5px;
+    font-size: 11px;
+}
+/* 时间戳标签 */
+body.theme-cute:not(.has-custom-bubble-css) #layer-chat .avatar-time-label,
+body.theme-cute:not(.has-custom-bubble-css) #layer-chat .bubble-time-label {
+    font-family: inherit !important;
+    color: var(--cute-text-light) !important;
+    font-size: 10px;
+}
+
+/* 聊天输入栏 悬浮胶囊 — 支持CSS变量自定义 */
+body.theme-cute #layer-chat .input-bar,
+body.theme-cute #chat-input-bar {
+    background: var(--chat-input-bg, rgba(255,255,255,0.96)) !important;
+    border-top: none !important;
+    border: var(--chat-input-border, 1.5px solid var(--cute-border)) !important;
+    border-radius: var(--chat-input-radius, 26px) !important;
+    box-shadow: var(--chat-input-shadow, 0 2px 16px var(--cute-shadow), 0 0 0 0.5px var(--cute-border)) !important;
+}
+/* 输入框 */
+body.theme-cute #layer-chat .input-field,
+body.theme-cute #chat-input {
+    border: 1.5px solid var(--cute-border) !important;
+    border-radius: 20px !important;
+    background: #faf9fc !important;
+    font-family: inherit !important;
+    color: var(--cute-text) !important;
+}
+body.theme-cute #layer-chat .input-field:focus,
+body.theme-cute #chat-input:focus {
+    outline: none !important;
+    background: #fff !important;
+    box-shadow: 0 0 0 2px rgba(232, 160, 184, 0.25) !important;
+    border-color: var(--cute-accent) !important;
+}
+/* 输入栏按钮 */
+body.theme-cute #layer-chat .btn-act {
+    color: var(--cute-accent) !important;
+    transition: transform 0.15s !important;
+}
+body.theme-cute #layer-chat .btn-act:active {
+    transform: scale(0.85) !important;
+    color: var(--cute-pink) !important;
+}
+/* 发送按钮 */
+body.theme-cute #layer-chat .btn-send {
+    color: var(--cute-accent) !important;
+    font-weight: 700 !important;
+}
+body.theme-cute #layer-chat .btn-send:active {
+    transform: scale(0.85) !important;
+}
+/* AI生成按钮 */
+body.theme-cute #layer-chat .btn-gen {
+    color: var(--cute-accent) !important;
+}
+/* 心声按钮 */
+body.theme-cute #layer-chat .btn-thought {
+    color: var(--cute-text-light) !important;
+}
+/* 工具栏 */
+body.theme-cute #layer-chat .toolbar {
+    background: rgba(250,249,252,0.96) !important;
+    border-top: 1px solid var(--cute-border) !important;
+}
+body.theme-cute #layer-chat .toolbar i {
+    color: var(--cute-accent) !important;
+    transition: all 0.15s !important;
+}
+body.theme-cute #layer-chat .toolbar i:active {
+    transform: scale(0.85) !important;
+    color: var(--cute-pink) !important;
+}
+
+/* 引用预览条 */
+body.theme-cute #layer-chat .quote-preview {
+    background: var(--cute-accent-light) !important;
+    border: 1px solid var(--cute-border) !important;
+    border-left: 3px solid var(--cute-accent) !important;
+    border-radius: var(--cute-radius-xs) !important;
+    color: var(--cute-text) !important;
+    font-size: 12px !important;
+}
+
+/* 消息弹出菜单 */
+body.theme-cute #layer-chat .pop-menu {
+    background: #fff !important;
+    border: 1px solid var(--cute-border) !important;
+    box-shadow: 0 4px 20px var(--cute-shadow) !important;
+    border-radius: var(--cute-radius) !important;
+}
+body.theme-cute #layer-chat .pop-opt {
+    color: var(--cute-text) !important;
+    font-family: inherit !important;
+    font-weight: 500 !important;
+    border-bottom: 1px solid rgba(220,210,230,0.15) !important;
+}
+body.theme-cute #layer-chat .pop-opt:last-child {
+    border-bottom: none !important;
+}
+body.theme-cute #layer-chat .pop-opt:active {
+    background: var(--cute-accent-light) !important;
+    color: var(--cute-accent) !important;
+}
+
+/* 语音气泡 */
+body.theme-cute:not(.has-custom-bubble-css) #layer-chat .bubble.voice .voice-wave-anim span {
+    background: var(--cute-accent) !important;
+}
+body.theme-cute:not(.has-custom-bubble-css) #layer-chat .msg-row.me .bubble.voice .voice-wave-anim span {
+    background: var(--cute-pink) !important;
+}
+body.theme-cute:not(.has-custom-bubble-css) #layer-chat .bubble.voice .voice-sec {
+    color: var(--cute-text-light) !important;
+}
+
+/* 撤回消息 */
+body.theme-cute:not(.has-custom-bubble-css) #layer-chat .bubble.recalled {
+    background: transparent !important;
+    border: 1.5px dashed var(--cute-border) !important;
+    box-shadow: none !important;
+    color: var(--cute-text-light) !important;
+    font-size: 12px !important;
+}
+
+/* 多选模式 */
+body.theme-cute #chat-select-bar {
+    background: #fff !important;
+    border-bottom: 1px solid var(--cute-border) !important;
+    color: var(--cute-text) !important;
+}
+
+/* 转账气泡 */
+body.theme-cute:not(.has-custom-bubble-css) #layer-chat .bubble-transfer {
+    border: 1px solid var(--cute-border) !important;
+    border-radius: var(--cute-radius) !important;
+    box-shadow: 0 2px 8px var(--cute-shadow) !important;
+    background: #fff !important;
+}
+body.theme-cute:not(.has-custom-bubble-css) #layer-chat .bubble-transfer .transfer-top {
+    background: var(--cute-accent-light) !important;
+    border-bottom: 1px solid var(--cute-border) !important;
+    border-radius: var(--cute-radius) var(--cute-radius) 0 0 !important;
+}
+body.theme-cute:not(.has-custom-bubble-css) #layer-chat .bubble-transfer .transfer-amt {
+    color: var(--cute-accent) !important;
+    font-weight: 700 !important;
+}
+body.theme-cute:not(.has-custom-bubble-css) #layer-chat .bubble-transfer .transfer-desc {
+    color: var(--cute-text-light) !important;
+}
+body.theme-cute:not(.has-custom-bubble-css) #layer-chat .bubble-transfer .transfer-bottom {
+    background: #fafafa !important;
+    color: var(--cute-text-light) !important;
+    border-top: none !important;
+    font-size: 11px !important;
+    border-radius: 0 0 var(--cute-radius) var(--cute-radius) !important;
+}
+
+/* 红包气泡 - 可爱粉嫩风格 */
+body.theme-cute:not(.has-custom-bubble-css) #layer-chat .bubble-redpacket {
+    border: 1px solid var(--cute-border) !important;
+    border-radius: 16px !important;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.06) !important;
+    background: #fff !important;
+}
+body.theme-cute:not(.has-custom-bubble-css) #layer-chat .bubble-redpacket .rp-top {
+    background: linear-gradient(135deg, #e8786e, #d45b5b) !important;
+    border-bottom: none !important;
+    border-radius: 16px 16px 0 0 !important;
+}
+body.theme-cute:not(.has-custom-bubble-css) #layer-chat .bubble-redpacket .rp-greeting {
+    color: #fff !important;
+    font-weight: 500 !important;
+}
+body.theme-cute:not(.has-custom-bubble-css) #layer-chat .bubble-redpacket .rp-status {
+    color: rgba(255,255,255,0.7) !important;
+}
+body.theme-cute:not(.has-custom-bubble-css) #layer-chat .bubble-redpacket .rp-bottom {
+    background: #d45b5b !important;
+    color: rgba(255,255,255,0.55) !important;
+    border-radius: 0 0 16px 16px !important;
+    font-size: 11px !important;
+}
+body.theme-cute:not(.has-custom-bubble-css) #layer-chat .bubble-redpacket.rp-done .rp-top {
+    background: linear-gradient(135deg, #ccc, #bbb) !important;
+}
+body.theme-cute:not(.has-custom-bubble-css) #layer-chat .bubble-redpacket.rp-done .rp-bottom {
+    background: #bbb !important;
+}
+
+/* 共享帖子气泡 */
+body.theme-cute:not(.has-custom-bubble-css) #layer-chat .bubble-shared-post {
+    border: 1px solid var(--cute-border) !important;
+    border-radius: var(--cute-radius) !important;
+    box-shadow: 0 2px 8px var(--cute-shadow) !important;
+    background: #fff !important;
+}
+
+/* 滚动到底部按钮 */
+body.theme-cute #chat-scroll-bottom-btn {
+    background: #fff !important;
+    border: 1px solid var(--cute-border) !important;
+    border-radius: 50% !important;
+    box-shadow: 0 2px 12px var(--cute-shadow) !important;
+    color: var(--cute-accent) !important;
+}
+body.theme-cute #chat-scroll-bottom-btn:active {
+    transform: scale(0.9) !important;
+    box-shadow: 0 1px 4px var(--cute-shadow) !important;
+}
+
+/* 共读状态栏 */
+body.theme-cute #chat-read-banner {
+    background: var(--cute-accent-light) !important;
+    border-bottom: 1px solid var(--cute-border) !important;
+    color: var(--cute-text) !important;
+    letter-spacing: 0.3px !important;
+}
+
+/* 气泡引用样式 - 上下结构 */
+body.theme-cute:not(.has-custom-bubble-css) #layer-chat .bubble-quote {
+    background: var(--cute-accent-light) !important;
+    border-left: none !important;
+    color: var(--cute-text-light) !important;
+    border-radius: var(--cute-radius-xs) !important;
+    font-size: 12px !important;
+}
+
+/* 心声气泡 */
+body.theme-cute:not(.has-custom-bubble-css) #layer-chat .thought-bubble {
+    border: 1.5px dashed var(--cute-border) !important;
+    background: rgba(253,240,244,0.5) !important;
+    border-radius: var(--cute-radius) !important;
+    box-shadow: none !important;
+    color: var(--cute-text-light) !important;
+    font-style: italic !important;
+}
+
+/* 表情面板 */
+body.theme-cute #layer-chat .sticker-panel {
+    background: #fff !important;
+    border-top: 1px solid var(--cute-border) !important;
+}
+
+/* 聊天设置页面 */
+body.theme-cute #layer-chat-settings .nav-bar {
+    background: rgba(255,255,255,0.95) !important;
+    border-bottom: 1px solid var(--cute-border) !important;
+    box-shadow: 0 2px 10px var(--cute-shadow) !important;
+}
+body.theme-cute #layer-chat-settings .group-box {
+    border: 1px solid var(--cute-border) !important;
+    border-radius: var(--cute-radius) !important;
+    box-shadow: 0 2px 10px var(--cute-shadow) !important;
+    margin: 14px 12px !important;
+}
+body.theme-cute #layer-chat-settings .form-cell {
+    border-bottom: 1px solid rgba(220,210,230,0.15) !important;
+}
+body.theme-cute #layer-chat-settings .form-cell:last-child {
+    border-bottom: none !important;
+}
+body.theme-cute #layer-chat-settings .form-label {
+    font-weight: 600 !important;
+    color: var(--cute-text) !important;
+    font-family: inherit !important;
+}
+
+/* ===== 添加联系人弹窗 ===== */
+body.theme-cute #modal-contact .modal-box {
+    background: #fff !important;
+    border: 1px solid var(--cute-border) !important;
+    border-radius: var(--cute-radius) !important;
+    box-shadow: 0 8px 32px rgba(200,190,210,0.2) !important;
+    padding: 24px 20px !important;
+}
+body.theme-cute #modal-contact .modal-box h3 {
+    font-weight: 700 !important;
+    letter-spacing: 0.5px !important;
+    color: var(--cute-text) !important;
+    font-size: 18px !important;
+    text-align: center !important;
+    padding-bottom: 12px !important;
+    margin-bottom: 16px !important;
+    font-family: inherit !important;
+}
+body.theme-cute #modal-contact .modal-box h3::after {
+    content: '♡ ─ ─ ─ ─ ─ ─ ─ ─ ─ ♡' !important;
+    display: block !important;
+    position: absolute !important;
+    bottom: 0 !important;
+    left: 50% !important;
+    transform: translateX(-50%) !important;
+    font-size: 10px !important;
+    color: var(--cute-pink) !important;
+    letter-spacing: 2px !important;
+    white-space: nowrap !important;
+}
+body.theme-cute #modal-contact .upload-box {
+    border: 2px dashed var(--cute-border) !important;
+    border-radius: 50% !important;
+    box-shadow: 0 2px 8px var(--cute-shadow) !important;
+    background: var(--cute-bg) !important;
+}
+body.theme-cute #modal-contact .upload-box i {
+    color: var(--cute-accent) !important;
+}
+body.theme-cute #modal-contact .upload-box img {
+    filter: none !important;
+}
+body.theme-cute #modal-contact #new-contact-name,
+body.theme-cute #modal-contact #new-contact-remark,
+body.theme-cute #modal-contact #new-contact-remark-for-me,
+body.theme-cute #modal-contact #new-contact-signature,
+body.theme-cute #modal-contact #new-contact-persona {
+    border: 1.5px solid var(--cute-border) !important;
+    border-radius: 20px !important;
+    background: var(--cute-bg) !important;
+    color: var(--cute-text) !important;
+    box-shadow: none !important;
+}
+body.theme-cute #modal-contact #new-contact-name:focus,
+body.theme-cute #modal-contact #new-contact-remark:focus,
+body.theme-cute #modal-contact #new-contact-remark-for-me:focus,
+body.theme-cute #modal-contact #new-contact-signature:focus,
+body.theme-cute #modal-contact #new-contact-persona:focus {
+    outline: none !important;
+    background: #fff !important;
+    box-shadow: 0 0 0 2px rgba(232,160,184,0.25) !important;
+}
+body.theme-cute #modal-contact #new-contact-name::placeholder,
+body.theme-cute #modal-contact #new-contact-remark::placeholder,
+body.theme-cute #modal-contact #new-contact-remark-for-me::placeholder,
+body.theme-cute #modal-contact #new-contact-signature::placeholder,
+body.theme-cute #modal-contact #new-contact-persona::placeholder {
+    color: var(--cute-text-light) !important;
+}
+body.theme-cute #modal-contact .modal-box button {
+    border: 1px solid var(--cute-border) !important;
+    border-radius: 20px !important;
+    font-weight: 600 !important;
+    cursor: pointer !important;
+    transition: all 0.2s !important;
+    font-family: inherit !important;
+}
+body.theme-cute #modal-contact .modal-btn-cancel {
+    background: #fff !important;
+    color: var(--cute-text) !important;
+    border: 1px solid var(--cute-border) !important;
+    border-radius: 20px !important;
+    box-shadow: 0 2px 8px var(--cute-shadow) !important;
+}
+body.theme-cute #modal-contact .modal-btn-cancel:active {
+    transform: scale(0.96) !important;
+}
+body.theme-cute #modal-contact .modal-btn-save {
+    background: linear-gradient(135deg, var(--cute-accent), var(--cute-pink)) !important;
+    color: #fff !important;
+    border: none !important;
+    border-radius: 20px !important;
+    box-shadow: 0 2px 12px rgba(232,160,184,0.25) !important;
+}
+body.theme-cute #modal-contact .modal-btn-save:active {
+    transform: scale(0.96) !important;
+}
+body.theme-cute #modal-contact.modal-mask {
+    background: rgba(100,90,110,0.3) !important;
+}
+/* 移除便签装饰 */
+body.theme-cute #modal-contact .modal-box::before {
+    display: none !important;
+}
+body.theme-cute #modal-contact .modal-box::after {
+    display: none !important;
+}
+
+/* ===== 联系人列表界面 ===== */
+body.theme-cute #tab-contacts > .nav-bar {
+    background: rgba(255,255,255,0.95) !important;
+    border-bottom: 1px solid var(--cute-border) !important;
+    box-shadow: 0 2px 10px var(--cute-shadow) !important;
+    backdrop-filter: blur(20px) !important;
+}
+body.theme-cute #tab-contacts > .nav-bar .nav-title {
+    font-weight: 700 !important;
+    color: var(--cute-text) !important;
+    font-size: 17px !important;
+}
+body.theme-cute #tab-contacts > .nav-bar .nav-icon {
+    color: var(--cute-accent) !important;
+}
+
+/* 联系人列表背景 */
+body.theme-cute #contact-list {
+    background: var(--cute-bg) !important;
+    background-image: none !important;
+    padding-left: 12px !important;
+    padding-right: 12px !important;
+}
+
+/* 联系人列表项 */
+body.theme-cute #contact-list .list-item {
+    background: #fff !important;
+    border: 1px solid var(--cute-border) !important;
+    border-radius: var(--cute-radius) !important;
+    box-shadow: 0 2px 8px var(--cute-shadow) !important;
+    margin-bottom: 10px !important;
+    padding: 14px 15px !important;
+    transition: transform 0.15s !important;
+}
+body.theme-cute #contact-list .list-item:active {
+    transform: scale(0.98) !important;
+    box-shadow: 0 1px 4px var(--cute-shadow) !important;
+}
+
+/* 置顶联系人 */
+body.theme-cute #contact-list .list-item[style*="background: rgb(240, 240, 255)"],
+body.theme-cute #contact-list .list-item[style*="background:#f0f0ff"] {
+    background: #fff5f7 !important;
+    border: 1.5px solid rgba(232,160,184,0.35) !important;
+}
+
+/* 联系人头像 */
+body.theme-cute #contact-list .list-item .avatar {
+    border: 2px solid var(--cute-border) !important;
+    box-shadow: 0 2px 6px var(--cute-shadow) !important;
+    filter: none !important;
+}
+
+/* 联系人名字 */
+body.theme-cute #contact-list .list-item .list-title {
+    font-weight: 700 !important;
+    color: var(--cute-text) !important;
+}
+body.theme-cute #contact-list .list-item .list-sub {
+    color: var(--cute-text-light) !important;
+    font-size: 12px !important;
+}
+body.theme-cute #contact-list .list-item > i {
+    color: var(--cute-accent) !important;
+}
+body.theme-cute #contact-list .list-item .fa-users {
+    color: var(--cute-text-light) !important;
+}
+body.theme-cute #contact-list .list-item .fa-thumbtack {
+    color: var(--cute-pink) !important;
+}
+
+/* 联系人右键菜单 */
+body.theme-cute .contact-menu {
+    background: #fff !important;
+    border: 1px solid var(--cute-border) !important;
+    border-radius: var(--cute-radius) !important;
+    box-shadow: 0 4px 20px var(--cute-shadow) !important;
+}
+body.theme-cute .contact-menu-item {
+    color: var(--cute-text) !important;
+    border-bottom-color: rgba(220,210,230,0.15) !important;
+}
+body.theme-cute .contact-menu-item:active {
+    background: var(--cute-accent-light) !important;
+    color: var(--cute-accent) !important;
+}
+
+/* 添加按钮 */
+body.theme-cute #tab-contacts .nav-icon .fa-plus-circle {
+    color: var(--cute-accent) !important;
+}
+
+/* ===== 微信底部Tab栏 ===== */
+body.theme-cute #layer-wechat > .wx-tab-bar,
+body.theme-cute .wx-tab-bar {
+    background: rgba(255,255,255,0.96) !important;
+    border-top: 1px solid var(--cute-border) !important;
+    box-shadow: 0 -2px 10px var(--cute-shadow) !important;
+}
+body.theme-cute #layer-wechat > .wx-tab-bar .nav-tab,
+body.theme-cute .wx-tab-bar .nav-tab {
+    color: var(--cute-text-light) !important;
+    font-weight: 600 !important;
+}
+body.theme-cute #layer-wechat > .wx-tab-bar .nav-tab i,
+body.theme-cute .wx-tab-bar .nav-tab i {
+    color: inherit !important;
+}
+body.theme-cute #layer-wechat > .wx-tab-bar .nav-tab.active,
+body.theme-cute .wx-tab-bar .nav-tab.active {
+    color: var(--cute-accent) !important;
+}
+body.theme-cute #layer-wechat > .wx-tab-bar .nav-tab.active i,
+body.theme-cute .wx-tab-bar .nav-tab.active i {
+    transform: scale(1.1) !important;
+    color: var(--cute-accent) !important;
+}
+body.theme-cute .wx-tab-bar .nav-tab:active {
+    opacity: 0.7 !important;
+    transform: scale(0.92) !important;
+}
+
+/* ===== 世界书界面 ===== */
+body.theme-cute #layer-worldbook > .nav-bar {
+    background: rgba(255,255,255,0.95) !important;
+    border-bottom: 1px solid var(--cute-border) !important;
+    box-shadow: 0 2px 10px var(--cute-shadow) !important;
+}
+body.theme-cute #layer-worldbook > .nav-bar .nav-title {
+    font-weight: 700 !important;
+    color: var(--cute-text) !important;
+    font-family: inherit !important;
+}
+body.theme-cute #layer-worldbook > .nav-bar .nav-icon {
+    color: var(--cute-accent) !important;
+}
+body.theme-cute #layer-worldbook > .scroll-y {
+    background: var(--cute-bg) !important;
+    background-image: none !important;
+}
+/* 分类栏 */
+body.theme-cute #layer-worldbook .wb-category-bar {
+    background: rgba(255,255,255,0.92) !important;
+    border-bottom: 1px solid var(--cute-border) !important;
+    box-shadow: 0 2px 8px var(--cute-shadow) !important;
+    padding: 10px !important;
+}
+/* 分类标签 */
+body.theme-cute #layer-worldbook .wb-cate-chip {
+    border: 1px solid var(--cute-border) !important;
+    border-radius: 20px !important;
+    background: #fff !important;
+    color: var(--cute-text) !important;
+    font-weight: 600 !important;
+    font-size: 12px !important;
+    padding: 6px 16px !important;
+    box-shadow: 0 2px 6px var(--cute-shadow) !important;
+    transition: all 0.2s !important;
+}
+body.theme-cute #layer-worldbook .wb-cate-chip.active {
+    background: linear-gradient(135deg, var(--cute-accent), var(--cute-pink)) !important;
+    color: #fff !important;
+    border-color: transparent !important;
+    box-shadow: 0 2px 12px rgba(232,160,184,0.25) !important;
+}
+body.theme-cute #layer-worldbook .wb-cate-chip:active {
+    transform: scale(0.95) !important;
+}
+/* 添加菜单 */
+body.theme-cute #layer-worldbook .add-menu {
+    background: #fff !important;
+    border: 1px solid var(--cute-border) !important;
+    border-radius: var(--cute-radius) !important;
+    box-shadow: 0 4px 20px var(--cute-shadow) !important;
+}
+body.theme-cute #layer-worldbook .add-item {
+    color: var(--cute-text) !important;
+    border-bottom-color: rgba(220,210,230,0.15) !important;
+}
+body.theme-cute #layer-worldbook .add-item:active {
+    background: var(--cute-accent-light) !important;
+    color: var(--cute-accent) !important;
+}
+/* 世界书列表项 */
+body.theme-cute #wb-list .group-box.wb-item {
+    background: #fff !important;
+    border: 1px solid var(--cute-border) !important;
+    border-radius: var(--cute-radius) !important;
+    box-shadow: 0 2px 10px var(--cute-shadow) !important;
+    margin-bottom: 12px !important;
+    overflow: visible !important;
+}
+body.theme-cute #wb-list .group-box.wb-item:active {
+    transform: scale(0.99) !important;
+}
+body.theme-cute #wb-list .group-box.wb-item b,
+body.theme-cute #wb-list .group-box.wb-item strong {
+    color: var(--cute-text) !important;
+}
+body.theme-cute #wb-list .wb-collapse-arrow {
+    color: var(--cute-accent) !important;
+}
+body.theme-cute #wb-list .wb-content {
+    color: var(--cute-text) !important;
+    border-top: 1px solid var(--cute-border) !important;
+}
+/* 世界书编辑区域 */
+body.theme-cute #wb-list .wb-edit-area textarea {
+    border: 1.5px solid var(--cute-border) !important;
+    border-radius: var(--cute-radius-xs) !important;
+    background: var(--cute-bg) !important;
+    color: var(--cute-text) !important;
+}
+body.theme-cute #wb-list .wb-edit-area textarea:focus {
+    outline: none !important;
+    background: #fff !important;
+    box-shadow: 0 0 0 2px rgba(232,160,184,0.25) !important;
+}
+body.theme-cute #wb-list .wb-edit-area input,
+body.theme-cute #wb-list .wb-edit-area select {
+    border: 1.5px solid var(--cute-border) !important;
+    border-radius: var(--cute-radius-xs) !important;
+    background: var(--cute-bg) !important;
+    color: var(--cute-text) !important;
+}
+/* 世界书按钮 */
+body.theme-cute #wb-list .wb-btn {
+    border: 1px solid var(--cute-border) !important;
+    border-radius: 20px !important;
+    font-weight: 600 !important;
+    transition: all 0.2s !important;
+}
+body.theme-cute #wb-list .wb-btn.edit {
+    background: #fff !important;
+    color: var(--cute-accent) !important;
+    box-shadow: 0 2px 6px var(--cute-shadow) !important;
+}
+body.theme-cute #wb-list .wb-btn.del {
+    background: #fff !important;
+    color: var(--cute-pink) !important;
+    box-shadow: 0 2px 6px var(--cute-shadow) !important;
+}
+body.theme-cute #wb-list .wb-btn.save {
+    background: linear-gradient(135deg, var(--cute-accent), var(--cute-pink)) !important;
+    color: #fff !important;
+    border: none !important;
+    box-shadow: 0 2px 12px rgba(232,160,184,0.25) !important;
+}
+body.theme-cute #wb-list .wb-btn.cancel {
+    background: #fff !important;
+    color: var(--cute-text) !important;
+    box-shadow: 0 2px 6px var(--cute-shadow) !important;
+}
+body.theme-cute #wb-list .wb-btn:active {
+    transform: scale(0.95) !important;
+}
+
+/* ===== 世界书弹窗 ===== */
+body.theme-cute #modal-wb .modal-box,
+body.theme-cute #modal-category .modal-box,
+body.theme-cute #modal-wb-select .modal-box {
+    background: #fff !important;
+    border: 1px solid var(--cute-border) !important;
+    border-radius: var(--cute-radius) !important;
+    box-shadow: 0 8px 32px rgba(200,190,210,0.2) !important;
+}
+body.theme-cute #modal-wb .modal-box h3,
+body.theme-cute #modal-category .modal-box h3,
+body.theme-cute #modal-wb-select .modal-box h3 {
+    font-weight: 700 !important;
+    color: var(--cute-text) !important;
+    font-size: 17px !important;
+    font-family: inherit !important;
+}
+body.theme-cute #modal-wb .modal-box h3::after,
+body.theme-cute #modal-category .modal-box h3::after,
+body.theme-cute #modal-wb-select .modal-box h3::after {
+    content: '♡ ─ ─ ─ ─ ─ ─ ─ ─ ─ ♡' !important;
+    font-size: 10px !important;
+    color: var(--cute-pink) !important;
+}
+body.theme-cute #modal-wb input,
+body.theme-cute #modal-wb textarea,
+body.theme-cute #modal-wb select,
+body.theme-cute #modal-category input {
+    border: 1.5px solid var(--cute-border) !important;
+    border-radius: var(--cute-radius-xs) !important;
+    background: var(--cute-bg) !important;
+    color: var(--cute-text) !important;
+}
+body.theme-cute #modal-wb input:focus,
+body.theme-cute #modal-wb textarea:focus,
+body.theme-cute #modal-wb select:focus,
+body.theme-cute #modal-category input:focus {
+    outline: none !important;
+    background: #fff !important;
+    box-shadow: 0 0 0 2px rgba(232,160,184,0.25) !important;
+}
+body.theme-cute .wb-modal-btn-cancel {
+    background: #fff !important;
+    color: var(--cute-text) !important;
+    border: 1px solid var(--cute-border) !important;
+    border-radius: 20px !important;
+    box-shadow: 0 2px 6px var(--cute-shadow) !important;
+}
+body.theme-cute .wb-modal-btn-save {
+    background: linear-gradient(135deg, var(--cute-accent), var(--cute-pink)) !important;
+    color: #fff !important;
+    border: none !important;
+    border-radius: 20px !important;
+    box-shadow: 0 2px 12px rgba(232,160,184,0.25) !important;
+}
+/* 移除便签装饰 */
+body.theme-cute #modal-wb .modal-box::before,
+body.theme-cute #modal-category .modal-box::before,
+body.theme-cute #modal-wb-select .modal-box::before {
+    display: none !important;
+}
+
+/* 世界书HTML弹窗 */
+body.theme-cute .wb-html-popup-container {
+    border: 1px solid var(--cute-border) !important;
+    border-radius: var(--cute-radius) !important;
+    box-shadow: 0 8px 32px rgba(200,190,210,0.2) !important;
+}
+body.theme-cute .wb-html-popup-header {
+    border-bottom: 1px solid var(--cute-border) !important;
+    background: #fff !important;
+    border-radius: var(--cute-radius) var(--cute-radius) 0 0 !important;
+}
+body.theme-cute .wb-html-popup-header span {
+    font-weight: 700 !important;
+    color: var(--cute-text) !important;
+}
+body.theme-cute .wb-html-popup-close {
+    border: 1px solid var(--cute-border) !important;
+    border-radius: 50% !important;
+    background: #fff !important;
+    color: var(--cute-text-light) !important;
+}
+body.theme-cute .wb-html-popup-close:hover {
+    background: var(--cute-accent-light) !important;
+    color: var(--cute-accent) !important;
+}
+
+/* ===== 微信"我的"界面 ===== */
+body.theme-cute #tab-me {
+    background: var(--cute-bg) !important;
+    background-image: none !important;
+}
+body.theme-cute #tab-me > .scroll-y {
+    background: transparent !important;
+}
+/* 个人信息卡片 */
+body.theme-cute #tab-me > .scroll-y > div:first-child {
+    background: #fff !important;
+    border: 1px solid var(--cute-border) !important;
+    border-radius: var(--cute-radius) !important;
+    box-shadow: 0 2px 10px var(--cute-shadow) !important;
+    margin: 20px 12px 0 !important;
+    padding: 24px 20px !important;
+}
+/* 移除便签钉装饰 */
+body.theme-cute #tab-me > .scroll-y > div:first-child::before {
+    display: none !important;
+}
+/* 个人头像 */
+body.theme-cute #tab-me #my-avatar {
+    border: 2px solid var(--cute-border) !important;
+    box-shadow: 0 2px 8px var(--cute-shadow) !important;
+    filter: none !important;
+}
+/* 个人名字 */
+body.theme-cute #tab-me #my-name {
+    font-weight: 700 !important;
+    color: var(--cute-text) !important;
+}
+body.theme-cute #tab-me #my-wxid {
+    color: var(--cute-text-light) !important;
+}
+body.theme-cute #tab-me > .scroll-y > div:first-child > i {
+    color: var(--cute-accent) !important;
+}
+/* group-box */
+body.theme-cute #tab-me .group-box {
+    background: #fff !important;
+    border: 1px solid var(--cute-border) !important;
+    border-radius: var(--cute-radius) !important;
+    box-shadow: 0 2px 10px var(--cute-shadow) !important;
+    margin: 12px 12px !important;
+    overflow: hidden !important;
+}
+/* 移除便签折角 */
+body.theme-cute #tab-me .group-box::after {
+    display: none !important;
+}
+/* 覆盖 wechat_me_anime_style.css 的装饰元素 */
+body.theme-cute #tab-me .scroll-y::before {
+    display: none !important;
+}
+body.theme-cute #tab-me .scroll-y::after {
+    display: none !important;
+}
+body.theme-cute #tab-me .group-box::before {
+    display: none !important;
+}
+body.theme-cute #tab-me .scroll-y > div:first-child::after {
+    display: none !important;
+}
+body.theme-cute #tab-me .list-item:first-child::before {
+    display: none !important;
+}
+body.theme-cute #tab-me .group-box .list-item {
+    background: #fff !important;
+    border-bottom: 1px solid rgba(220,210,230,0.12) !important;
+    padding: 14px 15px !important;
+}
+body.theme-cute #tab-me .group-box .list-item:last-child {
+    border-bottom: none !important;
+}
+body.theme-cute #tab-me .group-box .list-item:active {
+    background: var(--cute-bg) !important;
+    transform: none !important;
+}
+body.theme-cute #tab-me .group-box .list-item > i,
+body.theme-cute #tab-me .group-box .list-item .fas,
+body.theme-cute #tab-me .group-box .list-item .far {
+    color: var(--cute-accent) !important;
+}
+body.theme-cute #tab-me .group-box .list-item .list-title {
+    font-weight: 600 !important;
+    color: var(--cute-text) !important;
+}
+body.theme-cute #tab-me .group-box .list-item .list-sub {
+    color: var(--cute-text-light) !important;
+}
+body.theme-cute #tab-me .group-box .form-cell {
+    border-bottom: 1px solid rgba(220,210,230,0.12) !important;
+    padding: 14px 15px !important;
+}
+body.theme-cute #tab-me .group-box .form-cell:last-child {
+    border-bottom: none !important;
+}
+body.theme-cute #tab-me .group-box .form-cell .form-label {
+    font-weight: 600 !important;
+    color: var(--cute-text) !important;
+}
+/* 开关 */
+body.theme-cute #tab-me .group-box .switch .slider {
+    border: 1.5px solid var(--cute-border) !important;
+    border-radius: 20px !important;
+    background: #e8e4ec !important;
+}
+body.theme-cute #tab-me .group-box .switch .slider::before {
+    border-radius: 50% !important;
+    border: none !important;
+}
+body.theme-cute #tab-me .group-box .switch input:checked + .slider {
+    background: linear-gradient(135deg, var(--cute-accent), var(--cute-pink)) !important;
+}
+body.theme-cute #tab-me #wallet-balance {
+    color: var(--cute-accent) !important;
+    font-weight: 700 !important;
+}
+
+/* ===== 感知界面 ===== */
+body.theme-cute #layer-perception > .nav-bar {
+    background: rgba(255,255,255,0.95) !important;
+    border-bottom: 1px solid var(--cute-border) !important;
+    box-shadow: 0 2px 10px var(--cute-shadow) !important;
+}
+body.theme-cute #layer-perception > .nav-bar .nav-title {
+    color: var(--cute-text) !important;
+    font-weight: 700 !important;
+    font-family: inherit !important;
+}
+body.theme-cute #layer-perception > .nav-bar .nav-icon {
+    color: var(--cute-accent) !important;
+}
+body.theme-cute #layer-perception > .scroll-y {
+    background: var(--cute-bg) !important;
+}
+
+/* ===== 美化界面 ===== */
+body.theme-cute #layer-beauty > .nav-bar {
+    background: rgba(255,255,255,0.95) !important;
+    border-bottom: 1px solid var(--cute-border) !important;
+    box-shadow: 0 2px 10px var(--cute-shadow) !important;
+}
+body.theme-cute #layer-beauty > .nav-bar .nav-title {
+    font-family: inherit !important;
+    font-weight: 700 !important;
+    color: var(--cute-text) !important;
+}
+body.theme-cute #layer-beauty > .nav-bar .nav-icon {
+    color: var(--cute-accent) !important;
+}
+/* 美化菜单 */
+body.theme-cute #layer-beauty #beauty-menu {
+    background: var(--cute-bg) !important;
+    background-image: none !important;
+}
+body.theme-cute #layer-beauty .beauty-menu-list {
+    gap: 8px !important;
+}
+body.theme-cute #layer-beauty .beauty-menu-item {
+    background: #fff !important;
+    border: 1px solid var(--cute-border) !important;
+    border-radius: var(--cute-radius) !important;
+    box-shadow: 0 2px 8px var(--cute-shadow) !important;
+    margin-bottom: 0 !important;
+    padding: 14px 14px !important;
+}
+body.theme-cute #layer-beauty .beauty-menu-item:active {
+    transform: scale(0.98) !important;
+    box-shadow: 0 1px 4px var(--cute-shadow) !important;
+}
+body.theme-cute #layer-beauty .beauty-menu-icon {
+    background: var(--cute-accent-light) !important;
+    border-radius: var(--cute-radius-sm) !important;
+}
+body.theme-cute #layer-beauty .beauty-menu-icon i {
+    color: var(--cute-accent) !important;
+}
+body.theme-cute #layer-beauty .beauty-menu-title {
+    font-weight: 700 !important;
+    color: var(--cute-text) !important;
+    font-family: inherit !important;
+}
+body.theme-cute #layer-beauty .beauty-menu-desc {
+    color: var(--cute-text-light) !important;
+}
+body.theme-cute #layer-beauty .beauty-menu-arrow {
+    color: var(--cute-accent) !important;
+}
+/* 美化子页面背景 */
+body.theme-cute #layer-beauty .beauty-subpage .scroll-y {
+    background: var(--cute-bg) !important;
+    background-image: none !important;
+}
+/* 美化区块卡片 */
+body.theme-cute #layer-beauty .beauty-section-card {
+    background: #fff !important;
+    border: 1px solid var(--cute-border) !important;
+    border-radius: var(--cute-radius) !important;
+    box-shadow: 0 2px 10px var(--cute-shadow) !important;
+}
+/* 移除便签折角 */
+body.theme-cute #layer-beauty .beauty-section-card::after {
+    display: none !important;
+}
+body.theme-cute #layer-beauty .beauty-section-header {
+    border-bottom: 1px solid var(--cute-border) !important;
+}
+body.theme-cute #layer-beauty .beauty-section-header span {
+    color: var(--cute-text) !important;
+    font-family: inherit !important;
+}
+body.theme-cute #layer-beauty .beauty-section-header i {
+    color: var(--cute-accent) !important;
+}
+
+/* ===== 设置界面 - 完整覆盖黑白便签风 ===== */
+body.theme-cute #layer-settings > .nav-bar {
+    background: rgba(255,255,255,0.95) !important;
+    border-bottom: 1px solid var(--cute-border) !important;
+    box-shadow: 0 2px 10px var(--cute-shadow) !important;
+}
+body.theme-cute #layer-settings > .nav-bar .nav-title {
+    font-family: inherit !important;
+    font-weight: 700 !important;
+    color: var(--cute-text) !important;
+    letter-spacing: 0.5px !important;
+}
+body.theme-cute #layer-settings > .nav-bar .nav-icon {
+    color: var(--cute-accent) !important;
+}
+body.theme-cute #layer-settings > .nav-bar .nav-icon:active {
+    opacity: 0.6 !important;
+    transform: scale(0.92) !important;
+}
+/* 设置主菜单背景 */
+body.theme-cute #settings-menu {
+    background: var(--cute-bg) !important;
+    background-image: none !important;
+}
+/* 设置导航列表项 - 覆盖便签风 */
+body.theme-cute #layer-settings .settings-nav-item {
+    background: #fff !important;
+    border: 1px solid var(--cute-border) !important;
+    border-radius: var(--cute-radius) !important;
+    box-shadow: 0 2px 8px var(--cute-shadow) !important;
+    padding: 14px 14px !important;
+    position: relative !important;
+    transition: transform 0.15s !important;
+}
+body.theme-cute #layer-settings .settings-nav-item:active {
+    transform: scale(0.98) !important;
+    box-shadow: 0 1px 4px var(--cute-shadow) !important;
+}
+/* 设置图标 */
+body.theme-cute #layer-settings .settings-nav-icon-i {
+    background: var(--cute-accent-light) !important;
+    box-shadow: none !important;
+    border-radius: var(--cute-radius-sm) !important;
+    color: var(--cute-accent) !important;
+}
+/* 设置文字 */
+body.theme-cute #layer-settings .settings-nav-title-text {
+    font-family: inherit !important;
+    font-weight: 700 !important;
+    color: var(--cute-text) !important;
+    letter-spacing: 0.3px !important;
+}
+body.theme-cute #layer-settings .settings-nav-desc {
+    color: var(--cute-text-light) !important;
+    font-size: 12px !important;
+}
+/* 设置箭头 */
+body.theme-cute #layer-settings .settings-nav-arrow {
+    color: var(--cute-accent) !important;
+}
+/* 设置子页面背景 */
+body.theme-cute #layer-settings .settings-subpage > .scroll-y {
+    background: var(--cute-bg) !important;
+    background-image: none !important;
+}
+/* 设置区块卡片 */
+body.theme-cute #layer-settings .beauty-section-card {
+    background: #fff !important;
+    border: 1px solid var(--cute-border) !important;
+    border-radius: var(--cute-radius) !important;
+    box-shadow: 0 2px 10px var(--cute-shadow) !important;
+    overflow: visible !important;
+    position: relative !important;
+}
+/* 移除便签折角 */
+body.theme-cute #layer-settings .beauty-section-card::after {
+    display: none !important;
+}
+/* 区块标题 */
+body.theme-cute #layer-settings .beauty-section-header {
+    border-bottom: 1px solid var(--cute-border) !important;
+    background: #fff !important;
+    font-family: inherit !important;
+    font-weight: 600 !important;
+    color: var(--cute-text) !important;
+}
+body.theme-cute #layer-settings .beauty-section-header span {
+    color: var(--cute-text) !important;
+    font-family: inherit !important;
+}
+body.theme-cute #layer-settings .beauty-section-header i {
+    color: var(--cute-accent) !important;
+}
+/* 设置页面背景 */
+body.theme-cute #layer-settings > .scroll-y {
+    background: var(--cute-bg) !important;
+    background-image: none !important;
+}
+/* 设置form */
+body.theme-cute #layer-settings .form-cell {
+    border-bottom: 1px solid rgba(220,210,230,0.15) !important;
+}
+body.theme-cute #layer-settings .form-cell:last-child {
+    border-bottom: none !important;
+}
+body.theme-cute #layer-settings .form-label {
+    color: var(--cute-text) !important;
+    font-weight: 600 !important;
+    font-family: inherit !important;
+}
+body.theme-cute #layer-settings .group-box {
+    background: #fff !important;
+    border: 1px solid var(--cute-border) !important;
+    border-radius: var(--cute-radius) !important;
+    box-shadow: 0 2px 10px var(--cute-shadow) !important;
+}
+/* 移除便签折角 */
+body.theme-cute #layer-settings .group-box::after {
+    display: none !important;
+}
+/* 设置操作按钮 - 覆盖便签风 */
+body.theme-cute #layer-settings .beauty-action-btn {
+    border: 1px solid var(--cute-border) !important;
+    border-radius: 20px !important;
+    font-family: inherit !important;
+    font-weight: 600 !important;
+    letter-spacing: 0.3px !important;
+    background: linear-gradient(135deg, var(--cute-accent), var(--cute-pink)) !important;
+    color: #fff !important;
+    box-shadow: 0 2px 10px rgba(232,160,184,0.2) !important;
+    transition: all 0.2s !important;
+}
+body.theme-cute #layer-settings .beauty-action-btn:active {
+    transform: scale(0.96) !important;
+    box-shadow: 0 1px 4px rgba(232,160,184,0.15) !important;
+}
+/* 重置按钮变体 */
+body.theme-cute #layer-settings .beauty-action-btn.reset {
+    background: #fff !important;
+    color: var(--cute-pink) !important;
+    border: 1px solid rgba(242,165,184,0.3) !important;
+    box-shadow: 0 2px 8px var(--cute-shadow) !important;
+}
+/* mini按钮 */
+body.theme-cute #layer-settings .beauty-action-btn.mini {
+    border-radius: 16px !important;
+}
+/* preset按钮 */
+body.theme-cute #layer-settings .beauty-action-btn.preset {
+    background: var(--cute-accent-light) !important;
+    color: var(--cute-accent) !important;
+    border-color: var(--cute-border) !important;
+    box-shadow: 0 2px 8px var(--cute-shadow) !important;
+}
+/* 危险按钮 */
+body.theme-cute #layer-settings .beauty-action-btn[style*="background:#fa5151"],
+body.theme-cute #layer-settings .beauty-action-btn[style*="background: rgb(250, 81, 81)"] {
+    border: 1px solid rgba(250,81,81,0.3) !important;
+    border-radius: 20px !important;
+    box-shadow: 0 2px 8px rgba(250,81,81,0.15) !important;
+    font-family: inherit !important;
+}
+/* 紫色导入导出按钮 */
+body.theme-cute #layer-settings .beauty-action-btn[style*="background:#5856d6"],
+body.theme-cute #layer-settings .beauty-action-btn[style*="background: rgb(88, 86, 214)"] {
+    background: linear-gradient(135deg, var(--cute-accent), var(--cute-pink)) !important;
+    border: 1px solid var(--cute-border) !important;
+    border-radius: 20px !important;
+    box-shadow: 0 2px 10px rgba(232,160,184,0.2) !important;
+    font-family: inherit !important;
+}
+/* 设置页面 input/select - 覆盖便签风 */
+body.theme-cute #layer-settings input[type="text"],
+body.theme-cute #layer-settings input[type="number"],
+body.theme-cute #layer-settings input[type="url"],
+body.theme-cute #layer-settings input[type="date"],
+body.theme-cute #layer-settings textarea,
+body.theme-cute #layer-settings select {
+    border: 1.5px solid var(--cute-border) !important;
+    border-radius: var(--cute-radius-xs) !important;
+    background: var(--cute-bg) !important;
+    color: var(--cute-text) !important;
+    font-family: inherit !important;
+}
+body.theme-cute #layer-settings input[type="text"]:focus,
+body.theme-cute #layer-settings input[type="number"]:focus,
+body.theme-cute #layer-settings input[type="url"]:focus,
+body.theme-cute #layer-settings input[type="date"]:focus,
+body.theme-cute #layer-settings textarea:focus,
+body.theme-cute #layer-settings select:focus {
+    outline: none !important;
+    background: #fff !important;
+    box-shadow: 0 0 0 2px rgba(232,160,184,0.25) !important;
+}
+/* placeholder */
+body.theme-cute #layer-settings input::placeholder,
+body.theme-cute #layer-settings textarea::placeholder {
+    color: var(--cute-text-light) !important;
+    font-family: inherit !important;
+}
+/* range滑块 */
+body.theme-cute #layer-settings input[type="range"] {
+    accent-color: var(--cute-accent) !important;
+}
+/* color颜色选择器 */
+body.theme-cute #layer-settings input[type="color"] {
+    border: 1.5px solid var(--cute-border) !important;
+    border-radius: var(--cute-radius-xs) !important;
+}
+/* 设置页面开关 - 覆盖便签风 */
+body.theme-cute #layer-settings .switch .slider {
+    border: 1.5px solid var(--cute-border) !important;
+    border-radius: 20px !important;
+    background: #e8e4ec !important;
+}
+body.theme-cute #layer-settings .switch .slider::before {
+    border-radius: 50% !important;
+    border: none !important;
+}
+body.theme-cute #layer-settings .switch input:checked + .slider {
+    background: linear-gradient(135deg, var(--cute-accent), var(--cute-pink)) !important;
+}
+/* 设置页label文字 */
+body.theme-cute #layer-settings label {
+    color: var(--cute-text) !important;
+    font-family: inherit !important;
+}
+
+/* 聊天设置页面补充 */
+body.theme-cute #layer-chat-settings .beauty-section-card {
+    background: #fff !important;
+    border: 1px solid var(--cute-border) !important;
+    border-radius: var(--cute-radius) !important;
+    box-shadow: 0 2px 10px var(--cute-shadow) !important;
+}
+body.theme-cute #layer-chat-settings .beauty-section-card::after {
+    display: none !important;
+}
+body.theme-cute #layer-chat-settings .beauty-section-header {
+    border-bottom: 1px solid var(--cute-border) !important;
+}
+body.theme-cute #layer-chat-settings .beauty-section-header span {
+    color: var(--cute-text) !important;
+    font-family: inherit !important;
+}
+body.theme-cute #layer-chat-settings .beauty-section-header i {
+    color: var(--cute-accent) !important;
+}
+/* 聊天设置 - 开关/输入框等 */
+body.theme-cute #layer-chat-settings .switch .slider {
+    border: 1.5px solid var(--cute-border) !important;
+    border-radius: 20px !important;
+    background: #e8e4ec !important;
+}
+body.theme-cute #layer-chat-settings .switch .slider::before {
+    border-radius: 50% !important;
+    border: none !important;
+}
+body.theme-cute #layer-chat-settings .switch input:checked + .slider {
+    background: linear-gradient(135deg, var(--cute-accent), var(--cute-pink)) !important;
+}
+body.theme-cute #layer-chat-settings .form-label {
+    font-family: inherit !important;
+}
+body.theme-cute #layer-chat-settings .beauty-action-btn {
+    border: 1px solid var(--cute-border) !important;
+    border-radius: 20px !important;
+    font-family: inherit !important;
+    font-weight: 600 !important;
+}
+body.theme-cute #layer-chat-settings > .scroll-y {
+    background: var(--cute-bg) !important;
+    background-image: none !important;
+}
+body.theme-cute #layer-chat-settings .nav-bar .nav-title {
+    font-family: inherit !important;
+    font-weight: 700 !important;
+    color: var(--cute-text) !important;
+}
+body.theme-cute #layer-chat-settings .nav-bar .nav-icon {
+    color: var(--cute-accent) !important;
+}
+
+/* ===== 全局通用覆盖 ===== */
+
+/* 所有layer的背景（排除语音/视频通话层，保持其毛玻璃效果） */
+body.theme-cute .layer:not(#layer-voice-call):not(#layer-video-call) {
+    background: var(--cute-bg) !important;
+}
+
+/* ===== 全局弹窗覆盖 - 覆盖所有黑白便签风弹窗 ===== */
+body.theme-cute .modal-mask .modal-box {
+    background: #fff !important;
+    border: 1px solid var(--cute-border) !important;
+    border-radius: var(--cute-radius) !important;
+    box-shadow: 0 8px 32px rgba(200,190,210,0.2) !important;
+    position: relative !important;
+}
+/* 移除所有弹窗的便签折角 */
+body.theme-cute .modal-mask .modal-box::after {
+    display: none !important;
+}
+body.theme-cute .modal-mask .modal-box::before {
+    display: none !important;
+}
+/* 弹窗标题 */
+body.theme-cute .modal-mask .modal-box h3 {
+    font-family: inherit !important;
+    font-weight: 700 !important;
+    letter-spacing: 0.5px !important;
+    color: var(--cute-text) !important;
+}
+/* 弹窗按钮 */
+body.theme-cute .modal-mask .modal-box button {
+    font-family: inherit !important;
+    border-radius: 20px !important;
+}
+/* 弹窗输入框 */
+body.theme-cute .modal-mask .modal-box input[type="text"],
+body.theme-cute .modal-mask .modal-box input[type="number"],
+body.theme-cute .modal-mask .modal-box input[type="date"],
+body.theme-cute .modal-mask .modal-box input[type="time"],
+body.theme-cute .modal-mask .modal-box input[type="url"],
+body.theme-cute .modal-mask .modal-box textarea,
+body.theme-cute .modal-mask .modal-box select {
+    border: 1.5px solid var(--cute-border) !important;
+    border-radius: var(--cute-radius-xs) !important;
+    background: var(--cute-bg) !important;
+    color: var(--cute-text) !important;
+    font-family: inherit !important;
+}
+body.theme-cute .modal-mask .modal-box input:focus,
+body.theme-cute .modal-mask .modal-box textarea:focus,
+body.theme-cute .modal-mask .modal-box select:focus {
+    outline: none !important;
+    background: #fff !important;
+    box-shadow: 0 0 0 2px rgba(232,160,184,0.25) !important;
+}
+/* 弹窗遮罩背景 */
+body.theme-cute .modal-mask {
+    background: rgba(100,90,110,0.3) !important;
+}
+
+/* 全局开关样式 */
+body.theme-cute .switch .slider {
+    border: 1.5px solid var(--cute-border) !important;
+    border-radius: 20px !important;
+}
+body.theme-cute .switch .slider::before {
+    border-radius: 50% !important;
+}
+body.theme-cute .switch input:checked + .slider {
+    background: linear-gradient(135deg, var(--cute-accent), var(--cute-pink)) !important;
+}
+
+/* 全局按钮样式覆盖 */
+body.theme-cute .beauty-action-btn {
+    border-radius: 20px !important;
+    font-weight: 600 !important;
+    border: 1px solid var(--cute-border) !important;
+    transition: all 0.2s !important;
+    font-family: inherit !important;
+}
+body.theme-cute .beauty-action-btn:active {
+    transform: scale(0.96) !important;
+}
+body.theme-cute .beauty-action-btn.reset {
+    background: #fff !important;
+    color: var(--cute-pink) !important;
+    border: 1px solid rgba(242,165,184,0.3) !important;
+}
+body.theme-cute .beauty-action-btn.preset {
+    background: var(--cute-accent-light) !important;
+    color: var(--cute-accent) !important;
+}
+
+/* 全局toast */
+body.theme-cute #toast {
+    border-radius: 20px !important;
+    background: rgba(61,58,66,0.85) !important;
+    box-shadow: 0 4px 16px var(--cute-shadow) !important;
+}
+
+/* CSS输入框 */
+body.theme-cute .css-input {
+    border: 1.5px solid var(--cute-border) !important;
+    border-radius: var(--cute-radius-xs) !important;
+    background: var(--cute-bg) !important;
+}
+body.theme-cute .css-input:focus {
+    border-color: var(--cute-accent) !important;
+    box-shadow: 0 0 0 2px rgba(232,160,184,0.25) !important;
+}
+
+/* 美化组件标签 */
+body.theme-cute .beauty-comp-tabs {
+    background: var(--cute-bg) !important;
+    border-radius: var(--cute-radius) !important;
+    border: 1px solid var(--cute-border) !important;
+}
+body.theme-cute .beauty-comp-tab {
+    border-radius: 20px !important;
+    color: var(--cute-text-light) !important;
+    border-right: none !important;
+}
+body.theme-cute .beauty-comp-tab.active {
+    background: #fff !important;
+    color: var(--cute-accent) !important;
+    box-shadow: 0 2px 8px var(--cute-shadow) !important;
+}
+
+/* 美化模式切换按钮 */
+body.theme-cute .beauty-mode-toggle {
+    border-radius: 20px !important;
+    background: var(--cute-bg) !important;
+}
+body.theme-cute .beauty-mode-btn {
+    border-radius: 20px !important;
+}
+body.theme-cute .beauty-mode-btn.active {
+    background: #fff !important;
+    box-shadow: 0 2px 8px var(--cute-shadow) !important;
+}
+
+/* 世界书选择列表项 */
+body.theme-cute #wb-select-list .list-item,
+body.theme-cute #wb-select-list > div {
+    border: 1px solid var(--cute-border) !important;
+    border-radius: var(--cute-radius-xs) !important;
+    background: #fff !important;
+    margin-bottom: 8px !important;
+}
+
+/* 预设弹窗 */
+body.theme-cute .preset-popup {
+    border-radius: var(--cute-radius) !important;
+    box-shadow: 0 8px 32px rgba(200,190,210,0.2) !important;
+}
+
+/* ===== 导航栏间距调整 ===== */
+/* 美化页面导航列表间距缩小 */
+body.theme-cute #layer-beauty .beauty-menu-list {
+    gap: 8px !important;
+}
+/* 设置页面导航列表间距缩小 */
+body.theme-cute #layer-settings .settings-nav-list {
+    gap: 8px !important;
+}
+
+/* ===== 额外弹窗覆盖（确保所有弹窗都是可爱风） ===== */
+
+/* 自定义输入弹窗（伪装语音/图片等） */
+body.theme-cute #modal-custom-input .modal-box {
+    background: #fff !important;
+    border: 1px solid var(--cute-border) !important;
+    border-radius: var(--cute-radius) !important;
+    box-shadow: 0 8px 32px rgba(200,190,210,0.2) !important;
+}
+body.theme-cute #modal-custom-input .modal-box h3 {
+    font-family: inherit !important;
+    font-weight: 700 !important;
+    color: var(--cute-text) !important;
+}
+body.theme-cute #modal-custom-input .modal-box::after {
+    display: none !important;
+}
+
+/* 确认弹窗 */
+body.theme-cute #modal-confirm .modal-box {
+    background: #fff !important;
+    border: 1px solid var(--cute-border) !important;
+    border-radius: var(--cute-radius) !important;
+    box-shadow: 0 8px 32px rgba(200,190,210,0.2) !important;
+}
+body.theme-cute #modal-confirm .modal-box::after {
+    display: none !important;
+}
+
+/* 选择器弹窗 */
+body.theme-cute #modal-picker .modal-box {
+    background: #fff !important;
+    border: 1px solid var(--cute-border) !important;
+    border-radius: var(--cute-radius) !important;
+    box-shadow: 0 8px 32px rgba(200,190,210,0.2) !important;
+}
+body.theme-cute #modal-picker .modal-box::after {
+    display: none !important;
+}
+
+/* 心声弹窗 */
+body.theme-cute #modal-thought .modal-box {
+    background: #fff !important;
+    border: 1px solid var(--cute-border) !important;
+    border-radius: var(--cute-radius) !important;
+    box-shadow: 0 8px 32px rgba(200,190,210,0.2) !important;
+}
+body.theme-cute #modal-thought .modal-box::after {
+    display: none !important;
+}
+
+/* 心声历史弹窗 */
+body.theme-cute #modal-heart-history .modal-box,
+body.theme-cute #modal-heart-edit .modal-box {
+    background: #fff !important;
+    border: 1px solid var(--cute-border) !important;
+    border-radius: var(--cute-radius) !important;
+    box-shadow: 0 8px 32px rgba(200,190,210,0.2) !important;
+}
+body.theme-cute #modal-heart-history .modal-box::after,
+body.theme-cute #modal-heart-edit .modal-box::after {
+    display: none !important;
+}
+
+/* 转发弹窗 */
+body.theme-cute #modal-forward-type .modal-box,
+body.theme-cute #modal-forward-contact .modal-box {
+    background: #fff !important;
+    border: 1px solid var(--cute-border) !important;
+    border-radius: var(--cute-radius) !important;
+}
+body.theme-cute #modal-forward-type .modal-box::after,
+body.theme-cute #modal-forward-contact .modal-box::after {
+    display: none !important;
+}
+
+/* 转账操作弹窗 */
+body.theme-cute #modal-transfer-action .modal-box {
+    background: #fff !important;
+    border: 1px solid var(--cute-border) !important;
+    border-radius: var(--cute-radius) !important;
+}
+body.theme-cute #modal-transfer-action .modal-box::after {
+    display: none !important;
+}
+
+/* 图片上传弹窗 */
+body.theme-cute #modal-img-upload .modal-box {
+    background: #fff !important;
+    border: 1px solid var(--cute-border) !important;
+    border-radius: var(--cute-radius) !important;
+}
+body.theme-cute #modal-img-upload .modal-box::after {
+    display: none !important;
+}
+
+/* 裁剪弹窗 */
+body.theme-cute #modal-cropper .modal-box,
+body.theme-cute #modal-vinyl-cropper .modal-box {
+    background: #fff !important;
+    border: 1px solid var(--cute-border) !important;
+    border-radius: var(--cute-radius) !important;
+}
+body.theme-cute #modal-cropper .modal-box::after,
+body.theme-cute #modal-vinyl-cropper .modal-box::after {
+    display: none !important;
+}
+
+/* 纪念日/人设/表情/音乐等弹窗 */
+body.theme-cute #modal-anniv .modal-box,
+body.theme-cute #modal-anniv-edit .modal-box,
+body.theme-cute #modal-persona .modal-box,
+body.theme-cute #modal-sticker .modal-box,
+body.theme-cute #modal-sticker-cate .modal-box,
+body.theme-cute #modal-music .modal-box,
+body.theme-cute #modal-location-edit .modal-box,
+body.theme-cute #modal-couple-date .modal-box,
+body.theme-cute #modal-api-preset .modal-box,
+body.theme-cute #modal-profile-edit .modal-box,
+body.theme-cute #modal-profile-preset .modal-box,
+body.theme-cute #modal-profile-preset-edit .modal-box,
+body.theme-cute #modal-desktop-profile-edit .modal-box,
+body.theme-cute #modal-widget-manager .modal-box,
+body.theme-cute #modal-batch-frame .modal-box,
+body.theme-cute #modal-edit-memory .modal-box,
+body.theme-cute #modal-memory-source .modal-box,
+body.theme-cute #modal-manual-summary .modal-box,
+body.theme-cute #modal-clear-records .modal-box,
+body.theme-cute #modal-book-upload .modal-box,
+body.theme-cute #modal-book-category .modal-box,
+body.theme-cute #modal-read-together .modal-box,
+body.theme-cute #modal-contact-sound .modal-box,
+body.theme-cute #modal-mail-freq .modal-box,
+body.theme-cute #modal-pwa-install .modal-box,
+body.theme-cute #modal-moment-generate .modal-box,
+body.theme-cute #modal-diary-generate .modal-box,
+body.theme-cute #modal-new-post .modal-box,
+body.theme-cute #modal-moment-action > div > div,
+body.theme-cute #modal-listen-contact .modal-box,
+body.theme-cute #modal-create-group .modal-box,
+body.theme-cute #modal-moment-group-select .modal-box,
+body.theme-cute #modal-group-offline-invite .modal-box,
+body.theme-cute #modal-offline-settings .settings-sheet,
+body.theme-cute #modal-reverse-check-invite .modal-box,
+body.theme-cute #modal-reverse-check-request .modal-box,
+body.theme-cute #modal-checkphone-contact .modal-box,
+body.theme-cute #modal-forum-profile .modal-box,
+body.theme-cute #modal-forum-settings .modal-box,
+body.theme-cute #modal-forum-section-manager .modal-box,
+body.theme-cute #modal-forum-section-edit .modal-box,
+body.theme-cute #modal-add-supervisor .modal-box,
+body.theme-cute #modal-add-task .modal-box,
+body.theme-cute #modal-focus-settings .modal-box,
+body.theme-cute #modal-task-detail .modal-box,
+body.theme-cute #modal-mood-diary .modal-box,
+body.theme-cute #modal-add-mood .modal-box,
+body.theme-cute #modal-sv-achievements .modal-box,
+body.theme-cute #modal-sv-settings .modal-box,
+body.theme-cute #modal-fanfic-cp .modal-box,
+body.theme-cute #modal-fanfic-generate .modal-box,
+body.theme-cute #modal-memorial-detail .modal-box {
+    background: #fff !important;
+    border: 1px solid var(--cute-border) !important;
+    border-radius: var(--cute-radius) !important;
+    box-shadow: 0 8px 32px rgba(200,190,210,0.2) !important;
+}
+body.theme-cute #modal-anniv .modal-box::after,
+body.theme-cute #modal-anniv-edit .modal-box::after,
+body.theme-cute #modal-persona .modal-box::after,
+body.theme-cute #modal-sticker .modal-box::after,
+body.theme-cute #modal-sticker-cate .modal-box::after,
+body.theme-cute #modal-music .modal-box::after,
+body.theme-cute #modal-location-edit .modal-box::after,
+body.theme-cute #modal-couple-date .modal-box::after,
+body.theme-cute #modal-api-preset .modal-box::after,
+body.theme-cute #modal-profile-edit .modal-box::after,
+body.theme-cute #modal-profile-preset .modal-box::after,
+body.theme-cute #modal-profile-preset-edit .modal-box::after,
+body.theme-cute #modal-desktop-profile-edit .modal-box::after,
+body.theme-cute #modal-widget-manager .modal-box::after,
+body.theme-cute #modal-batch-frame .modal-box::after,
+body.theme-cute #modal-edit-memory .modal-box::after,
+body.theme-cute #modal-memory-source .modal-box::after,
+body.theme-cute #modal-manual-summary .modal-box::after,
+body.theme-cute #modal-clear-records .modal-box::after,
+body.theme-cute #modal-book-upload .modal-box::after,
+body.theme-cute #modal-book-category .modal-box::after,
+body.theme-cute #modal-read-together .modal-box::after,
+body.theme-cute #modal-contact-sound .modal-box::after,
+body.theme-cute #modal-mail-freq .modal-box::after,
+body.theme-cute #modal-pwa-install .modal-box::after,
+body.theme-cute #modal-moment-generate .modal-box::after,
+body.theme-cute #modal-diary-generate .modal-box::after,
+body.theme-cute #modal-new-post .modal-box::after,
+body.theme-cute #modal-listen-contact .modal-box::after,
+body.theme-cute #modal-create-group .modal-box::after,
+body.theme-cute #modal-moment-group-select .modal-box::after,
+body.theme-cute #modal-group-offline-invite .modal-box::after,
+body.theme-cute #modal-offline-settings .settings-sheet::after,
+body.theme-cute #modal-reverse-check-invite .modal-box::after,
+body.theme-cute #modal-reverse-check-request .modal-box::after,
+body.theme-cute #modal-checkphone-contact .modal-box::after,
+body.theme-cute #modal-forum-profile .modal-box::after,
+body.theme-cute #modal-forum-settings .modal-box::after,
+body.theme-cute #modal-forum-section-manager .modal-box::after,
+body.theme-cute #modal-forum-section-edit .modal-box::after,
+body.theme-cute #modal-add-supervisor .modal-box::after,
+body.theme-cute #modal-add-task .modal-box::after,
+body.theme-cute #modal-focus-settings .modal-box::after,
+body.theme-cute #modal-task-detail .modal-box::after,
+body.theme-cute #modal-mood-diary .modal-box::after,
+body.theme-cute #modal-add-mood .modal-box::after,
+body.theme-cute #modal-sv-achievements .modal-box::after,
+body.theme-cute #modal-sv-settings .modal-box::after,
+body.theme-cute #modal-fanfic-cp .modal-box::after,
+body.theme-cute #modal-fanfic-generate .modal-box::after,
+body.theme-cute #modal-memorial-detail .modal-box::after {
+    display: none !important;
+}
+
+/* 弹窗内的h3标题都改为可爱风 */
+body.theme-cute #modal-anniv .modal-box h3,
+body.theme-cute #modal-anniv-edit .modal-box h3,
+body.theme-cute #modal-persona .modal-box h3,
+body.theme-cute #modal-sticker .modal-box h3,
+body.theme-cute #modal-sticker-cate .modal-box h3,
+body.theme-cute #modal-music .modal-box h3,
+body.theme-cute #modal-location-edit .modal-box h3,
+body.theme-cute #modal-couple-date .modal-box h3,
+body.theme-cute #modal-api-preset .modal-box h3,
+body.theme-cute #modal-profile-edit .modal-box h3,
+body.theme-cute #modal-custom-input .modal-box h3,
+body.theme-cute #modal-confirm .modal-box h3,
+body.theme-cute #modal-thought .modal-box h3,
+body.theme-cute #modal-transfer-action .modal-box h3,
+body.theme-cute #modal-img-upload .modal-box h3,
+body.theme-cute #modal-cropper .modal-box h3,
+body.theme-cute #modal-forward-type .modal-box h3,
+body.theme-cute #modal-forward-contact .modal-box h3 {
+    font-family: inherit !important;
+    font-weight: 700 !important;
+    color: var(--cute-text) !important;
+    letter-spacing: 0.3px !important;
+}
+
+/* 精灵系统弹窗 */
+body.theme-cute #modal-spirit-create .spirit-create-modal,
+body.theme-cute #modal-spirit-chat .spirit-chat-modal {
+    border: 1px solid var(--cute-border) !important;
+    border-radius: var(--cute-radius) !important;
+    box-shadow: 0 8px 32px rgba(200,190,210,0.2) !important;
+}
+
+/* 群成员状态弹窗 */
+body.theme-cute #modal-group-member-status .group-member-popup {
+    border: 1px solid var(--cute-border) !important;
+    border-radius: var(--cute-radius) !important;
+    box-shadow: 0 8px 32px rgba(200,190,210,0.2) !important;
+    background: #fff !important;
+}
+
+/* 纪念馆详情文字颜色修复（白色背景下白色文字不可见） */
+body.theme-cute #modal-memorial-detail .memorial-detail-rarity {
+    color: #ad1457 !important;
+}
+body.theme-cute #modal-memorial-detail .memorial-detail-name {
+    color: #333 !important;
+}
+body.theme-cute #modal-memorial-detail .memorial-detail-from {
+    color: rgba(0,0,0,0.5) !important;
+}
+body.theme-cute #modal-memorial-detail .memorial-detail-content {
+    color: #444 !important;
+    background: rgba(0,0,0,0.03) !important;
+    border-color: rgba(0,0,0,0.08) !important;
+}
+body.theme-cute #modal-memorial-detail .memorial-detail-date {
+    color: rgba(0,0,0,0.35) !important;
+}
+
+/* 朋友圈操作弹窗 */
+body.theme-cute #modal-moment-action > div > div {
+    border-radius: var(--cute-radius) !important;
+}
+
+/* ===== 情侣空间界面 ===== */
+body.theme-cute #layer-couple {
+    background: var(--cute-bg) !important;
+}
+body.theme-cute #layer-couple .nav-bar {
+    background: rgba(255,255,255,0.95) !important;
+    border-bottom: 1px solid var(--cute-border) !important;
+    box-shadow: 0 2px 10px var(--cute-shadow) !important;
+    backdrop-filter: blur(20px) !important;
+    -webkit-backdrop-filter: blur(20px) !important;
+}
+body.theme-cute #layer-couple .nav-bar .nav-title {
+    color: var(--cute-text) !important;
+    font-weight: 700 !important;
+    font-family: inherit !important;
+}
+body.theme-cute #layer-couple .nav-bar .nav-icon {
+    color: var(--cute-accent) !important;
+}
+body.theme-cute #layer-couple .group-box,
+body.theme-cute #layer-couple .beauty-section-card {
+    background: #fff !important;
+    border: 1px solid var(--cute-border) !important;
+    border-radius: var(--cute-radius) !important;
+    box-shadow: 0 2px 10px var(--cute-shadow) !important;
+}
+body.theme-cute #layer-couple .group-box::after,
+body.theme-cute #layer-couple .beauty-section-card::after {
+    display: none !important;
+}
+body.theme-cute #layer-couple .scroll-y {
+    background: var(--cute-bg) !important;
+}
+
+/* ===== 学习App界面 ===== */
+
+/* 学习App整体背景 */
+body.theme-cute #layer-study {
+    background: var(--cute-bg) !important;
+}
+
+/* 导航栏 */
+body.theme-cute #layer-study .nav-bar {
+    background: rgba(255,255,255,0.95) !important;
+    border-bottom: 1px solid var(--cute-border) !important;
+    box-shadow: 0 2px 10px var(--cute-shadow) !important;
+    backdrop-filter: blur(20px) !important;
+    -webkit-backdrop-filter: blur(20px) !important;
+}
+body.theme-cute #layer-study .nav-bar .nav-title {
+    font-family: inherit !important;
+    font-weight: 700 !important;
+    color: var(--cute-text) !important;
+}
+body.theme-cute #layer-study .nav-bar .nav-icon {
+    color: var(--cute-accent) !important;
+}
+body.theme-cute #layer-study .nav-bar .nav-icon:active {
+    opacity: 0.6 !important;
+    transform: scale(0.92) !important;
+}
+
+/* 滚动区域背景 */
+body.theme-cute #layer-study .scroll-y {
+    background: var(--cute-bg) !important;
+}
+
+/* Study Tab 背景 */
+body.theme-cute .study-tab {
+    background: var(--cute-bg) !important;
+}
+
+/* 今日学习进度卡片 */
+body.theme-cute .study-progress-card {
+    background: #fff !important;
+    border: 1px solid var(--cute-border) !important;
+    border-radius: var(--cute-radius) !important;
+    box-shadow: 0 2px 10px var(--cute-shadow) !important;
+}
+body.theme-cute .study-progress-header span {
+    color: var(--cute-text) !important;
+    font-weight: 700 !important;
+}
+body.theme-cute .study-stat-num {
+    color: var(--cute-accent) !important;
+    font-weight: 700 !important;
+}
+body.theme-cute .study-stat-label {
+    color: var(--cute-text-light) !important;
+}
+body.theme-cute .study-progress-bar-outer {
+    background: rgba(220,210,230,0.2) !important;
+    border-radius: 20px !important;
+}
+body.theme-cute .study-progress-bar-inner {
+    background: linear-gradient(135deg, var(--cute-accent), var(--cute-pink)) !important;
+    border-radius: 20px !important;
+}
+
+/* 学习总开关Banner */
+body.theme-cute .study-master-banner {
+    background: linear-gradient(135deg, var(--cute-accent), var(--cute-pink)) !important;
+    border-radius: var(--cute-radius) !important;
+}
+
+/* 功能入口网格 */
+body.theme-cute .study-menu-grid {
+    gap: 16px !important;
+}
+body.theme-cute .study-menu-item span {
+    color: var(--cute-text-light) !important;
+}
+body.theme-cute .study-menu-icon {
+    width: 50px !important;
+    height: 50px !important;
+    border-radius: 50% !important;
+}
+body.theme-cute .study-menu-icon:active {
+    transform: scale(0.92) !important;
+}
+body.theme-cute .study-menu-icon.study-icon-materials {
+    background: linear-gradient(135deg, var(--cute-accent), var(--cute-pink)) !important;
+}
+body.theme-cute .study-menu-icon.study-icon-plan {
+    background: var(--cute-accent-light) !important;
+    color: var(--cute-accent) !important;
+}
+body.theme-cute .study-menu-icon.study-icon-quiz {
+    background: rgba(232,160,184,0.12) !important;
+    color: var(--cute-pink) !important;
+}
+body.theme-cute .study-menu-icon.study-icon-lecture {
+    background: rgba(220,210,230,0.2) !important;
+    color: var(--cute-text-light) !important;
+}
+
+/* 章节标题 */
+body.theme-cute .study-section-title {
+    color: var(--cute-text) !important;
+    font-weight: 700 !important;
+    font-family: inherit !important;
+}
+body.theme-cute .study-section-title i {
+    color: var(--cute-accent) !important;
+}
+
+/* 分类标签栏 */
+body.theme-cute .study-category-bar {
+    background: rgba(255,255,255,0.92) !important;
+    border-bottom: 1px solid var(--cute-border) !important;
+}
+body.theme-cute .study-cat-tab {
+    background: transparent !important;
+    color: var(--cute-text-light) !important;
+    border-radius: 20px !important;
+    font-weight: 500 !important;
+}
+body.theme-cute .study-cat-tab.active {
+    background: transparent !important;
+    color: var(--cute-accent) !important;
+    font-weight: 700 !important;
+    border-bottom: 2px solid var(--cute-accent) !important;
+}
+
+/* 学习资料卡片 */
+body.theme-cute .study-material-card {
+    background: #fff !important;
+    border: 1px solid var(--cute-border) !important;
+    border-radius: var(--cute-radius) !important;
+    box-shadow: 0 2px 8px var(--cute-shadow) !important;
+}
+body.theme-cute .study-material-card .mat-name {
+    color: var(--cute-text) !important;
+    font-weight: 700 !important;
+}
+body.theme-cute .study-material-card .mat-badge {
+    background: var(--cute-accent-light) !important;
+    color: var(--cute-accent) !important;
+    border-radius: 20px !important;
+}
+body.theme-cute .study-material-card .mat-badge.builtin {
+    background: rgba(220,210,230,0.15) !important;
+    color: var(--cute-text-light) !important;
+}
+body.theme-cute .study-material-card .mat-preview {
+    color: var(--cute-text-light) !important;
+}
+body.theme-cute .study-material-card .mat-footer {
+    color: var(--cute-text-light) !important;
+}
+body.theme-cute .study-material-card .mat-actions button {
+    background: var(--cute-accent-light) !important;
+    color: var(--cute-accent) !important;
+    border: none !important;
+    border-radius: 20px !important;
+}
+
+/* 复习计划卡片 */
+body.theme-cute .study-plan-detail {
+    background: #fff !important;
+    border: 1px solid var(--cute-border) !important;
+    border-radius: var(--cute-radius) !important;
+    box-shadow: 0 2px 8px var(--cute-shadow) !important;
+}
+body.theme-cute .study-plan-detail .plan-detail-name {
+    color: var(--cute-text) !important;
+    font-weight: 700 !important;
+}
+body.theme-cute .study-plan-detail .plan-detail-status {
+    border-radius: 20px !important;
+}
+body.theme-cute .study-plan-detail .plan-progress-bar {
+    background: rgba(220,210,230,0.2) !important;
+    border-radius: 20px !important;
+}
+body.theme-cute .study-plan-detail .plan-progress-fill {
+    background: linear-gradient(135deg, var(--cute-accent), var(--cute-pink)) !important;
+    border-radius: 20px !important;
+}
+body.theme-cute .study-plan-detail .plan-detail-meta {
+    color: var(--cute-text-light) !important;
+}
+body.theme-cute .study-plan-detail .plan-detail-actions button {
+    border-radius: 20px !important;
+}
+
+/* 今日计划列表 */
+body.theme-cute .study-plan-item {
+    background: #fff !important;
+    border: 1px solid var(--cute-border) !important;
+    border-radius: var(--cute-radius) !important;
+    box-shadow: 0 2px 6px var(--cute-shadow) !important;
+}
+body.theme-cute .study-plan-item .plan-name {
+    color: var(--cute-text) !important;
+}
+body.theme-cute .study-plan-item .plan-meta {
+    color: var(--cute-text-light) !important;
+}
+body.theme-cute .study-plan-item .plan-check {
+    border-color: var(--cute-border) !important;
+    border-radius: 50% !important;
+}
+body.theme-cute .study-plan-item .plan-check.completed {
+    background: linear-gradient(135deg, var(--cute-accent), var(--cute-pink)) !important;
+    border-color: transparent !important;
+}
+body.theme-cute .study-plan-item .plan-actions button {
+    border-radius: 20px !important;
+}
+
+/* 空状态提示 */
+body.theme-cute .study-empty-hint {
+    color: var(--cute-text-light) !important;
+}
+
+/* 底部导航栏 */
+body.theme-cute .study-bottom-nav {
+    background: rgba(255,255,255,0.96) !important;
+    border-top: 1px solid var(--cute-border) !important;
+    box-shadow: 0 -2px 10px var(--cute-shadow) !important;
+}
+body.theme-cute .study-bottom-item {
+    color: var(--cute-text-light) !important;
+    font-family: inherit !important;
+}
+body.theme-cute .study-bottom-item.active {
+    color: var(--cute-accent) !important;
+}
+
+/* 主按钮（通用） */
+body.theme-cute .study-btn-primary {
+    background: linear-gradient(135deg, var(--cute-accent), var(--cute-pink)) !important;
+    color: #fff !important;
+    border: none !important;
+    border-radius: 20px !important;
+    box-shadow: 0 2px 12px rgba(232,160,184,0.25) !important;
+}
+body.theme-cute .study-btn-primary:active {
+    transform: scale(0.96) !important;
+}
+
+/* Modal 内主按钮 */
+body.theme-cute .study-modal-btn-primary {
+    background: linear-gradient(135deg, var(--cute-accent), var(--cute-pink)) !important;
+    color: #fff !important;
+}
+body.theme-cute .study-modal-btn-primary:active {
+    transform: scale(0.96) !important;
+}
+
+/* 学习弹窗 Modal */
+body.theme-cute #modal-study-plan > div,
+body.theme-cute #modal-study-upload > div,
+body.theme-cute #modal-study-settings > div {
+    background: #fff !important;
+    border: 1px solid var(--cute-border) !important;
+    border-radius: var(--cute-radius) !important;
+    box-shadow: 0 8px 32px rgba(200,190,210,0.2) !important;
+}
+body.theme-cute #modal-study-plan input,
+body.theme-cute #modal-study-plan select,
+body.theme-cute #modal-study-upload input,
+body.theme-cute #modal-study-upload select,
+body.theme-cute #modal-study-upload textarea,
+body.theme-cute #modal-study-settings input[type="number"] {
+    border: 1.5px solid var(--cute-border) !important;
+    border-radius: var(--cute-radius-xs) !important;
+    background: var(--cute-bg) !important;
+    color: var(--cute-text) !important;
+}
+body.theme-cute #modal-study-plan input:focus,
+body.theme-cute #modal-study-plan select:focus,
+body.theme-cute #modal-study-upload input:focus,
+body.theme-cute #modal-study-upload textarea:focus,
+body.theme-cute #modal-study-settings input:focus {
+    outline: none !important;
+    box-shadow: 0 0 0 2px rgba(232,160,184,0.25) !important;
+}
+
+/* 测试区域 */
+body.theme-cute .study-quiz-area {
+    background: #fff !important;
+    border: 1px solid var(--cute-border) !important;
+    border-radius: var(--cute-radius) !important;
+    box-shadow: 0 2px 8px var(--cute-shadow) !important;
+}
+body.theme-cute .study-quiz-question-text {
+    color: var(--cute-text) !important;
+    font-weight: 600 !important;
+}
+body.theme-cute .study-quiz-counter {
+    color: var(--cute-text-light) !important;
+}
+body.theme-cute .study-quiz-option {
+    border: 1px solid var(--cute-border) !important;
+    border-radius: var(--cute-radius-sm) !important;
+    background: #fff !important;
+}
+body.theme-cute .study-quiz-option:hover {
+    border-color: var(--cute-accent) !important;
+}
+body.theme-cute .study-quiz-option.correct {
+    border-color: var(--cute-accent) !important;
+    background: var(--cute-accent-light) !important;
+}
+body.theme-cute .study-quiz-option.wrong {
+    border-color: rgba(250,81,81,0.3) !important;
+    background: rgba(250,81,81,0.05) !important;
+}
+body.theme-cute .study-quiz-option.selected {
+    border-color: var(--cute-accent) !important;
+}
+body.theme-cute .study-quiz-option-label {
+    border-color: var(--cute-border) !important;
+    border-radius: 50% !important;
+}
+body.theme-cute .study-quiz-option.correct .study-quiz-option-label {
+    background: var(--cute-accent) !important;
+    color: #fff !important;
+}
+body.theme-cute .study-quiz-option.wrong .study-quiz-option-label {
+    background: rgba(250,81,81,0.6) !important;
+    color: #fff !important;
+}
+body.theme-cute .study-quiz-score .score-num {
+    color: var(--cute-accent) !important;
+    font-weight: 700 !important;
+}
+body.theme-cute .study-quiz-score .score-label {
+    color: var(--cute-text-light) !important;
+}
+
+/* 学习小测弹窗（聊天中弹出） */
+body.theme-cute .study-quiz-popup {
+    background: rgba(100,90,110,0.3) !important;
+}
+body.theme-cute .study-quiz-popup-content {
+    background: #fff !important;
+    border: 1px solid var(--cute-border) !important;
+    border-radius: var(--cute-radius) !important;
+    box-shadow: 0 8px 32px rgba(200,190,210,0.2) !important;
+}
+body.theme-cute .study-quiz-popup-header {
+    background: linear-gradient(135deg, var(--cute-accent), var(--cute-pink)) !important;
+    color: #fff !important;
+    font-weight: 700 !important;
+    padding: 12px 16px !important;
+}
+body.theme-cute .study-quiz-popup-close {
+    background: rgba(255,255,255,0.2) !important;
+}
+body.theme-cute .study-quiz-popup-question {
+    color: var(--cute-text) !important;
+    border-bottom-color: var(--cute-border) !important;
+}
+body.theme-cute .study-quiz-popup-result {
+    border-top-color: var(--cute-border) !important;
+}
+body.theme-cute .study-quiz-popup-result.correct {
+    background: var(--cute-accent-light) !important;
+    color: var(--cute-text) !important;
+}
+body.theme-cute .study-quiz-popup-result.wrong {
+    background: rgba(250,81,81,0.05) !important;
+    color: rgba(200,50,50,0.8) !important;
+}
+body.theme-cute .study-quiz-popup-input button {
+    background: linear-gradient(135deg, var(--cute-accent), var(--cute-pink)) !important;
+    color: #fff !important;
+    border-radius: 20px !important;
+}
+body.theme-cute .study-quiz-popup-input input {
+    border: 1.5px solid var(--cute-border) !important;
+    border-radius: var(--cute-radius-xs) !important;
+}
+
+/* 网课学习聊天 */
+body.theme-cute .study-lecture-msgs {
+    padding-bottom: 64px !important;
+}
+body.theme-cute .study-lecture-msg {
+    font-family: inherit !important;
+    border-radius: var(--cute-radius) !important;
+}
+body.theme-cute .study-lecture-msg.teacher {
+    background: #fff !important;
+    border: 1px solid var(--cute-border) !important;
+    border-radius: 2px var(--cute-radius) var(--cute-radius) var(--cute-radius) !important;
+    color: var(--cute-text) !important;
+}
+body.theme-cute .study-lecture-msg.student {
+    background: linear-gradient(135deg, #fdf0f4, #fce8ef) !important;
+    color: var(--cute-text) !important;
+    border-radius: var(--cute-radius) 2px var(--cute-radius) var(--cute-radius) !important;
+}
+body.theme-cute .study-lecture-msg.system {
+    background: var(--cute-accent-light) !important;
+    color: var(--cute-text-light) !important;
+    font-size: 11px !important;
+    border-radius: 20px !important;
+}
+body.theme-cute .study-lecture-msg.quiz-inline {
+    background: rgba(232,160,184,0.08) !important;
+    color: var(--cute-text) !important;
+    border: 1px solid var(--cute-border) !important;
+    border-radius: var(--cute-radius-sm) !important;
+}
+
+/* 网课输入栏 */
+body.theme-cute .study-lecture-input-bar {
+    background: rgba(255,255,255,0.96) !important;
+    border-top: 1px solid var(--cute-border) !important;
+    box-shadow: 0 -2px 10px var(--cute-shadow) !important;
+}
+body.theme-cute .study-lecture-input-bar input {
+    border: 1.5px solid var(--cute-border) !important;
+    border-radius: 20px !important;
+    background: var(--cute-bg) !important;
+    font-family: inherit !important;
+    color: var(--cute-text) !important;
+}
+body.theme-cute .study-lecture-input-bar input:focus {
+    border-color: var(--cute-accent) !important;
+    background: #fff !important;
+}
+body.theme-cute .study-lecture-input-bar button {
+    background: linear-gradient(135deg, var(--cute-accent), var(--cute-pink)) !important;
+    color: #fff !important;
+    border-radius: 20px !important;
+    font-weight: 600 !important;
+}
+
+/* 讲师选择 */
+body.theme-cute .study-teacher-item {
+    border: 1px solid var(--cute-border) !important;
+    border-radius: var(--cute-radius-sm) !important;
+}
+body.theme-cute .study-teacher-item.selected {
+    border-color: var(--cute-accent) !important;
+    background: var(--cute-accent-light) !important;
+}
+body.theme-cute .study-teacher-item img {
+    border: 1px solid var(--cute-border) !important;
+    border-radius: 50% !important;
+}
+body.theme-cute .study-teacher-item .teacher-name {
+    color: var(--cute-text) !important;
+    font-weight: 600 !important;
+}
+body.theme-cute .study-teacher-item .teacher-persona {
+    color: var(--cute-text-light) !important;
+}
+
+/* 资料选择 */
+body.theme-cute .study-material-select {
+    border: 1px solid var(--cute-border) !important;
+    border-radius: var(--cute-radius-sm) !important;
+    background: #fff !important;
+    box-shadow: none !important;
+}
+body.theme-cute .study-material-select.selected {
+    border-color: var(--cute-accent) !important;
+    background: var(--cute-accent-light) !important;
+}

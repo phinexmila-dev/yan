@@ -1,0 +1,272 @@
+/* ====== 情侣生活中心 - 黑白极简 (styles-couple-life.css) ====== */
+
+/* 页面容器 */
+.cl-page {
+    display: flex; flex-direction: column;
+    height: 100vh; height: 100dvh; height: -webkit-fill-available;
+    background: #fff;
+    /* [FIX-iOS底部栏] 确保页面不超出可视区域 */
+    max-height: 100vh; max-height: 100dvh; max-height: -webkit-fill-available;
+    overflow: hidden;
+    position: relative;
+}
+
+/* 顶栏 */
+.cl-topbar {
+    display: flex; align-items: center; padding: 14px 16px;
+    background: #fff; border-bottom: 1px solid #f0f0f0;
+    flex-shrink: 0;
+}
+.cl-topbar-back {
+    width: 32px; height: 32px; display: flex; align-items: center;
+    justify-content: center; cursor: pointer; color: #333;
+    border-radius: 50%; transition: background 0.15s;
+}
+.cl-topbar-back:active { background: #f5f5f5; }
+.cl-topbar-title {
+    flex: 1; font-size: 17px; font-weight: 600; color: #000;
+    text-align: center; margin-right: 32px;
+}
+.cl-topbar-actions { width: 32px; }
+
+/* 主体 */
+.cl-body {
+    flex: 1; overflow-y: auto; -webkit-overflow-scrolling: touch;
+    background: #f7f7f7;
+    /* [FIX-iOS底部栏] min-height:0 防止flex子元素溢出导致底部栏被推出屏幕 */
+    min-height: 0;
+}
+
+/* ====== 底部Tab导航 ====== */
+.cl-tab-bar {
+    display: flex; border-top: 1px solid #f0f0f0;
+    background: #fff; padding: 6px 0 2px; flex-shrink: 0;
+    /* [FIX-iOS底部栏] 兼容旧版iOS的-webkit-前缀 + 确保底部栏始终可见 */
+    padding-bottom: max(2px, env(safe-area-inset-bottom, 0px));
+    padding-bottom: max(2px, constant(safe-area-inset-bottom));
+    padding-bottom: max(2px, env(safe-area-inset-bottom, 0px));
+    z-index: 10;
+    position: relative;
+}
+.cl-tab {
+    flex: 1; display: flex; flex-direction: column; align-items: center;
+    gap: 3px; padding: 6px 0; cursor: pointer; color: #999;
+    transition: color 0.2s;
+}
+.cl-tab.active { color: #000; }
+.cl-tab svg { transition: stroke 0.2s; }
+.cl-tab.active svg { stroke-width: 2.2; }
+.cl-tab-icon { height: 24px; display: flex; align-items: center; justify-content: center; }
+.cl-tab-label { font-size: 10px; font-weight: 500; }
+
+/* ====== 日历Tab ====== */
+.cl-cal-section {
+    background: #fff; margin: 0 0 8px;
+}
+.cl-cal-month-bar {
+    display: flex; align-items: center; justify-content: center;
+    padding: 14px 16px; gap: 16px;
+}
+.cl-cal-month-arrow {
+    width: 32px; height: 32px; display: flex; align-items: center;
+    justify-content: center; cursor: pointer; color: #666;
+    border-radius: 50%; background: #f5f5f5; transition: background 0.15s;
+}
+.cl-cal-month-arrow:active { background: #eee; }
+.cl-cal-month-title {
+    font-size: 16px; font-weight: 600; color: #000;
+    min-width: 110px; text-align: center;
+}
+.cl-cal-today-btn {
+    width: 32px; height: 32px; display: flex; align-items: center;
+    justify-content: center; cursor: pointer; color: #666;
+    border-radius: 50%; background: #f5f5f5; transition: background 0.15s;
+}
+.cl-cal-today-btn:active { background: #eee; }
+
+.cl-cal-weekdays {
+    display: grid; grid-template-columns: repeat(7, 1fr);
+    padding: 4px 12px; border-bottom: 1px solid #f8f8f8;
+}
+.cl-cal-weekdays span {
+    text-align: center; font-size: 12px; color: #aaa;
+    padding: 4px 0; font-weight: 500;
+}
+
+.cl-cal-grid {
+    display: grid; grid-template-columns: repeat(7, 1fr);
+    padding: 6px 12px 12px; gap: 2px;
+}
+.cl-cal-day {
+    position: relative; text-align: center; padding: 10px 0;
+    font-size: 14px; color: #333; cursor: pointer;
+    border-radius: 50%; width: 38px; height: 38px;
+    display: flex; align-items: center; justify-content: center;
+    margin: 0 auto; transition: all 0.15s;
+}
+.cl-cal-day:active { background: #f5f5f5; }
+.cl-cal-other { color: #ddd; }
+.cl-cal-today {
+    background: #000; color: #fff; font-weight: 700;
+}
+.cl-cal-selected {
+    outline: 2px solid #000; outline-offset: 1px;
+}
+.cl-cal-today.cl-cal-selected { outline: none; }
+.cl-cal-dot {
+    width: 4px; height: 4px; border-radius: 50%; background: #000;
+    position: absolute; bottom: 2px; left: 50%; transform: translateX(-50%);
+}
+.cl-cal-today .cl-cal-dot { background: rgba(255,255,255,0.7); }
+
+/* 事件头 */
+.cl-events-header {
+    display: flex; align-items: center; padding: 14px 16px 8px;
+    background: #f7f7f7; gap: 8px;
+}
+.cl-events-date { font-size: 15px; font-weight: 600; color: #000; }
+.cl-events-count { font-size: 12px; color: #999; flex: 1; }
+
+/* 事件列表 */
+.cl-events-list { padding: 0 16px 16px; }
+.cl-empty {
+    text-align: center; padding: 40px 0; color: #bbb;
+    font-size: 14px;
+}
+
+.cl-event-item {
+    display: flex; background: #fff; border-radius: 12px;
+    margin-bottom: 8px; overflow: hidden;
+    border: 1px solid #f0f0f0;
+}
+.cl-event-stripe {
+    width: 3px; background: #000; flex-shrink: 0;
+}
+.cl-event-body { flex: 1; padding: 12px 14px; }
+.cl-event-title { font-size: 14px; font-weight: 600; color: #000; }
+.cl-event-time { font-size: 12px; color: #999; margin-top: 2px; }
+.cl-event-desc { font-size: 12px; color: #888; margin-top: 3px; }
+.cl-event-tag {
+    display: inline-block; font-size: 11px; color: #999;
+    background: #f5f5f5; padding: 2px 8px; border-radius: 10px;
+    margin-top: 6px;
+}
+
+/* ====== 子模块内容容器 ====== */
+.cl-sub-content {
+    padding: 0;
+}
+.cl-sub-scroll {
+    padding: 16px;
+}
+
+/* 覆盖子模块中的导航栏样式（隐藏冗余nav） */
+.cl-sub-content .cl-nav,
+.cl-sub-content .cc-nav,
+.cl-sub-content > .nav-bar {
+    display: none !important;
+}
+.cl-sub-content .cl-container,
+.cl-sub-content .cc-container,
+.cl-sub-content .schedule-container {
+    height: auto !important;
+}
+
+/* ====== 经期模块 黑白覆盖 ====== */
+.cl-sub-content .group-box {
+    background: #fff; border-radius: 16px;
+    border: 1px solid #f0f0f0; margin-bottom: 12px;
+    box-shadow: none;
+}
+.cl-sub-content .form-cell {
+    padding: 14px 16px; border-bottom: 1px solid #f8f8f8;
+}
+.cl-sub-content .form-cell:last-child { border-bottom: none; }
+.cl-sub-content .switch input:checked + .slider {
+    background: #000;
+}
+
+/* ====== 纪念日模块 黑白覆盖 ====== */
+.cl-sub-content .anni-card,
+.cl-sub-content [style*="border-radius"][style*="background"] {
+    border: 1px solid #f0f0f0 !important;
+    box-shadow: none !important;
+}
+
+/* ====== 账本模块 黑白覆盖 ====== */
+.cl-sub-content .cl-tabs {
+    border-bottom: 1px solid #f0f0f0;
+}
+.cl-sub-content .cl-tab.active {
+    color: #000; border-bottom-color: #000;
+}
+.cl-sub-content .cl-month-bar {
+    background: #fff;
+}
+
+/* ====== 添加按钮 ====== */
+.cl-events-add-btn {
+    width: 28px; height: 28px; display: flex; align-items: center;
+    justify-content: center; cursor: pointer; color: #fff;
+    background: #000; border-radius: 50%; flex-shrink: 0;
+    transition: opacity 0.15s;
+}
+.cl-events-add-btn:active { opacity: 0.7; }
+
+/* ====== 弹窗 Overlay ====== */
+.cl-modal-overlay {
+    position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(0,0,0,0.45); z-index: 100;
+    display: flex; align-items: center; justify-content: center;
+    padding: 24px;
+}
+.cl-modal-panel {
+    background: #fff; border-radius: 16px; padding: 20px;
+    width: 100%; max-width: 340px;
+    border: 1px solid #e0e0e0;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.12);
+}
+.cl-modal-header {
+    display: flex; align-items: center; justify-content: space-between;
+    margin-bottom: 16px;
+}
+.cl-modal-title { font-size: 16px; font-weight: 600; color: #000; }
+.cl-modal-close {
+    width: 32px; height: 32px; display: flex; align-items: center;
+    justify-content: center; cursor: pointer; color: #666;
+    border-radius: 50%; transition: background 0.15s;
+}
+.cl-modal-close:active { background: #f0f0f0; }
+
+/* ====== 添加/编辑表单（弹窗内） ====== */
+
+.cl-add-type-bar {
+    display: flex; gap: 8px; margin-bottom: 12px;
+}
+.cl-add-type-btn {
+    flex: 1; text-align: center; padding: 6px 0; font-size: 13px;
+    border-radius: 8px; cursor: pointer; color: #999;
+    background: #f5f5f5; transition: all 0.15s; font-weight: 500;
+}
+.cl-add-type-btn.active { background: #000; color: #fff; }
+
+.cl-add-input {
+    display: block; width: 100%; box-sizing: border-box;
+    padding: 10px 12px; margin-bottom: 8px; font-size: 14px;
+    border: 1px solid #e8e8e8; border-radius: 8px; outline: none;
+    background: #fafafa; color: #333; transition: border-color 0.15s;
+}
+.cl-add-input:focus { border-color: #000; background: #fff; }
+
+.cl-add-save-btn {
+    display: block; width: 100%; padding: 10px 0; font-size: 14px;
+    font-weight: 600; color: #fff; background: #000; border: none;
+    border-radius: 8px; cursor: pointer; margin-top: 4px;
+    transition: opacity 0.15s;
+}
+.cl-add-save-btn:active { opacity: 0.7; }
+
+/* 事件操作按钮 */
+.cl-event-actions {
+    display: flex; gap: 2px; flex-shrink: 0;
+}

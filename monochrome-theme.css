@@ -1,0 +1,2129 @@
+/* ===== 全局主题：高级极简黑白风 (Monochrome Premium) ===== */
+/* 纯白实色卡片 · 大圆角 · 纯黑主按钮 · 高对比度 · 大留白 · 粗体标题 */
+/* 当 body 添加 .theme-mono 类时激活此主题 */
+
+/* ===== 全局基础变量 ===== */
+body.theme-mono {
+    /* —— 背景 & 容器 —— */
+    --mo-bg: #f1f1f2;                                 /* 整体底色，稍灰的中性色 */
+    --mo-bg-elevated: #ffffff;                        /* 卡片底色 */
+    --mo-bg-sunken: #e8e8ea;                          /* 凹陷区底色（输入框等） */
+    --mo-bg-soft: #f6f6f7;                            /* 轻量背景 */
+
+    /* —— 主色系 (高对比纯黑白) —— */
+    --mo-ink: #0a0a0a;                                /* 主文字/主按钮 */
+    --mo-ink-soft: #1a1a1a;                           /* 稍软的黑 */
+    --mo-text: #0a0a0a;                               /* 主文字 */
+    --mo-text-secondary: #65656b;                     /* 次要文字 */
+    --mo-text-tertiary: #a1a1a8;                      /* 三级文字 */
+    --mo-text-disabled: #c5c5ca;                      /* 禁用/占位 */
+
+    /* —— 边框 & 分隔线 —— */
+    --mo-border: rgba(0, 0, 0, 0.06);                 /* 轻边框 */
+    --mo-border-strong: rgba(0, 0, 0, 0.12);          /* 强边框 */
+    --mo-border-ink: #0a0a0a;                         /* 实心黑边框（描边按钮） */
+    --mo-divider: rgba(0, 0, 0, 0.05);                /* 分隔线 */
+
+    /* —— 阴影（更柔更深，突出卡片） —— */
+    --mo-shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.04);
+    --mo-shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.05);
+    --mo-shadow: 0 4px 16px rgba(0, 0, 0, 0.06), 0 1px 3px rgba(0, 0, 0, 0.04);
+    --mo-shadow-lg: 0 10px 30px rgba(0, 0, 0, 0.08), 0 2px 6px rgba(0, 0, 0, 0.04);
+    --mo-shadow-xl: 0 20px 50px rgba(0, 0, 0, 0.12), 0 4px 12px rgba(0, 0, 0, 0.06);
+    --mo-shadow-ink: 0 6px 20px rgba(0, 0, 0, 0.22);  /* 黑按钮阴影 */
+
+    /* —— 圆角（明显比韩系大，图片风格感） —— */
+    --mo-radius-xs: 10px;
+    --mo-radius-sm: 14px;
+    --mo-radius: 18px;                                /* 卡片主圆角 */
+    --mo-radius-lg: 22px;
+    --mo-radius-xl: 28px;
+    --mo-radius-pill: 999px;                          /* 胶囊按钮 */
+
+    /* —— 字体（几何无衬线，现代感） —— */
+    --mo-font: 'Inter', -apple-system, 'SF Pro Display', 'Pretendard', 'PingFang SC',
+               'Helvetica Neue', 'Segoe UI', Roboto, sans-serif;
+    --mo-font-mono: 'JetBrains Mono', 'SF Mono', 'Menlo', monospace;
+
+    /* —— 交互 —— */
+    --mo-hover: rgba(0, 0, 0, 0.04);
+    --mo-active: rgba(0, 0, 0, 0.08);
+    --mo-focus-ring: 0 0 0 3px rgba(0, 0, 0, 0.08);
+
+    /* —— 间距 —— */
+    --mo-gap-card: 14px;                              /* 卡片间距 */
+    --mo-gap-inner: 16px;                             /* 卡片内边距 */
+}
+
+/* ===== 全局字体应用 ===== */
+body.theme-mono,
+body.theme-mono input,
+body.theme-mono textarea,
+body.theme-mono select,
+body.theme-mono button {
+    font-family: var(--mo-font) !important;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+/* ===== 全局layer背景 ===== */
+body.theme-mono .layer:not(#layer-voice-call):not(#layer-video-call) {
+    background: var(--mo-bg) !important;
+}
+
+/* ============================================================
+   1. 聊天界面
+   ============================================================ */
+
+/* 聊天导航栏 */
+body.theme-mono #layer-chat > .nav-bar#chat-nav-bar {
+    background: var(--chat-nav-bg, var(--mo-bg-elevated)) !important;
+    border-bottom: var(--chat-nav-border, 1px solid var(--mo-border)) !important;
+    box-shadow: var(--chat-nav-shadow, var(--mo-shadow-xs)) !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+}
+body.theme-mono #layer-chat > .nav-bar#chat-nav-bar .nav-title {
+    font-family: var(--chat-nav-font, var(--mo-font)) !important;
+    font-weight: var(--chat-nav-font-weight, 700) !important;
+    letter-spacing: -0.4px !important;
+    color: var(--chat-nav-color, var(--mo-text)) !important;
+    font-size: var(--chat-nav-font-size, 18px) !important;
+}
+body.theme-mono #layer-chat > .nav-bar#chat-nav-bar .nav-icon {
+    color: var(--chat-nav-icon-color, var(--mo-text)) !important;
+}
+body.theme-mono #layer-chat > .nav-bar#chat-nav-bar .nav-icon:active {
+    opacity: 0.4 !important;
+    transform: scale(0.88) !important;
+}
+
+/* 聊天历史背景 */
+body.theme-mono #chat-history:not(.has-custom-bg) {
+    background: var(--mo-bg) !important;
+    background-image: none !important;
+}
+body.theme-mono #chat-history.has-custom-bg {
+    background-color: transparent !important;
+    background-image: none;
+}
+body.theme-mono #layer-chat {
+    background: var(--mo-bg) !important;
+}
+
+/* 聊天气泡 */
+body.theme-mono:not(.has-custom-bubble-css) #layer-chat .bubble {
+    border: none !important;
+    border-radius: var(--mo-radius) !important;
+    box-shadow: var(--mo-shadow-sm) !important;
+    font-family: var(--mo-font) !important;
+    color: var(--mo-text) !important;
+    position: relative;
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+    overflow: visible !important;
+    padding: 12px 16px !important;
+}
+/* 对方气泡：白底 */
+body.theme-mono:not(.has-custom-bubble-css) #layer-chat .msg-row:not(.me) .bubble {
+    background: var(--mo-bg-elevated) !important;
+    border: none !important;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05) !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+}
+body.theme-mono:not(.has-custom-bubble-css) #layer-chat .msg-row:not(.me) .bubble::before {
+    border-right-color: var(--mo-bg-elevated) !important;
+}
+/* 自己气泡：纯黑底白字 */
+body.theme-mono:not(.has-custom-bubble-css) #layer-chat .msg-row.me .bubble {
+    background: var(--mo-ink) !important;
+    color: #fff !important;
+    border: none !important;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.18) !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+}
+body.theme-mono:not(.has-custom-bubble-css) #layer-chat .msg-row.me .bubble * {
+    color: #fff !important;
+}
+body.theme-mono:not(.has-custom-bubble-css) #layer-chat .msg-row.me .bubble::after {
+    border-left-color: var(--mo-ink) !important;
+}
+/* 气泡按压 */
+body.theme-mono:not(.has-custom-bubble-css) #layer-chat .bubble:active {
+    transform: scale(0.98) !important;
+}
+/* 气泡内图片 */
+body.theme-mono:not(.has-custom-bubble-css) #layer-chat .bubble img:not(.emoji-img) {
+    border: none !important;
+    border-radius: var(--mo-radius-sm) !important;
+    filter: none !important;
+}
+/* 图片气泡 */
+body.theme-mono:not(.has-custom-bubble-css) #layer-chat .bubble:has(img:not(.emoji-img)):not(.voice) {
+    background: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+    padding: 0 !important;
+}
+body.theme-mono:not(.has-custom-bubble-css) #layer-chat .msg-row:not(.me) .bubble:has(img):not(.voice) {
+    margin-left: 6px;
+}
+body.theme-mono:not(.has-custom-bubble-css) #layer-chat .msg-row.me .bubble:has(img):not(.voice) {
+    margin-right: 6px;
+}
+
+/* 头像 */
+body.theme-mono:not(.has-custom-bubble-css) #layer-chat .avatar-wrapper-chat .avatar,
+body.theme-mono:not(.has-custom-bubble-css) #layer-chat .msg-row .avatar {
+    border: none !important;
+    border-radius: 50% !important;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08) !important;
+    filter: none !important;
+}
+
+/* 时间分隔线 & 标签 */
+body.theme-mono:not(.has-custom-bubble-css) #layer-chat .time-divider,
+body.theme-mono:not(.has-custom-bubble-css) #layer-chat .msg-row .time-label {
+    font-family: var(--mo-font) !important;
+    color: var(--mo-text-tertiary) !important;
+    letter-spacing: 0.2px;
+    font-size: 11px;
+    font-weight: 500;
+}
+body.theme-mono:not(.has-custom-bubble-css) #layer-chat .avatar-time-label,
+body.theme-mono:not(.has-custom-bubble-css) #layer-chat .bubble-time-label {
+    font-family: var(--mo-font) !important;
+    color: var(--mo-text-tertiary) !important;
+    font-size: 10px;
+    font-weight: 500;
+}
+
+/* 聊天输入栏 悬浮胶囊 */
+body.theme-mono #layer-chat .input-bar,
+body.theme-mono #chat-input-bar {
+    background: var(--chat-input-bg, var(--mo-bg-elevated)) !important;
+    border-top: none !important;
+    border: var(--chat-input-border, 1px solid var(--mo-border)) !important;
+    border-radius: var(--chat-input-radius, 26px) !important;
+    box-shadow: var(--chat-input-shadow, 0 2px 12px rgba(0, 0, 0, 0.04), 0 0 0 0.5px var(--mo-border)) !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+}
+/* 输入框 - 凹陷感 */
+body.theme-mono #layer-chat .input-field,
+body.theme-mono #chat-input {
+    border: none !important;
+    border-radius: var(--mo-radius-pill) !important;
+    background: var(--mo-bg-sunken) !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+    font-family: var(--mo-font) !important;
+    color: var(--mo-text) !important;
+    padding: 10px 16px !important;
+}
+body.theme-mono #layer-chat .input-field:focus,
+body.theme-mono #chat-input:focus {
+    outline: none !important;
+    background: var(--mo-bg-elevated) !important;
+    box-shadow: var(--mo-focus-ring) !important;
+}
+/* 输入栏按钮 */
+body.theme-mono #layer-chat .btn-act {
+    color: var(--mo-text-secondary) !important;
+    transition: transform 0.15s !important;
+}
+body.theme-mono #layer-chat .btn-act:active {
+    transform: scale(0.82) !important;
+    color: var(--mo-text) !important;
+}
+/* 发送按钮 - 纯黑圆形 */
+body.theme-mono #layer-chat .btn-send {
+    color: var(--mo-text) !important;
+    font-weight: 700 !important;
+}
+body.theme-mono #layer-chat .btn-send:active {
+    transform: scale(0.82) !important;
+}
+body.theme-mono #layer-chat .btn-gen {
+    color: var(--mo-text-secondary) !important;
+}
+body.theme-mono #layer-chat .btn-thought {
+    color: var(--mo-text-secondary) !important;
+}
+/* 工具栏 */
+body.theme-mono #layer-chat .toolbar {
+    background: var(--mo-bg-elevated) !important;
+    border-top: 1px solid var(--mo-border) !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+}
+body.theme-mono #layer-chat .toolbar i {
+    color: var(--mo-text-secondary) !important;
+    transition: all 0.15s !important;
+}
+body.theme-mono #layer-chat .toolbar i:active {
+    transform: scale(0.82) !important;
+    color: var(--mo-text) !important;
+}
+
+/* 引用预览条 */
+body.theme-mono #layer-chat .quote-preview {
+    background: var(--mo-bg-soft) !important;
+    border: none !important;
+    border-left: 3px solid var(--mo-ink) !important;
+    border-radius: var(--mo-radius-xs) !important;
+    color: var(--mo-text-secondary) !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+    font-size: 12px !important;
+}
+
+/* 消息弹出菜单 - 深色浮层（图片风格） */
+body.theme-mono #layer-chat .pop-menu {
+    background: var(--mo-bg-elevated) !important;
+    border: none !important;
+    box-shadow: var(--mo-shadow-xl) !important;
+    border-radius: var(--mo-radius-sm) !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+    overflow: hidden !important;
+}
+body.theme-mono #layer-chat .pop-opt {
+    color: var(--mo-text) !important;
+    font-family: var(--mo-font) !important;
+    font-weight: 500 !important;
+    letter-spacing: -0.1px !important;
+    border-bottom: 1px solid var(--mo-divider) !important;
+    padding: 12px 16px !important;
+}
+body.theme-mono #layer-chat .pop-opt:last-child {
+    border-bottom: none !important;
+}
+body.theme-mono #layer-chat .pop-opt:active {
+    background: var(--mo-active) !important;
+    color: var(--mo-text) !important;
+}
+
+/* 语音气泡 */
+body.theme-mono:not(.has-custom-bubble-css) #layer-chat .bubble.voice .voice-wave-anim span {
+    background: var(--mo-text-secondary) !important;
+}
+body.theme-mono:not(.has-custom-bubble-css) #layer-chat .msg-row.me .bubble.voice .voice-wave-anim span {
+    background: #fff !important;
+}
+body.theme-mono:not(.has-custom-bubble-css) #layer-chat .bubble.voice .voice-sec {
+    color: var(--mo-text-secondary) !important;
+}
+body.theme-mono:not(.has-custom-bubble-css) #layer-chat .msg-row.me .bubble.voice .voice-sec {
+    color: rgba(255,255,255,0.7) !important;
+}
+
+/* 撤回消息 */
+body.theme-mono:not(.has-custom-bubble-css) #layer-chat .bubble.recalled {
+    background: transparent !important;
+    border: 1px dashed var(--mo-border-strong) !important;
+    box-shadow: none !important;
+    color: var(--mo-text-tertiary) !important;
+    font-size: 12px !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+}
+
+/* 多选模式 */
+body.theme-mono #chat-select-bar {
+    background: var(--mo-bg-elevated) !important;
+    border-bottom: 1px solid var(--mo-border) !important;
+    color: var(--mo-text) !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+}
+
+/* 转账气泡 */
+body.theme-mono:not(.has-custom-bubble-css) #layer-chat .bubble-transfer {
+    border: none !important;
+    border-radius: var(--mo-radius) !important;
+    box-shadow: var(--mo-shadow-sm) !important;
+    background: var(--mo-bg-elevated) !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+    overflow: hidden !important;
+}
+body.theme-mono:not(.has-custom-bubble-css) #layer-chat .bubble-transfer .transfer-top {
+    background: var(--mo-ink) !important;
+    border-bottom: none !important;
+    border-radius: var(--mo-radius) var(--mo-radius) 0 0 !important;
+    color: #fff !important;
+}
+body.theme-mono:not(.has-custom-bubble-css) #layer-chat .bubble-transfer .transfer-top * {
+    color: #fff !important;
+}
+body.theme-mono:not(.has-custom-bubble-css) #layer-chat .bubble-transfer .transfer-amt {
+    color: #fff !important;
+    font-weight: 700 !important;
+}
+body.theme-mono:not(.has-custom-bubble-css) #layer-chat .bubble-transfer .transfer-desc {
+    color: rgba(255,255,255,0.7) !important;
+}
+body.theme-mono:not(.has-custom-bubble-css) #layer-chat .bubble-transfer .transfer-bottom {
+    background: var(--mo-bg-soft) !important;
+    color: var(--mo-text-secondary) !important;
+    border-top: none !important;
+    font-size: 11px !important;
+    border-radius: 0 0 var(--mo-radius) var(--mo-radius) !important;
+}
+
+/* 红包气泡 */
+body.theme-mono:not(.has-custom-bubble-css) #layer-chat .bubble-redpacket {
+    border: none !important;
+    border-radius: var(--mo-radius) !important;
+    box-shadow: var(--mo-shadow-sm) !important;
+    background: var(--mo-bg-elevated) !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+    overflow: hidden !important;
+}
+body.theme-mono:not(.has-custom-bubble-css) #layer-chat .bubble-redpacket .rp-top {
+    background: var(--mo-ink) !important;
+    border-bottom: none !important;
+    border-radius: var(--mo-radius) var(--mo-radius) 0 0 !important;
+    backdrop-filter: none !important;
+}
+body.theme-mono:not(.has-custom-bubble-css) #layer-chat .bubble-redpacket .rp-greeting {
+    color: #fff !important;
+    font-weight: 600 !important;
+    letter-spacing: -0.2px !important;
+}
+body.theme-mono:not(.has-custom-bubble-css) #layer-chat .bubble-redpacket .rp-status {
+    color: rgba(255,255,255,0.6) !important;
+}
+body.theme-mono:not(.has-custom-bubble-css) #layer-chat .bubble-redpacket .rp-bottom {
+    background: var(--mo-bg-soft) !important;
+    color: var(--mo-text-secondary) !important;
+    border-top: none !important;
+    font-size: 11px !important;
+    border-radius: 0 0 var(--mo-radius) var(--mo-radius) !important;
+}
+body.theme-mono:not(.has-custom-bubble-css) #layer-chat .bubble-redpacket.rp-done .rp-top {
+    background: #4a4a4a !important;
+}
+
+/* 共享帖子气泡 */
+body.theme-mono:not(.has-custom-bubble-css) #layer-chat .bubble-shared-post {
+    border: none !important;
+    border-radius: var(--mo-radius) !important;
+    box-shadow: var(--mo-shadow-sm) !important;
+    background: var(--mo-bg-elevated) !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+    overflow: hidden !important;
+}
+
+/* 滚动到底部按钮 */
+body.theme-mono #chat-scroll-bottom-btn {
+    background: var(--mo-ink) !important;
+    border: none !important;
+    border-radius: 50% !important;
+    box-shadow: var(--mo-shadow-ink) !important;
+    color: #fff !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+}
+body.theme-mono #chat-scroll-bottom-btn:active {
+    transform: scale(0.88) !important;
+}
+
+/* 共读状态栏 */
+body.theme-mono #chat-read-banner {
+    background: var(--mo-bg-elevated) !important;
+    border-bottom: 1px solid var(--mo-border) !important;
+    color: var(--mo-text) !important;
+    letter-spacing: -0.1px !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+}
+
+/* 气泡引用 - 上下结构 */
+body.theme-mono:not(.has-custom-bubble-css) #layer-chat .bubble-quote {
+    background: var(--mo-bg-soft) !important;
+    border-left: none !important;
+    color: var(--mo-text-secondary) !important;
+    border-radius: var(--mo-radius-xs) !important;
+    font-size: 12px !important;
+}
+body.theme-mono:not(.has-custom-bubble-css) #layer-chat .msg-row.me .bubble-quote {
+    background: rgba(255,255,255,0.15) !important;
+    border-left: none !important;
+    color: rgba(255,255,255,0.8) !important;
+}
+
+/* 心声气泡 */
+body.theme-mono:not(.has-custom-bubble-css) #layer-chat .thought-bubble {
+    border: 1px dashed var(--mo-border-strong) !important;
+    background: var(--mo-bg-soft) !important;
+    border-radius: var(--mo-radius) !important;
+    box-shadow: none !important;
+    color: var(--mo-text-secondary) !important;
+    font-style: italic !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+}
+
+/* 表情面板 */
+body.theme-mono #layer-chat .sticker-panel {
+    background: var(--mo-bg-elevated) !important;
+    border-top: 1px solid var(--mo-border) !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+}
+
+/* ============================================================
+   2. 聊天设置页面
+   ============================================================ */
+body.theme-mono #layer-chat-settings .nav-bar {
+    background: var(--mo-bg-elevated) !important;
+    border-bottom: 1px solid var(--mo-border) !important;
+    box-shadow: var(--mo-shadow-xs) !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+}
+body.theme-mono #layer-chat-settings > .scroll-y {
+    background: var(--mo-bg) !important;
+    background-image: none !important;
+}
+body.theme-mono #layer-chat-settings .nav-bar .nav-title {
+    font-family: var(--mo-font) !important;
+    font-weight: 700 !important;
+    color: var(--mo-text) !important;
+    letter-spacing: -0.4px !important;
+    font-size: 18px !important;
+}
+body.theme-mono #layer-chat-settings .nav-bar .nav-icon {
+    color: var(--mo-text) !important;
+}
+body.theme-mono #layer-chat-settings .group-box {
+    border: none !important;
+    border-radius: var(--mo-radius) !important;
+    box-shadow: var(--mo-shadow-sm) !important;
+    margin: 14px 14px !important;
+    background: var(--mo-bg-elevated) !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+    overflow: hidden !important;
+}
+body.theme-mono #layer-chat-settings .group-box::after,
+body.theme-mono #layer-chat-settings .group-box::before {
+    display: none !important;
+}
+body.theme-mono #layer-chat-settings .form-cell {
+    border-bottom: 1px solid var(--mo-divider) !important;
+    padding: 14px 16px !important;
+}
+body.theme-mono #layer-chat-settings .form-cell:last-child {
+    border-bottom: none !important;
+}
+body.theme-mono #layer-chat-settings .form-label {
+    font-weight: 500 !important;
+    color: var(--mo-text) !important;
+    font-family: var(--mo-font) !important;
+}
+body.theme-mono #layer-chat-settings .beauty-section-card {
+    background: var(--mo-bg-elevated) !important;
+    border: none !important;
+    border-radius: var(--mo-radius) !important;
+    box-shadow: var(--mo-shadow-sm) !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+    overflow: hidden !important;
+}
+body.theme-mono #layer-chat-settings .beauty-section-card::after {
+    display: none !important;
+}
+body.theme-mono #layer-chat-settings .beauty-section-header {
+    border-bottom: 1px solid var(--mo-divider) !important;
+    background: transparent !important;
+    font-family: var(--mo-font) !important;
+}
+body.theme-mono #layer-chat-settings .beauty-section-header span {
+    color: var(--mo-text) !important;
+    font-family: var(--mo-font) !important;
+    font-weight: 600 !important;
+}
+body.theme-mono #layer-chat-settings .beauty-section-header i {
+    color: var(--mo-text-secondary) !important;
+}
+body.theme-mono #layer-chat-settings .beauty-action-btn {
+    border: none !important;
+    border-radius: var(--mo-radius-sm) !important;
+    font-family: var(--mo-font) !important;
+    font-weight: 600 !important;
+    box-shadow: var(--mo-shadow-ink) !important;
+}
+body.theme-mono #layer-chat-settings .beauty-action-btn:active {
+    transform: scale(0.97) !important;
+    opacity: 0.85 !important;
+}
+
+/* ============================================================
+   3. 添加联系人弹窗
+   ============================================================ */
+body.theme-mono #modal-contact .modal-box {
+    background: var(--mo-bg-elevated) !important;
+    border: none !important;
+    border-radius: var(--mo-radius-lg) !important;
+    box-shadow: var(--mo-shadow-xl) !important;
+    padding: 26px 22px !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+}
+body.theme-mono #modal-contact .modal-box::before,
+body.theme-mono #modal-contact .modal-box::after {
+    display: none !important;
+}
+body.theme-mono #modal-contact .modal-box h3 {
+    font-weight: 700 !important;
+    letter-spacing: -0.4px !important;
+    color: var(--mo-text) !important;
+    font-size: 18px !important;
+    text-align: center !important;
+    padding-bottom: 14px !important;
+    margin-bottom: 18px !important;
+    font-family: var(--mo-font) !important;
+    border-bottom: 1px solid var(--mo-divider) !important;
+}
+body.theme-mono #modal-contact .modal-box h3::after {
+    display: none !important;
+}
+body.theme-mono #modal-contact .upload-box {
+    border: 2px dashed var(--mo-border-strong) !important;
+    border-radius: 50% !important;
+    box-shadow: none !important;
+    background: var(--mo-bg-soft) !important;
+}
+body.theme-mono #modal-contact .upload-box i {
+    color: var(--mo-text-secondary) !important;
+}
+body.theme-mono #modal-contact .upload-box img {
+    filter: none !important;
+}
+body.theme-mono #modal-contact input,
+body.theme-mono #modal-contact textarea {
+    border: none !important;
+    border-radius: var(--mo-radius-sm) !important;
+    background: var(--mo-bg-sunken) !important;
+    color: var(--mo-text) !important;
+    box-shadow: none !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+    padding: 10px 14px !important;
+}
+body.theme-mono #modal-contact input:focus,
+body.theme-mono #modal-contact textarea:focus {
+    outline: none !important;
+    background: var(--mo-bg-elevated) !important;
+    box-shadow: var(--mo-focus-ring) !important;
+}
+body.theme-mono #modal-contact input::placeholder,
+body.theme-mono #modal-contact textarea::placeholder {
+    color: var(--mo-text-tertiary) !important;
+}
+body.theme-mono #modal-contact .modal-box button {
+    border: none !important;
+    border-radius: var(--mo-radius-sm) !important;
+    font-weight: 600 !important;
+    cursor: pointer !important;
+    transition: all 0.15s ease !important;
+    font-family: var(--mo-font) !important;
+    letter-spacing: -0.1px !important;
+    padding: 12px 20px !important;
+}
+body.theme-mono #modal-contact .modal-btn-cancel {
+    background: var(--mo-bg-sunken) !important;
+    color: var(--mo-text) !important;
+    box-shadow: none !important;
+}
+body.theme-mono #modal-contact .modal-btn-cancel:active {
+    transform: scale(0.97) !important;
+    background: var(--mo-active) !important;
+}
+body.theme-mono #modal-contact .modal-btn-save {
+    background: var(--mo-ink) !important;
+    color: #fff !important;
+    box-shadow: var(--mo-shadow-ink) !important;
+}
+body.theme-mono #modal-contact .modal-btn-save:active {
+    transform: scale(0.97) !important;
+    opacity: 0.85 !important;
+}
+body.theme-mono #modal-contact.modal-mask {
+    background: rgba(0, 0, 0, 0.35) !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+}
+
+/* ============================================================
+   4. 联系人列表
+   ============================================================ */
+body.theme-mono #tab-contacts > .nav-bar {
+    background: var(--mo-bg-elevated) !important;
+    border-bottom: 1px solid var(--mo-border) !important;
+    box-shadow: var(--mo-shadow-xs) !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+}
+body.theme-mono #tab-contacts > .nav-bar .nav-title {
+    font-weight: 700 !important;
+    color: var(--mo-text) !important;
+    font-size: 18px !important;
+    letter-spacing: -0.4px !important;
+    font-family: var(--mo-font) !important;
+}
+body.theme-mono #tab-contacts > .nav-bar .nav-icon {
+    color: var(--mo-text) !important;
+}
+
+body.theme-mono #contact-list {
+    background: var(--mo-bg) !important;
+    background-image: none !important;
+    padding-left: 12px !important;
+    padding-right: 12px !important;
+    padding-bottom: 8px !important;
+    /* [FIX] 不覆盖padding-top，保持inline的56px给nav-bar留空间 */
+}
+
+body.theme-mono #contact-list .list-item {
+    background: var(--mo-bg-elevated) !important;
+    border: none !important;
+    border-radius: var(--mo-radius) !important;
+    box-shadow: var(--mo-shadow-xs) !important;
+    margin-bottom: 8px !important;
+    padding: 14px 16px !important;
+    transition: transform 0.15s ease !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+}
+body.theme-mono #contact-list .list-item:active {
+    transform: scale(0.99) !important;
+    box-shadow: var(--mo-shadow-xs) !important;
+}
+body.theme-mono #contact-list .list-item[style*="background: rgb(240, 240, 255)"],
+body.theme-mono #contact-list .list-item[style*="background:#f0f0ff"] {
+    background: var(--mo-bg-soft) !important;
+    border: none !important;
+    box-shadow: var(--mo-shadow-xs) !important;
+}
+body.theme-mono #contact-list .list-item .avatar {
+    border: none !important;
+    border-radius: 50% !important;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06) !important;
+    filter: none !important;
+}
+body.theme-mono #contact-list .list-item .list-title {
+    font-weight: 600 !important;
+    color: var(--mo-text) !important;
+    letter-spacing: -0.2px !important;
+    font-family: var(--mo-font) !important;
+}
+body.theme-mono #contact-list .list-item .list-sub {
+    color: var(--mo-text-secondary) !important;
+    font-size: 12px !important;
+    font-family: var(--mo-font) !important;
+}
+body.theme-mono #contact-list .list-item > i {
+    color: var(--mo-text-secondary) !important;
+}
+body.theme-mono #contact-list .list-item .fa-users {
+    color: var(--mo-text-tertiary) !important;
+}
+body.theme-mono #contact-list .list-item .fa-thumbtack {
+    color: var(--mo-ink) !important;
+}
+
+/* 右键菜单 */
+body.theme-mono .contact-menu {
+    background: var(--mo-bg-elevated) !important;
+    border: none !important;
+    border-radius: var(--mo-radius-sm) !important;
+    box-shadow: var(--mo-shadow-xl) !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+    overflow: hidden !important;
+}
+body.theme-mono .contact-menu-item {
+    color: var(--mo-text) !important;
+    border-bottom-color: var(--mo-divider) !important;
+    font-family: var(--mo-font) !important;
+    font-weight: 500 !important;
+    padding: 12px 16px !important;
+}
+body.theme-mono .contact-menu-item:active {
+    background: var(--mo-active) !important;
+    color: var(--mo-text) !important;
+}
+body.theme-mono #tab-contacts .nav-icon .fa-plus-circle {
+    color: var(--mo-text) !important;
+}
+
+/* ============================================================
+   5. 微信底部Tab栏
+   ============================================================ */
+body.theme-mono #layer-wechat > .wx-tab-bar,
+body.theme-mono .wx-tab-bar {
+    background: var(--mo-bg-elevated) !important;
+    border-top: 1px solid var(--mo-border) !important;
+    box-shadow: 0 -2px 16px rgba(0, 0, 0, 0.05) !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+}
+body.theme-mono #layer-wechat > .wx-tab-bar .nav-tab,
+body.theme-mono .wx-tab-bar .nav-tab {
+    color: var(--mo-text-tertiary) !important;
+    font-weight: 500 !important;
+    font-family: var(--mo-font) !important;
+}
+body.theme-mono #layer-wechat > .wx-tab-bar .nav-tab i,
+body.theme-mono .wx-tab-bar .nav-tab i {
+    color: inherit !important;
+}
+body.theme-mono #layer-wechat > .wx-tab-bar .nav-tab.active,
+body.theme-mono .wx-tab-bar .nav-tab.active {
+    color: var(--mo-ink) !important;
+}
+body.theme-mono #layer-wechat > .wx-tab-bar .nav-tab.active i,
+body.theme-mono .wx-tab-bar .nav-tab.active i {
+    transform: none !important;
+    color: var(--mo-ink) !important;
+}
+body.theme-mono .wx-tab-bar .nav-tab:active {
+    opacity: 0.5 !important;
+    transform: scale(0.9) !important;
+}
+
+/* ============================================================
+   6. 世界书界面
+   ============================================================ */
+body.theme-mono #layer-worldbook > .nav-bar {
+    background: var(--mo-bg-elevated) !important;
+    border-bottom: 1px solid var(--mo-border) !important;
+    box-shadow: var(--mo-shadow-xs) !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+}
+body.theme-mono #layer-worldbook > .nav-bar .nav-title {
+    font-weight: 700 !important;
+    color: var(--mo-text) !important;
+    font-family: var(--mo-font) !important;
+    letter-spacing: -0.4px !important;
+    font-size: 18px !important;
+}
+body.theme-mono #layer-worldbook > .nav-bar .nav-icon {
+    color: var(--mo-text) !important;
+}
+body.theme-mono #layer-worldbook > .scroll-y {
+    background: var(--mo-bg) !important;
+    background-image: none !important;
+}
+
+body.theme-mono #layer-worldbook .wb-category-bar {
+    background: var(--mo-bg) !important;
+    border-bottom: 1px solid var(--mo-border) !important;
+    box-shadow: none !important;
+    padding: 10px 12px !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+}
+body.theme-mono #layer-worldbook .wb-cate-chip {
+    border: none !important;
+    border-radius: var(--mo-radius-pill) !important;
+    background: var(--mo-bg-elevated) !important;
+    color: var(--mo-text-secondary) !important;
+    font-weight: 600 !important;
+    font-size: 12px !important;
+    padding: 6px 14px !important;
+    box-shadow: var(--mo-shadow-xs) !important;
+    transition: all 0.15s ease !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+    font-family: var(--mo-font) !important;
+}
+body.theme-mono #layer-worldbook .wb-cate-chip.active {
+    background: var(--mo-ink) !important;
+    color: #fff !important;
+    border-color: transparent !important;
+    box-shadow: var(--mo-shadow-ink) !important;
+}
+body.theme-mono #layer-worldbook .wb-cate-chip:active {
+    transform: scale(0.94) !important;
+}
+
+body.theme-mono #layer-worldbook .add-menu {
+    background: var(--mo-bg-elevated) !important;
+    border: none !important;
+    border-radius: var(--mo-radius-sm) !important;
+    box-shadow: var(--mo-shadow-xl) !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+    overflow: hidden !important;
+}
+body.theme-mono #layer-worldbook .add-item {
+    color: var(--mo-text) !important;
+    border-bottom-color: var(--mo-divider) !important;
+    font-family: var(--mo-font) !important;
+    font-weight: 500 !important;
+}
+body.theme-mono #layer-worldbook .add-item:active {
+    background: var(--mo-active) !important;
+}
+
+body.theme-mono #wb-list .group-box.wb-item {
+    background: var(--mo-bg-elevated) !important;
+    border: none !important;
+    border-radius: var(--mo-radius) !important;
+    box-shadow: var(--mo-shadow-xs) !important;
+    margin-bottom: 10px !important;
+    overflow: visible !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+}
+body.theme-mono #wb-list .group-box.wb-item:active {
+    transform: scale(0.995) !important;
+}
+body.theme-mono #wb-list .group-box.wb-item::after {
+    display: none !important;
+}
+body.theme-mono #wb-list .group-box.wb-item b,
+body.theme-mono #wb-list .group-box.wb-item strong {
+    color: var(--mo-text) !important;
+    font-family: var(--mo-font) !important;
+    font-weight: 700 !important;
+}
+body.theme-mono #wb-list .wb-collapse-arrow {
+    color: var(--mo-text-secondary) !important;
+}
+body.theme-mono #wb-list .wb-content {
+    color: var(--mo-text) !important;
+    border-top: 1px solid var(--mo-divider) !important;
+}
+body.theme-mono #wb-list .wb-edit-area textarea,
+body.theme-mono #wb-list .wb-edit-area input,
+body.theme-mono #wb-list .wb-edit-area select {
+    border: none !important;
+    border-radius: var(--mo-radius-sm) !important;
+    background: var(--mo-bg-sunken) !important;
+    color: var(--mo-text) !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+    font-family: var(--mo-font) !important;
+    padding: 10px 12px !important;
+}
+body.theme-mono #wb-list .wb-edit-area textarea:focus,
+body.theme-mono #wb-list .wb-edit-area input:focus,
+body.theme-mono #wb-list .wb-edit-area select:focus {
+    outline: none !important;
+    background: var(--mo-bg-elevated) !important;
+    box-shadow: var(--mo-focus-ring) !important;
+}
+body.theme-mono #wb-list .wb-btn {
+    border: none !important;
+    border-radius: var(--mo-radius-sm) !important;
+    font-weight: 600 !important;
+    transition: all 0.15s ease !important;
+    font-family: var(--mo-font) !important;
+    box-shadow: none !important;
+    padding: 8px 16px !important;
+}
+body.theme-mono #wb-list .wb-btn.edit,
+body.theme-mono #wb-list .wb-btn.cancel {
+    background: var(--mo-bg-sunken) !important;
+    color: var(--mo-text) !important;
+}
+body.theme-mono #wb-list .wb-btn.del {
+    background: var(--mo-bg-sunken) !important;
+    color: var(--mo-text-secondary) !important;
+}
+body.theme-mono #wb-list .wb-btn.save {
+    background: var(--mo-ink) !important;
+    color: #fff !important;
+    box-shadow: var(--mo-shadow-ink) !important;
+}
+body.theme-mono #wb-list .wb-btn:active {
+    transform: scale(0.96) !important;
+}
+
+/* 世界书弹窗 */
+body.theme-mono #modal-wb .modal-box,
+body.theme-mono #modal-category .modal-box,
+body.theme-mono #modal-wb-select .modal-box {
+    background: var(--mo-bg-elevated) !important;
+    border: none !important;
+    border-radius: var(--mo-radius-lg) !important;
+    box-shadow: var(--mo-shadow-xl) !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+}
+body.theme-mono #modal-wb .modal-box h3,
+body.theme-mono #modal-category .modal-box h3,
+body.theme-mono #modal-wb-select .modal-box h3 {
+    font-weight: 700 !important;
+    color: var(--mo-text) !important;
+    font-size: 17px !important;
+    font-family: var(--mo-font) !important;
+    letter-spacing: -0.3px !important;
+}
+body.theme-mono #modal-wb .modal-box h3::after,
+body.theme-mono #modal-category .modal-box h3::after,
+body.theme-mono #modal-wb-select .modal-box h3::after,
+body.theme-mono #modal-wb .modal-box::before,
+body.theme-mono #modal-category .modal-box::before,
+body.theme-mono #modal-wb-select .modal-box::before {
+    display: none !important;
+}
+body.theme-mono #modal-wb input,
+body.theme-mono #modal-wb textarea,
+body.theme-mono #modal-wb select,
+body.theme-mono #modal-category input {
+    border: none !important;
+    border-radius: var(--mo-radius-sm) !important;
+    background: var(--mo-bg-sunken) !important;
+    color: var(--mo-text) !important;
+    font-family: var(--mo-font) !important;
+    padding: 10px 14px !important;
+}
+body.theme-mono #modal-wb input:focus,
+body.theme-mono #modal-wb textarea:focus,
+body.theme-mono #modal-wb select:focus,
+body.theme-mono #modal-category input:focus {
+    outline: none !important;
+    background: var(--mo-bg-elevated) !important;
+    box-shadow: var(--mo-focus-ring) !important;
+}
+body.theme-mono .wb-modal-btn-cancel {
+    background: var(--mo-bg-sunken) !important;
+    color: var(--mo-text) !important;
+    border: none !important;
+    border-radius: var(--mo-radius-sm) !important;
+    box-shadow: none !important;
+    font-family: var(--mo-font) !important;
+    font-weight: 600 !important;
+}
+body.theme-mono .wb-modal-btn-save {
+    background: var(--mo-ink) !important;
+    color: #fff !important;
+    border: none !important;
+    border-radius: var(--mo-radius-sm) !important;
+    box-shadow: var(--mo-shadow-ink) !important;
+    font-family: var(--mo-font) !important;
+    font-weight: 600 !important;
+}
+
+/* 世界书HTML弹窗 */
+body.theme-mono .wb-html-popup-container {
+    border: none !important;
+    border-radius: var(--mo-radius-lg) !important;
+    box-shadow: var(--mo-shadow-xl) !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+    background: var(--mo-bg-elevated) !important;
+}
+body.theme-mono .wb-html-popup-header {
+    border-bottom: 1px solid var(--mo-divider) !important;
+    background: var(--mo-bg-elevated) !important;
+    border-radius: var(--mo-radius-lg) var(--mo-radius-lg) 0 0 !important;
+}
+body.theme-mono .wb-html-popup-header span {
+    font-weight: 700 !important;
+    color: var(--mo-text) !important;
+    font-family: var(--mo-font) !important;
+}
+body.theme-mono .wb-html-popup-close {
+    border: none !important;
+    border-radius: 50% !important;
+    background: var(--mo-bg-sunken) !important;
+    color: var(--mo-text-secondary) !important;
+}
+body.theme-mono .wb-html-popup-close:hover {
+    background: var(--mo-active) !important;
+    color: var(--mo-text) !important;
+}
+
+/* ============================================================
+   7. "我的"界面
+   ============================================================ */
+body.theme-mono #tab-me {
+    background: var(--mo-bg) !important;
+    background-image: none !important;
+}
+body.theme-mono #tab-me > .scroll-y {
+    background: transparent !important;
+    background-image: none !important;
+}
+body.theme-mono #tab-me .scroll-y::before,
+body.theme-mono #tab-me .scroll-y::after {
+    display: none !important;
+}
+
+/* 个人信息卡片 - 大号黑色卡片（图片风格） */
+body.theme-mono #tab-me > .scroll-y > div:first-child {
+    background: var(--mo-bg-elevated) !important;
+    border: none !important;
+    border-radius: var(--mo-radius-lg) !important;
+    box-shadow: var(--mo-shadow-sm) !important;
+    margin: 18px 14px 0 !important;
+    padding: 26px 22px !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+    transform: none !important;
+    position: relative !important;
+}
+body.theme-mono #tab-me > .scroll-y > div:first-child::before,
+body.theme-mono #tab-me > .scroll-y > div:first-child::after {
+    display: none !important;
+}
+body.theme-mono #tab-me #my-avatar {
+    border: none !important;
+    border-radius: 50% !important;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08) !important;
+    filter: none !important;
+}
+body.theme-mono #tab-me #my-name {
+    font-weight: 700 !important;
+    color: var(--mo-text) !important;
+    letter-spacing: -0.4px !important;
+    font-family: var(--mo-font) !important;
+    text-shadow: none !important;
+    font-size: 20px !important;
+}
+body.theme-mono #tab-me #my-wxid {
+    color: var(--mo-text-secondary) !important;
+    font-family: var(--mo-font) !important;
+}
+body.theme-mono #tab-me > .scroll-y > div:first-child > i {
+    color: var(--mo-text-tertiary) !important;
+}
+
+body.theme-mono #tab-me .group-box {
+    background: var(--mo-bg-elevated) !important;
+    border: none !important;
+    border-radius: var(--mo-radius) !important;
+    box-shadow: var(--mo-shadow-xs) !important;
+    margin: 10px 14px !important;
+    overflow: hidden !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+    transform: none !important;
+}
+body.theme-mono #tab-me .group-box::after,
+body.theme-mono #tab-me .group-box::before {
+    display: none !important;
+}
+body.theme-mono #tab-me .group-box .list-item,
+body.theme-mono #tab-me .list-item {
+    background: transparent !important;
+    border-bottom: 1px solid var(--mo-divider) !important;
+    padding: 14px 16px !important;
+}
+body.theme-mono #tab-me .group-box .list-item:last-child,
+body.theme-mono #tab-me .list-item:last-child {
+    border-bottom: none !important;
+}
+body.theme-mono #tab-me .group-box .list-item:active,
+body.theme-mono #tab-me .list-item:active {
+    background: var(--mo-active) !important;
+    transform: none !important;
+}
+body.theme-mono #tab-me .group-box .list-item > i,
+body.theme-mono #tab-me .group-box .list-item .fas,
+body.theme-mono #tab-me .group-box .list-item .far,
+body.theme-mono #tab-me .list-item i {
+    color: var(--mo-text-secondary) !important;
+    filter: none !important;
+    opacity: 1 !important;
+}
+body.theme-mono #tab-me .group-box .list-item .list-title,
+body.theme-mono #tab-me .list-title {
+    font-weight: 600 !important;
+    color: var(--mo-text) !important;
+    font-family: var(--mo-font) !important;
+    letter-spacing: -0.2px !important;
+}
+body.theme-mono #tab-me .group-box .list-item .list-sub,
+body.theme-mono #tab-me .list-sub {
+    color: var(--mo-text-secondary) !important;
+    font-family: var(--mo-font) !important;
+}
+body.theme-mono #tab-me .group-box .form-cell,
+body.theme-mono #tab-me .form-cell {
+    border-bottom: 1px solid var(--mo-divider) !important;
+    padding: 14px 16px !important;
+}
+body.theme-mono #tab-me .group-box .form-cell:last-child,
+body.theme-mono #tab-me .form-cell:last-child {
+    border-bottom: none !important;
+}
+body.theme-mono #tab-me .group-box .form-cell .form-label,
+body.theme-mono #tab-me .form-label {
+    font-weight: 500 !important;
+    color: var(--mo-text) !important;
+    font-family: var(--mo-font) !important;
+}
+body.theme-mono #tab-me #wallet-balance {
+    color: var(--mo-text) !important;
+    font-weight: 700 !important;
+    font-family: var(--mo-font) !important;
+}
+
+/* ============================================================
+   8. 全局开关 (switch)
+   ============================================================ */
+body.theme-mono .switch .slider {
+    border: none !important;
+    border-radius: 999px !important;
+    background: #d1d1d6 !important;
+}
+body.theme-mono .switch .slider::before {
+    border-radius: 50% !important;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2) !important;
+    border: none !important;
+}
+body.theme-mono .switch input:checked + .slider {
+    background: var(--mo-ink) !important;
+}
+body.theme-mono .switch {
+    border: none !important;
+    box-shadow: none !important;
+    background: transparent !important;
+}
+
+/* ============================================================
+   9. 感知/情侣空间/其他 layer 通用
+   ============================================================ */
+body.theme-mono #layer-perception > .nav-bar,
+body.theme-mono #layer-couple .nav-bar {
+    background: var(--mo-bg-elevated) !important;
+    border-bottom: 1px solid var(--mo-border) !important;
+    box-shadow: var(--mo-shadow-xs) !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+}
+body.theme-mono #layer-perception > .nav-bar .nav-title,
+body.theme-mono #layer-couple .nav-bar .nav-title {
+    color: var(--mo-text) !important;
+    font-weight: 700 !important;
+    font-family: var(--mo-font) !important;
+    letter-spacing: -0.4px !important;
+    font-size: 18px !important;
+}
+body.theme-mono #layer-perception > .nav-bar .nav-icon,
+body.theme-mono #layer-couple .nav-bar .nav-icon {
+    color: var(--mo-text) !important;
+}
+body.theme-mono #layer-perception > .scroll-y,
+body.theme-mono #layer-couple,
+body.theme-mono #layer-couple .scroll-y {
+    background: var(--mo-bg) !important;
+}
+body.theme-mono #layer-couple .group-box,
+body.theme-mono #layer-couple .beauty-section-card {
+    background: var(--mo-bg-elevated) !important;
+    border: none !important;
+    border-radius: var(--mo-radius) !important;
+    box-shadow: var(--mo-shadow-xs) !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+    overflow: hidden !important;
+}
+body.theme-mono #layer-couple .group-box::after,
+body.theme-mono #layer-couple .beauty-section-card::after {
+    display: none !important;
+}
+
+/* ============================================================
+   10. 美化界面
+   ============================================================ */
+body.theme-mono #layer-beauty > .nav-bar {
+    background: var(--mo-bg-elevated) !important;
+    border-bottom: 1px solid var(--mo-border) !important;
+    box-shadow: var(--mo-shadow-xs) !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+}
+body.theme-mono #layer-beauty > .nav-bar .nav-title {
+    font-family: var(--mo-font) !important;
+    font-weight: 700 !important;
+    color: var(--mo-text) !important;
+    letter-spacing: -0.4px !important;
+    font-size: 18px !important;
+}
+body.theme-mono #layer-beauty > .nav-bar .nav-icon {
+    color: var(--mo-text) !important;
+}
+body.theme-mono #layer-beauty #beauty-menu {
+    background: var(--mo-bg) !important;
+    background-image: none !important;
+}
+body.theme-mono #layer-beauty .beauty-menu-list {
+    gap: 10px !important;
+}
+body.theme-mono #layer-beauty .beauty-menu-item {
+    background: var(--mo-bg-elevated) !important;
+    border: none !important;
+    border-radius: var(--mo-radius) !important;
+    box-shadow: var(--mo-shadow-xs) !important;
+    margin-bottom: 0 !important;
+    padding: 16px !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+    transition: transform 0.15s ease !important;
+}
+body.theme-mono #layer-beauty .beauty-menu-item:active {
+    transform: scale(0.99) !important;
+}
+body.theme-mono #layer-beauty .beauty-menu-icon {
+    background: var(--mo-ink) !important;
+    border-radius: var(--mo-radius-sm) !important;
+    box-shadow: var(--mo-shadow-ink) !important;
+    color: #fff !important;
+}
+body.theme-mono #layer-beauty .beauty-menu-icon i {
+    color: #fff !important;
+}
+body.theme-mono #layer-beauty .beauty-menu-title {
+    font-weight: 700 !important;
+    color: var(--mo-text) !important;
+    font-family: var(--mo-font) !important;
+    letter-spacing: -0.2px !important;
+}
+body.theme-mono #layer-beauty .beauty-menu-desc {
+    color: var(--mo-text-secondary) !important;
+    font-family: var(--mo-font) !important;
+}
+body.theme-mono #layer-beauty .beauty-menu-arrow {
+    color: var(--mo-text-tertiary) !important;
+}
+body.theme-mono #layer-beauty .beauty-subpage > .scroll-y {
+    background: var(--mo-bg) !important;
+    background-image: none !important;
+}
+body.theme-mono #layer-beauty .beauty-section-card {
+    background: var(--mo-bg-elevated) !important;
+    border: none !important;
+    border-radius: var(--mo-radius) !important;
+    box-shadow: var(--mo-shadow-xs) !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+    overflow: hidden !important;
+}
+body.theme-mono #layer-beauty .beauty-section-card::after {
+    display: none !important;
+}
+body.theme-mono #layer-beauty .beauty-section-header {
+    border-bottom: 1px solid var(--mo-divider) !important;
+    background: transparent !important;
+    font-family: var(--mo-font) !important;
+}
+body.theme-mono #layer-beauty .beauty-section-header span {
+    color: var(--mo-text) !important;
+    font-family: var(--mo-font) !important;
+    font-weight: 600 !important;
+}
+body.theme-mono #layer-beauty .beauty-section-header i {
+    color: var(--mo-text-secondary) !important;
+}
+
+body.theme-mono #layer-beauty .beauty-action-btn {
+    border: none !important;
+    border-radius: var(--mo-radius-sm) !important;
+    font-family: var(--mo-font) !important;
+    font-weight: 600 !important;
+    letter-spacing: -0.1px !important;
+    background: var(--mo-ink) !important;
+    color: #fff !important;
+    box-shadow: var(--mo-shadow-ink) !important;
+    transition: all 0.15s ease !important;
+}
+body.theme-mono #layer-beauty .beauty-action-btn:active {
+    transform: scale(0.97) !important;
+    opacity: 0.85 !important;
+}
+body.theme-mono #layer-beauty .beauty-action-btn.reset {
+    background: var(--mo-bg-sunken) !important;
+    color: var(--mo-text-secondary) !important;
+    border: none !important;
+    box-shadow: none !important;
+}
+body.theme-mono #layer-beauty .beauty-action-btn.preset {
+    background: var(--mo-bg-sunken) !important;
+    color: var(--mo-text) !important;
+    border: none !important;
+    box-shadow: none !important;
+}
+body.theme-mono #layer-beauty .beauty-action-btn.mini {
+    border-radius: var(--mo-radius-xs) !important;
+}
+body.theme-mono #layer-beauty .beauty-action-btn[style*="background:#111"],
+body.theme-mono #layer-beauty .beauty-action-btn[style*="background: #111"],
+body.theme-mono #layer-beauty .beauty-action-btn[style*="background:rgb(17"] {
+    border: none !important;
+    border-radius: var(--mo-radius-sm) !important;
+    box-shadow: var(--mo-shadow-ink) !important;
+}
+body.theme-mono #layer-beauty .beauty-action-btn[style*="background:#f5f5f5"],
+body.theme-mono #layer-beauty .beauty-action-btn[style*="background: #f5f5f5"],
+body.theme-mono #layer-beauty .beauty-action-btn[style*="background: rgb(245"] {
+    background: var(--mo-bg-sunken) !important;
+    color: var(--mo-text) !important;
+    border: none !important;
+    border-radius: var(--mo-radius-sm) !important;
+    box-shadow: none !important;
+}
+
+/* 美化组件标签 */
+body.theme-mono #layer-beauty .beauty-comp-tabs,
+body.theme-mono .beauty-comp-tabs {
+    background: var(--mo-bg-sunken) !important;
+    border-radius: var(--mo-radius-sm) !important;
+    border: none !important;
+    overflow: hidden !important;
+    padding: 4px !important;
+}
+body.theme-mono #layer-beauty .beauty-comp-tab,
+body.theme-mono .beauty-comp-tab {
+    border-radius: var(--mo-radius-xs) !important;
+    color: var(--mo-text-secondary) !important;
+    border-right: none !important;
+    font-family: var(--mo-font) !important;
+    font-weight: 600 !important;
+}
+body.theme-mono #layer-beauty .beauty-comp-tab.active,
+body.theme-mono .beauty-comp-tab.active {
+    background: var(--mo-bg-elevated) !important;
+    color: var(--mo-text) !important;
+    box-shadow: var(--mo-shadow-xs) !important;
+    font-weight: 700 !important;
+}
+body.theme-mono #layer-beauty .beauty-mode-toggle {
+    border-radius: var(--mo-radius-sm) !important;
+    background: var(--mo-bg-sunken) !important;
+    border: none !important;
+    padding: 4px !important;
+}
+body.theme-mono #layer-beauty .beauty-mode-btn {
+    border-radius: var(--mo-radius-xs) !important;
+    font-family: var(--mo-font) !important;
+    color: var(--mo-text-secondary) !important;
+    font-weight: 600 !important;
+}
+body.theme-mono #layer-beauty .beauty-mode-btn.active {
+    background: var(--mo-bg-elevated) !important;
+    color: var(--mo-text) !important;
+    box-shadow: var(--mo-shadow-xs) !important;
+}
+body.theme-mono #layer-beauty .form-cell {
+    border-bottom: 1px solid var(--mo-divider) !important;
+}
+body.theme-mono #layer-beauty .form-cell:last-child {
+    border-bottom: none !important;
+}
+body.theme-mono #layer-beauty .form-label {
+    font-family: var(--mo-font) !important;
+    font-weight: 500 !important;
+    color: var(--mo-text) !important;
+}
+body.theme-mono #layer-beauty input[type="text"],
+body.theme-mono #layer-beauty input[type="number"],
+body.theme-mono #layer-beauty input[type="url"],
+body.theme-mono #layer-beauty textarea,
+body.theme-mono #layer-beauty select {
+    border: none !important;
+    border-radius: var(--mo-radius-sm) !important;
+    background: var(--mo-bg-sunken) !important;
+    color: var(--mo-text) !important;
+    font-family: var(--mo-font) !important;
+    padding: 10px 14px !important;
+}
+body.theme-mono #layer-beauty input[type="text"]:focus,
+body.theme-mono #layer-beauty input[type="number"]:focus,
+body.theme-mono #layer-beauty input[type="url"]:focus,
+body.theme-mono #layer-beauty textarea:focus,
+body.theme-mono #layer-beauty select:focus {
+    outline: none !important;
+    background: var(--mo-bg-elevated) !important;
+    box-shadow: var(--mo-focus-ring) !important;
+}
+body.theme-mono #layer-beauty input[type="range"] {
+    accent-color: var(--mo-ink) !important;
+}
+body.theme-mono #layer-beauty input[type="color"] {
+    border: 1px solid var(--mo-border) !important;
+    border-radius: var(--mo-radius-xs) !important;
+}
+body.theme-mono #layer-beauty .comp-img-preview {
+    border: 2px dashed var(--mo-border-strong) !important;
+    border-radius: var(--mo-radius-sm) !important;
+    background: var(--mo-bg-soft) !important;
+}
+body.theme-mono #layer-beauty #icon-size-preview {
+    background: var(--mo-bg) !important;
+    border: 1px solid var(--mo-border) !important;
+    border-radius: var(--mo-radius-sm) !important;
+}
+body.theme-mono #layer-beauty label {
+    color: var(--mo-text) !important;
+    font-family: var(--mo-font) !important;
+}
+body.theme-mono #layer-beauty .css-input,
+body.theme-mono .css-input {
+    border: none !important;
+    border-radius: var(--mo-radius-sm) !important;
+    background: var(--mo-bg-sunken) !important;
+    color: var(--mo-text) !important;
+    font-family: var(--mo-font-mono) !important;
+}
+body.theme-mono #layer-beauty .css-input:focus,
+body.theme-mono .css-input:focus {
+    outline: none !important;
+    background: var(--mo-bg-elevated) !important;
+    box-shadow: var(--mo-focus-ring) !important;
+}
+body.theme-mono #layer-beauty .font-preset-item {
+    border: none !important;
+    border-radius: var(--mo-radius-sm) !important;
+    background: var(--mo-bg-soft) !important;
+    margin-bottom: 8px !important;
+    box-shadow: var(--mo-shadow-xs) !important;
+}
+body.theme-mono #layer-beauty .font-preset-item .fp-name {
+    font-family: var(--mo-font) !important;
+    color: var(--mo-text) !important;
+    font-weight: 600 !important;
+}
+body.theme-mono #layer-beauty .font-preset-item .fp-actions button {
+    border: none !important;
+    border-radius: var(--mo-radius-xs) !important;
+    font-family: var(--mo-font) !important;
+    font-weight: 600 !important;
+    box-shadow: none !important;
+}
+body.theme-mono #layer-beauty .fp-load-btn {
+    background: var(--mo-ink) !important;
+    color: #fff !important;
+    box-shadow: var(--mo-shadow-ink) !important;
+}
+body.theme-mono #layer-beauty .fp-del-btn {
+    background: var(--mo-bg-sunken) !important;
+    color: var(--mo-text) !important;
+}
+
+/* ============================================================
+   11. 设置界面
+   ============================================================ */
+body.theme-mono #layer-settings > .nav-bar {
+    background: var(--mo-bg-elevated) !important;
+    border-bottom: 1px solid var(--mo-border) !important;
+    box-shadow: var(--mo-shadow-xs) !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+}
+body.theme-mono #layer-settings > .nav-bar .nav-title {
+    font-family: var(--mo-font) !important;
+    font-weight: 700 !important;
+    color: var(--mo-text) !important;
+    letter-spacing: -0.4px !important;
+    font-size: 18px !important;
+}
+body.theme-mono #layer-settings > .nav-bar .nav-icon {
+    color: var(--mo-text) !important;
+}
+body.theme-mono #layer-settings > .nav-bar .nav-icon:active {
+    opacity: 0.4 !important;
+    transform: scale(0.88) !important;
+}
+body.theme-mono #settings-menu,
+body.theme-mono #layer-settings > .scroll-y,
+body.theme-mono #layer-settings .settings-subpage > .scroll-y {
+    background: var(--mo-bg) !important;
+    background-image: none !important;
+}
+body.theme-mono #layer-settings .settings-nav-list {
+    gap: 10px !important;
+}
+body.theme-mono #layer-settings .settings-nav-item {
+    background: var(--mo-bg-elevated) !important;
+    border: none !important;
+    border-radius: var(--mo-radius) !important;
+    box-shadow: var(--mo-shadow-xs) !important;
+    padding: 16px !important;
+    position: relative !important;
+    transition: transform 0.15s ease !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+}
+body.theme-mono #layer-settings .settings-nav-item:active {
+    transform: scale(0.99) !important;
+}
+body.theme-mono #layer-settings .settings-nav-icon-i {
+    background: var(--mo-ink) !important;
+    box-shadow: var(--mo-shadow-ink) !important;
+    border-radius: var(--mo-radius-sm) !important;
+    color: #fff !important;
+}
+body.theme-mono #layer-settings .settings-nav-title-text {
+    font-family: var(--mo-font) !important;
+    font-weight: 700 !important;
+    color: var(--mo-text) !important;
+    letter-spacing: -0.2px !important;
+}
+body.theme-mono #layer-settings .settings-nav-desc {
+    color: var(--mo-text-secondary) !important;
+    font-size: 12px !important;
+    font-family: var(--mo-font) !important;
+}
+body.theme-mono #layer-settings .settings-nav-arrow {
+    color: var(--mo-text-tertiary) !important;
+}
+body.theme-mono #layer-settings .beauty-section-card,
+body.theme-mono #layer-settings .group-box {
+    background: var(--mo-bg-elevated) !important;
+    border: none !important;
+    border-radius: var(--mo-radius) !important;
+    box-shadow: var(--mo-shadow-xs) !important;
+    overflow: hidden !important;
+    position: relative !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+}
+body.theme-mono #layer-settings .beauty-section-card::after,
+body.theme-mono #layer-settings .group-box::after {
+    display: none !important;
+}
+body.theme-mono #layer-settings .beauty-section-header {
+    border-bottom: 1px solid var(--mo-divider) !important;
+    background: transparent !important;
+    font-family: var(--mo-font) !important;
+    font-weight: 600 !important;
+    color: var(--mo-text) !important;
+}
+body.theme-mono #layer-settings .beauty-section-header span {
+    color: var(--mo-text) !important;
+    font-family: var(--mo-font) !important;
+    font-weight: 600 !important;
+}
+body.theme-mono #layer-settings .beauty-section-header i {
+    color: var(--mo-text-secondary) !important;
+}
+body.theme-mono #layer-settings .form-cell {
+    border-bottom: 1px solid var(--mo-divider) !important;
+    padding: 14px 16px !important;
+}
+body.theme-mono #layer-settings .form-cell:last-child {
+    border-bottom: none !important;
+}
+body.theme-mono #layer-settings .form-label {
+    color: var(--mo-text) !important;
+    font-weight: 500 !important;
+    font-family: var(--mo-font) !important;
+}
+body.theme-mono #layer-settings .beauty-action-btn {
+    border: none !important;
+    border-radius: var(--mo-radius-sm) !important;
+    font-family: var(--mo-font) !important;
+    font-weight: 600 !important;
+    letter-spacing: -0.1px !important;
+    background: var(--mo-ink) !important;
+    color: #fff !important;
+    box-shadow: var(--mo-shadow-ink) !important;
+    transition: all 0.15s ease !important;
+}
+body.theme-mono #layer-settings .beauty-action-btn:active {
+    transform: scale(0.97) !important;
+    opacity: 0.85 !important;
+}
+body.theme-mono #layer-settings .beauty-action-btn.reset {
+    background: var(--mo-bg-sunken) !important;
+    color: var(--mo-text-secondary) !important;
+    box-shadow: none !important;
+}
+body.theme-mono #layer-settings .beauty-action-btn.preset {
+    background: var(--mo-bg-sunken) !important;
+    color: var(--mo-text) !important;
+    box-shadow: none !important;
+}
+body.theme-mono #layer-settings .beauty-action-btn.mini {
+    border-radius: var(--mo-radius-xs) !important;
+}
+/* 危险按钮保留红色语义但收敛 */
+body.theme-mono #layer-settings .beauty-action-btn[style*="background:#fa5151"],
+body.theme-mono #layer-settings .beauty-action-btn[style*="background: rgb(250, 81, 81)"] {
+    border: none !important;
+    border-radius: var(--mo-radius-sm) !important;
+    box-shadow: 0 6px 20px rgba(250, 81, 81, 0.25) !important;
+    font-family: var(--mo-font) !important;
+}
+/* 紫色按钮统一变黑 */
+body.theme-mono #layer-settings .beauty-action-btn[style*="background:#5856d6"],
+body.theme-mono #layer-settings .beauty-action-btn[style*="background: rgb(88, 86, 214)"] {
+    background: var(--mo-ink) !important;
+    border: none !important;
+    border-radius: var(--mo-radius-sm) !important;
+    box-shadow: var(--mo-shadow-ink) !important;
+    font-family: var(--mo-font) !important;
+}
+
+body.theme-mono #layer-settings input[type="text"],
+body.theme-mono #layer-settings input[type="number"],
+body.theme-mono #layer-settings input[type="url"],
+body.theme-mono #layer-settings input[type="date"],
+body.theme-mono #layer-settings textarea,
+body.theme-mono #layer-settings select {
+    border: none !important;
+    border-radius: var(--mo-radius-sm) !important;
+    background: var(--mo-bg-sunken) !important;
+    color: var(--mo-text) !important;
+    font-family: var(--mo-font) !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+    padding: 10px 14px !important;
+}
+body.theme-mono #layer-settings input:focus,
+body.theme-mono #layer-settings textarea:focus,
+body.theme-mono #layer-settings select:focus {
+    outline: none !important;
+    background: var(--mo-bg-elevated) !important;
+    box-shadow: var(--mo-focus-ring) !important;
+}
+body.theme-mono #layer-settings input::placeholder,
+body.theme-mono #layer-settings textarea::placeholder {
+    color: var(--mo-text-tertiary) !important;
+    font-family: var(--mo-font) !important;
+}
+body.theme-mono #layer-settings input[type="range"] {
+    accent-color: var(--mo-ink) !important;
+}
+body.theme-mono #layer-settings input[type="color"] {
+    border: 1px solid var(--mo-border) !important;
+    border-radius: var(--mo-radius-xs) !important;
+}
+body.theme-mono #layer-settings label {
+    color: var(--mo-text) !important;
+    font-family: var(--mo-font) !important;
+}
+body.theme-mono #layer-settings .stt-provider-btn,
+body.theme-mono #layer-settings .imggen-provider-btn {
+    border: none !important;
+    border-radius: var(--mo-radius-sm) !important;
+    background: var(--mo-bg-sunken) !important;
+    color: var(--mo-text) !important;
+    font-family: var(--mo-font) !important;
+    font-weight: 600 !important;
+    box-shadow: none !important;
+    transition: all 0.15s !important;
+}
+body.theme-mono #layer-settings .stt-provider-btn.active,
+body.theme-mono #layer-settings .imggen-provider-btn.active {
+    background: var(--mo-ink) !important;
+    color: #fff !important;
+    box-shadow: var(--mo-shadow-ink) !important;
+}
+body.theme-mono #layer-settings .stt-provider-btn:active,
+body.theme-mono #layer-settings .imggen-provider-btn:active {
+    transform: scale(0.96) !important;
+}
+body.theme-mono #layer-settings #lockscreen-wallpaper-preview {
+    border: 2px dashed var(--mo-border-strong) !important;
+    border-radius: var(--mo-radius-sm) !important;
+    background: var(--mo-bg-soft) !important;
+}
+body.theme-mono #layer-settings #api-preset-list > div {
+    border: none !important;
+    border-radius: var(--mo-radius-sm) !important;
+    background: var(--mo-bg-soft) !important;
+    box-shadow: var(--mo-shadow-xs) !important;
+    margin-bottom: 8px !important;
+}
+body.theme-mono #layer-settings p,
+body.theme-mono #layer-beauty p,
+body.theme-mono #layer-settings #keepalive-status {
+    font-family: var(--mo-font) !important;
+}
+body.theme-mono #layer-settings .settings-subpage .scroll-y > div[style*="font-size:12px"],
+body.theme-mono #layer-settings .settings-subpage .scroll-y > div[style*="font-size: 12px"],
+body.theme-mono #layer-beauty .beauty-subpage .scroll-y > div[style*="font-size:12px"],
+body.theme-mono #layer-beauty .beauty-subpage .scroll-y > div[style*="font-size: 12px"] {
+    font-family: var(--mo-font) !important;
+    color: var(--mo-text-tertiary) !important;
+}
+
+/* ============================================================
+   12. 通用弹窗 - 图片风格的大圆角白底卡片
+   ============================================================ */
+body.theme-mono .modal-mask .modal-box {
+    background: var(--mo-bg-elevated) !important;
+    border: none !important;
+    border-radius: var(--mo-radius-lg) !important;
+    box-shadow: var(--mo-shadow-xl) !important;
+    position: relative !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+}
+body.theme-mono .modal-mask .modal-box::after,
+body.theme-mono .modal-mask .modal-box::before {
+    display: none !important;
+}
+body.theme-mono .modal-mask .modal-box h3 {
+    font-family: var(--mo-font) !important;
+    font-weight: 700 !important;
+    letter-spacing: -0.4px !important;
+    color: var(--mo-text) !important;
+    font-size: 18px !important;
+}
+body.theme-mono .modal-mask .modal-box h3::after {
+    display: none !important;
+}
+body.theme-mono .modal-mask .modal-box button {
+    font-family: var(--mo-font) !important;
+    border-radius: var(--mo-radius-sm) !important;
+    font-weight: 600 !important;
+}
+body.theme-mono .modal-mask .modal-box input[type="text"],
+body.theme-mono .modal-mask .modal-box input[type="number"],
+body.theme-mono .modal-mask .modal-box input[type="date"],
+body.theme-mono .modal-mask .modal-box input[type="time"],
+body.theme-mono .modal-mask .modal-box input[type="url"],
+body.theme-mono .modal-mask .modal-box textarea,
+body.theme-mono .modal-mask .modal-box select {
+    border: none !important;
+    border-radius: var(--mo-radius-sm) !important;
+    background: var(--mo-bg-sunken) !important;
+    color: var(--mo-text) !important;
+    font-family: var(--mo-font) !important;
+    padding: 10px 14px !important;
+}
+body.theme-mono .modal-mask .modal-box input:focus,
+body.theme-mono .modal-mask .modal-box textarea:focus,
+body.theme-mono .modal-mask .modal-box select:focus {
+    outline: none !important;
+    background: var(--mo-bg-elevated) !important;
+    box-shadow: var(--mo-focus-ring) !important;
+}
+/* 弹窗遮罩 - 图片风格中遮罩偏暗但无模糊 */
+body.theme-mono .modal-mask {
+    background: rgba(0, 0, 0, 0.4) !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+}
+
+/* ============================================================
+   13. 通用按钮 / Toast
+   ============================================================ */
+body.theme-mono .beauty-action-btn {
+    border-radius: var(--mo-radius-sm) !important;
+    font-weight: 600 !important;
+    border: none !important;
+    transition: all 0.15s ease !important;
+    font-family: var(--mo-font) !important;
+}
+body.theme-mono .beauty-action-btn:active {
+    transform: scale(0.97) !important;
+    opacity: 0.85 !important;
+}
+body.theme-mono .beauty-action-btn.reset {
+    background: var(--mo-bg-sunken) !important;
+    color: var(--mo-text-secondary) !important;
+    border: none !important;
+    box-shadow: none !important;
+}
+body.theme-mono .beauty-action-btn.preset {
+    background: var(--mo-bg-sunken) !important;
+    color: var(--mo-text) !important;
+    box-shadow: none !important;
+}
+
+/* Toast - 图片风格的深色胶囊 */
+body.theme-mono #toast {
+    border-radius: var(--mo-radius-pill) !important;
+    background: var(--mo-ink) !important;
+    box-shadow: var(--mo-shadow-lg) !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+    font-family: var(--mo-font) !important;
+    font-weight: 500 !important;
+    color: #fff !important;
+    padding: 10px 20px !important;
+}
+
+/* ============================================================
+   14. 全局通用元素
+   ============================================================ */
+body.theme-mono input,
+body.theme-mono textarea,
+body.theme-mono select {
+    font-family: var(--mo-font) !important;
+}
+body.theme-mono .full-btn {
+    background: var(--mo-ink) !important;
+    color: #fff !important;
+    border: none !important;
+    border-radius: var(--mo-radius-sm) !important;
+    font-weight: 600 !important;
+    box-shadow: var(--mo-shadow-ink) !important;
+    font-family: var(--mo-font) !important;
+}
+body.theme-mono .full-btn:active {
+    transform: scale(0.98) !important;
+    opacity: 0.88 !important;
+}
+
+/* 学习/论坛等通用nav-bar */
+body.theme-mono #layer-study > .nav-bar,
+body.theme-mono #layer-forum > .nav-bar,
+body.theme-mono #layer-shop > .nav-bar,
+body.theme-mono #layer-wallet > .nav-bar,
+body.theme-mono #layer-calendar > .nav-bar,
+body.theme-mono #layer-paopao > .nav-bar,
+body.theme-mono #layer-mailbox > .nav-bar {
+    background: var(--mo-bg-elevated) !important;
+    border-bottom: 1px solid var(--mo-border) !important;
+    box-shadow: var(--mo-shadow-xs) !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+}
+body.theme-mono #layer-study > .nav-bar .nav-title,
+body.theme-mono #layer-forum > .nav-bar .nav-title,
+body.theme-mono #layer-shop > .nav-bar .nav-title,
+body.theme-mono #layer-wallet > .nav-bar .nav-title,
+body.theme-mono #layer-calendar > .nav-bar .nav-title,
+body.theme-mono #layer-paopao > .nav-bar .nav-title,
+body.theme-mono #layer-mailbox > .nav-bar .nav-title {
+    font-family: var(--mo-font) !important;
+    font-weight: 700 !important;
+    color: var(--mo-text) !important;
+    letter-spacing: -0.4px !important;
+    font-size: 18px !important;
+}
+body.theme-mono #layer-study > .nav-bar .nav-icon,
+body.theme-mono #layer-forum > .nav-bar .nav-icon,
+body.theme-mono #layer-shop > .nav-bar .nav-icon,
+body.theme-mono #layer-wallet > .nav-bar .nav-icon,
+body.theme-mono #layer-calendar > .nav-bar .nav-icon,
+body.theme-mono #layer-paopao > .nav-bar .nav-icon,
+body.theme-mono #layer-mailbox > .nav-bar .nav-icon {
+    color: var(--mo-text) !important;
+}
+
+/* 学习讲座消息卡 */
+body.theme-mono .study-lecture-msg {
+    background: var(--mo-bg-elevated) !important;
+    border: none !important;
+    border-radius: var(--mo-radius) !important;
+    box-shadow: var(--mo-shadow-sm) !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+    font-family: var(--mo-font) !important;
+    color: var(--mo-text) !important;
+}
+
+/* ============================================================
+   15. 聊天列表 (#tab-chats)
+   ============================================================ */
+body.theme-mono #tab-chats {
+    background: var(--mo-bg) !important;
+    background-image: none !important;
+}
+body.theme-mono #tab-chats > .nav-bar {
+    background: var(--mo-bg-elevated) !important;
+    border-bottom: 1px solid var(--mo-border) !important;
+    box-shadow: var(--mo-shadow-xs) !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+}
+body.theme-mono #tab-chats > .nav-bar .nav-title {
+    font-weight: 700 !important;
+    color: var(--mo-text) !important;
+    font-family: var(--mo-font) !important;
+    letter-spacing: -0.4px !important;
+    font-size: 18px !important;
+}
+body.theme-mono #tab-chats > .nav-bar .nav-icon {
+    color: var(--mo-text) !important;
+}
+body.theme-mono #tab-chats .list-item {
+    background: var(--mo-bg-elevated) !important;
+    border: none !important;
+    border-radius: var(--mo-radius) !important;
+    box-shadow: var(--mo-shadow-xs) !important;
+    margin: 8px 12px !important;
+    padding: 14px 16px !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+}
+body.theme-mono #tab-chats .list-item:active {
+    transform: scale(0.99) !important;
+}
+body.theme-mono #tab-chats .list-item .avatar {
+    border: none !important;
+    border-radius: 50% !important;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06) !important;
+    filter: none !important;
+}
+body.theme-mono #tab-chats .list-item .list-title {
+    font-weight: 700 !important;
+    color: var(--mo-text) !important;
+    letter-spacing: -0.2px !important;
+    font-family: var(--mo-font) !important;
+}
+body.theme-mono #tab-chats .list-item .list-sub {
+    color: var(--mo-text-secondary) !important;
+    font-family: var(--mo-font) !important;
+}
+/* 未读红点 */
+body.theme-mono #tab-chats .badge,
+body.theme-mono #tab-chats .unread-badge {
+    background: var(--mo-ink) !important;
+    color: #fff !important;
+    border-radius: 999px !important;
+    font-weight: 700 !important;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2) !important;
+}
+
+/* ============================================================
+   16. 主题卡片UI（设置→美化→主题选择器） - 让新主题在卡片中预览好看
+   ============================================================ */
+.theme-card.theme-card-mono .theme-card-preview {
+    background: #f1f1f2 !important;
+    position: relative;
+    overflow: hidden;
+}
+.theme-card.theme-card-mono .theme-card-preview::before {
+    content: '';
+    position: absolute;
+    top: 14%;
+    left: 12%;
+    width: 52%;
+    height: 32%;
+    background: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 3px 12px rgba(0,0,0,0.08);
+}
+.theme-card.theme-card-mono .theme-card-preview::after {
+    content: '';
+    position: absolute;
+    bottom: 14%;
+    right: 12%;
+    width: 44%;
+    height: 28%;
+    background: #0a0a0a;
+    border-radius: 10px;
+    box-shadow: 0 4px 14px rgba(0,0,0,0.22);
+}
+
+/* ============================================================
+   17. 头像预设/联系人资料
+   ============================================================ */
+body.theme-mono #layer-contact-profile {
+    background: var(--mo-bg) !important;
+}
+body.theme-mono #layer-contact-profile .nav-bar {
+    background: var(--mo-bg-elevated) !important;
+    border-bottom: 1px solid var(--mo-border) !important;
+    box-shadow: var(--mo-shadow-xs) !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+}
+body.theme-mono #layer-contact-profile .nav-title {
+    font-weight: 700 !important;
+    color: var(--mo-text) !important;
+    font-family: var(--mo-font) !important;
+}
+body.theme-mono #layer-contact-profile .nav-icon {
+    color: var(--mo-text) !important;
+}
+body.theme-mono #layer-contact-profile .group-box,
+body.theme-mono #layer-contact-profile .beauty-section-card {
+    background: var(--mo-bg-elevated) !important;
+    border: none !important;
+    border-radius: var(--mo-radius) !important;
+    box-shadow: var(--mo-shadow-xs) !important;
+    overflow: hidden !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+}
+body.theme-mono #layer-contact-profile .group-box::after,
+body.theme-mono #layer-contact-profile .beauty-section-card::after {
+    display: none !important;
+}
+
+/* ============================================================
+   18. 浮窗 & 桌面
+   ============================================================ */
+body.theme-mono #phone-wallpaper,
+body.theme-mono .desktop-wallpaper {
+    filter: saturate(0) !important;
+}
+/* 底部胶囊导航 */
+body.theme-mono .bottom-nav {
+    background: rgba(255, 255, 255, 0.88) !important;
+    border-radius: var(--mo-radius-pill) !important;
+    backdrop-filter: blur(15px) !important;
+    -webkit-backdrop-filter: blur(15px) !important;
+    box-shadow: var(--mo-shadow-lg) !important;
+    border: 1px solid var(--mo-border) !important;
+}
+body.theme-mono .dock-icon {
+    border-radius: var(--mo-radius-sm) !important;
+    box-shadow: var(--mo-shadow-xs) !important;
+}
+
+/* ============================================================
+   19. 头像框 / 附加组件
+   ============================================================ */
+body.theme-mono .pop-menu,
+body.theme-mono .contact-menu,
+body.theme-mono .app-menu,
+body.theme-mono .common-menu {
+    background: var(--mo-bg-elevated) !important;
+    border: none !important;
+    border-radius: var(--mo-radius-sm) !important;
+    box-shadow: var(--mo-shadow-xl) !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+    overflow: hidden !important;
+}
+
+/* ============================================================
+   20. 收尾：对一些使用 inline style 的彩色按钮收敛到黑白
+   ============================================================ */
+body.theme-mono button[style*="background:#07c160"],
+body.theme-mono button[style*="background: #07c160"],
+body.theme-mono button[style*="background:rgb(7, 193, 96)"] {
+    background: var(--mo-ink) !important;
+    color: #fff !important;
+    box-shadow: var(--mo-shadow-ink) !important;
+    border-radius: var(--mo-radius-sm) !important;
+}
+body.theme-mono button[style*="background:#576b95"],
+body.theme-mono button[style*="background: #576b95"] {
+    background: var(--mo-ink) !important;
+    color: #fff !important;
+    box-shadow: var(--mo-shadow-ink) !important;
+    border-radius: var(--mo-radius-sm) !important;
+}
+
+/* 滚动条 */
+body.theme-mono ::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+}
+body.theme-mono ::-webkit-scrollbar-track {
+    background: transparent;
+}
+body.theme-mono ::-webkit-scrollbar-thumb {
+    background: rgba(0, 0, 0, 0.15);
+    border-radius: 999px;
+}
+body.theme-mono ::-webkit-scrollbar-thumb:hover {
+    background: rgba(0, 0, 0, 0.25);
+}
+
+/* ============================================================
+   End of monochrome-theme.css
+   ============================================================ */

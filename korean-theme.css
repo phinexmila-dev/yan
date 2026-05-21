@@ -1,0 +1,3614 @@
+/* ===== 全局主题：韩系极简风 ===== */
+/* 黑白灰 · 毛玻璃 · 锐利直角/微圆角 · 极细线条 · 冷淡高级感 */
+/* 当 body 添加 .theme-korean 类时激活此主题 */
+
+/* ===== 全局基础变量 ===== */
+body.theme-korean {
+    --kr-bg: linear-gradient(180deg, #f7f7f8 0%, #ededf0 50%, #e8e8ec 100%);
+    --kr-bg-flat: #f0f0f3;
+    --kr-card: rgba(255, 255, 255, 0.55);
+    --kr-card-solid: #ffffff;
+    --kr-border: rgba(0, 0, 0, 0.08);
+    --kr-border-strong: rgba(0, 0, 0, 0.12);
+    --kr-shadow: 0 1px 3px rgba(0, 0, 0, 0.04), 0 4px 12px rgba(0, 0, 0, 0.03);
+    --kr-shadow-lg: 0 4px 24px rgba(0, 0, 0, 0.08), 0 1px 4px rgba(0, 0, 0, 0.04);
+    --kr-shadow-xl: 0 8px 40px rgba(0, 0, 0, 0.12), 0 2px 8px rgba(0, 0, 0, 0.06);
+    --kr-accent: #1a1a1a;
+    --kr-accent-soft: #4a4a4a;
+    --kr-text: #111111;
+    --kr-text-secondary: #7c7c82;
+    --kr-text-tertiary: #a8a8ad;
+    --kr-glass: rgba(255, 255, 255, 0.45);
+    --kr-glass-heavy: rgba(255, 255, 255, 0.72);
+    --kr-glass-ultra: rgba(255, 255, 255, 0.88);
+    --kr-glass-dark: rgba(0, 0, 0, 0.03);
+    --kr-blur: 20px;
+    --kr-blur-heavy: 40px;
+    --kr-blur-ultra: 60px;
+    --kr-radius: 14px;
+    --kr-radius-md: 12px;
+    --kr-radius-sm: 10px;
+    --kr-radius-xs: 8px;
+    --kr-divider: rgba(0, 0, 0, 0.04);
+    --kr-hover: rgba(0, 0, 0, 0.02);
+    --kr-active: rgba(0, 0, 0, 0.05);
+    --kr-font: -apple-system, 'Pretendard', 'SF Pro Display', 'Helvetica Neue', sans-serif;
+}
+
+/* ===== 聊天界面 ===== */
+
+/* 聊天导航栏 — 支持CSS变量自定义 */
+body.theme-korean #layer-chat > .nav-bar#chat-nav-bar {
+    background: var(--chat-nav-bg, var(--kr-glass-ultra)) !important;
+    border-bottom: var(--chat-nav-border, 1px solid var(--kr-border)) !important;
+    box-shadow: var(--chat-nav-shadow, var(--kr-shadow)) !important;
+    backdrop-filter: blur(var(--kr-blur-heavy)) saturate(200%) !important;
+    -webkit-backdrop-filter: blur(var(--kr-blur-heavy)) saturate(200%) !important;
+}
+body.theme-korean #layer-chat > .nav-bar#chat-nav-bar .nav-title {
+    font-family: var(--chat-nav-font, var(--kr-font)) !important;
+    font-weight: var(--chat-nav-font-weight, 600) !important;
+    letter-spacing: -0.5px !important;
+    color: var(--chat-nav-color, var(--kr-text)) !important;
+    font-size: var(--chat-nav-font-size, 17px) !important;
+}
+body.theme-korean #layer-chat > .nav-bar#chat-nav-bar .nav-icon {
+    color: var(--chat-nav-icon-color, var(--kr-text)) !important;
+}
+body.theme-korean #layer-chat > .nav-bar#chat-nav-bar .nav-icon:active {
+    opacity: 0.4 !important;
+    transform: scale(0.92) !important;
+}
+
+/* 聊天历史背景 */
+body.theme-korean #chat-history:not(.has-custom-bg) {
+    background: var(--kr-bg-flat) !important;
+    background-image: none !important;
+}
+body.theme-korean #chat-history.has-custom-bg {
+    background-color: transparent !important;
+    background-image: none;
+}
+/* [FIX-悬浮底栏白色] 让layer-chat背景与chat-history同步，用户做悬浮底栏时底部不露白 */
+body.theme-korean #layer-chat {
+    background: var(--kr-bg-flat) !important;
+}
+
+/* 聊天气泡 - 当用户有自定义气泡CSS时让步 */
+body.theme-korean:not(.has-custom-bubble-css) #layer-chat .bubble {
+    border: none !important;
+    border-radius: var(--kr-radius) !important;
+    box-shadow: var(--kr-shadow) !important;
+    font-family: var(--kr-font) !important;
+    color: var(--kr-text) !important;
+    position: relative;
+    transition: transform 0.12s ease, box-shadow 0.12s ease;
+    overflow: visible !important;
+}
+/* 对方气泡 - 灰色半透明毛玻璃 */
+body.theme-korean:not(.has-custom-bubble-css) #layer-chat .msg-row:not(.me) .bubble {
+    background: rgba(200, 200, 205, 0.35) !important;
+    backdrop-filter: blur(var(--kr-blur-heavy)) saturate(180%) !important;
+    -webkit-backdrop-filter: blur(var(--kr-blur-heavy)) saturate(180%) !important;
+    border: 0.5px solid rgba(180, 180, 188, 0.3) !important;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04), inset 0 1px 0 rgba(255, 255, 255, 0.5) !important;
+}
+body.theme-korean:not(.has-custom-bubble-css) #layer-chat .msg-row:not(.me) .bubble::before {
+    border-right-color: rgba(200, 200, 205, 0.35) !important;
+}
+/* 自己气泡 - 粉色半透明毛玻璃 */
+body.theme-korean:not(.has-custom-bubble-css) #layer-chat .msg-row.me .bubble {
+    background: rgba(255, 182, 193, 0.35) !important;
+    backdrop-filter: blur(var(--kr-blur-heavy)) saturate(180%) !important;
+    -webkit-backdrop-filter: blur(var(--kr-blur-heavy)) saturate(180%) !important;
+    border: 0.5px solid rgba(255, 170, 185, 0.3) !important;
+    box-shadow: 0 2px 8px rgba(255, 140, 160, 0.08), inset 0 1px 0 rgba(255, 255, 255, 0.5) !important;
+}
+body.theme-korean:not(.has-custom-bubble-css) #layer-chat .msg-row.me .bubble::after {
+    border-left-color: rgba(255, 182, 193, 0.35) !important;
+}
+/* 气泡按压效果 */
+body.theme-korean:not(.has-custom-bubble-css) #layer-chat .bubble:active {
+    transform: scale(0.985) !important;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.03) !important;
+}
+/* 气泡内图片 */
+body.theme-korean:not(.has-custom-bubble-css) #layer-chat .bubble img:not(.emoji-img) {
+    border: none !important;
+    border-radius: var(--kr-radius-sm) !important;
+    filter: none !important;
+}
+/* 图片气泡特殊处理 */
+body.theme-korean:not(.has-custom-bubble-css) #layer-chat .bubble:has(img:not(.emoji-img)):not(.voice) {
+    background: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+    padding: 0 !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+}
+body.theme-korean:not(.has-custom-bubble-css) #layer-chat .msg-row:not(.me) .bubble:has(img):not(.voice) {
+    margin-left: 6px;
+}
+body.theme-korean:not(.has-custom-bubble-css) #layer-chat .msg-row.me .bubble:has(img):not(.voice) {
+    margin-right: 6px;
+}
+
+/* 头像 */
+body.theme-korean:not(.has-custom-bubble-css) #layer-chat .avatar-wrapper-chat .avatar,
+body.theme-korean:not(.has-custom-bubble-css) #layer-chat .msg-row .avatar {
+    border: 1px solid rgba(0, 0, 0, 0.08) !important;
+    box-shadow: 0 1px 6px rgba(0, 0, 0, 0.06) !important;
+    filter: none !important;
+}
+
+/* 时间分隔线 */
+body.theme-korean:not(.has-custom-bubble-css) #layer-chat .time-divider,
+body.theme-korean:not(.has-custom-bubble-css) #layer-chat .msg-row .time-label {
+    font-family: var(--kr-font) !important;
+    color: var(--kr-text-tertiary) !important;
+    letter-spacing: 0.3px;
+    font-size: 11px;
+    font-weight: 400;
+}
+/* 时间戳标签 */
+body.theme-korean:not(.has-custom-bubble-css) #layer-chat .avatar-time-label,
+body.theme-korean:not(.has-custom-bubble-css) #layer-chat .bubble-time-label {
+    font-family: var(--kr-font) !important;
+    color: var(--kr-text-tertiary) !important;
+    font-size: 10px;
+}
+
+/* 聊天输入栏 悬浮胶囊 — 支持CSS变量自定义 */
+body.theme-korean #layer-chat .input-bar,
+body.theme-korean #chat-input-bar {
+    background: var(--chat-input-bg, var(--kr-glass-ultra)) !important;
+    border-top: none !important;
+    border: var(--chat-input-border, 0.5px solid var(--kr-border)) !important;
+    border-radius: var(--chat-input-radius, 26px) !important;
+    box-shadow: var(--chat-input-shadow, 0 2px 20px rgba(0, 0, 0, 0.06), 0 0 0 0.5px var(--kr-border)) !important;
+    backdrop-filter: blur(var(--kr-blur-heavy)) saturate(200%) !important;
+    -webkit-backdrop-filter: blur(var(--kr-blur-heavy)) saturate(200%) !important;
+}
+/* 输入框 */
+body.theme-korean #layer-chat .input-field,
+body.theme-korean #chat-input {
+    border: 1px solid rgba(0, 0, 0, 0.08) !important;
+    border-radius: var(--kr-radius) !important;
+    background: rgba(255, 255, 255, 0.7) !important;
+    backdrop-filter: blur(10px) !important;
+    -webkit-backdrop-filter: blur(10px) !important;
+    font-family: var(--kr-font) !important;
+    color: var(--kr-text) !important;
+}
+body.theme-korean #layer-chat .input-field:focus,
+body.theme-korean #chat-input:focus {
+    outline: none !important;
+    background: rgba(255, 255, 255, 0.9) !important;
+    box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.05) !important;
+    border-color: rgba(0, 0, 0, 0.15) !important;
+}
+/* 输入栏按钮 */
+body.theme-korean #layer-chat .btn-act {
+    color: var(--kr-accent-soft) !important;
+    transition: transform 0.12s !important;
+}
+body.theme-korean #layer-chat .btn-act:active {
+    transform: scale(0.85) !important;
+    color: var(--kr-text) !important;
+}
+/* 发送按钮 */
+body.theme-korean #layer-chat .btn-send {
+    color: var(--kr-text) !important;
+    font-weight: 600 !important;
+}
+body.theme-korean #layer-chat .btn-send:active {
+    transform: scale(0.85) !important;
+}
+/* AI生成按钮 */
+body.theme-korean #layer-chat .btn-gen {
+    color: var(--kr-accent-soft) !important;
+}
+/* 心声按钮 */
+body.theme-korean #layer-chat .btn-thought {
+    color: var(--kr-text-secondary) !important;
+}
+/* 工具栏 */
+body.theme-korean #layer-chat .toolbar {
+    background: var(--kr-glass) !important;
+    border-top: 0.5px solid var(--kr-border) !important;
+    backdrop-filter: blur(var(--kr-blur)) !important;
+    -webkit-backdrop-filter: blur(var(--kr-blur)) !important;
+}
+body.theme-korean #layer-chat .toolbar i {
+    color: var(--kr-accent-soft) !important;
+    transition: all 0.12s !important;
+}
+body.theme-korean #layer-chat .toolbar i:active {
+    transform: scale(0.85) !important;
+    color: var(--kr-text) !important;
+}
+
+/* 引用预览条 */
+body.theme-korean #layer-chat .quote-preview {
+    background: var(--kr-glass) !important;
+    border: 0.5px solid var(--kr-border) !important;
+    border-left: 2px solid var(--kr-text-tertiary) !important;
+    border-radius: var(--kr-radius-xs) !important;
+    color: var(--kr-text) !important;
+    backdrop-filter: blur(16px) !important;
+    -webkit-backdrop-filter: blur(16px) !important;
+    font-size: 12px !important;
+}
+
+/* 消息弹出菜单 */
+body.theme-korean #layer-chat .pop-menu {
+    background: var(--kr-glass-ultra) !important;
+    border: 0.5px solid var(--kr-border-strong) !important;
+    box-shadow: var(--kr-shadow-xl) !important;
+    border-radius: var(--kr-radius-md) !important;
+    backdrop-filter: blur(var(--kr-blur-ultra)) saturate(200%) !important;
+    -webkit-backdrop-filter: blur(var(--kr-blur-ultra)) saturate(200%) !important;
+}
+body.theme-korean #layer-chat .pop-opt {
+    color: var(--kr-text) !important;
+    font-family: var(--kr-font) !important;
+    font-weight: 400 !important;
+    letter-spacing: -0.2px !important;
+    border-bottom: 0.5px solid var(--kr-divider) !important;
+}
+body.theme-korean #layer-chat .pop-opt:last-child {
+    border-bottom: none !important;
+}
+body.theme-korean #layer-chat .pop-opt:active {
+    background: var(--kr-active) !important;
+    color: var(--kr-text) !important;
+}
+
+/* 语音气泡 */
+body.theme-korean:not(.has-custom-bubble-css) #layer-chat .bubble.voice .voice-wave-anim span {
+    background: var(--kr-accent-soft) !important;
+}
+body.theme-korean:not(.has-custom-bubble-css) #layer-chat .msg-row.me .bubble.voice .voice-wave-anim span {
+    background: var(--kr-text-secondary) !important;
+}
+body.theme-korean:not(.has-custom-bubble-css) #layer-chat .bubble.voice .voice-sec {
+    color: var(--kr-text-secondary) !important;
+}
+
+/* 撤回消息 */
+body.theme-korean:not(.has-custom-bubble-css) #layer-chat .bubble.recalled {
+    background: transparent !important;
+    border: 1px dashed rgba(0, 0, 0, 0.1) !important;
+    box-shadow: none !important;
+    color: var(--kr-text-tertiary) !important;
+    font-size: 12px !important;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+}
+
+/* 多选模式 */
+body.theme-korean #chat-select-bar {
+    background: var(--kr-glass-ultra) !important;
+    border-bottom: 0.5px solid var(--kr-border) !important;
+    color: var(--kr-text) !important;
+    backdrop-filter: blur(var(--kr-blur)) !important;
+    -webkit-backdrop-filter: blur(var(--kr-blur)) !important;
+}
+
+/* 转账气泡 */
+body.theme-korean:not(.has-custom-bubble-css) #layer-chat .bubble-transfer {
+    border: 0.5px solid var(--kr-border) !important;
+    border-radius: var(--kr-radius) !important;
+    box-shadow: var(--kr-shadow) !important;
+    background: var(--kr-glass-ultra) !important;
+    backdrop-filter: blur(var(--kr-blur)) !important;
+    -webkit-backdrop-filter: blur(var(--kr-blur)) !important;
+}
+body.theme-korean:not(.has-custom-bubble-css) #layer-chat .bubble-transfer .transfer-top {
+    background: rgba(0, 0, 0, 0.02) !important;
+    border-bottom: 0.5px solid var(--kr-divider) !important;
+    border-radius: var(--kr-radius) var(--kr-radius) 0 0 !important;
+}
+body.theme-korean:not(.has-custom-bubble-css) #layer-chat .bubble-transfer .transfer-amt {
+    color: var(--kr-text) !important;
+    font-weight: 700 !important;
+}
+body.theme-korean:not(.has-custom-bubble-css) #layer-chat .bubble-transfer .transfer-desc {
+    color: var(--kr-text-secondary) !important;
+}
+body.theme-korean:not(.has-custom-bubble-css) #layer-chat .bubble-transfer .transfer-bottom {
+    background: rgba(0, 0, 0, 0.015) !important;
+    color: var(--kr-text-tertiary) !important;
+    border-top: none !important;
+    font-size: 11px !important;
+    border-radius: 0 0 var(--kr-radius) var(--kr-radius) !important;
+}
+
+/* 红包气泡 - 韩系玻璃拟态风格 */
+body.theme-korean:not(.has-custom-bubble-css) #layer-chat .bubble-redpacket {
+    border: 0.5px solid var(--kr-border) !important;
+    border-radius: var(--kr-radius) !important;
+    box-shadow: var(--kr-shadow) !important;
+    background: var(--kr-glass-ultra) !important;
+    backdrop-filter: blur(var(--kr-blur)) !important;
+    -webkit-backdrop-filter: blur(var(--kr-blur)) !important;
+}
+body.theme-korean:not(.has-custom-bubble-css) #layer-chat .bubble-redpacket .rp-top {
+    background: linear-gradient(135deg, rgba(192,57,38,0.85), rgba(169,50,38,0.9)) !important;
+    border-bottom: 0.5px solid rgba(255,255,255,0.1) !important;
+    border-radius: var(--kr-radius) var(--kr-radius) 0 0 !important;
+    backdrop-filter: blur(4px) !important;
+}
+body.theme-korean:not(.has-custom-bubble-css) #layer-chat .bubble-redpacket .rp-greeting {
+    color: rgba(255,255,255,0.95) !important;
+    font-weight: 400 !important;
+    letter-spacing: 0.3px !important;
+}
+body.theme-korean:not(.has-custom-bubble-css) #layer-chat .bubble-redpacket .rp-status {
+    color: rgba(255,255,255,0.55) !important;
+}
+body.theme-korean:not(.has-custom-bubble-css) #layer-chat .bubble-redpacket .rp-bottom {
+    background: rgba(169,50,38,0.75) !important;
+    color: rgba(255,255,255,0.45) !important;
+    border-top: none !important;
+    font-size: 11px !important;
+    border-radius: 0 0 var(--kr-radius) var(--kr-radius) !important;
+}
+body.theme-korean:not(.has-custom-bubble-css) #layer-chat .bubble-redpacket.rp-done .rp-top {
+    background: linear-gradient(135deg, rgba(150,150,150,0.7), rgba(130,130,130,0.7)) !important;
+}
+body.theme-korean:not(.has-custom-bubble-css) #layer-chat .bubble-redpacket.rp-done .rp-bottom {
+    background: rgba(130,130,130,0.6) !important;
+}
+
+/* 共享帖子气泡 */
+body.theme-korean:not(.has-custom-bubble-css) #layer-chat .bubble-shared-post {
+    border: 0.5px solid var(--kr-border) !important;
+    border-radius: var(--kr-radius) !important;
+    box-shadow: var(--kr-shadow) !important;
+    background: var(--kr-glass-ultra) !important;
+    backdrop-filter: blur(var(--kr-blur)) !important;
+    -webkit-backdrop-filter: blur(var(--kr-blur)) !important;
+}
+
+/* 滚动到底部按钮 */
+body.theme-korean #chat-scroll-bottom-btn {
+    background: var(--kr-glass-ultra) !important;
+    border: 0.5px solid var(--kr-border-strong) !important;
+    border-radius: 50% !important;
+    box-shadow: var(--kr-shadow-lg) !important;
+    color: var(--kr-text) !important;
+    backdrop-filter: blur(var(--kr-blur)) !important;
+    -webkit-backdrop-filter: blur(var(--kr-blur)) !important;
+}
+body.theme-korean #chat-scroll-bottom-btn:active {
+    transform: scale(0.9) !important;
+}
+
+/* 共读状态栏 */
+body.theme-korean #chat-read-banner {
+    background: var(--kr-glass) !important;
+    border-bottom: 0.5px solid var(--kr-border) !important;
+    color: var(--kr-text) !important;
+    letter-spacing: 0.2px !important;
+    backdrop-filter: blur(var(--kr-blur)) !important;
+    -webkit-backdrop-filter: blur(var(--kr-blur)) !important;
+}
+
+/* 气泡引用样式 - 上下结构 */
+body.theme-korean:not(.has-custom-bubble-css) #layer-chat .bubble-quote {
+    background: rgba(0, 0, 0, 0.025) !important;
+    border-left: none !important;
+    color: var(--kr-text-secondary) !important;
+    border-radius: var(--kr-radius-xs) !important;
+    font-size: 12px !important;
+}
+
+/* 心声气泡 */
+body.theme-korean:not(.has-custom-bubble-css) #layer-chat .thought-bubble {
+    border: 1px dashed rgba(0, 0, 0, 0.08) !important;
+    background: var(--kr-glass) !important;
+    border-radius: var(--kr-radius) !important;
+    box-shadow: none !important;
+    color: var(--kr-text-secondary) !important;
+    font-style: italic !important;
+    backdrop-filter: blur(var(--kr-blur)) !important;
+    -webkit-backdrop-filter: blur(var(--kr-blur)) !important;
+}
+
+/* 表情面板 */
+body.theme-korean #layer-chat .sticker-panel {
+    background: var(--kr-glass-ultra) !important;
+    border-top: 0.5px solid var(--kr-border) !important;
+    backdrop-filter: blur(var(--kr-blur-heavy)) !important;
+    -webkit-backdrop-filter: blur(var(--kr-blur-heavy)) !important;
+}
+
+/* 聊天设置页面 */
+body.theme-korean #layer-chat-settings .nav-bar {
+    background: var(--kr-glass-ultra) !important;
+    border-bottom: 0.5px solid var(--kr-border) !important;
+    box-shadow: var(--kr-shadow) !important;
+    backdrop-filter: blur(var(--kr-blur-heavy)) saturate(200%) !important;
+    -webkit-backdrop-filter: blur(var(--kr-blur-heavy)) saturate(200%) !important;
+}
+body.theme-korean #layer-chat-settings .group-box {
+    border: 0.5px solid var(--kr-border) !important;
+    border-radius: var(--kr-radius) !important;
+    box-shadow: var(--kr-shadow) !important;
+    margin: 14px 12px !important;
+    background: var(--kr-glass-heavy) !important;
+    backdrop-filter: blur(var(--kr-blur)) !important;
+    -webkit-backdrop-filter: blur(var(--kr-blur)) !important;
+}
+body.theme-korean #layer-chat-settings .form-cell {
+    border-bottom: 0.5px solid var(--kr-divider) !important;
+}
+body.theme-korean #layer-chat-settings .form-cell:last-child {
+    border-bottom: none !important;
+}
+body.theme-korean #layer-chat-settings .form-label {
+    font-weight: 500 !important;
+    color: var(--kr-text) !important;
+    font-family: var(--kr-font) !important;
+}
+
+/* ===== 添加联系人弹窗 ===== */
+body.theme-korean #modal-contact .modal-box {
+    background: var(--kr-glass-ultra) !important;
+    border: 0.5px solid var(--kr-border) !important;
+    border-radius: var(--kr-radius-md) !important;
+    box-shadow: var(--kr-shadow-xl) !important;
+    padding: 24px 20px !important;
+    backdrop-filter: blur(var(--kr-blur-ultra)) saturate(200%) !important;
+    -webkit-backdrop-filter: blur(var(--kr-blur-ultra)) saturate(200%) !important;
+}
+body.theme-korean #modal-contact .modal-box h3 {
+    font-weight: 600 !important;
+    letter-spacing: -0.3px !important;
+    color: var(--kr-text) !important;
+    font-size: 17px !important;
+    text-align: center !important;
+    padding-bottom: 12px !important;
+    margin-bottom: 16px !important;
+    font-family: var(--kr-font) !important;
+    border-bottom: 0.5px solid var(--kr-divider) !important;
+}
+body.theme-korean #modal-contact .modal-box h3::after {
+    display: none !important;
+}
+body.theme-korean #modal-contact .upload-box {
+    border: 1px dashed rgba(0, 0, 0, 0.12) !important;
+    border-radius: 50% !important;
+    box-shadow: none !important;
+    background: rgba(0, 0, 0, 0.02) !important;
+}
+body.theme-korean #modal-contact .upload-box i {
+    color: var(--kr-text-secondary) !important;
+}
+body.theme-korean #modal-contact .upload-box img {
+    filter: none !important;
+}
+body.theme-korean #modal-contact #new-contact-name,
+body.theme-korean #modal-contact #new-contact-remark,
+body.theme-korean #modal-contact #new-contact-remark-for-me,
+body.theme-korean #modal-contact #new-contact-signature,
+body.theme-korean #modal-contact #new-contact-persona {
+    border: 1px solid var(--kr-border) !important;
+    border-radius: var(--kr-radius-sm) !important;
+    background: rgba(255, 255, 255, 0.5) !important;
+    color: var(--kr-text) !important;
+    box-shadow: none !important;
+    backdrop-filter: blur(10px) !important;
+    -webkit-backdrop-filter: blur(10px) !important;
+}
+body.theme-korean #modal-contact #new-contact-name:focus,
+body.theme-korean #modal-contact #new-contact-remark:focus,
+body.theme-korean #modal-contact #new-contact-remark-for-me:focus,
+body.theme-korean #modal-contact #new-contact-signature:focus,
+body.theme-korean #modal-contact #new-contact-persona:focus {
+    outline: none !important;
+    background: rgba(255, 255, 255, 0.85) !important;
+    box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.05) !important;
+}
+body.theme-korean #modal-contact #new-contact-name::placeholder,
+body.theme-korean #modal-contact #new-contact-remark::placeholder,
+body.theme-korean #modal-contact #new-contact-remark-for-me::placeholder,
+body.theme-korean #modal-contact #new-contact-signature::placeholder,
+body.theme-korean #modal-contact #new-contact-persona::placeholder {
+    color: var(--kr-text-tertiary) !important;
+}
+body.theme-korean #modal-contact .modal-box button {
+    border: none !important;
+    border-radius: var(--kr-radius-sm) !important;
+    font-weight: 500 !important;
+    cursor: pointer !important;
+    transition: all 0.15s ease !important;
+    font-family: var(--kr-font) !important;
+    letter-spacing: -0.2px !important;
+}
+body.theme-korean #modal-contact .modal-btn-cancel {
+    background: rgba(0, 0, 0, 0.04) !important;
+    color: var(--kr-text) !important;
+    border: none !important;
+    border-radius: var(--kr-radius-sm) !important;
+    box-shadow: none !important;
+}
+body.theme-korean #modal-contact .modal-btn-cancel:active {
+    transform: scale(0.97) !important;
+    background: rgba(0, 0, 0, 0.07) !important;
+}
+body.theme-korean #modal-contact .modal-btn-save {
+    background: var(--kr-text) !important;
+    color: #fff !important;
+    border: none !important;
+    border-radius: var(--kr-radius-sm) !important;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15) !important;
+}
+body.theme-korean #modal-contact .modal-btn-save:active {
+    transform: scale(0.97) !important;
+    opacity: 0.85 !important;
+}
+body.theme-korean #modal-contact.modal-mask {
+    background: rgba(0, 0, 0, 0.3) !important;
+    backdrop-filter: blur(8px) !important;
+    -webkit-backdrop-filter: blur(8px) !important;
+}
+/* 移除便签装饰 */
+body.theme-korean #modal-contact .modal-box::before {
+    display: none !important;
+}
+body.theme-korean #modal-contact .modal-box::after {
+    display: none !important;
+}
+
+/* ===== 联系人列表界面 ===== */
+body.theme-korean #tab-contacts > .nav-bar {
+    background: var(--kr-glass-ultra) !important;
+    border-bottom: 0.5px solid var(--kr-border) !important;
+    box-shadow: var(--kr-shadow) !important;
+    backdrop-filter: blur(var(--kr-blur-heavy)) saturate(200%) !important;
+    -webkit-backdrop-filter: blur(var(--kr-blur-heavy)) saturate(200%) !important;
+}
+body.theme-korean #tab-contacts > .nav-bar .nav-title {
+    font-weight: 600 !important;
+    color: var(--kr-text) !important;
+    font-size: 17px !important;
+    letter-spacing: -0.3px !important;
+    font-family: var(--kr-font) !important;
+}
+body.theme-korean #tab-contacts > .nav-bar .nav-icon {
+    color: var(--kr-text) !important;
+}
+
+/* 联系人列表背景 */
+body.theme-korean #contact-list {
+    background: var(--kr-bg-flat) !important;
+    background-image: none !important;
+    padding-left: 12px !important;
+    padding-right: 12px !important;
+}
+
+/* 联系人列表项 */
+body.theme-korean #contact-list .list-item {
+    background: var(--kr-glass-heavy) !important;
+    border: 0.5px solid var(--kr-border) !important;
+    border-radius: var(--kr-radius) !important;
+    box-shadow: var(--kr-shadow) !important;
+    margin-bottom: 6px !important;
+    padding: 14px 15px !important;
+    transition: transform 0.12s ease !important;
+    backdrop-filter: blur(var(--kr-blur)) !important;
+    -webkit-backdrop-filter: blur(var(--kr-blur)) !important;
+}
+body.theme-korean #contact-list .list-item:active {
+    transform: scale(0.985) !important;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.03) !important;
+}
+
+/* 置顶联系人 */
+body.theme-korean #contact-list .list-item[style*="background: rgb(240, 240, 255)"],
+body.theme-korean #contact-list .list-item[style*="background:#f0f0ff"] {
+    background: rgba(0, 0, 0, 0.03) !important;
+    border: 1px solid rgba(0, 0, 0, 0.08) !important;
+}
+
+/* 联系人头像 */
+body.theme-korean #contact-list .list-item .avatar {
+    border: 1px solid rgba(0, 0, 0, 0.06) !important;
+    box-shadow: 0 1px 6px rgba(0, 0, 0, 0.05) !important;
+    filter: none !important;
+}
+
+/* 联系人名字 */
+body.theme-korean #contact-list .list-item .list-title {
+    font-weight: 600 !important;
+    color: var(--kr-text) !important;
+    letter-spacing: -0.2px !important;
+    font-family: var(--kr-font) !important;
+}
+body.theme-korean #contact-list .list-item .list-sub {
+    color: var(--kr-text-secondary) !important;
+    font-size: 12px !important;
+    font-family: var(--kr-font) !important;
+}
+body.theme-korean #contact-list .list-item > i {
+    color: var(--kr-text-secondary) !important;
+}
+body.theme-korean #contact-list .list-item .fa-users {
+    color: var(--kr-text-tertiary) !important;
+}
+body.theme-korean #contact-list .list-item .fa-thumbtack {
+    color: var(--kr-text-secondary) !important;
+}
+
+/* 联系人右键菜单 */
+body.theme-korean .contact-menu {
+    background: var(--kr-glass-ultra) !important;
+    border: 0.5px solid var(--kr-border-strong) !important;
+    border-radius: var(--kr-radius-md) !important;
+    box-shadow: var(--kr-shadow-xl) !important;
+    backdrop-filter: blur(var(--kr-blur-ultra)) saturate(200%) !important;
+    -webkit-backdrop-filter: blur(var(--kr-blur-ultra)) saturate(200%) !important;
+}
+body.theme-korean .contact-menu-item {
+    color: var(--kr-text) !important;
+    border-bottom-color: var(--kr-divider) !important;
+    font-family: var(--kr-font) !important;
+}
+body.theme-korean .contact-menu-item:active {
+    background: var(--kr-active) !important;
+    color: var(--kr-text) !important;
+}
+
+/* 添加按钮 */
+body.theme-korean #tab-contacts .nav-icon .fa-plus-circle {
+    color: var(--kr-text) !important;
+}
+
+/* ===== 微信底部Tab栏 ===== */
+body.theme-korean #layer-wechat > .wx-tab-bar,
+body.theme-korean .wx-tab-bar {
+    background: var(--kr-glass-ultra) !important;
+    border-top: 0.5px solid var(--kr-border) !important;
+    box-shadow: 0 -1px 12px rgba(0, 0, 0, 0.03) !important;
+    backdrop-filter: blur(var(--kr-blur-heavy)) saturate(200%) !important;
+    -webkit-backdrop-filter: blur(var(--kr-blur-heavy)) saturate(200%) !important;
+}
+body.theme-korean #layer-wechat > .wx-tab-bar .nav-tab,
+body.theme-korean .wx-tab-bar .nav-tab {
+    color: var(--kr-text-tertiary) !important;
+    font-weight: 400 !important;
+    font-family: var(--kr-font) !important;
+}
+body.theme-korean #layer-wechat > .wx-tab-bar .nav-tab i,
+body.theme-korean .wx-tab-bar .nav-tab i {
+    color: inherit !important;
+}
+body.theme-korean #layer-wechat > .wx-tab-bar .nav-tab.active,
+body.theme-korean .wx-tab-bar .nav-tab.active {
+    color: var(--kr-text) !important;
+}
+body.theme-korean #layer-wechat > .wx-tab-bar .nav-tab.active i,
+body.theme-korean .wx-tab-bar .nav-tab.active i {
+    transform: none !important;
+    color: var(--kr-text) !important;
+}
+body.theme-korean .wx-tab-bar .nav-tab:active {
+    opacity: 0.5 !important;
+    transform: scale(0.92) !important;
+}
+
+/* ===== 世界书界面 ===== */
+body.theme-korean #layer-worldbook > .nav-bar {
+    background: var(--kr-glass-ultra) !important;
+    border-bottom: 0.5px solid var(--kr-border) !important;
+    box-shadow: var(--kr-shadow) !important;
+    backdrop-filter: blur(var(--kr-blur-heavy)) saturate(200%) !important;
+    -webkit-backdrop-filter: blur(var(--kr-blur-heavy)) saturate(200%) !important;
+}
+body.theme-korean #layer-worldbook > .nav-bar .nav-title {
+    font-weight: 600 !important;
+    color: var(--kr-text) !important;
+    font-family: var(--kr-font) !important;
+    letter-spacing: -0.3px !important;
+}
+body.theme-korean #layer-worldbook > .nav-bar .nav-icon {
+    color: var(--kr-text) !important;
+}
+body.theme-korean #layer-worldbook > .scroll-y {
+    background: var(--kr-bg-flat) !important;
+    background-image: none !important;
+}
+/* 分类栏 */
+body.theme-korean #layer-worldbook .wb-category-bar {
+    background: var(--kr-glass) !important;
+    border-bottom: 0.5px solid var(--kr-border) !important;
+    box-shadow: none !important;
+    padding: 10px !important;
+    backdrop-filter: blur(var(--kr-blur)) !important;
+    -webkit-backdrop-filter: blur(var(--kr-blur)) !important;
+}
+/* 分类标签 */
+body.theme-korean #layer-worldbook .wb-cate-chip {
+    border: 0.5px solid var(--kr-border-strong) !important;
+    border-radius: var(--kr-radius) !important;
+    background: var(--kr-glass) !important;
+    color: var(--kr-text-secondary) !important;
+    font-weight: 500 !important;
+    font-size: 12px !important;
+    padding: 5px 14px !important;
+    box-shadow: none !important;
+    transition: all 0.15s ease !important;
+    backdrop-filter: blur(12px) !important;
+    -webkit-backdrop-filter: blur(12px) !important;
+    font-family: var(--kr-font) !important;
+}
+body.theme-korean #layer-worldbook .wb-cate-chip.active {
+    background: var(--kr-text) !important;
+    color: #fff !important;
+    border-color: transparent !important;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12) !important;
+}
+body.theme-korean #layer-worldbook .wb-cate-chip:active {
+    transform: scale(0.96) !important;
+}
+/* 添加菜单 */
+body.theme-korean #layer-worldbook .add-menu {
+    background: var(--kr-glass-ultra) !important;
+    border: 0.5px solid var(--kr-border-strong) !important;
+    border-radius: var(--kr-radius-md) !important;
+    box-shadow: var(--kr-shadow-xl) !important;
+    backdrop-filter: blur(var(--kr-blur-ultra)) !important;
+    -webkit-backdrop-filter: blur(var(--kr-blur-ultra)) !important;
+}
+body.theme-korean #layer-worldbook .add-item {
+    color: var(--kr-text) !important;
+    border-bottom-color: var(--kr-divider) !important;
+    font-family: var(--kr-font) !important;
+}
+body.theme-korean #layer-worldbook .add-item:active {
+    background: var(--kr-active) !important;
+}
+/* 世界书列表项 */
+body.theme-korean #wb-list .group-box.wb-item {
+    background: var(--kr-glass-heavy) !important;
+    border: 0.5px solid var(--kr-border) !important;
+    border-radius: var(--kr-radius) !important;
+    box-shadow: var(--kr-shadow) !important;
+    margin-bottom: 8px !important;
+    overflow: visible !important;
+    backdrop-filter: blur(var(--kr-blur)) !important;
+    -webkit-backdrop-filter: blur(var(--kr-blur)) !important;
+}
+body.theme-korean #wb-list .group-box.wb-item:active {
+    transform: scale(0.995) !important;
+}
+body.theme-korean #wb-list .group-box.wb-item b,
+body.theme-korean #wb-list .group-box.wb-item strong {
+    color: var(--kr-text) !important;
+    font-family: var(--kr-font) !important;
+}
+body.theme-korean #wb-list .wb-collapse-arrow {
+    color: var(--kr-text-secondary) !important;
+}
+body.theme-korean #wb-list .wb-content {
+    color: var(--kr-text) !important;
+    border-top: 0.5px solid var(--kr-divider) !important;
+}
+/* 世界书编辑区域 */
+body.theme-korean #wb-list .wb-edit-area textarea {
+    border: 1px solid var(--kr-border) !important;
+    border-radius: var(--kr-radius-sm) !important;
+    background: rgba(255, 255, 255, 0.5) !important;
+    color: var(--kr-text) !important;
+    backdrop-filter: blur(10px) !important;
+    -webkit-backdrop-filter: blur(10px) !important;
+    font-family: var(--kr-font) !important;
+}
+body.theme-korean #wb-list .wb-edit-area textarea:focus {
+    outline: none !important;
+    background: rgba(255, 255, 255, 0.85) !important;
+    box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.05) !important;
+}
+body.theme-korean #wb-list .wb-edit-area input,
+body.theme-korean #wb-list .wb-edit-area select {
+    border: 1px solid var(--kr-border) !important;
+    border-radius: var(--kr-radius-sm) !important;
+    background: rgba(255, 255, 255, 0.5) !important;
+    color: var(--kr-text) !important;
+    font-family: var(--kr-font) !important;
+}
+/* 世界书按钮 */
+body.theme-korean #wb-list .wb-btn {
+    border: none !important;
+    border-radius: var(--kr-radius-sm) !important;
+    font-weight: 500 !important;
+    transition: all 0.15s ease !important;
+    font-family: var(--kr-font) !important;
+    box-shadow: none !important;
+}
+body.theme-korean #wb-list .wb-btn.edit {
+    background: rgba(0, 0, 0, 0.04) !important;
+    color: var(--kr-text) !important;
+}
+body.theme-korean #wb-list .wb-btn.del {
+    background: rgba(0, 0, 0, 0.04) !important;
+    color: var(--kr-text-secondary) !important;
+}
+body.theme-korean #wb-list .wb-btn.save {
+    background: var(--kr-text) !important;
+    color: #fff !important;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12) !important;
+}
+body.theme-korean #wb-list .wb-btn.cancel {
+    background: rgba(0, 0, 0, 0.04) !important;
+    color: var(--kr-text) !important;
+}
+body.theme-korean #wb-list .wb-btn:active {
+    transform: scale(0.96) !important;
+}
+
+/* ===== 世界书弹窗 ===== */
+body.theme-korean #modal-wb .modal-box,
+body.theme-korean #modal-category .modal-box,
+body.theme-korean #modal-wb-select .modal-box {
+    background: var(--kr-glass-ultra) !important;
+    border: 0.5px solid var(--kr-border) !important;
+    border-radius: var(--kr-radius-md) !important;
+    box-shadow: var(--kr-shadow-xl) !important;
+    backdrop-filter: blur(var(--kr-blur-ultra)) saturate(200%) !important;
+    -webkit-backdrop-filter: blur(var(--kr-blur-ultra)) saturate(200%) !important;
+}
+body.theme-korean #modal-wb .modal-box h3,
+body.theme-korean #modal-category .modal-box h3,
+body.theme-korean #modal-wb-select .modal-box h3 {
+    font-weight: 600 !important;
+    color: var(--kr-text) !important;
+    font-size: 16px !important;
+    font-family: var(--kr-font) !important;
+    letter-spacing: -0.3px !important;
+}
+body.theme-korean #modal-wb .modal-box h3::after,
+body.theme-korean #modal-category .modal-box h3::after,
+body.theme-korean #modal-wb-select .modal-box h3::after {
+    display: none !important;
+}
+body.theme-korean #modal-wb input,
+body.theme-korean #modal-wb textarea,
+body.theme-korean #modal-wb select,
+body.theme-korean #modal-category input {
+    border: 1px solid var(--kr-border) !important;
+    border-radius: var(--kr-radius-sm) !important;
+    background: rgba(255, 255, 255, 0.5) !important;
+    color: var(--kr-text) !important;
+    font-family: var(--kr-font) !important;
+}
+body.theme-korean #modal-wb input:focus,
+body.theme-korean #modal-wb textarea:focus,
+body.theme-korean #modal-wb select:focus,
+body.theme-korean #modal-category input:focus {
+    outline: none !important;
+    background: rgba(255, 255, 255, 0.85) !important;
+    box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.05) !important;
+}
+body.theme-korean .wb-modal-btn-cancel {
+    background: rgba(0, 0, 0, 0.04) !important;
+    color: var(--kr-text) !important;
+    border: none !important;
+    border-radius: var(--kr-radius-sm) !important;
+    box-shadow: none !important;
+    font-family: var(--kr-font) !important;
+}
+body.theme-korean .wb-modal-btn-save {
+    background: var(--kr-text) !important;
+    color: #fff !important;
+    border: none !important;
+    border-radius: var(--kr-radius-sm) !important;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12) !important;
+    font-family: var(--kr-font) !important;
+}
+/* 移除便签装饰 */
+body.theme-korean #modal-wb .modal-box::before,
+body.theme-korean #modal-category .modal-box::before,
+body.theme-korean #modal-wb-select .modal-box::before {
+    display: none !important;
+}
+
+/* 世界书HTML弹窗 */
+body.theme-korean .wb-html-popup-container {
+    border: 0.5px solid var(--kr-border) !important;
+    border-radius: var(--kr-radius-md) !important;
+    box-shadow: var(--kr-shadow-xl) !important;
+    backdrop-filter: blur(var(--kr-blur-heavy)) !important;
+    -webkit-backdrop-filter: blur(var(--kr-blur-heavy)) !important;
+}
+body.theme-korean .wb-html-popup-header {
+    border-bottom: 0.5px solid var(--kr-divider) !important;
+    background: var(--kr-glass-ultra) !important;
+    border-radius: var(--kr-radius-md) var(--kr-radius-md) 0 0 !important;
+}
+body.theme-korean .wb-html-popup-header span {
+    font-weight: 600 !important;
+    color: var(--kr-text) !important;
+    font-family: var(--kr-font) !important;
+}
+body.theme-korean .wb-html-popup-close {
+    border: none !important;
+    border-radius: 50% !important;
+    background: rgba(0, 0, 0, 0.05) !important;
+    color: var(--kr-text-secondary) !important;
+}
+body.theme-korean .wb-html-popup-close:hover {
+    background: rgba(0, 0, 0, 0.08) !important;
+    color: var(--kr-text) !important;
+}
+
+/* ===== 微信"我的"界面 ===== */
+body.theme-korean #tab-me {
+    background: var(--kr-bg-flat) !important;
+    background-image: none !important;
+}
+body.theme-korean #tab-me > .scroll-y {
+    background: transparent !important;
+    background-image: none !important;
+}
+/* 移除便签纸红线装饰 */
+body.theme-korean #tab-me .scroll-y::before {
+    display: none !important;
+}
+/* 个人信息卡片 */
+body.theme-korean #tab-me > .scroll-y > div:first-child {
+    background: var(--kr-glass-heavy) !important;
+    border: 0.5px solid var(--kr-border) !important;
+    border-radius: var(--kr-radius-md) !important;
+    box-shadow: var(--kr-shadow) !important;
+    margin: 20px 12px 0 !important;
+    padding: 24px 20px !important;
+    backdrop-filter: blur(var(--kr-blur)) !important;
+    -webkit-backdrop-filter: blur(var(--kr-blur)) !important;
+    transform: none !important;
+}
+/* 移除便签钉装饰 */
+body.theme-korean #tab-me > .scroll-y > div:first-child::before {
+    display: none !important;
+}
+/* 个人头像 */
+body.theme-korean #tab-me #my-avatar {
+    border: 1px solid rgba(0, 0, 0, 0.06) !important;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06) !important;
+    filter: none !important;
+}
+/* 个人名字 */
+body.theme-korean #tab-me #my-name {
+    font-weight: 600 !important;
+    color: var(--kr-text) !important;
+    letter-spacing: -0.3px !important;
+    font-family: var(--kr-font) !important;
+    text-shadow: none !important;
+}
+body.theme-korean #tab-me #my-wxid {
+    color: var(--kr-text-secondary) !important;
+    font-family: var(--kr-font) !important;
+}
+body.theme-korean #tab-me > .scroll-y > div:first-child > i {
+    color: var(--kr-text-secondary) !important;
+}
+/* group-box */
+body.theme-korean #tab-me .group-box {
+    background: var(--kr-glass-heavy) !important;
+    border: 0.5px solid var(--kr-border) !important;
+    border-radius: var(--kr-radius-md) !important;
+    box-shadow: var(--kr-shadow) !important;
+    margin: 8px 12px !important;
+    overflow: hidden !important;
+    backdrop-filter: blur(var(--kr-blur)) !important;
+    -webkit-backdrop-filter: blur(var(--kr-blur)) !important;
+}
+/* 移除便签折角 */
+body.theme-korean #tab-me .group-box::after {
+    display: none !important;
+}
+body.theme-korean #tab-me .group-box .list-item {
+    background: transparent !important;
+    border-bottom: 0.5px solid var(--kr-divider) !important;
+    padding: 14px 15px !important;
+}
+body.theme-korean #tab-me .group-box .list-item:last-child {
+    border-bottom: none !important;
+}
+body.theme-korean #tab-me .group-box .list-item:active {
+    background: var(--kr-active) !important;
+    transform: none !important;
+}
+body.theme-korean #tab-me .group-box .list-item > i,
+body.theme-korean #tab-me .group-box .list-item .fas,
+body.theme-korean #tab-me .group-box .list-item .far {
+    color: var(--kr-text-secondary) !important;
+}
+body.theme-korean #tab-me .group-box .list-item .list-title {
+    font-weight: 500 !important;
+    color: var(--kr-text) !important;
+    font-family: var(--kr-font) !important;
+}
+body.theme-korean #tab-me .group-box .list-item .list-sub {
+    color: var(--kr-text-secondary) !important;
+}
+body.theme-korean #tab-me .group-box .form-cell {
+    border-bottom: 0.5px solid var(--kr-divider) !important;
+    padding: 14px 15px !important;
+}
+body.theme-korean #tab-me .group-box .form-cell:last-child {
+    border-bottom: none !important;
+}
+body.theme-korean #tab-me .group-box .form-cell .form-label {
+    font-weight: 500 !important;
+    color: var(--kr-text) !important;
+    font-family: var(--kr-font) !important;
+}
+/* 开关 */
+body.theme-korean #tab-me .group-box .switch .slider {
+    border: none !important;
+    border-radius: 20px !important;
+    background: #d1d1d6 !important;
+}
+body.theme-korean #tab-me .group-box .switch .slider::before {
+    border-radius: 50% !important;
+    border: none !important;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.15) !important;
+}
+body.theme-korean #tab-me .group-box .switch input:checked + .slider {
+    background: var(--kr-text) !important;
+}
+body.theme-korean #tab-me #wallet-balance {
+    color: var(--kr-text) !important;
+    font-weight: 600 !important;
+    font-family: var(--kr-font) !important;
+}
+/* 覆盖 wechat_me_anime_style.css 的装饰元素 */
+body.theme-korean #tab-me .scroll-y::after {
+    display: none !important;
+}
+body.theme-korean #tab-me .group-box::before {
+    display: none !important;
+}
+body.theme-korean #tab-me .group-box:nth-child(2)::after,
+body.theme-korean #tab-me .group-box:nth-child(3)::after,
+body.theme-korean #tab-me .group-box:nth-child(4)::after {
+    display: none !important;
+}
+body.theme-korean #tab-me .group-box:first-of-type::before {
+    display: none !important;
+}
+body.theme-korean #tab-me .scroll-y > div:first-child::after {
+    display: none !important;
+}
+body.theme-korean #tab-me .list-item:first-child::before {
+    display: none !important;
+}
+/* 覆盖 wechat_me_anime_style 的旋转/边框等 */
+body.theme-korean #tab-me .group-box {
+    transform: none !important;
+}
+body.theme-korean #tab-me .list-item {
+    border-bottom: 0.5px solid var(--kr-divider) !important;
+}
+body.theme-korean #tab-me .list-item:last-child {
+    border-bottom: none !important;
+}
+body.theme-korean #tab-me .list-item i {
+    filter: none !important;
+    opacity: 1 !important;
+}
+body.theme-korean #tab-me .list-title {
+    font-family: var(--kr-font) !important;
+    letter-spacing: -0.2px !important;
+}
+body.theme-korean #tab-me .list-sub {
+    font-family: var(--kr-font) !important;
+}
+body.theme-korean #tab-me .switch {
+    border: none !important;
+    box-shadow: none !important;
+    background: transparent !important;
+}
+body.theme-korean #tab-me .form-cell {
+    border-bottom: 0.5px solid var(--kr-divider) !important;
+}
+body.theme-korean #tab-me .form-cell:last-child {
+    border-bottom: none !important;
+}
+body.theme-korean #tab-me .form-label {
+    font-family: var(--kr-font) !important;
+}
+
+/* ===== 感知界面 ===== */
+body.theme-korean #layer-perception > .nav-bar {
+    background: var(--kr-glass-ultra) !important;
+    border-bottom: 0.5px solid var(--kr-border) !important;
+    box-shadow: var(--kr-shadow) !important;
+    backdrop-filter: blur(var(--kr-blur-heavy)) saturate(200%) !important;
+    -webkit-backdrop-filter: blur(var(--kr-blur-heavy)) saturate(200%) !important;
+}
+body.theme-korean #layer-perception > .nav-bar .nav-title {
+    color: var(--kr-text) !important;
+    font-weight: 600 !important;
+    font-family: var(--kr-font) !important;
+    letter-spacing: -0.3px !important;
+}
+body.theme-korean #layer-perception > .nav-bar .nav-icon {
+    color: var(--kr-text) !important;
+}
+body.theme-korean #layer-perception > .scroll-y {
+    background: var(--kr-bg-flat) !important;
+}
+
+/* ===== 情侣空间界面 ===== */
+body.theme-korean #layer-couple {
+    background: var(--kr-bg-flat) !important;
+}
+body.theme-korean #layer-couple .nav-bar {
+    background: var(--kr-glass-ultra) !important;
+    border-bottom: 0.5px solid var(--kr-border) !important;
+    box-shadow: var(--kr-shadow) !important;
+    backdrop-filter: blur(var(--kr-blur-heavy)) saturate(200%) !important;
+    -webkit-backdrop-filter: blur(var(--kr-blur-heavy)) saturate(200%) !important;
+}
+body.theme-korean #layer-couple .nav-bar .nav-title {
+    color: var(--kr-text) !important;
+    font-weight: 600 !important;
+    letter-spacing: -0.3px !important;
+    font-family: var(--kr-font) !important;
+}
+body.theme-korean #layer-couple .nav-bar .nav-icon {
+    color: var(--kr-text) !important;
+}
+body.theme-korean #layer-couple .group-box,
+body.theme-korean #layer-couple .beauty-section-card {
+    background: var(--kr-glass-heavy) !important;
+    border: 0.5px solid var(--kr-border) !important;
+    border-radius: var(--kr-radius-md) !important;
+    box-shadow: var(--kr-shadow) !important;
+    backdrop-filter: blur(var(--kr-blur)) !important;
+    -webkit-backdrop-filter: blur(var(--kr-blur)) !important;
+}
+body.theme-korean #layer-couple .group-box::after,
+body.theme-korean #layer-couple .beauty-section-card::after {
+    display: none !important;
+}
+body.theme-korean #layer-couple .scroll-y {
+    background: var(--kr-bg-flat) !important;
+}
+
+/* ===== 美化界面 ===== */
+body.theme-korean #layer-beauty > .nav-bar {
+    background: var(--kr-glass-ultra) !important;
+    border-bottom: 0.5px solid var(--kr-border) !important;
+    box-shadow: var(--kr-shadow) !important;
+    backdrop-filter: blur(var(--kr-blur-heavy)) saturate(200%) !important;
+    -webkit-backdrop-filter: blur(var(--kr-blur-heavy)) saturate(200%) !important;
+}
+body.theme-korean #layer-beauty > .nav-bar .nav-title {
+    font-family: var(--kr-font) !important;
+    font-weight: 600 !important;
+    color: var(--kr-text) !important;
+    letter-spacing: -0.3px !important;
+}
+body.theme-korean #layer-beauty > .nav-bar .nav-icon {
+    color: var(--kr-text) !important;
+}
+/* 美化菜单 */
+body.theme-korean #layer-beauty #beauty-menu {
+    background: var(--kr-bg-flat) !important;
+    background-image: none !important;
+}
+body.theme-korean #layer-beauty .beauty-menu-list {
+    gap: 6px !important;
+}
+body.theme-korean #layer-beauty .beauty-menu-item {
+    background: var(--kr-glass-heavy) !important;
+    border: 0.5px solid var(--kr-border) !important;
+    border-radius: var(--kr-radius) !important;
+    box-shadow: var(--kr-shadow) !important;
+    margin-bottom: 0 !important;
+    padding: 14px 14px !important;
+    backdrop-filter: blur(var(--kr-blur)) !important;
+    -webkit-backdrop-filter: blur(var(--kr-blur)) !important;
+    transition: transform 0.12s ease !important;
+}
+body.theme-korean #layer-beauty .beauty-menu-item:active {
+    transform: scale(0.985) !important;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.03) !important;
+}
+body.theme-korean #layer-beauty .beauty-menu-icon {
+    background: rgba(0, 0, 0, 0.03) !important;
+    border-radius: var(--kr-radius-sm) !important;
+    box-shadow: none !important;
+}
+body.theme-korean #layer-beauty .beauty-menu-icon i {
+    color: var(--kr-text-secondary) !important;
+}
+body.theme-korean #layer-beauty .beauty-menu-title {
+    font-weight: 600 !important;
+    color: var(--kr-text) !important;
+    font-family: var(--kr-font) !important;
+    letter-spacing: -0.2px !important;
+}
+body.theme-korean #layer-beauty .beauty-menu-desc {
+    color: var(--kr-text-secondary) !important;
+    font-family: var(--kr-font) !important;
+}
+body.theme-korean #layer-beauty .beauty-menu-arrow {
+    color: var(--kr-text-tertiary) !important;
+}
+/* 美化子页面背景 */
+body.theme-korean #layer-beauty .beauty-subpage > .scroll-y {
+    background: var(--kr-bg-flat) !important;
+    background-image: none !important;
+}
+/* 美化区块卡片 */
+body.theme-korean #layer-beauty .beauty-section-card {
+    background: var(--kr-glass-heavy) !important;
+    border: 0.5px solid var(--kr-border) !important;
+    border-radius: var(--kr-radius-md) !important;
+    box-shadow: var(--kr-shadow) !important;
+    backdrop-filter: blur(var(--kr-blur)) !important;
+    -webkit-backdrop-filter: blur(var(--kr-blur)) !important;
+}
+/* 移除便签折角 */
+body.theme-korean #layer-beauty .beauty-section-card::after {
+    display: none !important;
+}
+body.theme-korean #layer-beauty .beauty-section-header {
+    border-bottom: 0.5px solid var(--kr-divider) !important;
+    background: transparent !important;
+    font-family: var(--kr-font) !important;
+}
+body.theme-korean #layer-beauty .beauty-section-header span {
+    color: var(--kr-text) !important;
+    font-family: var(--kr-font) !important;
+    font-weight: 500 !important;
+}
+body.theme-korean #layer-beauty .beauty-section-header i {
+    color: var(--kr-text-secondary) !important;
+}
+/* 美化操作按钮 */
+body.theme-korean #layer-beauty .beauty-action-btn {
+    border: none !important;
+    border-radius: var(--kr-radius-sm) !important;
+    font-family: var(--kr-font) !important;
+    font-weight: 500 !important;
+    letter-spacing: -0.2px !important;
+    background: var(--kr-text) !important;
+    color: #fff !important;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1) !important;
+    transition: all 0.15s ease !important;
+}
+body.theme-korean #layer-beauty .beauty-action-btn:active {
+    transform: scale(0.97) !important;
+    opacity: 0.85 !important;
+}
+body.theme-korean #layer-beauty .beauty-action-btn.reset {
+    background: rgba(0, 0, 0, 0.04) !important;
+    color: var(--kr-text-secondary) !important;
+    border: none !important;
+    box-shadow: none !important;
+}
+body.theme-korean #layer-beauty .beauty-action-btn.mini {
+    border-radius: var(--kr-radius-xs) !important;
+}
+body.theme-korean #layer-beauty .beauty-action-btn.preset {
+    background: rgba(0, 0, 0, 0.04) !important;
+    color: var(--kr-text) !important;
+    border: none !important;
+    box-shadow: none !important;
+}
+/* 带内联样式的按钮覆盖 */
+body.theme-korean #layer-beauty .beauty-action-btn[style*="background:#111"],
+body.theme-korean #layer-beauty .beauty-action-btn[style*="background: #111"],
+body.theme-korean #layer-beauty .beauty-action-btn[style*="background:rgb(17"] {
+    border: none !important;
+    border-radius: var(--kr-radius-sm) !important;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1) !important;
+}
+body.theme-korean #layer-beauty .beauty-action-btn[style*="background:#f5f5f5"],
+body.theme-korean #layer-beauty .beauty-action-btn[style*="background: #f5f5f5"],
+body.theme-korean #layer-beauty .beauty-action-btn[style*="background: rgb(245"] {
+    background: rgba(0, 0, 0, 0.04) !important;
+    color: var(--kr-text) !important;
+    border: none !important;
+    border-radius: var(--kr-radius-sm) !important;
+    box-shadow: none !important;
+}
+/* 美化组件标签 */
+body.theme-korean #layer-beauty .beauty-comp-tabs {
+    background: rgba(0, 0, 0, 0.03) !important;
+    border-radius: var(--kr-radius) !important;
+    border: none !important;
+    overflow: hidden !important;
+}
+body.theme-korean #layer-beauty .beauty-comp-tab {
+    border-radius: var(--kr-radius-sm) !important;
+    color: var(--kr-text-secondary) !important;
+    border-right: none !important;
+    font-family: var(--kr-font) !important;
+    font-weight: 500 !important;
+}
+body.theme-korean #layer-beauty .beauty-comp-tab.active {
+    background: var(--kr-glass-ultra) !important;
+    color: var(--kr-text) !important;
+    box-shadow: 0 1px 6px rgba(0, 0, 0, 0.06) !important;
+    font-weight: 600 !important;
+    backdrop-filter: blur(var(--kr-blur)) !important;
+    -webkit-backdrop-filter: blur(var(--kr-blur)) !important;
+}
+/* 美化模式切换按钮 */
+body.theme-korean #layer-beauty .beauty-mode-toggle {
+    border-radius: var(--kr-radius) !important;
+    background: rgba(0, 0, 0, 0.03) !important;
+    border: none !important;
+}
+body.theme-korean #layer-beauty .beauty-mode-btn {
+    border-radius: var(--kr-radius-sm) !important;
+    font-family: var(--kr-font) !important;
+    color: var(--kr-text-secondary) !important;
+    font-weight: 500 !important;
+}
+body.theme-korean #layer-beauty .beauty-mode-btn.active {
+    background: var(--kr-glass-ultra) !important;
+    color: var(--kr-text) !important;
+    box-shadow: 0 1px 6px rgba(0, 0, 0, 0.06) !important;
+}
+/* 美化 form-cell/form-label */
+body.theme-korean #layer-beauty .form-cell {
+    border-bottom: 0.5px solid var(--kr-divider) !important;
+}
+body.theme-korean #layer-beauty .form-cell:last-child {
+    border-bottom: none !important;
+}
+body.theme-korean #layer-beauty .form-label {
+    font-family: var(--kr-font) !important;
+    font-weight: 500 !important;
+    color: var(--kr-text) !important;
+}
+/* 美化页面中的 input/select */
+body.theme-korean #layer-beauty input[type="text"],
+body.theme-korean #layer-beauty input[type="number"],
+body.theme-korean #layer-beauty input[type="url"],
+body.theme-korean #layer-beauty textarea,
+body.theme-korean #layer-beauty select {
+    border: 1px solid var(--kr-border) !important;
+    border-radius: var(--kr-radius-sm) !important;
+    background: rgba(255, 255, 255, 0.5) !important;
+    color: var(--kr-text) !important;
+    font-family: var(--kr-font) !important;
+}
+body.theme-korean #layer-beauty input[type="text"]:focus,
+body.theme-korean #layer-beauty input[type="number"]:focus,
+body.theme-korean #layer-beauty input[type="url"]:focus,
+body.theme-korean #layer-beauty textarea:focus,
+body.theme-korean #layer-beauty select:focus {
+    outline: none !important;
+    background: rgba(255, 255, 255, 0.85) !important;
+    box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.05) !important;
+}
+/* range滑块 */
+body.theme-korean #layer-beauty input[type="range"] {
+    accent-color: var(--kr-text) !important;
+}
+/* color颜色选择器 */
+body.theme-korean #layer-beauty input[type="color"] {
+    border: 1px solid var(--kr-border) !important;
+    border-radius: var(--kr-radius-xs) !important;
+}
+/* 美化页面开关 */
+body.theme-korean #layer-beauty .switch .slider {
+    border: none !important;
+    border-radius: 20px !important;
+    background: #d1d1d6 !important;
+}
+body.theme-korean #layer-beauty .switch .slider::before {
+    border-radius: 50% !important;
+    border: none !important;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.15) !important;
+}
+body.theme-korean #layer-beauty .switch input:checked + .slider {
+    background: var(--kr-text) !important;
+}
+/* 图片预览框 */
+body.theme-korean #layer-beauty .comp-img-preview {
+    border: 1px dashed var(--kr-border-strong) !important;
+    border-radius: var(--kr-radius-sm) !important;
+    background: rgba(0, 0, 0, 0.015) !important;
+}
+/* 图标预览区 */
+body.theme-korean #layer-beauty #icon-size-preview {
+    background: var(--kr-bg-flat) !important;
+    border: 1px solid var(--kr-border) !important;
+    border-radius: var(--kr-radius-sm) !important;
+}
+/* 美化页label文字 */
+body.theme-korean #layer-beauty label {
+    color: var(--kr-text) !important;
+    font-family: var(--kr-font) !important;
+}
+/* CSS输入框 */
+body.theme-korean #layer-beauty .css-input {
+    border: 1px solid var(--kr-border) !important;
+    border-radius: var(--kr-radius-sm) !important;
+    background: rgba(255, 255, 255, 0.5) !important;
+    color: var(--kr-text) !important;
+    font-family: 'SF Mono', 'Menlo', monospace !important;
+}
+body.theme-korean #layer-beauty .css-input:focus {
+    outline: none !important;
+    background: rgba(255, 255, 255, 0.85) !important;
+    box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.05) !important;
+}
+/* 字体预设项 */
+body.theme-korean #layer-beauty .font-preset-item {
+    border: 0.5px solid var(--kr-border) !important;
+    border-radius: var(--kr-radius-sm) !important;
+    background: var(--kr-glass) !important;
+    margin-bottom: 6px !important;
+}
+body.theme-korean #layer-beauty .font-preset-item .fp-name {
+    font-family: var(--kr-font) !important;
+    color: var(--kr-text) !important;
+    font-weight: 500 !important;
+}
+body.theme-korean #layer-beauty .font-preset-item .fp-actions button {
+    border: none !important;
+    border-radius: var(--kr-radius-xs) !important;
+    font-family: var(--kr-font) !important;
+    font-weight: 500 !important;
+    box-shadow: none !important;
+}
+body.theme-korean #layer-beauty .fp-load-btn {
+    background: var(--kr-text) !important;
+    color: #fff !important;
+    box-shadow: none !important;
+}
+body.theme-korean #layer-beauty .fp-del-btn {
+    background: rgba(0, 0, 0, 0.04) !important;
+    color: var(--kr-text) !important;
+    box-shadow: none !important;
+}
+
+/* ===== 设置界面 ===== */
+body.theme-korean #layer-settings > .nav-bar {
+    background: var(--kr-glass-ultra) !important;
+    border-bottom: 0.5px solid var(--kr-border) !important;
+    box-shadow: var(--kr-shadow) !important;
+    backdrop-filter: blur(var(--kr-blur-heavy)) saturate(200%) !important;
+    -webkit-backdrop-filter: blur(var(--kr-blur-heavy)) saturate(200%) !important;
+}
+body.theme-korean #layer-settings > .nav-bar .nav-title {
+    font-family: var(--kr-font) !important;
+    font-weight: 600 !important;
+    color: var(--kr-text) !important;
+    letter-spacing: -0.3px !important;
+}
+body.theme-korean #layer-settings > .nav-bar .nav-icon {
+    color: var(--kr-text) !important;
+}
+body.theme-korean #layer-settings > .nav-bar .nav-icon:active {
+    opacity: 0.4 !important;
+    transform: scale(0.92) !important;
+}
+/* 设置主菜单背景 */
+body.theme-korean #settings-menu {
+    background: var(--kr-bg-flat) !important;
+    background-image: none !important;
+}
+/* 设置导航列表项 */
+body.theme-korean #layer-settings .settings-nav-item {
+    background: var(--kr-glass-heavy) !important;
+    border: 0.5px solid var(--kr-border) !important;
+    border-radius: var(--kr-radius) !important;
+    box-shadow: var(--kr-shadow) !important;
+    padding: 14px 14px !important;
+    position: relative !important;
+    transition: transform 0.12s ease !important;
+    backdrop-filter: blur(var(--kr-blur)) !important;
+    -webkit-backdrop-filter: blur(var(--kr-blur)) !important;
+}
+body.theme-korean #layer-settings .settings-nav-item:active {
+    transform: scale(0.985) !important;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.03) !important;
+}
+/* 设置图标 */
+body.theme-korean #layer-settings .settings-nav-icon-i {
+    background: rgba(0, 0, 0, 0.03) !important;
+    box-shadow: none !important;
+    border-radius: var(--kr-radius-sm) !important;
+    color: var(--kr-text-secondary) !important;
+}
+/* 设置文字 */
+body.theme-korean #layer-settings .settings-nav-title-text {
+    font-family: var(--kr-font) !important;
+    font-weight: 600 !important;
+    color: var(--kr-text) !important;
+    letter-spacing: -0.2px !important;
+}
+body.theme-korean #layer-settings .settings-nav-desc {
+    color: var(--kr-text-secondary) !important;
+    font-size: 12px !important;
+    font-family: var(--kr-font) !important;
+}
+/* 设置箭头 */
+body.theme-korean #layer-settings .settings-nav-arrow {
+    color: var(--kr-text-tertiary) !important;
+}
+/* 设置子页面背景 */
+body.theme-korean #layer-settings .settings-subpage > .scroll-y {
+    background: var(--kr-bg-flat) !important;
+    background-image: none !important;
+}
+/* 设置区块卡片 */
+body.theme-korean #layer-settings .beauty-section-card {
+    background: var(--kr-glass-heavy) !important;
+    border: 0.5px solid var(--kr-border) !important;
+    border-radius: var(--kr-radius-md) !important;
+    box-shadow: var(--kr-shadow) !important;
+    overflow: visible !important;
+    position: relative !important;
+    backdrop-filter: blur(var(--kr-blur)) !important;
+    -webkit-backdrop-filter: blur(var(--kr-blur)) !important;
+}
+/* 移除便签折角 */
+body.theme-korean #layer-settings .beauty-section-card::after {
+    display: none !important;
+}
+/* 区块标题 */
+body.theme-korean #layer-settings .beauty-section-header {
+    border-bottom: 0.5px solid var(--kr-divider) !important;
+    background: transparent !important;
+    font-family: var(--kr-font) !important;
+    font-weight: 500 !important;
+    color: var(--kr-text) !important;
+}
+body.theme-korean #layer-settings .beauty-section-header span {
+    color: var(--kr-text) !important;
+    font-family: var(--kr-font) !important;
+}
+body.theme-korean #layer-settings .beauty-section-header i {
+    color: var(--kr-text-secondary) !important;
+}
+/* 设置页面背景 */
+body.theme-korean #layer-settings > .scroll-y {
+    background: var(--kr-bg-flat) !important;
+    background-image: none !important;
+}
+/* 设置form */
+body.theme-korean #layer-settings .form-cell {
+    border-bottom: 0.5px solid var(--kr-divider) !important;
+}
+body.theme-korean #layer-settings .form-cell:last-child {
+    border-bottom: none !important;
+}
+body.theme-korean #layer-settings .form-label {
+    color: var(--kr-text) !important;
+    font-weight: 500 !important;
+    font-family: var(--kr-font) !important;
+}
+body.theme-korean #layer-settings .group-box {
+    background: var(--kr-glass-heavy) !important;
+    border: 0.5px solid var(--kr-border) !important;
+    border-radius: var(--kr-radius-md) !important;
+    box-shadow: var(--kr-shadow) !important;
+    backdrop-filter: blur(var(--kr-blur)) !important;
+    -webkit-backdrop-filter: blur(var(--kr-blur)) !important;
+}
+/* 移除便签折角 */
+body.theme-korean #layer-settings .group-box::after {
+    display: none !important;
+}
+/* 设置操作按钮 */
+body.theme-korean #layer-settings .beauty-action-btn {
+    border: none !important;
+    border-radius: var(--kr-radius-sm) !important;
+    font-family: var(--kr-font) !important;
+    font-weight: 500 !important;
+    letter-spacing: -0.2px !important;
+    background: var(--kr-text) !important;
+    color: #fff !important;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1) !important;
+    transition: all 0.15s ease !important;
+}
+body.theme-korean #layer-settings .beauty-action-btn:active {
+    transform: scale(0.97) !important;
+    opacity: 0.85 !important;
+}
+/* 重置按钮变体 */
+body.theme-korean #layer-settings .beauty-action-btn.reset {
+    background: rgba(0, 0, 0, 0.04) !important;
+    color: var(--kr-text-secondary) !important;
+    border: none !important;
+    box-shadow: none !important;
+}
+/* mini按钮 */
+body.theme-korean #layer-settings .beauty-action-btn.mini {
+    border-radius: var(--kr-radius-xs) !important;
+}
+/* preset按钮 */
+body.theme-korean #layer-settings .beauty-action-btn.preset {
+    background: rgba(0, 0, 0, 0.04) !important;
+    color: var(--kr-text) !important;
+    border: none !important;
+    box-shadow: none !important;
+}
+/* 危险按钮 */
+body.theme-korean #layer-settings .beauty-action-btn[style*="background:#fa5151"],
+body.theme-korean #layer-settings .beauty-action-btn[style*="background: rgb(250, 81, 81)"] {
+    border: none !important;
+    border-radius: var(--kr-radius-sm) !important;
+    box-shadow: 0 2px 8px rgba(250, 81, 81, 0.15) !important;
+    font-family: var(--kr-font) !important;
+}
+/* 紫色导入导出按钮 */
+body.theme-korean #layer-settings .beauty-action-btn[style*="background:#5856d6"],
+body.theme-korean #layer-settings .beauty-action-btn[style*="background: rgb(88, 86, 214)"] {
+    background: var(--kr-text) !important;
+    border: none !important;
+    border-radius: var(--kr-radius-sm) !important;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12) !important;
+    font-family: var(--kr-font) !important;
+}
+/* 设置页面 input/select */
+body.theme-korean #layer-settings input[type="text"],
+body.theme-korean #layer-settings input[type="number"],
+body.theme-korean #layer-settings input[type="url"],
+body.theme-korean #layer-settings input[type="date"],
+body.theme-korean #layer-settings textarea,
+body.theme-korean #layer-settings select {
+    border: 1px solid var(--kr-border) !important;
+    border-radius: var(--kr-radius-sm) !important;
+    background: rgba(255, 255, 255, 0.5) !important;
+    color: var(--kr-text) !important;
+    font-family: var(--kr-font) !important;
+    backdrop-filter: blur(10px) !important;
+    -webkit-backdrop-filter: blur(10px) !important;
+}
+body.theme-korean #layer-settings input[type="text"]:focus,
+body.theme-korean #layer-settings input[type="number"]:focus,
+body.theme-korean #layer-settings input[type="url"]:focus,
+body.theme-korean #layer-settings input[type="date"]:focus,
+body.theme-korean #layer-settings textarea:focus,
+body.theme-korean #layer-settings select:focus {
+    outline: none !important;
+    background: rgba(255, 255, 255, 0.85) !important;
+    box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.05) !important;
+}
+/* placeholder */
+body.theme-korean #layer-settings input::placeholder,
+body.theme-korean #layer-settings textarea::placeholder {
+    color: var(--kr-text-tertiary) !important;
+    font-family: var(--kr-font) !important;
+}
+/* range滑块 */
+body.theme-korean #layer-settings input[type="range"] {
+    accent-color: var(--kr-text) !important;
+}
+/* color颜色选择器 */
+body.theme-korean #layer-settings input[type="color"] {
+    border: 1px solid var(--kr-border) !important;
+    border-radius: var(--kr-radius-xs) !important;
+}
+/* 设置页面开关 */
+body.theme-korean #layer-settings .switch .slider {
+    border: none !important;
+    border-radius: 20px !important;
+    background: #d1d1d6 !important;
+}
+body.theme-korean #layer-settings .switch .slider::before {
+    border-radius: 50% !important;
+    border: none !important;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.15) !important;
+}
+body.theme-korean #layer-settings .switch input:checked + .slider {
+    background: var(--kr-text) !important;
+}
+/* 设置页label文字 */
+body.theme-korean #layer-settings label {
+    color: var(--kr-text) !important;
+    font-family: var(--kr-font) !important;
+}
+/* STT 提供商按钮 */
+body.theme-korean #layer-settings .stt-provider-btn {
+    border: 0.5px solid var(--kr-border-strong) !important;
+    border-radius: var(--kr-radius-sm) !important;
+    background: var(--kr-glass) !important;
+    color: var(--kr-text) !important;
+    font-family: var(--kr-font) !important;
+    font-weight: 500 !important;
+    box-shadow: none !important;
+    transition: all 0.12s !important;
+}
+body.theme-korean #layer-settings .stt-provider-btn.active {
+    background: var(--kr-text) !important;
+    color: #fff !important;
+    border-color: transparent !important;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12) !important;
+}
+body.theme-korean #layer-settings .stt-provider-btn:active {
+    transform: scale(0.96) !important;
+}
+/* 生图提供商按钮 */
+body.theme-korean #layer-settings .imggen-provider-btn {
+    border: 0.5px solid var(--kr-border-strong) !important;
+    border-radius: var(--kr-radius-sm) !important;
+    background: var(--kr-glass) !important;
+    color: var(--kr-text) !important;
+    font-family: var(--kr-font) !important;
+    font-weight: 500 !important;
+    box-shadow: none !important;
+    transition: all 0.12s !important;
+}
+body.theme-korean #layer-settings .imggen-provider-btn.active {
+    background: var(--kr-text) !important;
+    color: #fff !important;
+    border-color: transparent !important;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12) !important;
+}
+body.theme-korean #layer-settings .imggen-provider-btn:active {
+    transform: scale(0.96) !important;
+}
+/* 锁屏壁纸预览区域 */
+body.theme-korean #layer-settings #lockscreen-wallpaper-preview {
+    border: 1px dashed var(--kr-border-strong) !important;
+    border-radius: var(--kr-radius-sm) !important;
+    background: rgba(0, 0, 0, 0.015) !important;
+}
+/* API预设列表项 */
+body.theme-korean #layer-settings #api-preset-list > div {
+    border: 0.5px solid var(--kr-border) !important;
+    border-radius: var(--kr-radius-sm) !important;
+    background: var(--kr-glass) !important;
+    box-shadow: none !important;
+    margin-bottom: 6px !important;
+}
+/* 后台保活状态文字 */
+body.theme-korean #layer-settings #keepalive-status {
+    font-family: var(--kr-font) !important;
+}
+/* 通用描述性文字 */
+body.theme-korean #layer-settings p,
+body.theme-korean #layer-beauty p {
+    font-family: var(--kr-font) !important;
+}
+/* 设置/美化子页面描述性小字 */
+body.theme-korean #layer-settings .settings-subpage .scroll-y > div[style*="font-size:12px"],
+body.theme-korean #layer-settings .settings-subpage .scroll-y > div[style*="font-size: 12px"],
+body.theme-korean #layer-beauty .beauty-subpage .scroll-y > div[style*="font-size:12px"],
+body.theme-korean #layer-beauty .beauty-subpage .scroll-y > div[style*="font-size: 12px"] {
+    font-family: var(--kr-font) !important;
+    color: var(--kr-text-tertiary) !important;
+}
+/* 通用：设置/美化内的 inline button */
+body.theme-korean #layer-settings button:not(.beauty-action-btn):not(.stt-provider-btn):not(.imggen-provider-btn):not(.nav-icon):not(.switch *) {
+    font-family: var(--kr-font) !important;
+}
+body.theme-korean #layer-beauty button:not(.beauty-action-btn):not(.beauty-comp-tab):not(.beauty-mode-btn):not(.nav-icon):not(.switch *) {
+    font-family: var(--kr-font) !important;
+}
+
+/* 聊天设置页面补充 */
+body.theme-korean #layer-chat-settings .beauty-section-card {
+    background: var(--kr-glass-heavy) !important;
+    border: 0.5px solid var(--kr-border) !important;
+    border-radius: var(--kr-radius-md) !important;
+    box-shadow: var(--kr-shadow) !important;
+    backdrop-filter: blur(var(--kr-blur)) !important;
+    -webkit-backdrop-filter: blur(var(--kr-blur)) !important;
+}
+body.theme-korean #layer-chat-settings .beauty-section-card::after {
+    display: none !important;
+}
+body.theme-korean #layer-chat-settings .beauty-section-header {
+    border-bottom: 0.5px solid var(--kr-divider) !important;
+    font-family: var(--kr-font) !important;
+}
+body.theme-korean #layer-chat-settings .beauty-section-header span {
+    color: var(--kr-text) !important;
+    font-family: var(--kr-font) !important;
+}
+body.theme-korean #layer-chat-settings .beauty-section-header i {
+    color: var(--kr-text-secondary) !important;
+}
+/* 聊天设置 - 开关/输入框等 */
+body.theme-korean #layer-chat-settings .switch .slider {
+    border: none !important;
+    border-radius: 20px !important;
+    background: #d1d1d6 !important;
+}
+body.theme-korean #layer-chat-settings .switch .slider::before {
+    border-radius: 50% !important;
+    border: none !important;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.15) !important;
+}
+body.theme-korean #layer-chat-settings .switch input:checked + .slider {
+    background: var(--kr-text) !important;
+}
+body.theme-korean #layer-chat-settings .form-label {
+    font-family: var(--kr-font) !important;
+}
+body.theme-korean #layer-chat-settings .beauty-action-btn {
+    border: none !important;
+    border-radius: var(--kr-radius-sm) !important;
+    font-family: var(--kr-font) !important;
+    font-weight: 500 !important;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1) !important;
+}
+body.theme-korean #layer-chat-settings .beauty-action-btn:active {
+    transform: scale(0.97) !important;
+    opacity: 0.85 !important;
+}
+body.theme-korean #layer-chat-settings > .scroll-y {
+    background: var(--kr-bg-flat) !important;
+    background-image: none !important;
+}
+body.theme-korean #layer-chat-settings .nav-bar .nav-title {
+    font-family: var(--kr-font) !important;
+    font-weight: 600 !important;
+    color: var(--kr-text) !important;
+    letter-spacing: -0.3px !important;
+}
+body.theme-korean #layer-chat-settings .nav-bar .nav-icon {
+    color: var(--kr-text) !important;
+}
+
+/* ===== 设置导航栏间距调整 ===== */
+body.theme-korean #layer-beauty .beauty-menu-list {
+    gap: 6px !important;
+}
+body.theme-korean #layer-settings .settings-nav-list {
+    gap: 6px !important;
+}
+
+/* ===== 全局通用覆盖 ===== */
+
+/* 所有layer的背景（排除语音/视频通话层，保持其毛玻璃效果） */
+body.theme-korean .layer:not(#layer-voice-call):not(#layer-video-call) {
+    background: var(--kr-bg-flat) !important;
+}
+
+/* ===== 全局弹窗覆盖 ===== */
+body.theme-korean .modal-mask .modal-box {
+    background: var(--kr-glass-ultra) !important;
+    border: 0.5px solid var(--kr-border) !important;
+    border-radius: var(--kr-radius-md) !important;
+    box-shadow: var(--kr-shadow-xl) !important;
+    position: relative !important;
+    backdrop-filter: blur(var(--kr-blur-ultra)) saturate(200%) !important;
+    -webkit-backdrop-filter: blur(var(--kr-blur-ultra)) saturate(200%) !important;
+}
+/* 移除所有弹窗的便签折角 */
+body.theme-korean .modal-mask .modal-box::after {
+    display: none !important;
+}
+body.theme-korean .modal-mask .modal-box::before {
+    display: none !important;
+}
+/* 弹窗标题 */
+body.theme-korean .modal-mask .modal-box h3 {
+    font-family: var(--kr-font) !important;
+    font-weight: 600 !important;
+    letter-spacing: -0.3px !important;
+    color: var(--kr-text) !important;
+}
+/* 弹窗按钮 */
+body.theme-korean .modal-mask .modal-box button {
+    font-family: var(--kr-font) !important;
+    border-radius: var(--kr-radius-sm) !important;
+}
+/* 弹窗输入框 */
+body.theme-korean .modal-mask .modal-box input[type="text"],
+body.theme-korean .modal-mask .modal-box input[type="number"],
+body.theme-korean .modal-mask .modal-box input[type="date"],
+body.theme-korean .modal-mask .modal-box input[type="time"],
+body.theme-korean .modal-mask .modal-box input[type="url"],
+body.theme-korean .modal-mask .modal-box textarea,
+body.theme-korean .modal-mask .modal-box select {
+    border: 1px solid var(--kr-border) !important;
+    border-radius: var(--kr-radius-sm) !important;
+    background: rgba(255, 255, 255, 0.5) !important;
+    color: var(--kr-text) !important;
+    font-family: var(--kr-font) !important;
+}
+body.theme-korean .modal-mask .modal-box input:focus,
+body.theme-korean .modal-mask .modal-box textarea:focus,
+body.theme-korean .modal-mask .modal-box select:focus {
+    outline: none !important;
+    background: rgba(255, 255, 255, 0.85) !important;
+    box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.05) !important;
+}
+/* 弹窗遮罩背景 */
+body.theme-korean .modal-mask {
+    background: rgba(0, 0, 0, 0.25) !important;
+    backdrop-filter: blur(10px) !important;
+    -webkit-backdrop-filter: blur(10px) !important;
+}
+
+/* 全局开关样式 */
+body.theme-korean .switch .slider {
+    border: none !important;
+    border-radius: 20px !important;
+    background: #d1d1d6 !important;
+}
+body.theme-korean .switch .slider::before {
+    border-radius: 50% !important;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.15) !important;
+    border: none !important;
+}
+body.theme-korean .switch input:checked + .slider {
+    background: var(--kr-text) !important;
+}
+
+/* 全局按钮样式覆盖 */
+body.theme-korean .beauty-action-btn {
+    border-radius: var(--kr-radius-sm) !important;
+    font-weight: 500 !important;
+    border: none !important;
+    transition: all 0.15s ease !important;
+    font-family: var(--kr-font) !important;
+    box-shadow: none !important;
+}
+body.theme-korean .beauty-action-btn:active {
+    transform: scale(0.97) !important;
+    opacity: 0.85 !important;
+}
+body.theme-korean .beauty-action-btn.reset {
+    background: rgba(0, 0, 0, 0.04) !important;
+    color: var(--kr-text-secondary) !important;
+    border: none !important;
+}
+body.theme-korean .beauty-action-btn.preset {
+    background: rgba(0, 0, 0, 0.04) !important;
+    color: var(--kr-text) !important;
+}
+
+/* 全局toast */
+body.theme-korean #toast {
+    border-radius: var(--kr-radius-sm) !important;
+    background: rgba(17, 17, 17, 0.8) !important;
+    box-shadow: var(--kr-shadow-lg) !important;
+    backdrop-filter: blur(var(--kr-blur)) !important;
+    -webkit-backdrop-filter: blur(var(--kr-blur)) !important;
+    font-family: var(--kr-font) !important;
+}
+
+/* CSS输入框 */
+body.theme-korean .css-input {
+    border: 1px solid var(--kr-border) !important;
+    border-radius: var(--kr-radius-sm) !important;
+    background: rgba(255, 255, 255, 0.5) !important;
+}
+body.theme-korean .css-input:focus {
+    border-color: rgba(0, 0, 0, 0.12) !important;
+    box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.05) !important;
+}
+
+/* 美化组件标签 */
+body.theme-korean .beauty-comp-tabs {
+    background: rgba(0, 0, 0, 0.03) !important;
+    border-radius: var(--kr-radius) !important;
+    border: none !important;
+}
+body.theme-korean .beauty-comp-tab {
+    border-radius: var(--kr-radius-sm) !important;
+    color: var(--kr-text-secondary) !important;
+    border-right: none !important;
+    font-family: var(--kr-font) !important;
+}
+body.theme-korean .beauty-comp-tab.active {
+    background: var(--kr-glass-ultra) !important;
+    color: var(--kr-text) !important;
+    box-shadow: 0 1px 6px rgba(0, 0, 0, 0.06) !important;
+    backdrop-filter: blur(var(--kr-blur)) !important;
+    -webkit-backdrop-filter: blur(var(--kr-blur)) !important;
+}
+
+/* 美化模式切换按钮 */
+body.theme-korean .beauty-mode-toggle {
+    border-radius: var(--kr-radius) !important;
+    background: rgba(0, 0, 0, 0.03) !important;
+    border: none !important;
+}
+body.theme-korean .beauty-mode-btn {
+    border-radius: var(--kr-radius-sm) !important;
+    font-family: var(--kr-font) !important;
+}
+body.theme-korean .beauty-mode-btn.active {
+    background: var(--kr-glass-ultra) !important;
+    box-shadow: 0 1px 6px rgba(0, 0, 0, 0.06) !important;
+}
+
+/* 世界书选择列表项 */
+body.theme-korean #wb-select-list .list-item,
+body.theme-korean #wb-select-list > div {
+    border: 0.5px solid var(--kr-border) !important;
+    border-radius: var(--kr-radius-sm) !important;
+    background: var(--kr-glass) !important;
+    margin-bottom: 6px !important;
+}
+
+/* 预设弹窗 */
+body.theme-korean .preset-popup {
+    border-radius: var(--kr-radius-md) !important;
+    box-shadow: var(--kr-shadow-xl) !important;
+    backdrop-filter: blur(var(--kr-blur-ultra)) !important;
+    -webkit-backdrop-filter: blur(var(--kr-blur-ultra)) !important;
+}
+
+/* ===== 额外弹窗覆盖（确保所有弹窗都是韩系风） ===== */
+
+/* 自定义输入弹窗 */
+body.theme-korean #modal-custom-input .modal-box {
+    background: var(--kr-glass-ultra) !important;
+    border: 0.5px solid var(--kr-border) !important;
+    border-radius: var(--kr-radius-md) !important;
+    box-shadow: var(--kr-shadow-xl) !important;
+    backdrop-filter: blur(var(--kr-blur-ultra)) saturate(200%) !important;
+    -webkit-backdrop-filter: blur(var(--kr-blur-ultra)) saturate(200%) !important;
+}
+body.theme-korean #modal-custom-input .modal-box h3 {
+    font-family: var(--kr-font) !important;
+    font-weight: 600 !important;
+    color: var(--kr-text) !important;
+}
+body.theme-korean #modal-custom-input .modal-box::after {
+    display: none !important;
+}
+
+/* 确认弹窗 */
+body.theme-korean #modal-confirm .modal-box {
+    background: var(--kr-glass-ultra) !important;
+    border: 0.5px solid var(--kr-border) !important;
+    border-radius: var(--kr-radius-md) !important;
+    box-shadow: var(--kr-shadow-xl) !important;
+    backdrop-filter: blur(var(--kr-blur-ultra)) saturate(200%) !important;
+    -webkit-backdrop-filter: blur(var(--kr-blur-ultra)) saturate(200%) !important;
+}
+body.theme-korean #modal-confirm .modal-box::after {
+    display: none !important;
+}
+
+/* 选择器弹窗 */
+body.theme-korean #modal-picker .modal-box {
+    background: var(--kr-glass-ultra) !important;
+    border: 0.5px solid var(--kr-border) !important;
+    border-radius: var(--kr-radius-md) !important;
+    box-shadow: var(--kr-shadow-xl) !important;
+    backdrop-filter: blur(var(--kr-blur-ultra)) saturate(200%) !important;
+    -webkit-backdrop-filter: blur(var(--kr-blur-ultra)) saturate(200%) !important;
+}
+body.theme-korean #modal-picker .modal-box::after {
+    display: none !important;
+}
+
+/* 心声弹窗 */
+body.theme-korean #modal-thought .modal-box {
+    background: var(--kr-glass-ultra) !important;
+    border: 0.5px solid var(--kr-border) !important;
+    border-radius: var(--kr-radius-md) !important;
+    box-shadow: var(--kr-shadow-xl) !important;
+    backdrop-filter: blur(var(--kr-blur-ultra)) saturate(200%) !important;
+    -webkit-backdrop-filter: blur(var(--kr-blur-ultra)) saturate(200%) !important;
+}
+body.theme-korean #modal-thought .modal-box::after {
+    display: none !important;
+}
+
+/* 心声历史弹窗 */
+body.theme-korean #modal-heart-history .modal-box,
+body.theme-korean #modal-heart-edit .modal-box {
+    background: var(--kr-glass-ultra) !important;
+    border: 0.5px solid var(--kr-border) !important;
+    border-radius: var(--kr-radius-md) !important;
+    box-shadow: var(--kr-shadow-xl) !important;
+    backdrop-filter: blur(var(--kr-blur-ultra)) saturate(200%) !important;
+    -webkit-backdrop-filter: blur(var(--kr-blur-ultra)) saturate(200%) !important;
+}
+body.theme-korean #modal-heart-history .modal-box::after,
+body.theme-korean #modal-heart-edit .modal-box::after {
+    display: none !important;
+}
+
+/* 转发弹窗 */
+body.theme-korean #modal-forward-type .modal-box,
+body.theme-korean #modal-forward-contact .modal-box {
+    background: var(--kr-glass-ultra) !important;
+    border: 0.5px solid var(--kr-border) !important;
+    border-radius: var(--kr-radius-md) !important;
+    backdrop-filter: blur(var(--kr-blur-ultra)) saturate(200%) !important;
+    -webkit-backdrop-filter: blur(var(--kr-blur-ultra)) saturate(200%) !important;
+}
+body.theme-korean #modal-forward-type .modal-box::after,
+body.theme-korean #modal-forward-contact .modal-box::after {
+    display: none !important;
+}
+
+/* 转账操作弹窗 */
+body.theme-korean #modal-transfer-action .modal-box {
+    background: var(--kr-glass-ultra) !important;
+    border: 0.5px solid var(--kr-border) !important;
+    border-radius: var(--kr-radius-md) !important;
+    backdrop-filter: blur(var(--kr-blur-ultra)) saturate(200%) !important;
+    -webkit-backdrop-filter: blur(var(--kr-blur-ultra)) saturate(200%) !important;
+}
+body.theme-korean #modal-transfer-action .modal-box::after {
+    display: none !important;
+}
+
+/* 图片上传弹窗 */
+body.theme-korean #modal-img-upload .modal-box {
+    background: var(--kr-glass-ultra) !important;
+    border: 0.5px solid var(--kr-border) !important;
+    border-radius: var(--kr-radius-md) !important;
+    backdrop-filter: blur(var(--kr-blur-ultra)) saturate(200%) !important;
+    -webkit-backdrop-filter: blur(var(--kr-blur-ultra)) saturate(200%) !important;
+}
+body.theme-korean #modal-img-upload .modal-box::after {
+    display: none !important;
+}
+
+/* 裁剪弹窗 */
+body.theme-korean #modal-cropper .modal-box,
+body.theme-korean #modal-vinyl-cropper .modal-box {
+    background: var(--kr-glass-ultra) !important;
+    border: 0.5px solid var(--kr-border) !important;
+    border-radius: var(--kr-radius-md) !important;
+    backdrop-filter: blur(var(--kr-blur-ultra)) saturate(200%) !important;
+    -webkit-backdrop-filter: blur(var(--kr-blur-ultra)) saturate(200%) !important;
+}
+body.theme-korean #modal-cropper .modal-box::after,
+body.theme-korean #modal-vinyl-cropper .modal-box::after {
+    display: none !important;
+}
+
+/* 所有其他弹窗 */
+body.theme-korean #modal-anniv .modal-box,
+body.theme-korean #modal-anniv-edit .modal-box,
+body.theme-korean #modal-persona .modal-box,
+body.theme-korean #modal-sticker .modal-box,
+body.theme-korean #modal-sticker-cate .modal-box,
+body.theme-korean #modal-music .modal-box,
+body.theme-korean #modal-location-edit .modal-box,
+body.theme-korean #modal-couple-date .modal-box,
+body.theme-korean #modal-api-preset .modal-box,
+body.theme-korean #modal-profile-edit .modal-box,
+body.theme-korean #modal-profile-preset .modal-box,
+body.theme-korean #modal-profile-preset-edit .modal-box,
+body.theme-korean #modal-desktop-profile-edit .modal-box,
+body.theme-korean #modal-widget-manager .modal-box,
+body.theme-korean #modal-batch-frame .modal-box,
+body.theme-korean #modal-edit-memory .modal-box,
+body.theme-korean #modal-memory-source .modal-box,
+body.theme-korean #modal-manual-summary .modal-box,
+body.theme-korean #modal-clear-records .modal-box,
+body.theme-korean #modal-book-upload .modal-box,
+body.theme-korean #modal-book-category .modal-box,
+body.theme-korean #modal-read-together .modal-box,
+body.theme-korean #modal-contact-sound .modal-box,
+body.theme-korean #modal-mail-freq .modal-box,
+body.theme-korean #modal-pwa-install .modal-box,
+body.theme-korean #modal-moment-generate .modal-box,
+body.theme-korean #modal-diary-generate .modal-box,
+body.theme-korean #modal-new-post .modal-box,
+body.theme-korean #modal-moment-action > div > div,
+body.theme-korean #modal-listen-contact .modal-box,
+body.theme-korean #modal-create-group .modal-box,
+body.theme-korean #modal-moment-group-select .modal-box,
+body.theme-korean #modal-group-offline-invite .modal-box,
+body.theme-korean #modal-offline-settings .settings-sheet,
+body.theme-korean #modal-reverse-check-invite .modal-box,
+body.theme-korean #modal-reverse-check-request .modal-box,
+body.theme-korean #modal-checkphone-contact .modal-box,
+body.theme-korean #modal-forum-profile .modal-box,
+body.theme-korean #modal-forum-settings .modal-box,
+body.theme-korean #modal-forum-section-manager .modal-box,
+body.theme-korean #modal-forum-section-edit .modal-box,
+body.theme-korean #modal-add-supervisor .modal-box,
+body.theme-korean #modal-add-task .modal-box,
+body.theme-korean #modal-focus-settings .modal-box,
+body.theme-korean #modal-task-detail .modal-box,
+body.theme-korean #modal-mood-diary .modal-box,
+body.theme-korean #modal-add-mood .modal-box,
+body.theme-korean #modal-sv-achievements .modal-box,
+body.theme-korean #modal-sv-settings .modal-box,
+body.theme-korean #modal-fanfic-cp .modal-box,
+body.theme-korean #modal-fanfic-generate .modal-box,
+body.theme-korean #modal-memorial-detail .modal-box {
+    background: var(--kr-glass-ultra) !important;
+    border: 0.5px solid var(--kr-border) !important;
+    border-radius: var(--kr-radius-md) !important;
+    box-shadow: var(--kr-shadow-xl) !important;
+    backdrop-filter: blur(var(--kr-blur-ultra)) saturate(200%) !important;
+    -webkit-backdrop-filter: blur(var(--kr-blur-ultra)) saturate(200%) !important;
+}
+body.theme-korean #modal-anniv .modal-box::after,
+body.theme-korean #modal-anniv-edit .modal-box::after,
+body.theme-korean #modal-persona .modal-box::after,
+body.theme-korean #modal-sticker .modal-box::after,
+body.theme-korean #modal-sticker-cate .modal-box::after,
+body.theme-korean #modal-music .modal-box::after,
+body.theme-korean #modal-location-edit .modal-box::after,
+body.theme-korean #modal-couple-date .modal-box::after,
+body.theme-korean #modal-api-preset .modal-box::after,
+body.theme-korean #modal-profile-edit .modal-box::after,
+body.theme-korean #modal-profile-preset .modal-box::after,
+body.theme-korean #modal-profile-preset-edit .modal-box::after,
+body.theme-korean #modal-desktop-profile-edit .modal-box::after,
+body.theme-korean #modal-widget-manager .modal-box::after,
+body.theme-korean #modal-batch-frame .modal-box::after,
+body.theme-korean #modal-edit-memory .modal-box::after,
+body.theme-korean #modal-memory-source .modal-box::after,
+body.theme-korean #modal-manual-summary .modal-box::after,
+body.theme-korean #modal-clear-records .modal-box::after,
+body.theme-korean #modal-book-upload .modal-box::after,
+body.theme-korean #modal-book-category .modal-box::after,
+body.theme-korean #modal-read-together .modal-box::after,
+body.theme-korean #modal-contact-sound .modal-box::after,
+body.theme-korean #modal-mail-freq .modal-box::after,
+body.theme-korean #modal-pwa-install .modal-box::after,
+body.theme-korean #modal-moment-generate .modal-box::after,
+body.theme-korean #modal-diary-generate .modal-box::after,
+body.theme-korean #modal-new-post .modal-box::after,
+body.theme-korean #modal-listen-contact .modal-box::after,
+body.theme-korean #modal-create-group .modal-box::after,
+body.theme-korean #modal-moment-group-select .modal-box::after,
+body.theme-korean #modal-group-offline-invite .modal-box::after,
+body.theme-korean #modal-offline-settings .settings-sheet::after,
+body.theme-korean #modal-reverse-check-invite .modal-box::after,
+body.theme-korean #modal-reverse-check-request .modal-box::after,
+body.theme-korean #modal-checkphone-contact .modal-box::after,
+body.theme-korean #modal-forum-profile .modal-box::after,
+body.theme-korean #modal-forum-settings .modal-box::after,
+body.theme-korean #modal-forum-section-manager .modal-box::after,
+body.theme-korean #modal-forum-section-edit .modal-box::after,
+body.theme-korean #modal-add-supervisor .modal-box::after,
+body.theme-korean #modal-add-task .modal-box::after,
+body.theme-korean #modal-focus-settings .modal-box::after,
+body.theme-korean #modal-task-detail .modal-box::after,
+body.theme-korean #modal-mood-diary .modal-box::after,
+body.theme-korean #modal-add-mood .modal-box::after,
+body.theme-korean #modal-sv-achievements .modal-box::after,
+body.theme-korean #modal-sv-settings .modal-box::after,
+body.theme-korean #modal-fanfic-cp .modal-box::after,
+body.theme-korean #modal-fanfic-generate .modal-box::after,
+body.theme-korean #modal-memorial-detail .modal-box::after {
+    display: none !important;
+}
+
+/* 弹窗内的h3标题都改为韩系风 */
+body.theme-korean #modal-anniv .modal-box h3,
+body.theme-korean #modal-anniv-edit .modal-box h3,
+body.theme-korean #modal-persona .modal-box h3,
+body.theme-korean #modal-sticker .modal-box h3,
+body.theme-korean #modal-sticker-cate .modal-box h3,
+body.theme-korean #modal-music .modal-box h3,
+body.theme-korean #modal-location-edit .modal-box h3,
+body.theme-korean #modal-couple-date .modal-box h3,
+body.theme-korean #modal-api-preset .modal-box h3,
+body.theme-korean #modal-profile-edit .modal-box h3,
+body.theme-korean #modal-custom-input .modal-box h3,
+body.theme-korean #modal-confirm .modal-box h3,
+body.theme-korean #modal-thought .modal-box h3,
+body.theme-korean #modal-transfer-action .modal-box h3,
+body.theme-korean #modal-img-upload .modal-box h3,
+body.theme-korean #modal-cropper .modal-box h3,
+body.theme-korean #modal-forward-type .modal-box h3,
+body.theme-korean #modal-forward-contact .modal-box h3 {
+    font-family: var(--kr-font) !important;
+    font-weight: 600 !important;
+    color: var(--kr-text) !important;
+    letter-spacing: -0.3px !important;
+}
+
+/* 精灵系统弹窗 */
+body.theme-korean #modal-spirit-create .spirit-create-modal,
+body.theme-korean #modal-spirit-chat .spirit-chat-modal {
+    border: 0.5px solid var(--kr-border) !important;
+    border-radius: var(--kr-radius-md) !important;
+    box-shadow: var(--kr-shadow-xl) !important;
+    backdrop-filter: blur(var(--kr-blur-ultra)) saturate(200%) !important;
+    -webkit-backdrop-filter: blur(var(--kr-blur-ultra)) saturate(200%) !important;
+}
+
+/* 群成员状态弹窗 */
+body.theme-korean #modal-group-member-status .group-member-popup {
+    border: 0.5px solid var(--kr-border) !important;
+    border-radius: var(--kr-radius-md) !important;
+    box-shadow: var(--kr-shadow-xl) !important;
+    background: var(--kr-glass-ultra) !important;
+    backdrop-filter: blur(var(--kr-blur-ultra)) saturate(200%) !important;
+    -webkit-backdrop-filter: blur(var(--kr-blur-ultra)) saturate(200%) !important;
+}
+
+/* 朋友圈操作弹窗 */
+body.theme-korean #modal-moment-action > div > div {
+    border-radius: var(--kr-radius-md) !important;
+    backdrop-filter: blur(var(--kr-blur-ultra)) !important;
+    -webkit-backdrop-filter: blur(var(--kr-blur-ultra)) !important;
+}
+
+/* ===== 韩系主题下的主题卡片适配 ===== */
+body.theme-korean .theme-card {
+    border-color: rgba(0, 0, 0, 0.06) !important;
+    background: var(--kr-glass-heavy) !important;
+    backdrop-filter: blur(var(--kr-blur)) !important;
+    -webkit-backdrop-filter: blur(var(--kr-blur)) !important;
+    border-radius: var(--kr-radius) !important;
+}
+body.theme-korean .theme-card.active {
+    border-color: var(--kr-text) !important;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.1) !important;
+}
+body.theme-korean .theme-card-name {
+    color: var(--kr-text) !important;
+    font-family: var(--kr-font) !important;
+}
+body.theme-korean .theme-card-desc {
+    color: var(--kr-text-secondary) !important;
+    font-family: var(--kr-font) !important;
+}
+body.theme-korean .theme-card-check i {
+    color: var(--kr-text) !important;
+    filter: none !important;
+}
+
+/* ===== 滚动条美化 ===== */
+body.theme-korean ::-webkit-scrollbar {
+    width: 3px;
+}
+body.theme-korean ::-webkit-scrollbar-track {
+    background: transparent;
+}
+body.theme-korean ::-webkit-scrollbar-thumb {
+    background: rgba(0, 0, 0, 0.1);
+    border-radius: 3px;
+}
+body.theme-korean ::-webkit-scrollbar-thumb:hover {
+    background: rgba(0, 0, 0, 0.18);
+}
+
+/* ===== 补充覆盖：布局排序/气泡预览/头像框等 ===== */
+
+/* 布局排序项 */
+body.theme-korean #layer-beauty .layout-order-item {
+    background: var(--kr-glass-heavy) !important;
+    border: 0.5px solid var(--kr-border) !important;
+    border-radius: var(--kr-radius) !important;
+    box-shadow: var(--kr-shadow) !important;
+    transition: transform 0.12s ease !important;
+    backdrop-filter: blur(var(--kr-blur)) !important;
+    -webkit-backdrop-filter: blur(var(--kr-blur)) !important;
+}
+body.theme-korean #layer-beauty .layout-order-item:active {
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.03) !important;
+    background: var(--kr-glass-heavy) !important;
+    transform: scale(0.985) !important;
+}
+body.theme-korean #layer-beauty .layout-order-item.dragging {
+    opacity: 0.5 !important;
+    background: var(--kr-glass) !important;
+}
+body.theme-korean #layer-beauty .layout-order-item.drag-over {
+    border-color: var(--kr-border-strong) !important;
+    border-style: dashed !important;
+    background: var(--kr-glass) !important;
+}
+body.theme-korean #layer-beauty .layout-order-icon {
+    border-radius: var(--kr-radius-sm) !important;
+    border: 0.5px solid var(--kr-border) !important;
+}
+body.theme-korean #layer-beauty .layout-order-title {
+    font-family: var(--kr-font) !important;
+    font-weight: 600 !important;
+    color: var(--kr-text) !important;
+}
+body.theme-korean #layer-beauty .layout-order-desc {
+    color: var(--kr-text-secondary) !important;
+    font-family: var(--kr-font) !important;
+}
+body.theme-korean #layer-beauty .layout-order-arrows button {
+    border: 0.5px solid var(--kr-border) !important;
+    border-radius: var(--kr-radius-xs) !important;
+    background: var(--kr-glass) !important;
+    color: var(--kr-text-secondary) !important;
+}
+body.theme-korean #layer-beauty .layout-order-arrows button:active {
+    background: var(--kr-text) !important;
+    color: #fff !important;
+    border-color: transparent !important;
+}
+body.theme-korean #layer-beauty .layout-order-handle {
+    color: var(--kr-text-tertiary) !important;
+}
+
+/* 布局预览框 */
+body.theme-korean #layer-beauty .layout-preview-box {
+    background: var(--kr-glass-heavy) !important;
+    border: 0.5px solid var(--kr-border) !important;
+    border-radius: var(--kr-radius) !important;
+    box-shadow: var(--kr-shadow) !important;
+}
+
+/* 气泡预览区域 */
+body.theme-korean #layer-beauty #bubble-preview-area {
+    background: var(--kr-bg-flat) !important;
+    border: 0.5px solid var(--kr-border) !important;
+    border-radius: var(--kr-radius) !important;
+    padding: 15px !important;
+}
+
+/* 头像框预设网格项 */
+body.theme-korean #layer-beauty #avatar-frame-preset-grid > div {
+    border: 0.5px solid var(--kr-border) !important;
+    border-radius: var(--kr-radius-sm) !important;
+    transition: all 0.12s ease !important;
+}
+body.theme-korean #layer-beauty #avatar-frame-preset-grid > div:active {
+    transform: scale(0.96) !important;
+    box-shadow: none !important;
+}
+
+/* inline style的select/input元素覆盖 */
+body.theme-korean #layer-beauty select[style],
+body.theme-korean #layer-settings select[style] {
+    border: 1px solid var(--kr-border) !important;
+    border-radius: var(--kr-radius-sm) !important;
+    background: rgba(255, 255, 255, 0.5) !important;
+    font-family: var(--kr-font) !important;
+}
+body.theme-korean #layer-beauty input[style*="border:1px solid #e0e0e0"],
+body.theme-korean #layer-beauty input[style*="border: 1px solid"],
+body.theme-korean #layer-settings input[style*="border:1px solid #e0e0e0"],
+body.theme-korean #layer-settings input[style*="border: 1px solid"] {
+    border: 1px solid var(--kr-border) !important;
+    border-radius: var(--kr-radius-sm) !important;
+    background: rgba(255, 255, 255, 0.5) !important;
+}
+
+/* 联系人声音设置列表 */
+body.theme-korean #layer-settings #contact-sound-list > div {
+    border: 0.5px solid var(--kr-border) !important;
+    border-radius: var(--kr-radius-sm) !important;
+    background: var(--kr-glass) !important;
+}
+
+/* Toast - 全局覆盖 styles.css 的便签风Toast */
+body.theme-korean #toast {
+    border: none !important;
+    border-radius: var(--kr-radius-sm) !important;
+    background: rgba(17, 17, 17, 0.8) !important;
+    color: #fff !important;
+    font-family: var(--kr-font) !important;
+    font-weight: 500 !important;
+    box-shadow: var(--kr-shadow-lg) !important;
+    backdrop-filter: blur(var(--kr-blur)) !important;
+    -webkit-backdrop-filter: blur(var(--kr-blur)) !important;
+    letter-spacing: -0.2px !important;
+}
+
+/* 通用模态弹窗覆盖（确保 body.theme-korean 的优先级足够高） */
+body.theme-korean .modal-mask .modal-box {
+    border: 0.5px solid var(--kr-border) !important;
+    border-radius: var(--kr-radius-md) !important;
+    box-shadow: var(--kr-shadow-xl) !important;
+}
+body.theme-korean .modal-mask .modal-box h3 {
+    font-family: var(--kr-font) !important;
+    font-weight: 600 !important;
+    letter-spacing: -0.3px !important;
+}
+body.theme-korean .modal-mask .modal-box button {
+    border-radius: var(--kr-radius-sm) !important;
+}
+body.theme-korean .modal-mask .modal-box input[type="text"],
+body.theme-korean .modal-mask .modal-box input[type="number"],
+body.theme-korean .modal-mask .modal-box input[type="date"],
+body.theme-korean .modal-mask .modal-box input[type="time"],
+body.theme-korean .modal-mask .modal-box textarea,
+body.theme-korean .modal-mask .modal-box select {
+    border-radius: var(--kr-radius-sm) !important;
+}
+
+/* 美化/设置页面中的描述文字字体 */
+body.theme-korean #layer-beauty div[style*="color:#666"],
+body.theme-korean #layer-beauty div[style*="color: #666"],
+body.theme-korean #layer-beauty div[style*="color:#888"],
+body.theme-korean #layer-beauty div[style*="color: #888"],
+body.theme-korean #layer-beauty div[style*="color:#999"],
+body.theme-korean #layer-beauty div[style*="color: #999"],
+body.theme-korean #layer-settings div[style*="color:#888"],
+body.theme-korean #layer-settings div[style*="color: #888"],
+body.theme-korean #layer-settings div[style*="color:#999"],
+body.theme-korean #layer-settings div[style*="color: #999"] {
+    font-family: var(--kr-font) !important;
+}
+
+/* 桌面图标美化网格 */
+body.theme-korean #layer-beauty #beautify-grid > div:active {
+    transform: scale(0.96) !important;
+}
+
+/* 聊天设置页面补充：确保 group-box 圆角 */
+body.theme-korean #layer-chat-settings .group-box {
+    border-radius: var(--kr-radius) !important;
+}
+
+/* 全局覆盖：确保所有 border-radius: 0 被覆盖 */
+body.theme-korean #layer-beauty .beauty-menu-item,
+body.theme-korean #layer-beauty .beauty-section-card,
+body.theme-korean #layer-beauty .beauty-action-btn,
+body.theme-korean #layer-beauty .beauty-comp-tabs,
+body.theme-korean #layer-beauty .beauty-comp-tab,
+body.theme-korean #layer-beauty .beauty-mode-toggle,
+body.theme-korean #layer-beauty .beauty-mode-btn,
+body.theme-korean #layer-beauty .comp-img-preview,
+body.theme-korean #layer-beauty #icon-size-preview,
+body.theme-korean #layer-beauty .font-preset-item,
+body.theme-korean #layer-beauty .css-input {
+    border-radius: var(--kr-radius-sm) !important;
+}
+
+body.theme-korean #layer-settings .settings-nav-item,
+body.theme-korean #layer-settings .beauty-section-card,
+body.theme-korean #layer-settings .beauty-action-btn,
+body.theme-korean #layer-settings .group-box,
+body.theme-korean #layer-settings #lockscreen-wallpaper-preview,
+body.theme-korean #layer-settings #api-preset-list > div,
+body.theme-korean #layer-settings .stt-provider-btn,
+body.theme-korean #layer-settings .imggen-provider-btn {
+    border-radius: var(--kr-radius-sm) !important;
+}
+
+/* 聊天设置圆角补充 */
+body.theme-korean #layer-chat-settings .beauty-section-card,
+body.theme-korean #layer-chat-settings .beauty-action-btn {
+    border-radius: var(--kr-radius-sm) !important;
+}
+
+/* ╔══════════════════════════════════════════════════════════════════╗
+   ║            학습 · 学习App 韩系极简风格                          ║
+   ╚══════════════════════════════════════════════════════════════════╝ */
+
+/* === 学习App整体背景 === */
+body.theme-korean #layer-study {
+    background: var(--kr-bg-flat) !important;
+    font-family: var(--kr-font) !important;
+}
+
+/* === 导航栏 === */
+body.theme-korean #layer-study .nav-bar {
+    background: var(--kr-glass-ultra) !important;
+    backdrop-filter: blur(var(--kr-blur-heavy)) saturate(200%) !important;
+    -webkit-backdrop-filter: blur(var(--kr-blur-heavy)) saturate(200%) !important;
+    border-bottom: 0.5px solid var(--kr-border) !important;
+    box-shadow: none !important;
+}
+body.theme-korean #layer-study .nav-bar .nav-title {
+    font-family: var(--kr-font) !important;
+    font-weight: 600 !important;
+    letter-spacing: -0.3px !important;
+    color: var(--kr-text) !important;
+}
+body.theme-korean #layer-study .nav-bar .nav-icon {
+    color: var(--kr-text) !important;
+}
+body.theme-korean #layer-study .nav-bar .nav-icon:active {
+    opacity: 0.4 !important;
+    transform: scale(0.92) !important;
+}
+
+/* === 滚动区域背景 === */
+body.theme-korean #layer-study .scroll-y {
+    background: var(--kr-bg-flat) !important;
+}
+
+/* === Study Tab 背景 === */
+body.theme-korean .study-tab {
+    background: var(--kr-bg-flat) !important;
+}
+
+/* === 今日学习进度卡片 === */
+body.theme-korean .study-progress-card {
+    background: var(--kr-card) !important;
+    backdrop-filter: blur(var(--kr-blur)) saturate(180%) !important;
+    -webkit-backdrop-filter: blur(var(--kr-blur)) saturate(180%) !important;
+    border: 0.5px solid var(--kr-border) !important;
+    border-radius: var(--kr-radius) !important;
+    box-shadow: var(--kr-shadow) !important;
+}
+body.theme-korean .study-progress-header span {
+    color: var(--kr-text) !important;
+    font-family: var(--kr-font) !important;
+    letter-spacing: -0.3px !important;
+}
+body.theme-korean .study-stat-num {
+    color: var(--kr-text) !important;
+    font-weight: 600 !important;
+    font-family: var(--kr-font) !important;
+}
+body.theme-korean .study-stat-label {
+    color: var(--kr-text-tertiary) !important;
+    font-size: 10px !important;
+    letter-spacing: 0.3px !important;
+}
+body.theme-korean .study-progress-bar-outer {
+    background: var(--kr-divider) !important;
+    border-radius: 2px !important;
+    height: 3px !important;
+}
+body.theme-korean .study-progress-bar-inner {
+    background: var(--kr-accent) !important;
+    border-radius: 2px !important;
+}
+
+/* === 学习总开关Banner === */
+body.theme-korean .study-master-banner {
+    background: var(--kr-accent) !important;
+    color: #fff !important;
+    border-radius: var(--kr-radius-sm) !important;
+    font-size: 12px !important;
+    letter-spacing: 0.2px !important;
+    padding: 8px 14px !important;
+}
+
+/* === 功能入口网格 === */
+body.theme-korean .study-menu-grid {
+    gap: 16px !important;
+    margin-bottom: 20px !important;
+}
+body.theme-korean .study-menu-item {
+    gap: 8px !important;
+}
+body.theme-korean .study-menu-item span {
+    color: var(--kr-text-secondary) !important;
+    font-size: 11px !important;
+    font-weight: 500 !important;
+    letter-spacing: 0.2px !important;
+}
+body.theme-korean .study-menu-icon {
+    width: 50px !important;
+    height: 50px !important;
+    border-radius: var(--kr-radius) !important;
+    box-shadow: none !important;
+    font-size: 18px !important;
+    transition: transform 0.12s ease !important;
+}
+body.theme-korean .study-menu-icon:active {
+    transform: scale(0.92) !important;
+}
+/* 韩系图标色：黑白灰单色系 */
+body.theme-korean .study-menu-icon.study-icon-materials {
+    background: var(--kr-accent) !important;
+    color: #fff !important;
+}
+body.theme-korean .study-menu-icon.study-icon-plan {
+    background: var(--kr-glass-heavy) !important;
+    border: 0.5px solid var(--kr-border) !important;
+    color: var(--kr-accent) !important;
+}
+body.theme-korean .study-menu-icon.study-icon-quiz {
+    background: var(--kr-glass-dark) !important;
+    border: 0.5px solid var(--kr-border) !important;
+    color: var(--kr-accent-soft) !important;
+}
+body.theme-korean .study-menu-icon.study-icon-lecture {
+    background: rgba(0, 0, 0, 0.06) !important;
+    border: 0.5px solid var(--kr-border) !important;
+    color: var(--kr-accent-soft) !important;
+}
+
+/* === 章节标题 === */
+body.theme-korean .study-section-title {
+    color: var(--kr-text) !important;
+    font-family: var(--kr-font) !important;
+    font-weight: 600 !important;
+    font-size: 14px !important;
+    letter-spacing: -0.3px !important;
+}
+body.theme-korean .study-section-title i {
+    color: var(--kr-accent-soft) !important;
+    font-size: 13px !important;
+}
+
+/* === 分类标签栏 === */
+body.theme-korean .study-category-bar {
+    background: var(--kr-glass-ultra) !important;
+    backdrop-filter: blur(var(--kr-blur)) !important;
+    -webkit-backdrop-filter: blur(var(--kr-blur)) !important;
+    border-bottom: 0.5px solid var(--kr-border) !important;
+}
+body.theme-korean .study-cat-tab {
+    background: transparent !important;
+    color: var(--kr-text-secondary) !important;
+    font-size: 12px !important;
+    font-weight: 500 !important;
+    border-radius: 0 !important;
+    padding: 8px 14px !important;
+    border-bottom: 2px solid transparent !important;
+    margin: 0 !important;
+    transition: all 0.15s ease !important;
+}
+body.theme-korean .study-cat-tab.active {
+    background: transparent !important;
+    color: var(--kr-text) !important;
+    font-weight: 600 !important;
+    border-bottom: 2px solid var(--kr-accent) !important;
+}
+
+/* === 学习资料卡片 === */
+body.theme-korean .study-material-card {
+    background: var(--kr-card) !important;
+    backdrop-filter: blur(var(--kr-blur)) saturate(180%) !important;
+    -webkit-backdrop-filter: blur(var(--kr-blur)) saturate(180%) !important;
+    border: 0.5px solid var(--kr-border) !important;
+    border-radius: var(--kr-radius) !important;
+    box-shadow: var(--kr-shadow) !important;
+    padding: 16px !important;
+}
+body.theme-korean .study-material-card .mat-name {
+    color: var(--kr-text) !important;
+    font-weight: 600 !important;
+    font-family: var(--kr-font) !important;
+    letter-spacing: -0.3px !important;
+}
+body.theme-korean .study-material-card .mat-badge {
+    background: var(--kr-glass-dark) !important;
+    color: var(--kr-text-secondary) !important;
+    border-radius: 4px !important;
+    font-size: 10px !important;
+    font-weight: 500 !important;
+    letter-spacing: 0.3px !important;
+}
+body.theme-korean .study-material-card .mat-badge.builtin {
+    background: rgba(0, 0, 0, 0.05) !important;
+    color: var(--kr-text-secondary) !important;
+}
+body.theme-korean .study-material-card .mat-preview {
+    color: var(--kr-text-tertiary) !important;
+    font-size: 12px !important;
+    line-height: 1.6 !important;
+}
+body.theme-korean .study-material-card .mat-footer {
+    color: var(--kr-text-tertiary) !important;
+}
+body.theme-korean .study-material-card .mat-actions button {
+    background: var(--kr-glass-dark) !important;
+    color: var(--kr-text-secondary) !important;
+    border-radius: var(--kr-radius-xs) !important;
+    font-weight: 500 !important;
+    transition: all 0.12s ease !important;
+}
+body.theme-korean .study-material-card .mat-actions button:hover {
+    background: rgba(0, 0, 0, 0.06) !important;
+    color: var(--kr-text) !important;
+}
+
+/* === 复习计划卡片 === */
+body.theme-korean .study-plan-detail {
+    background: var(--kr-card) !important;
+    backdrop-filter: blur(var(--kr-blur)) saturate(180%) !important;
+    -webkit-backdrop-filter: blur(var(--kr-blur)) saturate(180%) !important;
+    border: 0.5px solid var(--kr-border) !important;
+    border-radius: var(--kr-radius) !important;
+    box-shadow: var(--kr-shadow) !important;
+}
+body.theme-korean .study-plan-detail .plan-detail-name {
+    color: var(--kr-text) !important;
+    font-family: var(--kr-font) !important;
+    font-weight: 600 !important;
+    letter-spacing: -0.3px !important;
+}
+body.theme-korean .study-plan-detail .plan-detail-status {
+    border-radius: 4px !important;
+    font-weight: 500 !important;
+    font-size: 11px !important;
+}
+body.theme-korean .study-plan-detail .plan-progress-bar {
+    background: var(--kr-divider) !important;
+    border-radius: 2px !important;
+    height: 4px !important;
+}
+body.theme-korean .study-plan-detail .plan-progress-fill {
+    background: var(--kr-accent) !important;
+    border-radius: 2px !important;
+}
+body.theme-korean .study-plan-detail .plan-detail-meta {
+    color: var(--kr-text-tertiary) !important;
+    font-size: 11px !important;
+}
+body.theme-korean .study-plan-detail .plan-detail-actions button {
+    border-radius: var(--kr-radius-xs) !important;
+    font-weight: 500 !important;
+    transition: all 0.12s ease !important;
+}
+
+/* === 今日计划列表 === */
+body.theme-korean .study-plan-item {
+    background: var(--kr-card) !important;
+    backdrop-filter: blur(var(--kr-blur)) !important;
+    -webkit-backdrop-filter: blur(var(--kr-blur)) !important;
+    border: 0.5px solid var(--kr-border) !important;
+    border-radius: var(--kr-radius-sm) !important;
+    box-shadow: var(--kr-shadow) !important;
+}
+body.theme-korean .study-plan-item .plan-name {
+    color: var(--kr-text) !important;
+    font-weight: 500 !important;
+}
+body.theme-korean .study-plan-item .plan-meta {
+    color: var(--kr-text-tertiary) !important;
+}
+body.theme-korean .study-plan-item .plan-check {
+    border-color: var(--kr-border-strong) !important;
+}
+body.theme-korean .study-plan-item .plan-check.completed {
+    background: var(--kr-accent) !important;
+    border-color: var(--kr-accent) !important;
+}
+body.theme-korean .study-plan-item .plan-actions button {
+    border-radius: var(--kr-radius-xs) !important;
+}
+
+/* === 空状态提示 === */
+body.theme-korean .study-empty-hint {
+    color: var(--kr-text-tertiary) !important;
+    font-size: 13px !important;
+    letter-spacing: 0.2px !important;
+}
+
+/* === 底部导航栏 === */
+body.theme-korean .study-bottom-nav {
+    background: var(--kr-glass-ultra) !important;
+    backdrop-filter: blur(var(--kr-blur-heavy)) saturate(200%) !important;
+    -webkit-backdrop-filter: blur(var(--kr-blur-heavy)) saturate(200%) !important;
+    border-top: 0.5px solid var(--kr-border) !important;
+    box-shadow: 0 -1px 8px rgba(0, 0, 0, 0.02) !important;
+}
+body.theme-korean .study-bottom-item {
+    color: var(--kr-text-tertiary) !important;
+    font-size: 9px !important;
+    font-weight: 500 !important;
+    letter-spacing: 0.3px !important;
+    transition: color 0.15s ease !important;
+}
+body.theme-korean .study-bottom-item i {
+    font-size: 17px !important;
+}
+body.theme-korean .study-bottom-item.active {
+    color: var(--kr-text) !important;
+}
+
+/* === 主按钮（通用） === */
+body.theme-korean .study-btn-primary {
+    background: var(--kr-accent) !important;
+    color: #fff !important;
+    border-radius: var(--kr-radius-sm) !important;
+    font-family: var(--kr-font) !important;
+    font-weight: 600 !important;
+    letter-spacing: 0.3px !important;
+    box-shadow: none !important;
+    transition: opacity 0.12s ease !important;
+}
+body.theme-korean .study-btn-primary:active {
+    opacity: 0.7 !important;
+}
+
+/* === Modal 内主按钮 === */
+body.theme-korean .study-modal-btn-primary {
+    background: var(--kr-accent) !important;
+    color: #fff !important;
+}
+body.theme-korean .study-modal-btn-primary:active {
+    opacity: 0.7 !important;
+}
+
+/* === 弹窗 Modal === */
+body.theme-korean #modal-study-plan > div,
+body.theme-korean #modal-study-upload > div,
+body.theme-korean #modal-study-settings > div {
+    background: var(--kr-glass-ultra) !important;
+    backdrop-filter: blur(var(--kr-blur-ultra)) saturate(200%) !important;
+    -webkit-backdrop-filter: blur(var(--kr-blur-ultra)) saturate(200%) !important;
+    border: 0.5px solid var(--kr-border) !important;
+    border-radius: var(--kr-radius) !important;
+    box-shadow: var(--kr-shadow-xl) !important;
+}
+body.theme-korean #modal-study-plan input,
+body.theme-korean #modal-study-plan select,
+body.theme-korean #modal-study-upload input,
+body.theme-korean #modal-study-upload select,
+body.theme-korean #modal-study-upload textarea,
+body.theme-korean #modal-study-settings input[type="number"] {
+    border: 1px solid var(--kr-border) !important;
+    border-radius: var(--kr-radius-xs) !important;
+    background: rgba(255, 255, 255, 0.6) !important;
+    font-family: var(--kr-font) !important;
+    color: var(--kr-text) !important;
+    transition: border-color 0.15s ease !important;
+}
+body.theme-korean #modal-study-plan input:focus,
+body.theme-korean #modal-study-plan select:focus,
+body.theme-korean #modal-study-upload input:focus,
+body.theme-korean #modal-study-upload textarea:focus,
+body.theme-korean #modal-study-settings input:focus {
+    outline: none !important;
+    border-color: var(--kr-accent) !important;
+    box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.04) !important;
+}
+
+/* === 测试区域 === */
+body.theme-korean .study-quiz-area {
+    background: var(--kr-card) !important;
+    backdrop-filter: blur(var(--kr-blur)) !important;
+    -webkit-backdrop-filter: blur(var(--kr-blur)) !important;
+    border: 0.5px solid var(--kr-border) !important;
+    border-radius: var(--kr-radius) !important;
+    box-shadow: var(--kr-shadow) !important;
+}
+body.theme-korean .study-quiz-question-text {
+    color: var(--kr-text) !important;
+    font-family: var(--kr-font) !important;
+    font-weight: 500 !important;
+}
+body.theme-korean .study-quiz-counter {
+    color: var(--kr-text-tertiary) !important;
+}
+body.theme-korean .study-quiz-option {
+    border: 1px solid var(--kr-border) !important;
+    border-radius: var(--kr-radius-sm) !important;
+    background: rgba(255, 255, 255, 0.5) !important;
+    transition: all 0.12s ease !important;
+}
+body.theme-korean .study-quiz-option:hover {
+    border-color: var(--kr-border-strong) !important;
+    background: rgba(255, 255, 255, 0.8) !important;
+}
+body.theme-korean .study-quiz-option.correct {
+    border-color: #4a4a4a !important;
+    background: rgba(0, 0, 0, 0.03) !important;
+    color: var(--kr-text) !important;
+}
+body.theme-korean .study-quiz-option.wrong {
+    border-color: rgba(200, 50, 50, 0.3) !important;
+    background: rgba(200, 50, 50, 0.03) !important;
+    color: var(--kr-text-secondary) !important;
+}
+body.theme-korean .study-quiz-option.selected {
+    border-color: var(--kr-accent) !important;
+    background: rgba(0, 0, 0, 0.02) !important;
+}
+body.theme-korean .study-quiz-option-label {
+    border-color: var(--kr-border-strong) !important;
+    font-weight: 500 !important;
+}
+body.theme-korean .study-quiz-option.correct .study-quiz-option-label {
+    background: var(--kr-accent) !important;
+    border-color: var(--kr-accent) !important;
+}
+body.theme-korean .study-quiz-option.wrong .study-quiz-option-label {
+    background: rgba(200, 50, 50, 0.6) !important;
+    border-color: rgba(200, 50, 50, 0.6) !important;
+}
+body.theme-korean .study-quiz-score .score-num {
+    background: none !important;
+    -webkit-background-clip: initial !important;
+    -webkit-text-fill-color: var(--kr-text) !important;
+    font-weight: 300 !important;
+    font-size: 56px !important;
+}
+body.theme-korean .study-quiz-score .score-label {
+    color: var(--kr-text-tertiary) !important;
+}
+
+/* === 学习小测弹窗（聊天中弹出） === */
+body.theme-korean .study-quiz-popup {
+    background: rgba(0, 0, 0, 0.3) !important;
+}
+body.theme-korean .study-quiz-popup-content {
+    background: var(--kr-glass-ultra) !important;
+    backdrop-filter: blur(var(--kr-blur-ultra)) saturate(200%) !important;
+    -webkit-backdrop-filter: blur(var(--kr-blur-ultra)) saturate(200%) !important;
+    border: 0.5px solid var(--kr-border) !important;
+    border-radius: var(--kr-radius) !important;
+    box-shadow: var(--kr-shadow-xl) !important;
+}
+body.theme-korean .study-quiz-popup-header {
+    background: var(--kr-accent) !important;
+    color: #fff !important;
+    font-weight: 600 !important;
+    font-family: var(--kr-font) !important;
+    letter-spacing: 0.3px !important;
+    padding: 12px 16px !important;
+}
+body.theme-korean .study-quiz-popup-close {
+    background: rgba(255, 255, 255, 0.15) !important;
+}
+body.theme-korean .study-quiz-popup-question {
+    color: var(--kr-text) !important;
+    font-family: var(--kr-font) !important;
+    border-bottom-color: var(--kr-divider) !important;
+}
+body.theme-korean .study-quiz-popup-result {
+    border-top-color: var(--kr-divider) !important;
+}
+body.theme-korean .study-quiz-popup-result.correct {
+    background: rgba(0, 0, 0, 0.02) !important;
+    color: var(--kr-text) !important;
+}
+body.theme-korean .study-quiz-popup-result.wrong {
+    background: rgba(200, 50, 50, 0.03) !important;
+    color: rgba(180, 50, 50, 0.8) !important;
+}
+body.theme-korean .study-quiz-popup-input button {
+    background: var(--kr-accent) !important;
+    color: #fff !important;
+    border-radius: var(--kr-radius-sm) !important;
+}
+body.theme-korean .study-quiz-popup-input input {
+    border: 1px solid var(--kr-border) !important;
+    border-radius: var(--kr-radius-sm) !important;
+    font-family: var(--kr-font) !important;
+}
+
+/* === 收藏题库 & 答题操作栏 韩系覆盖 === */
+body.theme-korean .study-quiz-actions-bar {
+    border-top-color: var(--kr-divider) !important;
+}
+body.theme-korean .study-collect-btn {
+    border-color: var(--kr-border) !important;
+    color: var(--kr-text-secondary) !important;
+    border-radius: var(--kr-radius-xs) !important;
+    font-family: var(--kr-font) !important;
+}
+body.theme-korean .study-collect-btn.collected {
+    color: var(--kr-text-tertiary) !important;
+    border-color: var(--kr-divider) !important;
+}
+body.theme-korean .study-next-btn {
+    background: var(--kr-accent) !important;
+    border-radius: var(--kr-radius-xs) !important;
+    font-family: var(--kr-font) !important;
+}
+body.theme-korean .study-close-btn {
+    border-color: var(--kr-border) !important;
+    border-radius: var(--kr-radius-xs) !important;
+    font-family: var(--kr-font) !important;
+}
+body.theme-korean .study-quiz-popup-actions {
+    border-top-color: var(--kr-divider) !important;
+}
+body.theme-korean .study-fav-filter-bar {
+    border-bottom-color: var(--kr-divider) !important;
+    background: var(--kr-card-solid) !important;
+}
+body.theme-korean .study-fav-filter {
+    border-color: var(--kr-border) !important;
+    color: var(--kr-text-secondary) !important;
+    font-family: var(--kr-font) !important;
+    border-radius: 16px !important;
+}
+body.theme-korean .study-fav-filter.active {
+    background: var(--kr-accent) !important;
+    color: #fff !important;
+    border-color: var(--kr-accent) !important;
+}
+body.theme-korean .study-fav-card {
+    background: var(--kr-card-solid) !important;
+    border-color: var(--kr-border) !important;
+    border-radius: var(--kr-radius-sm) !important;
+    box-shadow: var(--kr-shadow) !important;
+}
+body.theme-korean .study-fav-stem {
+    color: var(--kr-text) !important;
+    font-family: var(--kr-font) !important;
+}
+body.theme-korean .study-fav-meta {
+    color: var(--kr-text-tertiary) !important;
+}
+body.theme-korean .study-fav-actions {
+    border-top-color: var(--kr-divider) !important;
+}
+body.theme-korean .study-fav-actions button {
+    color: var(--kr-text-secondary) !important;
+    font-family: var(--kr-font) !important;
+}
+body.theme-korean .study-menu-icon.study-icon-fav {
+    background: var(--kr-glass-dark) !important;
+    color: var(--kr-text) !important;
+}
+
+/* === 网课学习聊天 === */
+body.theme-korean .study-lecture-msgs {
+    padding-bottom: 64px !important;
+}
+body.theme-korean .study-lecture-msg {
+    font-family: var(--kr-font) !important;
+    border-radius: var(--kr-radius) !important;
+}
+body.theme-korean .study-lecture-msg.teacher {
+    background: var(--kr-glass-ultra) !important;
+    border: 0.5px solid var(--kr-border) !important;
+    border-radius: 2px var(--kr-radius) var(--kr-radius) var(--kr-radius) !important;
+    color: var(--kr-text) !important;
+}
+body.theme-korean .study-lecture-msg.student {
+    background: var(--kr-accent) !important;
+    color: #fff !important;
+    border-radius: var(--kr-radius) 2px var(--kr-radius) var(--kr-radius) !important;
+}
+body.theme-korean .study-lecture-msg.system {
+    background: var(--kr-glass-dark) !important;
+    color: var(--kr-text-tertiary) !important;
+    font-size: 11px !important;
+    border-radius: 20px !important;
+}
+body.theme-korean .study-lecture-msg.quiz-inline {
+    background: rgba(0, 0, 0, 0.03) !important;
+    color: var(--kr-text) !important;
+    border: 0.5px solid var(--kr-border) !important;
+    border-radius: var(--kr-radius-sm) !important;
+}
+
+/* === 网课输入栏 === */
+body.theme-korean .study-lecture-input-bar {
+    background: var(--kr-glass-ultra) !important;
+    backdrop-filter: blur(var(--kr-blur-heavy)) !important;
+    -webkit-backdrop-filter: blur(var(--kr-blur-heavy)) !important;
+    border-top: 0.5px solid var(--kr-border) !important;
+}
+body.theme-korean .study-lecture-input-bar input {
+    border: 1px solid var(--kr-border) !important;
+    border-radius: var(--kr-radius) !important;
+    background: rgba(255, 255, 255, 0.7) !important;
+    font-family: var(--kr-font) !important;
+    color: var(--kr-text) !important;
+}
+body.theme-korean .study-lecture-input-bar input:focus {
+    border-color: var(--kr-accent) !important;
+    background: rgba(255, 255, 255, 0.9) !important;
+}
+body.theme-korean .study-lecture-input-bar button {
+    background: var(--kr-accent) !important;
+    color: #fff !important;
+    border-radius: var(--kr-radius) !important;
+    font-family: var(--kr-font) !important;
+    font-weight: 600 !important;
+}
+
+/* === 讲师选择 === */
+body.theme-korean .study-teacher-item {
+    border: 1px solid var(--kr-border) !important;
+    border-radius: var(--kr-radius-sm) !important;
+    transition: all 0.12s ease !important;
+}
+body.theme-korean .study-teacher-item:hover {
+    background: var(--kr-hover) !important;
+}
+body.theme-korean .study-teacher-item.selected {
+    border-color: var(--kr-accent) !important;
+    background: rgba(0, 0, 0, 0.01) !important;
+}
+body.theme-korean .study-teacher-item img {
+    border: 1px solid var(--kr-border) !important;
+}
+body.theme-korean .study-teacher-item .teacher-name {
+    color: var(--kr-text) !important;
+    font-weight: 600 !important;
+}
+body.theme-korean .study-teacher-item .teacher-persona {
+    color: var(--kr-text-tertiary) !important;
+}
+
+/* === 资料选择 === */
+body.theme-korean .study-material-select {
+    border: 1px solid var(--kr-border) !important;
+    border-radius: var(--kr-radius-sm) !important;
+    background: var(--kr-card) !important;
+    box-shadow: none !important;
+}
+body.theme-korean .study-material-select:hover {
+    background: var(--kr-hover) !important;
+}
+body.theme-korean .study-material-select.selected {
+    border-color: var(--kr-accent) !important;
+    background: rgba(0, 0, 0, 0.01) !important;
+}
+
+/* === HTML弹窗（查看资料） === */
+body.theme-korean .wb-html-popup-overlay {
+    background: rgba(0, 0, 0, 0.35) !important;
+}
+body.theme-korean .wb-html-popup-container {
+    border-radius: var(--kr-radius) !important;
+    border: 0.5px solid var(--kr-border) !important;
+    box-shadow: var(--kr-shadow-xl) !important;
+    overflow: hidden;
+}
+body.theme-korean .wb-html-popup-header {
+    background: var(--kr-glass-ultra) !important;
+    backdrop-filter: blur(var(--kr-blur)) !important;
+    -webkit-backdrop-filter: blur(var(--kr-blur)) !important;
+    border-bottom: 0.5px solid var(--kr-border) !important;
+}
+body.theme-korean .wb-html-popup-header span,
+body.theme-korean #wb-html-popup-title {
+    font-family: var(--kr-font) !important;
+    font-weight: 600 !important;
+    color: var(--kr-text) !important;
+    letter-spacing: -0.3px !important;
+}
+body.theme-korean .wb-html-popup-close {
+    color: var(--kr-text-secondary) !important;
+    transition: opacity 0.12s ease !important;
+}
+body.theme-korean .wb-html-popup-close:active {
+    opacity: 0.4 !important;
+}
+body.theme-korean .wb-html-popup-body {
+    background: var(--kr-bg-flat) !important;
+}
+
+/* 纪念馆详情文字颜色修复（白色半透明背景下白色文字不可见） */
+body.theme-korean #modal-memorial-detail .memorial-detail-rarity {
+    color: var(--kr-accent) !important;
+}
+body.theme-korean #modal-memorial-detail .memorial-detail-name {
+    color: var(--kr-text) !important;
+}
+body.theme-korean #modal-memorial-detail .memorial-detail-from {
+    color: var(--kr-text-secondary) !important;
+}
+body.theme-korean #modal-memorial-detail .memorial-detail-content {
+    color: var(--kr-text) !important;
+    background: rgba(0,0,0,0.03) !important;
+    border-color: rgba(0,0,0,0.08) !important;
+}
+body.theme-korean #modal-memorial-detail .memorial-detail-date {
+    color: var(--kr-text-secondary) !important;
+}
+
+/* ╔══════════════════════════════════════════════════════════════════╗
+   ║  [FIX-全局覆盖v2] 补充缺失界面：聊天列表、朋友圈、桌面等      ║
+   ╚══════════════════════════════════════════════════════════════════╝ */
+
+/* ===== 聊天列表界面 (tab-chats) ===== */
+body.theme-korean #tab-chats {
+    background: var(--kr-bg-flat) !important;
+    background-image: none !important;
+}
+body.theme-korean #tab-chats > .nav-bar {
+    background: var(--kr-glass-ultra) !important;
+    border-bottom: 0.5px solid var(--kr-border) !important;
+    box-shadow: var(--kr-shadow) !important;
+    backdrop-filter: blur(var(--kr-blur-heavy)) saturate(200%) !important;
+    -webkit-backdrop-filter: blur(var(--kr-blur-heavy)) saturate(200%) !important;
+}
+body.theme-korean #tab-chats > .nav-bar .nav-title {
+    font-weight: 600 !important;
+    color: var(--kr-text) !important;
+    font-family: var(--kr-font) !important;
+    letter-spacing: -0.3px !important;
+}
+body.theme-korean #tab-chats > .nav-bar .nav-icon {
+    color: var(--kr-text) !important;
+}
+/* 聊天列表项 */
+body.theme-korean #tab-chats .chat-item,
+body.theme-korean #tab-chats .list-item {
+    background: var(--kr-glass-heavy) !important;
+    border: 0.5px solid var(--kr-border) !important;
+    border-radius: var(--kr-radius) !important;
+    box-shadow: var(--kr-shadow) !important;
+    margin-bottom: 4px !important;
+    backdrop-filter: blur(var(--kr-blur)) !important;
+    -webkit-backdrop-filter: blur(var(--kr-blur)) !important;
+    transition: transform 0.12s ease !important;
+}
+body.theme-korean #tab-chats .chat-item:active,
+body.theme-korean #tab-chats .list-item:active {
+    transform: scale(0.985) !important;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.03) !important;
+}
+body.theme-korean #tab-chats .chat-name,
+body.theme-korean #tab-chats .list-title {
+    color: var(--kr-text) !important;
+    font-weight: 600 !important;
+    font-family: var(--kr-font) !important;
+}
+body.theme-korean #tab-chats .chat-preview,
+body.theme-korean #tab-chats .list-sub {
+    color: var(--kr-text-secondary) !important;
+    font-family: var(--kr-font) !important;
+}
+body.theme-korean #tab-chats .chat-time {
+    color: var(--kr-text-tertiary) !important;
+    font-family: var(--kr-font) !important;
+}
+body.theme-korean #tab-chats .chat-item .avatar {
+    border: 1px solid rgba(0, 0, 0, 0.06) !important;
+    box-shadow: 0 1px 6px rgba(0, 0, 0, 0.05) !important;
+    filter: none !important;
+}
+/* 未读消息角标 */
+body.theme-korean #tab-chats .chat-badge {
+    background: var(--kr-text) !important;
+    color: #fff !important;
+    border: none !important;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.2) !important;
+}
+/* 搜索栏 */
+body.theme-korean #tab-chats .search-bar,
+body.theme-korean #tab-chats .chat-search {
+    background: rgba(0, 0, 0, 0.03) !important;
+    border: 0.5px solid var(--kr-border) !important;
+    border-radius: var(--kr-radius) !important;
+    color: var(--kr-text) !important;
+    font-family: var(--kr-font) !important;
+}
+body.theme-korean #tab-chats .search-bar::placeholder,
+body.theme-korean #tab-chats .chat-search::placeholder {
+    color: var(--kr-text-tertiary) !important;
+}
+
+/* ===== 发现/朋友圈界面 ===== */
+body.theme-korean #tab-discover {
+    background: var(--kr-bg-flat) !important;
+}
+body.theme-korean #tab-discover > .nav-bar {
+    background: var(--kr-glass-ultra) !important;
+    border-bottom: 0.5px solid var(--kr-border) !important;
+    box-shadow: var(--kr-shadow) !important;
+    backdrop-filter: blur(var(--kr-blur-heavy)) saturate(200%) !important;
+    -webkit-backdrop-filter: blur(var(--kr-blur-heavy)) saturate(200%) !important;
+}
+body.theme-korean #tab-discover > .nav-bar .nav-title {
+    font-weight: 600 !important;
+    color: var(--kr-text) !important;
+    font-family: var(--kr-font) !important;
+}
+body.theme-korean #tab-discover .list-item {
+    background: var(--kr-glass-heavy) !important;
+    border: 0.5px solid var(--kr-border) !important;
+    border-radius: var(--kr-radius) !important;
+    box-shadow: var(--kr-shadow) !important;
+    backdrop-filter: blur(var(--kr-blur)) !important;
+    -webkit-backdrop-filter: blur(var(--kr-blur)) !important;
+}
+body.theme-korean #tab-discover .list-item .list-title {
+    color: var(--kr-text) !important;
+    font-family: var(--kr-font) !important;
+}
+body.theme-korean #tab-discover .list-item i {
+    color: var(--kr-text-secondary) !important;
+}
+
+/* ===== 朋友圈层 ===== */
+body.theme-korean #layer-moments {
+    background: var(--kr-bg-flat) !important;
+}
+body.theme-korean #layer-moments .nav-bar {
+    background: var(--kr-glass-ultra) !important;
+    border-bottom: 0.5px solid var(--kr-border) !important;
+    box-shadow: var(--kr-shadow) !important;
+    backdrop-filter: blur(var(--kr-blur-heavy)) saturate(200%) !important;
+    -webkit-backdrop-filter: blur(var(--kr-blur-heavy)) saturate(200%) !important;
+}
+body.theme-korean #layer-moments .nav-bar .nav-title {
+    font-weight: 600 !important;
+    color: var(--kr-text) !important;
+    font-family: var(--kr-font) !important;
+}
+body.theme-korean #layer-moments .nav-bar .nav-icon {
+    color: var(--kr-text) !important;
+}
+body.theme-korean #layer-moments .scroll-y {
+    background: var(--kr-bg-flat) !important;
+}
+/* 朋友圈帖子卡片 */
+body.theme-korean #layer-moments .moment-card,
+body.theme-korean #layer-moments .post-card {
+    background: var(--kr-glass-heavy) !important;
+    border: 0.5px solid var(--kr-border) !important;
+    border-radius: var(--kr-radius) !important;
+    box-shadow: var(--kr-shadow) !important;
+    backdrop-filter: blur(var(--kr-blur)) !important;
+    -webkit-backdrop-filter: blur(var(--kr-blur)) !important;
+}
+body.theme-korean #layer-moments .moment-author,
+body.theme-korean #layer-moments .post-author {
+    color: var(--kr-text) !important;
+    font-weight: 600 !important;
+    font-family: var(--kr-font) !important;
+}
+body.theme-korean #layer-moments .moment-text,
+body.theme-korean #layer-moments .post-text {
+    color: var(--kr-text) !important;
+    font-family: var(--kr-font) !important;
+}
+body.theme-korean #layer-moments .moment-time,
+body.theme-korean #layer-moments .post-time {
+    color: var(--kr-text-tertiary) !important;
+    font-family: var(--kr-font) !important;
+}
+body.theme-korean #layer-moments .moment-actions button,
+body.theme-korean #layer-moments .post-actions button {
+    color: var(--kr-text-secondary) !important;
+    font-family: var(--kr-font) !important;
+}
+
+/* ===== 桌面界面补充 ===== */
+body.theme-korean #layer-desktop {
+    font-family: var(--kr-font) !important;
+}
+/* 桌面应用图标文字 */
+body.theme-korean #layer-desktop .app-name,
+body.theme-korean #layer-desktop .app-grid span {
+    font-family: var(--kr-font) !important;
+    letter-spacing: -0.2px !important;
+}
+/* 桌面胶囊导航 */
+body.theme-korean #layer-desktop .capsule-nav,
+body.theme-korean .capsule-nav {
+    background: var(--kr-glass-ultra) !important;
+    border: 0.5px solid var(--kr-border) !important;
+    border-radius: 28px !important;
+    box-shadow: var(--kr-shadow-lg) !important;
+    backdrop-filter: blur(var(--kr-blur-heavy)) saturate(200%) !important;
+    -webkit-backdrop-filter: blur(var(--kr-blur-heavy)) saturate(200%) !important;
+}
+body.theme-korean .capsule-nav .cap-item {
+    color: var(--kr-text-tertiary) !important;
+    font-family: var(--kr-font) !important;
+}
+body.theme-korean .capsule-nav .cap-item.active {
+    color: var(--kr-text) !important;
+}
+body.theme-korean .capsule-nav .cap-item i {
+    color: inherit !important;
+}
+
+/* ===== 泡泡聊天补充 ===== */
+body.theme-korean .pp-bubble-header-top {
+    background: var(--kr-glass-ultra) !important;
+    border-bottom: 0.5px solid var(--kr-border) !important;
+    backdrop-filter: blur(var(--kr-blur-heavy)) saturate(200%) !important;
+    -webkit-backdrop-filter: blur(var(--kr-blur-heavy)) saturate(200%) !important;
+}
+body.theme-korean .pp-bubble-header-top .pp-contact-name {
+    color: var(--kr-text) !important;
+    font-weight: 600 !important;
+    font-family: var(--kr-font) !important;
+}
+body.theme-korean .pp-bubble-close {
+    color: var(--kr-text-secondary) !important;
+}
+body.theme-korean .pp-bubble-body {
+    background: var(--kr-bg-flat) !important;
+}
+body.theme-korean .pp-bubble-input-bar {
+    background: var(--kr-glass-ultra) !important;
+    border-top: 0.5px solid var(--kr-border) !important;
+    backdrop-filter: blur(var(--kr-blur-heavy)) !important;
+    -webkit-backdrop-filter: blur(var(--kr-blur-heavy)) !important;
+}
+body.theme-korean .pp-bubble-input {
+    border: 1px solid var(--kr-border) !important;
+    border-radius: var(--kr-radius) !important;
+    background: rgba(255, 255, 255, 0.7) !important;
+    font-family: var(--kr-font) !important;
+    color: var(--kr-text) !important;
+}
+
+/* ===== 精灵系统韩系覆盖 ===== */
+body.theme-korean .spirit-list-page-wrap {
+    background: var(--kr-bg-flat) !important;
+}
+body.theme-korean .spirit-list-nav {
+    background: var(--kr-glass-ultra) !important;
+    border-bottom: 0.5px solid var(--kr-border) !important;
+    box-shadow: var(--kr-shadow) !important;
+    backdrop-filter: blur(var(--kr-blur-heavy)) saturate(200%) !important;
+    -webkit-backdrop-filter: blur(var(--kr-blur-heavy)) saturate(200%) !important;
+}
+body.theme-korean .spirit-list-nav .sln-title {
+    color: var(--kr-text) !important;
+    font-weight: 600 !important;
+    font-family: var(--kr-font) !important;
+}
+body.theme-korean .spirit-card {
+    background: var(--kr-glass-heavy) !important;
+    border: 0.5px solid var(--kr-border) !important;
+    border-radius: var(--kr-radius) !important;
+    box-shadow: var(--kr-shadow) !important;
+    backdrop-filter: blur(var(--kr-blur)) !important;
+    -webkit-backdrop-filter: blur(var(--kr-blur)) !important;
+}
+body.theme-korean .spirit-detail-topbar {
+    background: var(--kr-glass-ultra) !important;
+    border-bottom: 0.5px solid var(--kr-border) !important;
+    backdrop-filter: blur(var(--kr-blur-heavy)) saturate(200%) !important;
+    -webkit-backdrop-filter: blur(var(--kr-blur-heavy)) saturate(200%) !important;
+}
+body.theme-korean .spirit-detail-topbar .sdt-name {
+    color: var(--kr-text) !important;
+    font-weight: 600 !important;
+    font-family: var(--kr-font) !important;
+}
+
+/* ===== 全局字体和文字颜色兜底 ===== */
+body.theme-korean {
+    font-family: var(--kr-font) !important;
+    color: var(--kr-text) !important;
+    background: var(--kr-bg-flat) !important;
+}
+/* 全局 nav-bar 覆盖 */
+body.theme-korean .nav-bar {
+    background: var(--kr-glass-ultra) !important;
+    border-bottom: 0.5px solid var(--kr-border) !important;
+    backdrop-filter: blur(var(--kr-blur-heavy)) saturate(200%) !important;
+    -webkit-backdrop-filter: blur(var(--kr-blur-heavy)) saturate(200%) !important;
+}
+body.theme-korean .nav-bar .nav-title {
+    font-weight: 600 !important;
+    color: var(--kr-text) !important;
+    font-family: var(--kr-font) !important;
+    letter-spacing: -0.3px !important;
+}
+body.theme-korean .nav-bar .nav-icon {
+    color: var(--kr-text) !important;
+}
+/* 全局 scroll-y 背景 */
+body.theme-korean .scroll-y {
+    background: var(--kr-bg-flat) !important;
+    background-image: none !important;
+}
+/* 全局 group-box 覆盖 */
+body.theme-korean .group-box {
+    background: var(--kr-glass-heavy) !important;
+    border: 0.5px solid var(--kr-border) !important;
+    border-radius: var(--kr-radius-md) !important;
+    box-shadow: var(--kr-shadow) !important;
+    backdrop-filter: blur(var(--kr-blur)) !important;
+    -webkit-backdrop-filter: blur(var(--kr-blur)) !important;
+    transform: none !important;
+}
+/* 移除所有 group-box 的便签装饰 */
+body.theme-korean .group-box::before,
+body.theme-korean .group-box::after {
+    display: none !important;
+}
+/* 全局 list-item 覆盖 */
+body.theme-korean .list-item {
+    border-bottom: 0.5px solid var(--kr-divider) !important;
+}
+body.theme-korean .list-item:last-child {
+    border-bottom: none !important;
+}
+body.theme-korean .list-title {
+    color: var(--kr-text) !important;
+    font-family: var(--kr-font) !important;
+    font-weight: 500 !important;
+}
+body.theme-korean .list-sub {
+    color: var(--kr-text-secondary) !important;
+    font-family: var(--kr-font) !important;
+}
+/* 全局 form-cell 覆盖 */
+body.theme-korean .form-cell {
+    border-bottom: 0.5px solid var(--kr-divider) !important;
+}
+body.theme-korean .form-cell:last-child {
+    border-bottom: none !important;
+}
+body.theme-korean .form-label {
+    color: var(--kr-text) !important;
+    font-family: var(--kr-font) !important;
+    font-weight: 500 !important;
+}

@@ -1,0 +1,1940 @@
+/* ========== 外卖App样式 ========== */
+
+/* 外卖App Layer */
+#layer-fooddelivery {
+    background: #f5f5f5;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+#layer-fooddelivery .fd-container {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    overflow: hidden;
+}
+
+/* 顶部导航栏 */
+.fd-navbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 12px;
+    background: linear-gradient(135deg, #ff6b35, #ff4500);
+    color: #fff;
+    position: relative;
+    z-index: 10;
+    min-height: 44px;
+}
+.fd-navbar .fd-nav-left,
+.fd-navbar .fd-nav-right {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+.fd-navbar .fd-nav-btn {
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.2);
+    cursor: pointer;
+    font-size: 14px;
+    transition: background 0.2s;
+}
+.fd-navbar .fd-nav-btn:active {
+    background: rgba(255,255,255,0.35);
+}
+.fd-navbar .fd-nav-title {
+    font-size: 17px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+}
+
+/* 搜索栏 */
+.fd-search-bar {
+    display: flex;
+    align-items: center;
+    padding: 10px 12px;
+    background: #fff;
+    gap: 8px;
+    box-sizing: border-box;
+    width: 100%;
+    max-width: 100%;
+    overflow: hidden;
+}
+.fd-search-input-wrap {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    align-items: center;
+    background: #f0f0f0;
+    border-radius: 20px;
+    padding: 0 12px;
+    height: 36px;
+}
+.fd-search-input-wrap i {
+    color: #999;
+    margin-right: 8px;
+    font-size: 14px;
+    flex-shrink: 0;
+}
+.fd-search-input-wrap input {
+    flex: 1;
+    min-width: 0;
+    border: none;
+    background: none;
+    outline: none;
+    font-size: 14px;
+    color: #333;
+}
+.fd-search-btn {
+    padding: 6px 16px;
+    background: #ff4500;
+    color: #fff;
+    border: none;
+    border-radius: 18px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    flex-shrink: 0;
+    white-space: nowrap;
+}
+.fd-search-btn:active {
+    opacity: 0.8;
+}
+
+/* 分类图标网格 */
+.fd-category-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 8px;
+    padding: 12px;
+    background: #fff;
+    margin: 0 0 8px;
+}
+.fd-category-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    cursor: pointer;
+    padding: 6px 0;
+    border-radius: 12px;
+    transition: background 0.2s;
+}
+.fd-category-item:active {
+    background: #f5f5f5;
+}
+.fd-category-icon {
+    width: 44px;
+    height: 44px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    margin-bottom: 4px;
+}
+.fd-category-name {
+    font-size: 11px;
+    color: #333;
+    text-align: center;
+    line-height: 1.3;
+}
+
+/* 滚动内容区 */
+.fd-scroll-content {
+    flex: 1;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    padding-bottom: 60px;
+}
+
+/* 拼好饭板块 */
+.fd-pin-section {
+    background: #fff;
+    margin: 0 0 8px;
+    padding: 12px;
+}
+.fd-pin-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 10px;
+}
+.fd-pin-title {
+    font-size: 16px;
+    font-weight: 700;
+    color: #333;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+.fd-pin-badge {
+    font-size: 11px;
+    background: #ff4500;
+    color: #fff;
+    padding: 2px 8px;
+    border-radius: 10px;
+}
+.fd-pin-more {
+    font-size: 13px;
+    color: #999;
+    cursor: pointer;
+}
+.fd-pin-list {
+    display: flex;
+    gap: 10px;
+    overflow-x: auto;
+    padding-bottom: 6px;
+    -webkit-overflow-scrolling: touch;
+}
+.fd-pin-list::-webkit-scrollbar { display: none; }
+.fd-pin-card {
+    min-width: 140px;
+    background: #fafafa;
+    border-radius: 12px;
+    overflow: hidden;
+    cursor: pointer;
+    flex-shrink: 0;
+    transition: transform 0.15s;
+}
+.fd-pin-card:active {
+    transform: scale(0.97);
+}
+.fd-pin-card-img {
+    width: 140px;
+    height: 90px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 48px;
+    background: linear-gradient(135deg, #fff3e0, #ffe0b2);
+}
+.fd-pin-card-info {
+    padding: 8px;
+}
+.fd-pin-card-name {
+    font-size: 13px;
+    font-weight: 600;
+    color: #333;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.fd-pin-card-price {
+    font-size: 15px;
+    font-weight: 700;
+    color: #ff4500;
+    margin-top: 4px;
+}
+
+/* 附近商家板块 */
+.fd-nearby-section {
+    background: #fff;
+    padding: 12px;
+}
+.fd-nearby-header {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 12px;
+    border-bottom: 1px solid #f0f0f0;
+    padding-bottom: 10px;
+}
+.fd-nearby-tab {
+    font-size: 15px;
+    font-weight: 600;
+    color: #999;
+    cursor: pointer;
+    padding-bottom: 6px;
+    position: relative;
+}
+.fd-nearby-tab.active {
+    color: #333;
+}
+.fd-nearby-tab.active::after {
+    content: '';
+    position: absolute;
+    bottom: -1px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 24px;
+    height: 3px;
+    background: #ff4500;
+    border-radius: 2px;
+}
+
+/* 商家卡片 */
+.fd-shop-card {
+    display: flex;
+    gap: 10px;
+    padding: 12px 0;
+    border-bottom: 1px solid #f5f5f5;
+    cursor: pointer;
+    transition: background 0.15s;
+}
+.fd-shop-card:active {
+    background: #fafafa;
+}
+.fd-shop-logo {
+    width: 80px;
+    height: 80px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 36px;
+    flex-shrink: 0;
+    background: linear-gradient(135deg, #fff8e1, #ffecb3);
+}
+.fd-shop-info {
+    flex: 1;
+    min-width: 0;
+}
+.fd-shop-name {
+    font-size: 15px;
+    font-weight: 600;
+    color: #333;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.fd-shop-meta {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 4px;
+    font-size: 12px;
+    color: #999;
+}
+.fd-shop-rating {
+    color: #ff9800;
+    font-weight: 600;
+}
+.fd-shop-tags {
+    display: flex;
+    gap: 4px;
+    margin-top: 6px;
+    flex-wrap: wrap;
+}
+.fd-shop-tag {
+    font-size: 11px;
+    padding: 2px 6px;
+    background: #fff3e0;
+    color: #ff6b35;
+    border-radius: 4px;
+}
+
+/* 商家详情页 */
+.fd-shop-detail {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: #f5f5f5;
+    z-index: 100;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+.fd-shop-detail-header {
+    background: linear-gradient(135deg, #ff6b35, #ff4500);
+    padding: 12px;
+    color: #fff;
+}
+.fd-shop-detail-nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 10px;
+}
+.fd-shop-detail-nav .fd-nav-btn {
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.2);
+    cursor: pointer;
+    font-size: 14px;
+}
+.fd-shop-detail-info {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+}
+.fd-shop-detail-logo {
+    width: 60px;
+    height: 60px;
+    border-radius: 12px;
+    background: rgba(255,255,255,0.2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 30px;
+}
+.fd-shop-detail-text h3 {
+    margin: 0;
+    font-size: 16px;
+}
+.fd-shop-detail-text p {
+    margin: 4px 0 0;
+    font-size: 12px;
+    opacity: 0.85;
+}
+.fd-shop-detail-tabs {
+    display: flex;
+    background: #fff;
+    border-bottom: 1px solid #f0f0f0;
+}
+.fd-shop-detail-tab {
+    flex: 1;
+    text-align: center;
+    padding: 10px 0;
+    font-size: 14px;
+    color: #999;
+    cursor: pointer;
+    position: relative;
+}
+.fd-shop-detail-tab.active {
+    color: #333;
+    font-weight: 600;
+}
+.fd-shop-detail-tab.active::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 24px;
+    height: 3px;
+    background: #ff4500;
+    border-radius: 2px;
+}
+.fd-shop-detail-body {
+    flex: 1;
+    display: flex;
+    overflow: hidden;
+}
+.fd-menu-sidebar {
+    width: 85px;
+    background: #f5f5f5;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    flex-shrink: 0;
+}
+.fd-menu-sidebar-item {
+    padding: 12px 8px;
+    font-size: 12px;
+    color: #666;
+    text-align: center;
+    cursor: pointer;
+    border-left: 3px solid transparent;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    justify-content: center;
+}
+.fd-menu-sidebar-item.active {
+    background: #fff;
+    color: #ff4500;
+    font-weight: 600;
+    border-left-color: #ff4500;
+}
+.fd-menu-content {
+    flex: 1;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    padding: 8px 10px;
+    background: #fff;
+}
+.fd-menu-category-title {
+    font-size: 15px;
+    font-weight: 700;
+    color: #333;
+    margin: 12px 0 8px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+.fd-menu-item {
+    display: flex;
+    gap: 10px;
+    padding: 10px 0;
+    border-bottom: 1px solid #f8f8f8;
+    align-items: flex-start;
+}
+.fd-menu-item-img {
+    width: 80px;
+    height: 80px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 36px;
+    flex-shrink: 0;
+    background: linear-gradient(135deg, #fff8e1, #ffecb3);
+}
+.fd-menu-item-info {
+    flex: 1;
+    min-width: 0;
+}
+.fd-menu-item-name {
+    font-size: 14px;
+    font-weight: 600;
+    color: #333;
+}
+.fd-menu-item-desc {
+    font-size: 12px;
+    color: #999;
+    margin-top: 2px;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+.fd-menu-item-sales {
+    font-size: 11px;
+    color: #bbb;
+    margin-top: 4px;
+}
+.fd-menu-item-bottom {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 6px;
+}
+.fd-menu-item-price {
+    font-size: 16px;
+    font-weight: 700;
+    color: #ff4500;
+}
+.fd-menu-item-price small {
+    font-size: 11px;
+    font-weight: 400;
+}
+.fd-menu-item-add {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: #ff4500;
+    color: #fff;
+    border: none;
+    font-size: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+.fd-menu-item-add:active {
+    opacity: 0.8;
+}
+
+/* 底部Tab栏 */
+.fd-bottom-tabs {
+    display: flex;
+    background: #fff;
+    border-top: 1px solid #eee;
+    padding: 6px 0;
+    position: relative;
+    z-index: 10;
+}
+.fd-bottom-tab {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 4px 0;
+    cursor: pointer;
+    color: #999;
+    font-size: 10px;
+    gap: 2px;
+    transition: color 0.2s;
+}
+.fd-bottom-tab.active {
+    color: #ff4500;
+}
+.fd-bottom-tab i {
+    font-size: 20px;
+}
+.fd-bottom-tab span {
+    font-size: 10px;
+}
+
+/* 优惠券区域 */
+.fd-coupon-bar {
+    display: flex;
+    gap: 8px;
+    padding: 10px 12px;
+    background: #fff;
+    margin-bottom: 8px;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+}
+.fd-coupon-bar::-webkit-scrollbar { display: none; }
+.fd-coupon-item {
+    min-width: 140px;
+    background: linear-gradient(135deg, #ff4500, #ff6b35);
+    color: #fff;
+    border-radius: 10px;
+    padding: 10px 12px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex-shrink: 0;
+}
+.fd-coupon-amount {
+    font-size: 24px;
+    font-weight: 800;
+}
+.fd-coupon-amount small {
+    font-size: 12px;
+    font-weight: 400;
+}
+.fd-coupon-desc {
+    font-size: 10px;
+    opacity: 0.85;
+    margin-top: 2px;
+}
+
+/* 支付弹窗 */
+.fd-pay-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0,0,0,0.5);
+    z-index: 9999;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+}
+.fd-pay-sheet {
+    background: #fff;
+    border-radius: 16px 16px 0 0;
+    width: 100%;
+    max-width: 500px;
+    padding: 20px;
+    animation: fd-slideUp 0.3s ease;
+}
+@keyframes fd-slideUp {
+    from { transform: translateY(100%); }
+    to { transform: translateY(0); }
+}
+.fd-pay-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 16px;
+}
+.fd-pay-header h3 {
+    margin: 0;
+    font-size: 17px;
+}
+.fd-pay-close {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: #f0f0f0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-size: 14px;
+    color: #666;
+}
+.fd-pay-item-preview {
+    display: flex;
+    gap: 10px;
+    padding: 12px;
+    background: #f9f9f9;
+    border-radius: 12px;
+    margin-bottom: 16px;
+}
+.fd-pay-item-emoji {
+    font-size: 36px;
+}
+.fd-pay-item-detail h4 {
+    margin: 0;
+    font-size: 14px;
+    font-weight: 600;
+}
+.fd-pay-item-detail p {
+    margin: 4px 0 0;
+    font-size: 12px;
+    color: #999;
+}
+.fd-pay-total {
+    text-align: right;
+    font-size: 20px;
+    font-weight: 700;
+    color: #ff4500;
+    margin-bottom: 16px;
+}
+.fd-pay-methods {
+    margin-bottom: 16px;
+}
+.fd-pay-method {
+    display: flex;
+    align-items: center;
+    padding: 12px;
+    border: 1.5px solid #eee;
+    border-radius: 12px;
+    margin-bottom: 8px;
+    cursor: pointer;
+    transition: all 0.2s;
+    gap: 10px;
+}
+.fd-pay-method.selected {
+    border-color: #ff4500;
+    background: #fff8f5;
+}
+.fd-pay-method-icon {
+    width: 36px;
+    height: 36px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+}
+.fd-pay-method-info {
+    flex: 1;
+}
+.fd-pay-method-name {
+    font-size: 14px;
+    font-weight: 600;
+    color: #333;
+}
+.fd-pay-method-desc {
+    font-size: 11px;
+    color: #999;
+}
+.fd-pay-method-check {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    border: 2px solid #ddd;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.fd-pay-method.selected .fd-pay-method-check {
+    background: #ff4500;
+    border-color: #ff4500;
+    color: #fff;
+    font-size: 12px;
+}
+.fd-pay-submit {
+    width: 100%;
+    padding: 14px;
+    background: #ff4500;
+    color: #fff;
+    border: none;
+    border-radius: 24px;
+    font-size: 16px;
+    font-weight: 700;
+    cursor: pointer;
+}
+.fd-pay-submit:active {
+    opacity: 0.85;
+}
+
+/* 支付分类折叠 */
+.fd-pay-category {
+    border: 1.5px solid #f0f0f0;
+    border-radius: 14px;
+    margin-bottom: 10px;
+    overflow: hidden;
+}
+.fd-pay-category-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px 14px;
+    cursor: pointer;
+    background: #fafafa;
+    transition: background 0.2s;
+}
+.fd-pay-category-header:active {
+    background: #f0f0f0;
+}
+.fd-pay-cat-arrow {
+    color: #bbb;
+    font-size: 12px;
+    transition: transform 0.2s;
+}
+.fd-pay-category-body {
+    display: none;
+    padding: 0 6px 6px;
+}
+.fd-pay-category-body.show {
+    display: block;
+}
+.fd-pay-category-body .fd-pay-method {
+    margin-bottom: 4px;
+    border-radius: 10px;
+    border-width: 1px;
+}
+
+/* 代付消息气泡卡片 */
+.fd-proxy-pay-bubble {
+    background: #fff;
+    border-radius: 12px;
+    overflow: hidden;
+    border: 1px solid #f0f0f0;
+    max-width: 260px;
+    cursor: pointer;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+}
+.fd-proxy-pay-bubble-header {
+    background: linear-gradient(135deg, #ff6b35, #ff4500);
+    color: #fff;
+    padding: 8px 12px;
+    font-size: 12px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+.fd-proxy-pay-bubble-body {
+    padding: 10px 12px;
+}
+.fd-proxy-pay-bubble-item {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    margin-bottom: 6px;
+}
+.fd-proxy-pay-bubble-emoji {
+    font-size: 28px;
+}
+.fd-proxy-pay-bubble-info {
+    flex: 1;
+}
+.fd-proxy-pay-bubble-name {
+    font-size: 13px;
+    font-weight: 600;
+    color: #333;
+}
+.fd-proxy-pay-bubble-price {
+    font-size: 14px;
+    font-weight: 700;
+    color: #ff4500;
+}
+.fd-proxy-pay-bubble-footer {
+    display: flex;
+    border-top: 1px solid #f0f0f0;
+}
+.fd-proxy-pay-bubble-btn {
+    flex: 1;
+    text-align: center;
+    padding: 10px;
+    font-size: 13px;
+    cursor: pointer;
+}
+.fd-proxy-pay-bubble-btn.accept {
+    color: #ff4500;
+    font-weight: 600;
+    border-left: 1px solid #f0f0f0;
+}
+
+/* 健康饮食页面 */
+.fd-health-container {
+    flex: 1;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    padding: 12px;
+    padding-bottom: 70px;
+}
+.fd-health-card {
+    background: #fff;
+    border-radius: 16px;
+    padding: 16px;
+    margin-bottom: 12px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+}
+.fd-health-card h3 {
+    margin: 0 0 12px;
+    font-size: 16px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+.fd-meal-entry {
+    display: flex;
+    gap: 10px;
+    padding: 10px 0;
+    border-bottom: 1px solid #f8f8f8;
+    align-items: center;
+}
+.fd-meal-entry-emoji {
+    font-size: 28px;
+}
+.fd-meal-entry-info {
+    flex: 1;
+}
+.fd-meal-entry-name {
+    font-size: 14px;
+    font-weight: 600;
+}
+.fd-meal-entry-cal {
+    font-size: 12px;
+    color: #999;
+}
+.fd-meal-entry-delete {
+    color: #ccc;
+    cursor: pointer;
+    font-size: 16px;
+}
+.fd-add-meal-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    padding: 12px;
+    border: 2px dashed #ddd;
+    border-radius: 12px;
+    color: #999;
+    cursor: pointer;
+    font-size: 14px;
+    margin-top: 8px;
+    transition: all 0.2s;
+}
+.fd-add-meal-btn:active {
+    border-color: #ff4500;
+    color: #ff4500;
+}
+.fd-health-summary {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+    margin-bottom: 12px;
+}
+.fd-health-stat {
+    text-align: center;
+    padding: 12px 8px;
+    background: #f9f9f9;
+    border-radius: 12px;
+}
+.fd-health-stat-num {
+    font-size: 20px;
+    font-weight: 700;
+    color: #ff4500;
+}
+.fd-health-stat-label {
+    font-size: 11px;
+    color: #999;
+    margin-top: 2px;
+}
+.fd-ai-advice {
+    background: linear-gradient(135deg, #f0f9ff, #e0f2fe);
+    border-radius: 12px;
+    padding: 14px;
+    margin-top: 12px;
+}
+.fd-ai-advice-title {
+    font-size: 14px;
+    font-weight: 700;
+    color: #0284c7;
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+.fd-ai-advice-content {
+    font-size: 13px;
+    color: #334155;
+    line-height: 1.6;
+}
+.fd-ai-loading {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    gap: 8px;
+    color: #999;
+    font-size: 13px;
+}
+.fd-ai-loading .fd-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: #ff4500;
+    animation: fd-dot-pulse 1.2s ease-in-out infinite;
+}
+.fd-ai-loading .fd-dot:nth-child(2) { animation-delay: 0.2s; }
+.fd-ai-loading .fd-dot:nth-child(3) { animation-delay: 0.4s; }
+@keyframes fd-dot-pulse {
+    0%, 80%, 100% { transform: scale(0.6); opacity: 0.4; }
+    40% { transform: scale(1); opacity: 1; }
+}
+
+/* 个人主页 */
+.fd-profile-container {
+    flex: 1;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    padding-bottom: 70px;
+}
+.fd-profile-header {
+    background: linear-gradient(135deg, #ff6b35, #ff4500);
+    padding: 24px 16px;
+    color: #fff;
+    text-align: center;
+}
+.fd-profile-avatar {
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 28px;
+    margin: 0 auto 10px;
+}
+.fd-profile-name {
+    font-size: 18px;
+    font-weight: 700;
+}
+.fd-profile-section {
+    background: #fff;
+    margin: 8px 0;
+    padding: 12px 16px;
+}
+.fd-profile-section-title {
+    font-size: 15px;
+    font-weight: 700;
+    color: #333;
+    margin-bottom: 10px;
+}
+.fd-profile-cell {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px 0;
+    border-bottom: 1px solid #f5f5f5;
+    cursor: pointer;
+}
+.fd-profile-cell:last-child {
+    border-bottom: none;
+}
+.fd-profile-cell-left {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+.fd-profile-cell i {
+    font-size: 16px;
+    color: #ff4500;
+    width: 24px;
+    text-align: center;
+}
+
+/* 设置弹窗 */
+.fd-settings-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0,0,0,0.5);
+    z-index: 9999;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+}
+.fd-settings-sheet {
+    background: #fff;
+    border-radius: 16px 16px 0 0;
+    width: 100%;
+    max-width: 500px;
+    max-height: 80vh;
+    overflow-y: auto;
+    padding: 20px;
+    animation: fd-slideUp 0.3s ease;
+}
+.fd-settings-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 16px;
+}
+.fd-settings-header h3 {
+    margin: 0;
+    font-size: 17px;
+    font-weight: 700;
+}
+.fd-section-card {
+    background: #f9f9f9;
+    border-radius: 12px;
+    padding: 12px;
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.fd-section-card-info {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+.fd-section-card-emoji {
+    font-size: 24px;
+}
+.fd-section-card-text h4 {
+    margin: 0;
+    font-size: 14px;
+    font-weight: 600;
+}
+.fd-section-card-text p {
+    margin: 2px 0 0;
+    font-size: 11px;
+    color: #999;
+}
+.fd-section-card-actions {
+    display: flex;
+    gap: 6px;
+}
+.fd-section-card-btn {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-size: 12px;
+}
+.fd-section-card-btn.edit {
+    background: #e0f2fe;
+    color: #0284c7;
+}
+.fd-section-card-btn.delete {
+    background: #fee2e2;
+    color: #ef4444;
+}
+
+/* 添加餐食弹窗 */
+.fd-add-meal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0,0,0,0.5);
+    z-index: 9999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+}
+.fd-add-meal-modal {
+    background: #fff;
+    border-radius: 16px;
+    width: 100%;
+    max-width: 380px;
+    padding: 20px;
+    animation: fd-scaleIn 0.25s ease;
+}
+@keyframes fd-scaleIn {
+    from { transform: scale(0.9); opacity: 0; }
+    to { transform: scale(1); opacity: 1; }
+}
+.fd-add-meal-modal h3 {
+    margin: 0 0 16px;
+    font-size: 17px;
+    font-weight: 700;
+}
+.fd-form-group {
+    margin-bottom: 12px;
+}
+.fd-form-group label {
+    display: block;
+    font-size: 13px;
+    font-weight: 600;
+    color: #555;
+    margin-bottom: 6px;
+}
+.fd-form-group input,
+.fd-form-group textarea,
+.fd-form-group select {
+    width: 100%;
+    padding: 10px 12px;
+    border: 1.5px solid #e5e7eb;
+    border-radius: 10px;
+    font-size: 14px;
+    outline: none;
+    box-sizing: border-box;
+    transition: border-color 0.2s;
+}
+.fd-form-group input:focus,
+.fd-form-group textarea:focus {
+    border-color: #ff4500;
+}
+.fd-form-actions {
+    display: flex;
+    gap: 8px;
+    margin-top: 16px;
+}
+.fd-form-actions button {
+    flex: 1;
+    padding: 12px;
+    border: none;
+    border-radius: 12px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+}
+.fd-form-actions .fd-btn-cancel {
+    background: #f0f0f0;
+    color: #666;
+}
+.fd-form-actions .fd-btn-primary {
+    background: #ff4500;
+    color: #fff;
+}
+
+/* 食物卡片网格（搜索结果） */
+.fd-food-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+    padding: 12px;
+}
+.fd-food-card {
+    background: #fff;
+    border-radius: 14px;
+    overflow: hidden;
+    cursor: pointer;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    transition: transform 0.15s;
+}
+.fd-food-card:active {
+    transform: scale(0.97);
+}
+.fd-food-card-img {
+    height: 100px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 48px;
+    background: linear-gradient(135deg, #fff8e1, #ffecb3);
+}
+.fd-food-card-body {
+    padding: 8px 10px 10px;
+}
+.fd-food-card-name {
+    font-size: 13px;
+    font-weight: 600;
+    color: #333;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.fd-food-card-shop {
+    font-size: 11px;
+    color: #999;
+    margin-top: 2px;
+}
+.fd-food-card-price {
+    font-size: 16px;
+    font-weight: 700;
+    color: #ff4500;
+    margin-top: 4px;
+}
+
+/* ========== 给好友点外卖 - 横幅提示 ========== */
+.fd-gift-banner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 14px;
+    background: linear-gradient(135deg, #ff6b35, #ff9800);
+    color: #fff;
+    font-size: 13px;
+    animation: fd-gift-banner-pulse 2s infinite;
+}
+@keyframes fd-gift-banner-pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.9; }
+}
+.fd-gift-banner-left {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+.fd-gift-banner-left i {
+    font-size: 16px;
+}
+.fd-gift-banner-right {
+    padding: 4px 12px;
+    background: rgba(255,255,255,0.25);
+    border-radius: 12px;
+    cursor: pointer;
+    font-size: 12px;
+    font-weight: 600;
+}
+.fd-gift-banner-right:active {
+    background: rgba(255,255,255,0.4);
+}
+
+/* ========== 选择好友弹窗 ========== */
+.fd-gift-sheet-inner {
+    max-height: 70vh;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+.fd-gift-sheet-inner .fd-pay-header {
+    position: sticky;
+    top: 0;
+    background: #fff;
+    z-index: 2;
+    padding-bottom: 12px;
+    border-bottom: 1px solid #f0f0f0;
+    flex-shrink: 0;
+}
+.fd-gift-search-wrap {
+    padding: 0 4px 12px;
+    flex-shrink: 0;
+}
+.fd-gift-search-wrap input {
+    width: 100%;
+    padding: 8px 12px 8px 32px;
+    border: 1px solid #eee;
+    border-radius: 20px;
+    font-size: 13px;
+    background: #f7f7f7;
+    outline: none;
+    box-sizing: border-box;
+}
+.fd-gift-search-wrap i {
+    position: absolute;
+    left: 14px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #bbb;
+    font-size: 12px;
+}
+.fd-gift-contact-scroll {
+    flex: 1;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior: contain;
+}
+.fd-gift-bottom-bar {
+    flex-shrink: 0;
+    padding: 12px 0 0;
+    border-top: 1px solid #f0f0f0;
+}
+.fd-gift-cancel-btn {
+    width: 100%;
+    padding: 12px;
+    background: #f5f5f5;
+    color: #666;
+    border: none;
+    border-radius: 10px;
+    font-size: 14px;
+    cursor: pointer;
+    font-weight: 500;
+}
+.fd-gift-cancel-btn:active {
+    background: #e8e8e8;
+}
+.fd-gift-contact-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 16px;
+    cursor: pointer;
+    transition: background 0.15s;
+    border-bottom: 1px solid #f5f5f5;
+}
+.fd-gift-contact-item:active,
+.fd-gift-contact-item.active {
+    background: #fff5f0;
+}
+.fd-gift-contact-avatar {
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    background: #f0f0f0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 22px;
+    flex-shrink: 0;
+    overflow: hidden;
+}
+.fd-gift-contact-info {
+    flex: 1;
+    min-width: 0;
+}
+.fd-gift-contact-name {
+    font-size: 14px;
+    font-weight: 600;
+    color: #333;
+}
+.fd-gift-contact-desc {
+    font-size: 11px;
+    color: #999;
+    margin-top: 2px;
+}
+.fd-gift-contact-divider {
+    padding: 8px 16px;
+    font-size: 12px;
+    color: #999;
+    background: #f9f9f9;
+    font-weight: 600;
+}
+
+/* ========== 配送给谁 ========== */
+.fd-deliver-to-section {
+    margin-bottom: 12px;
+    background: #fafafa;
+    border-radius: 12px;
+    overflow: hidden;
+    border: 1px solid #f0f0f0;
+}
+.fd-deliver-to-title {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 10px 14px;
+    font-size: 13px;
+    font-weight: 700;
+    color: #333;
+    background: #fff;
+    border-bottom: 1px solid #f0f0f0;
+}
+.fd-deliver-to-title i {
+    color: #ff4500;
+}
+.fd-deliver-to-option {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 14px;
+    cursor: pointer;
+    transition: background 0.15s;
+    border-bottom: 1px solid #f5f5f5;
+}
+.fd-deliver-to-option:last-child {
+    border-bottom: none;
+}
+.fd-deliver-to-option:active,
+.fd-deliver-to-option.active {
+    background: #fff5f0;
+}
+.fd-deliver-to-icon {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: #f0f0f0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    flex-shrink: 0;
+    overflow: hidden;
+}
+.fd-deliver-to-info {
+    flex: 1;
+    min-width: 0;
+}
+.fd-deliver-to-name {
+    font-size: 13px;
+    font-weight: 600;
+    color: #333;
+}
+.fd-deliver-to-desc {
+    font-size: 11px;
+    color: #999;
+    margin-top: 1px;
+}
+.fd-deliver-to-check {
+    font-size: 16px;
+    color: #ff4500;
+    flex-shrink: 0;
+}
+.fd-deliver-to-check .fa-circle {
+    color: #ddd;
+}
+.fd-deliver-to-expand {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 10px 14px;
+    font-size: 12px;
+    color: #ff4500;
+    cursor: pointer;
+    font-weight: 600;
+    border-top: 1px solid #f0f0f0;
+}
+.fd-deliver-to-expand:active {
+    background: #fff5f0;
+}
+.fd-deliver-to-expand i:first-child {
+    font-size: 14px;
+}
+.fd-deliver-arrow {
+    margin-left: auto;
+    font-size: 11px;
+    transition: transform 0.2s;
+}
+
+/* ========== 外卖投喂消息气泡 ========== */
+.fd-gift-bubble {
+    background: #fff;
+    border-radius: 14px;
+    overflow: hidden;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+    max-width: 280px;
+    border: 1.5px solid #ffe0cc;
+}
+.fd-gift-bubble.received {
+    border-color: #ffd4d4;
+}
+.fd-gift-bubble-header {
+    background: linear-gradient(135deg, #ff6b35, #ff4500);
+    color: #fff;
+    padding: 8px 12px;
+    font-size: 13px;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+.fd-gift-bubble.received .fd-gift-bubble-header {
+    background: linear-gradient(135deg, #ff6b9d, #ff4081);
+}
+.fd-gift-bubble-body {
+    padding: 10px 12px;
+}
+.fd-gift-bubble-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+.fd-gift-bubble-emoji {
+    font-size: 32px;
+}
+.fd-gift-bubble-info {
+    flex: 1;
+}
+.fd-gift-bubble-name {
+    font-size: 14px;
+    font-weight: 600;
+    color: #333;
+}
+.fd-gift-bubble-price {
+    font-size: 15px;
+    font-weight: 700;
+    color: #ff4500;
+    margin-top: 2px;
+}
+.fd-gift-bubble-msg {
+    margin-top: 8px;
+    padding: 8px 10px;
+    background: #fff9f5;
+    border-radius: 8px;
+    font-size: 12px;
+    color: #666;
+    font-style: italic;
+    border-left: 3px solid #ff9800;
+}
+.fd-gift-bubble-footer {
+    padding: 8px 12px 10px;
+    border-top: 1px solid #f5f5f5;
+}
+.fd-gift-bubble-status {
+    font-size: 12px;
+    color: #ff9800;
+    font-weight: 600;
+    margin-bottom: 6px;
+}
+.fd-gift-bubble-btn-row {
+    display: flex;
+    gap: 8px;
+}
+.fd-gift-bubble-btn {
+    flex: 1;
+    text-align: center;
+    padding: 6px 0;
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    border-radius: 8px;
+    background: #fff5f0;
+    color: #ff4500;
+    transition: all 0.15s;
+}
+.fd-gift-bubble-btn:active {
+    background: #ffe0cc;
+    transform: scale(0.96);
+}
+
+/* ========== 外卖互送标签 ========== */
+.fd-gift-tag {
+    display: inline-block;
+    font-size: 10px;
+    color: #ff4500;
+    background: #fff5f0;
+    padding: 1px 6px;
+    border-radius: 8px;
+    margin-left: 4px;
+    font-weight: 600;
+    font-style: normal;
+}
+
+/* ========== 购物车底部栏 ========== */
+.fd-shop-cart-bar {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 56px;
+    background: #fff;
+    box-shadow: 0 -2px 12px rgba(0,0,0,0.1);
+    display: flex;
+    align-items: center;
+    padding: 0 12px;
+    /* [FIX-购物车遮挡] 提高z-index，确保购物车栏始终在商家详情页内容（搜索框等）之上 */
+    z-index: 200;
+}
+.fd-shop-cart-left {
+    display: flex;
+    align-items: center;
+    flex: 1;
+    cursor: pointer;
+}
+.fd-shop-cart-icon {
+    width: 48px;
+    height: 48px;
+    background: linear-gradient(135deg, #ff6b35, #ff4500);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    font-size: 20px;
+    position: relative;
+    margin-top: -16px;
+    box-shadow: 0 4px 12px rgba(255,69,0,0.35);
+}
+.fd-shop-cart-badge {
+    position: absolute;
+    top: -4px;
+    right: -4px;
+    min-width: 18px;
+    height: 18px;
+    background: #ffc107;
+    color: #333;
+    font-size: 11px;
+    font-weight: 700;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 4px;
+}
+.fd-shop-cart-info {
+    margin-left: 12px;
+}
+.fd-shop-cart-total {
+    font-size: 18px;
+    font-weight: 700;
+    color: #333;
+}
+.fd-shop-cart-tip {
+    font-size: 11px;
+    color: #999;
+}
+.fd-shop-cart-checkout {
+    padding: 12px 28px;
+    background: linear-gradient(135deg, #ff6b35, #ff4500);
+    color: #fff;
+    border: none;
+    border-radius: 24px;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+.fd-shop-cart-checkout:active {
+    transform: scale(0.96);
+}
+.fd-shop-cart-checkout.disabled {
+    background: #ddd;
+    color: #999;
+    cursor: not-allowed;
+}
+
+/* ========== 购物车弹窗 ========== */
+.fd-cart-popup {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 999;
+}
+.fd-cart-popup-mask {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0,0,0,0.5);
+}
+.fd-cart-popup-content {
+    position: absolute;
+    bottom: 56px;
+    left: 0;
+    right: 0;
+    max-height: 60vh;
+    background: #fff;
+    border-radius: 16px 16px 0 0;
+    overflow: hidden;
+    animation: fdCartSlideUp 0.25s ease-out;
+}
+@keyframes fdCartSlideUp {
+    from { transform: translateY(100%); }
+    to { transform: translateY(0); }
+}
+.fd-cart-popup-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 14px 16px;
+    border-bottom: 1px solid #f0f0f0;
+}
+.fd-cart-popup-title {
+    font-size: 16px;
+    font-weight: 700;
+    color: #333;
+}
+.fd-cart-popup-clear {
+    font-size: 13px;
+    color: #999;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+.fd-cart-popup-clear:hover {
+    color: #ff4500;
+}
+.fd-cart-popup-body {
+    max-height: calc(60vh - 60px);
+    overflow-y: auto;
+    padding-bottom: 12px;
+}
+
+/* ========== 购物车店铺分组 ========== */
+.fd-cart-shop-group {
+    margin: 12px;
+    background: #fafafa;
+    border-radius: 12px;
+    overflow: hidden;
+}
+.fd-cart-shop-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 12px;
+    background: #f5f5f5;
+}
+.fd-cart-shop-name {
+    font-size: 14px;
+    font-weight: 600;
+    color: #333;
+}
+.fd-cart-shop-clear {
+    font-size: 12px;
+    color: #999;
+    cursor: pointer;
+}
+.fd-cart-shop-clear:hover {
+    color: #ff4500;
+}
+.fd-cart-item {
+    display: flex;
+    align-items: center;
+    padding: 10px 12px;
+    gap: 10px;
+    border-bottom: 1px solid #f0f0f0;
+}
+.fd-cart-item:last-child {
+    border-bottom: none;
+}
+.fd-cart-item-emoji {
+    font-size: 28px;
+    width: 36px;
+    text-align: center;
+}
+.fd-cart-item-info {
+    flex: 1;
+    min-width: 0;
+}
+.fd-cart-item-name {
+    font-size: 14px;
+    font-weight: 500;
+    color: #333;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+.fd-cart-item-price {
+    font-size: 14px;
+    color: #ff4500;
+    font-weight: 600;
+    margin-top: 2px;
+}
+.fd-cart-item-qty {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+.fd-cart-qty-btn {
+    width: 26px;
+    height: 26px;
+    border: 1px solid #ddd;
+    background: #fff;
+    border-radius: 50%;
+    font-size: 16px;
+    font-weight: 600;
+    color: #ff4500;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.15s;
+}
+.fd-cart-qty-btn:active {
+    background: #fff5f0;
+    transform: scale(0.9);
+}
+.fd-cart-shop-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 12px;
+    background: #fff;
+    border-top: 1px solid #f0f0f0;
+}
+.fd-cart-shop-footer span {
+    font-size: 13px;
+    color: #666;
+}
+.fd-cart-shop-tip {
+    font-size: 12px;
+    color: #ff9800;
+}
+.fd-cart-shop-checkout {
+    padding: 6px 16px;
+    background: linear-gradient(135deg, #ff6b35, #ff4500);
+    color: #fff;
+    border: none;
+    border-radius: 16px;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+}
+.fd-cart-shop-checkout:active {
+    transform: scale(0.96);
+}
+
+/* ========== 结算页面 ========== */
+.fd-checkout-sheet {
+    max-height: 85vh;
+    overflow-y: auto;
+}
+.fd-checkout-shop {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 16px;
+    background: #f9f9f9;
+    margin: 0 -16px 12px;
+}
+.fd-checkout-shop-emoji {
+    font-size: 24px;
+}
+.fd-checkout-shop-name {
+    font-size: 15px;
+    font-weight: 600;
+    flex: 1;
+}
+.fd-checkout-shop-time {
+    font-size: 12px;
+    color: #999;
+}
+.fd-checkout-items {
+    margin-bottom: 12px;
+    border: 1px solid #f0f0f0;
+    border-radius: 10px;
+    overflow: hidden;
+}
+.fd-checkout-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 12px;
+    border-bottom: 1px solid #f5f5f5;
+}
+.fd-checkout-item:last-child {
+    border-bottom: none;
+}
+.fd-checkout-item-emoji {
+    font-size: 22px;
+}
+.fd-checkout-item-name {
+    flex: 1;
+    font-size: 14px;
+    color: #333;
+}
+.fd-checkout-item-qty {
+    font-size: 13px;
+    color: #999;
+}
+.fd-checkout-item-price {
+    font-size: 14px;
+    font-weight: 600;
+    color: #ff4500;
+}
+.fd-checkout-fees {
+    background: #f9f9f9;
+    border-radius: 10px;
+    padding: 10px 14px;
+    margin-bottom: 12px;
+}
+.fd-checkout-fee-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 6px 0;
+    font-size: 13px;
+    color: #666;
+}
+.fd-checkout-fee-row.total {
+    border-top: 1px dashed #ddd;
+    margin-top: 6px;
+    padding-top: 10px;
+    font-size: 16px;
+    font-weight: 700;
+    color: #333;
+}
+.fd-checkout-fee-row.total span:last-child {
+    color: #ff4500;
+    font-size: 18px;
+}

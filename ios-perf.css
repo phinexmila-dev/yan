@@ -1,0 +1,1463 @@
+/* ============================================================
+   IOS-PERF.CSS — iOS Safari/PWA 专用性能优化
+   ============================================================
+   核心策略：
+   1. 对高频场景（聊天、底部导航）禁用 backdrop-filter: blur()
+      backdrop-filter 是 iOS WebKit 上的头号 GPU 杀手，每帧实时高斯模糊
+   2. 对线下模式场景降级视觉效果，减少 GPU 合成层
+   3. 降级复杂动画和 transition
+   4. 优化滚动容器的 containment
+   
+   依赖：device-adapter.js 在 <html> 上添加 is-ios class
+   ============================================================ */
+
+/* ============================================================
+   1. 聊天页面（最高频场景）：禁用 backdrop-filter
+   ============================================================ */
+html.is-ios #layer-chat > .nav-bar,
+html.is-ios #layer-chat > .nav-bar#chat-nav-bar,
+html.is-ios #chat-nav-bar,
+html.is-ios #chat-input-bar,
+html.is-ios #layer-chat .input-bar,
+html.is-ios #layer-chat .toolbar,
+html.is-ios #layer-chat .toolbar .emoji-tab,
+html.is-ios #layer-chat .pop-menu,
+html.is-ios #layer-chat .pop-opt {
+    -webkit-backdrop-filter: none !important;
+    backdrop-filter: none !important;
+}
+
+/* 聊天导航栏：用完全不透明纯色替代毛玻璃（消除半透明模糊条） */
+html.is-ios #layer-chat > .nav-bar,
+html.is-ios #chat-nav-bar {
+    background: var(--chat-nav-bg, #ffffff) !important;
+    opacity: 1 !important;
+}
+
+/* 聊天输入栏 */
+html.is-ios #chat-input-bar,
+html.is-ios #layer-chat .input-bar {
+    background: var(--chat-input-bg, #ffffff) !important;
+    opacity: 1 !important;
+}
+
+/* ============================================================
+   2. 底部导航（始终可见）：禁用 backdrop-filter
+   ============================================================ */
+html.is-ios .bottom-nav {
+    -webkit-backdrop-filter: none !important;
+    backdrop-filter: none !important;
+    background: #f5f5f5 !important;
+    opacity: 1 !important;
+    /* [FIX-底部上移] iOS设备底部导航栏整体上移5px，避免被Home Indicator遮挡 */
+    margin-bottom: 9px !important;
+}
+
+/* ============================================================
+   3. 弹窗遮罩层：用纯色替代 blur（大面积 blur 极耗 GPU）
+   ============================================================ */
+html.is-ios .modal-mask,
+html.is-ios .gacha-overlay,
+html.is-ios .sv-complete-overlay,
+html.is-ios .ff-cmenu-bg,
+html.is-ios .ff-create-menu-overlay .ff-cmenu-bg {
+    -webkit-backdrop-filter: none !important;
+    backdrop-filter: none !important;
+    background: rgba(0, 0, 0, 0.7) !important;
+}
+
+/* ============================================================
+   4. 韩系主题：高特异性 backdrop-filter 覆盖
+   ============================================================ */
+html.is-ios body.theme-korean #layer-chat > .nav-bar#chat-nav-bar,
+html.is-ios body.theme-korean #chat-input-bar,
+html.is-ios body.theme-korean #layer-chat .input-bar,
+html.is-ios body.theme-korean #layer-chat .toolbar,
+html.is-ios body.theme-korean #layer-chat .toolbar .emoji-tab,
+html.is-ios body.theme-korean #layer-chat .pop-menu,
+html.is-ios body.theme-korean #layer-chat .pop-opt,
+html.is-ios body.theme-korean #layer-chat .bubble .bubble-reply-quote,
+html.is-ios body.theme-korean:not(.has-custom-bubble-css) #layer-chat .msg-row:not(.me) .bubble,
+html.is-ios body.theme-korean:not(.has-custom-bubble-css) #layer-chat .msg-row.me .bubble,
+html.is-ios body.theme-korean #chat-scroll-bottom-btn,
+html.is-ios body.theme-korean #layer-chat .typing-indicator,
+html.is-ios body.theme-korean #layer-chat .chat-notice,
+html.is-ios body.theme-korean #layer-chat-settings > .nav-bar,
+html.is-ios body.theme-korean #layer-chat-settings .group-box,
+html.is-ios body.theme-korean #tab-contacts > .nav-bar,
+html.is-ios body.theme-korean #contact-list .list-item,
+html.is-ios body.theme-korean #layer-wechat > .wx-tab-bar,
+html.is-ios body.theme-korean #layer-wechat > .nav-bar {
+    -webkit-backdrop-filter: none !important;
+    backdrop-filter: none !important;
+}
+
+/* ============================================================
+   5. 聊天气泡优化（减少 GPU 合成层）
+   ============================================================ */
+
+/* 聊天气泡：简化阴影 — 当用户有自定义气泡CSS时让步 */
+html.is-ios body:not(.has-custom-bubble-css) #layer-chat .bubble {
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.06) !important;
+}
+
+/* 头像：禁用复杂 filter — 当用户有自定义气泡CSS时让步 */
+html.is-ios body:not(.has-custom-bubble-css) #layer-chat .avatar,
+html.is-ios body:not(.has-custom-bubble-css) #layer-chat .avatar-wrapper-chat .avatar {
+    filter: none !important;
+}
+
+/* 消息行：布局隔离 + 触摸优化 */
+html.is-ios .msg-row {
+    contain: layout style;
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: transparent;
+}
+
+/* 聊天气泡：消除300ms点击延迟，提升触摸响应 */
+html.is-ios .bubble {
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: transparent;
+}
+
+/* 聊天历史容器：优化滚动 */
+html.is-ios #chat-history {
+    contain: layout style;
+    -webkit-overflow-scrolling: touch;
+}
+
+/* ============================================================
+   6. 线下模式专项优化（用户反馈线下容易发热）
+   ============================================================ */
+
+/* 线下模式独立页面：禁用所有 backdrop-filter */
+html.is-ios #layer-offline-mode .nav-bar,
+html.is-ios #layer-offline-mode .offline-fixed-header,
+html.is-ios #layer-offline-mode .offline-info-bar,
+html.is-ios #layer-offline-mode .offline-input-bar {
+    -webkit-backdrop-filter: none !important;
+    backdrop-filter: none !important;
+}
+
+/* 线下模式消息卡片：简化阴影 */
+html.is-ios .offline-msg-box {
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08) !important;
+}
+
+/* 线下模式文本块气泡：简化 */
+html.is-ios .bubble.offline-text-block {
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.06) !important;
+}
+
+/* 线下模式聊天嵌入：禁用线下头部栏的 blur */
+html.is-ios #chat-offline-header,
+html.is-ios #chat-offline-private-bar,
+html.is-ios #chat-offline-group-bar {
+    -webkit-backdrop-filter: none !important;
+    backdrop-filter: none !important;
+}
+
+/* 线下模式滚动容器优化 */
+html.is-ios #offline-chat-history {
+    contain: layout style;
+    -webkit-overflow-scrolling: touch;
+}
+
+/* ============================================================
+   7. 全局：减少 transition 时长（iOS 动画合成开销大）
+   ============================================================ */
+html.is-ios .bubble,
+html.is-ios .nav-bar,
+html.is-ios .bottom-nav,
+html.is-ios .input-bar,
+html.is-ios #chat-input-bar,
+html.is-ios .list-item,
+html.is-ios .modal-box,
+html.is-ios .pop-menu,
+html.is-ios .pop-opt,
+html.is-ios .toolbar,
+html.is-ios .btn,
+html.is-ios button,
+html.is-ios .tab-btn,
+html.is-ios .avatar,
+html.is-ios .msg-row {
+    transition-duration: 0.15s !important;
+}
+
+/* [OPT-返回流畅-v3] layer 动画优化：
+   1. 缩短到 0.18s（比 0.24s 少 25% 的帧数）
+   2. 所有 layer 预设 will-change:transform，让 GPU 提前创建合成层
+   3. 配合下方第 42 节的 position:fixed，动画期间零重排 */
+html.is-ios .layer {
+    transition: transform 0.18s cubic-bezier(0.32, 0.72, 0, 1), visibility 0s 0.18s, opacity 0s 0.18s !important;
+    will-change: transform !important;
+}
+html.is-ios .layer.show {
+    transition: transform 0.18s cubic-bezier(0.32, 0.72, 0, 1), visibility 0s 0s, opacity 0s 0s !important;
+}
+
+/* [OPT-返回按钮] 增大nav-icon触摸区域，消除300ms延迟 */
+html.is-ios .nav-icon {
+    min-width: 44px !important;
+    min-height: 44px !important;
+    touch-action: manipulation !important;
+    -webkit-tap-highlight-color: transparent !important;
+}
+
+/* ============================================================
+   8. 降级复杂动画
+   ============================================================ */
+
+/* 精灵系统浮动动画：降级为静态 */
+html.is-ios .slh-bubbles span {
+    animation: none !important;
+}
+html.is-ios .sln-title-icon {
+    animation: none !important;
+}
+
+/* 打字指示器：简化 */
+html.is-ios .typing-dots span {
+    animation-duration: 1.5s !important;
+}
+
+/* ============================================================
+   9. 离屏元素完全不渲染
+   ============================================================ */
+/* [FIX-iOS白屏-2026-04-11] content-visibility:hidden会导致白屏，
+   改为 contain: layout style paint 保留性能优化但不隐藏内容 */
+/* [FIX-白屏v3] 不再通过JS设置contentVisibility:hidden，彻底避免白屏 */
+html.is-ios .layer:not(.show) {
+    contain: layout style paint;
+    contain-intrinsic-size: 100vw 100vh;
+}
+/* 确保 .layer.show 始终可见，覆盖任何残留的 content-visibility 内联样式 */
+html.is-ios .layer.show {
+    content-visibility: visible !important;
+    contain: none;
+}
+
+/* ============================================================
+   10. 滚动容器优化
+   ============================================================ */
+html.is-ios .scroll-y,
+html.is-ios #moments-feed,
+html.is-ios #contact-list,
+html.is-ios .couple-modules-scroll,
+html.is-ios .ff-body2,
+html.is-ios .gacha-body {
+    contain: layout style;
+}
+
+/* ============================================================
+   11. 快速滚动模式：降级阴影
+   ============================================================ */
+html.is-ios body:not(.has-custom-bubble-css) .fast-scrolling .bubble {
+    box-shadow: none !important;
+}
+html.is-ios body:not(.has-custom-bubble-css) .fast-scrolling .avatar {
+    box-shadow: none !important;
+}
+
+/* ============================================================
+   12. 低帧率自适应模式（由 perf-utils.js FPS 监控动态添加）
+   ============================================================ */
+/* [FIX-2026-05-12-v2] 不再用 * 通配，改为对 body 本身设置，子元素继承 */
+html.is-ios body.low-fps-mode {
+    transition: none !important;
+    animation: none !important;
+}
+html.is-ios body.low-fps-mode .bubble,
+html.is-ios body.low-fps-mode .msg-row,
+html.is-ios body.low-fps-mode .nav-bar,
+html.is-ios body.low-fps-mode .input-bar,
+html.is-ios body.low-fps-mode .toolbar,
+html.is-ios body.low-fps-mode .list-item,
+html.is-ios body.low-fps-mode .avatar,
+html.is-ios body.low-fps-mode .spirit-card,
+html.is-ios body.low-fps-mode .modal-box {
+    transition: none !important;
+    animation: none !important;
+}
+html.is-ios body.low-fps-mode:not(.has-custom-bubble-css) .bubble {
+    box-shadow: none !important;
+    border-radius: 12px !important;
+}
+html.is-ios body.low-fps-mode .nav-bar {
+    box-shadow: none !important;
+    border-bottom: 1px solid #e0e0e0 !important;
+}
+html.is-ios body.low-fps-mode .bottom-nav {
+    box-shadow: none !important;
+    border-top: 1px solid #e0e0e0 !important;
+}
+
+/* ============================================================
+   13. 减少 box-shadow 复杂度
+   ============================================================ */
+html.is-ios .spirit-card,
+html.is-ios .spirit-card-avatar,
+html.is-ios .sln-back,
+html.is-ios .sln-add {
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1) !important;
+}
+
+/* ============================================================
+   14. 视频通话/语音通话优化
+   ============================================================ */
+html.is-ios #layer-voice-call,
+html.is-ios #layer-video-call {
+    background: rgba(0, 0, 0, 0.95) !important;
+    -webkit-backdrop-filter: none !important;
+    backdrop-filter: none !important;
+}
+html.is-ios .vc-btn,
+html.is-ios .vidcall-btn {
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2) !important;
+}
+
+/* ============================================================
+   15. 线下模式自定义CSS兼容
+   当用户设置了自定义线下CSS时，允许其 backdrop-filter 生效
+   ============================================================ */
+html.is-ios body.has-custom-offline-css .offline-fixed-header,
+html.is-ios body.has-custom-offline-css .offline-info-bar,
+html.is-ios body.has-custom-offline-css .offline-msg-box,
+html.is-ios body.has-custom-offline-css .offline-input-bar,
+html.is-ios body.has-custom-offline-css #chat-history.offline-chat-active,
+html.is-ios body.has-custom-offline-css .bubble.offline-text-block,
+html.is-ios body.has-custom-offline-css #layer-offline-mode,
+html.is-ios body.has-custom-offline-css #layer-offline-mode * {
+    -webkit-backdrop-filter: unset !important;
+    backdrop-filter: unset !important;
+}
+
+/* ============================================================
+   16. [FIX-iOS卡顿-2026-04-12] iOS 返回键卡顿 & 一般性卡顿优化
+   ============================================================ */
+
+/* 16a+16b 已合并到第 7 节（0.18s + will-change:transform） */
+
+/* 16c. 返回按钮 / 关闭按钮消除 iOS 300ms 点击延迟
+   touch-action:manipulation 告诉浏览器不需要等待双击缩放判定 */
+html.is-ios .nav-icon,
+html.is-ios .sln-back,
+html.is-ios .sdt-back,
+html.is-ios .offline-nav-icon,
+html.is-ios [onclick*="closeLayer"],
+html.is-ios [onclick*="goBack"],
+html.is-ios [onclick*="GoBack"],
+html.is-ios [onclick*="exitApp"] {
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: transparent;
+}
+
+/* ============================================================
+   17. [FIX-iOS弹窗] 关系网弹窗禁用动画，避免innerHTML后GPU合成层问题
+   ============================================================ */
+html.is-ios .rn-form-overlay,
+html.is-ios .rn-card-overlay,
+html.is-ios .rn-link-overlay {
+    animation: none !important;
+}
+html.is-ios .rn-form-panel,
+html.is-ios .rn-card-panel,
+html.is-ios .rn-link-panel {
+    animation: none !important;
+}
+
+/* ============================================================
+   18. [FIX-iOS点击] list-item / modal按钮消除300ms点击延迟
+   ============================================================ */
+html.is-ios .list-item {
+    touch-action: manipulation !important;
+    -webkit-tap-highlight-color: transparent;
+    cursor: pointer;
+}
+html.is-ios .modal-mask .modal-box button {
+    touch-action: manipulation !important;
+    -webkit-tap-highlight-color: transparent;
+}
+html.is-ios .modal-mask {
+    touch-action: manipulation !important;
+}
+
+/* ============================================================
+   19. [FIX-iOS发烫-2026-04-19] 心声弹窗性能补强（用户肉眼无变化）
+   ------------------------------------------------------------
+   19a. 心声/历史/编辑弹窗在 iOS 下强制关闭 backdrop-filter
+        — korean 主题这几个弹窗仍保留 blur+saturate，是 iOS GPU 热点。
+          关闭后背景仍然是半透明玻璃色（来自 --kr-glass-ultra），
+          但不再实时高斯模糊，用户视觉几乎察觉不到差异，GPU 温度明显下降。
+   ============================================================ */
+html.is-ios #modal-thought .modal-box,
+html.is-ios #modal-heart-history .modal-box,
+html.is-ios #modal-heart-edit .modal-box,
+html.is-ios body.theme-korean #modal-thought .modal-box,
+html.is-ios body.theme-korean #modal-heart-history .modal-box,
+html.is-ios body.theme-korean #modal-heart-edit .modal-box {
+    -webkit-backdrop-filter: none !important;
+    backdrop-filter: none !important;
+}
+
+/* 19b. 心声正文滚动区独立 containment（不影响视觉，只影响重绘范围） */
+html.is-ios #modal-thought .heart-popup-body,
+html.is-ios #modal-heart-history .hh-body,
+html.is-ios #modal-heart-edit .modal-box {
+    contain: content;
+}
+
+/* 19c. 打开的 modal-box 不需要常驻 GPU 层（无动画期间 will-change 属 auto） */
+html.is-ios .modal-mask .modal-box {
+    will-change: auto !important;
+}
+
+/* 19d. 隐藏中的弹窗释放 GPU 合成层（仅命中 display:none 的 mask，
+        打开时使用 display:flex/block 不命中本规则） */
+html.is-ios .modal-mask[style*="display: none"],
+html.is-ios .modal-mask[style*="display:none"] {
+    content-visibility: hidden;
+    contain: strict;
+}
+
+/* ============================================================
+   20. 统一弹窗/卡片 backdrop-filter 禁用（扩大白名单）
+   ============================================================
+   [FIX-2026-05-12-v3] 删除所有 [class*=] 属性选择器，改为具体 class。
+   遗漏的元素由 JS _iosBlurCleanup() 添加 .ios-no-blur 兜底。
+   ============================================================ */
+html.is-ios .modal-mask,
+html.is-ios .modal-mask .modal-box,
+html.is-ios .pp-modal,
+html.is-ios .pp-settings-modal,
+html.is-ios .pp-overlay,
+html.is-ios .pp-custom-blog,
+html.is-ios .action-sheet,
+html.is-ios .confirm-modal,
+html.is-ios .alert-modal,
+html.is-ios .ff-create-menu-overlay,
+html.is-ios .gacha-overlay,
+html.is-ios .heart-popup,
+html.is-ios .offline-page-bg,
+html.is-ios .chat-search-panel,
+html.is-ios .sv-complete-overlay {
+    -webkit-backdrop-filter: none !important;
+    backdrop-filter: none !important;
+}
+
+/* 21. 中断按钮：线下生成期间可见，触发 abortOfflineGeneration() */
+html.is-ios #offline-abort-btn {
+    will-change: auto !important;
+}
+
+/* 22. 虚拟列表容器优化（长聊天列表） */
+html.is-ios #chat-history,
+html.is-ios #offline-chat-history {
+    content-visibility: auto;
+    contain: layout style;
+}
+
+/* 23. 消息行 contain 优化：隔离每条消息的 reflow 影响范围
+       使 iOS 在长列表上的触摸命中和滚动表现更流畅 */
+html.is-ios #chat-history .msg-row,
+html.is-ios #offline-chat-history .msg-row {
+    contain: layout style;
+}
+
+/* ============================================================
+   24. [FIX-美化卡顿-2026-05-04] 韩系主题：全面覆盖非聊天页面 backdrop-filter
+   ============================================================
+   用户反馈使用美化（尤其韩系主题）后严重卡顿。根因：
+   korean-theme.css 共有 80+ 个 backdrop-filter: blur() 声明，
+   之前的 ios-perf.css 只覆盖了聊天页面约 20 个元素。
+   其余 60+ 个 blur 仍在各页面持续消耗 GPU（每帧实时高斯模糊）。
+   本次补全所有遗漏的页面元素。
+   ============================================================ */
+
+/* 24a. 设置/美化页面 */
+html.is-ios body.theme-korean #layer-settings > .nav-bar,
+html.is-ios body.theme-korean #layer-settings .group-box,
+html.is-ios body.theme-korean #layer-settings .settings-subpage,
+html.is-ios body.theme-korean #layer-settings .settings-nav-bar,
+html.is-ios body.theme-korean #layer-beauty > .nav-bar,
+html.is-ios body.theme-korean #layer-beauty .group-box,
+html.is-ios body.theme-korean #layer-beauty .beauty-subpage,
+html.is-ios body.theme-korean #layer-beauty .beauty-menu-item {
+    -webkit-backdrop-filter: none !important;
+    backdrop-filter: none !important;
+}
+
+/* 24b. 精灵系统 */
+html.is-ios body.theme-korean .spirit-card,
+html.is-ios body.theme-korean .spirit-list-nav,
+html.is-ios body.theme-korean .spirit-detail-topbar,
+html.is-ios body.theme-korean .spirit-detail-nav,
+html.is-ios body.theme-korean .spirit-detail-section,
+html.is-ios body.theme-korean .spirit-action-btn,
+html.is-ios body.theme-korean .sln-card,
+html.is-ios body.theme-korean .sdt-section {
+    -webkit-backdrop-filter: none !important;
+    backdrop-filter: none !important;
+}
+
+/* 24c. 朋友圈/状态 */
+html.is-ios body.theme-korean #tab-moments > .nav-bar,
+html.is-ios body.theme-korean .status-nav-bar,
+html.is-ios body.theme-korean .status-mood-bar,
+html.is-ios body.theme-korean .status-bubble,
+html.is-ios body.theme-korean .status-vital-card,
+html.is-ios body.theme-korean .status-detail-panel,
+html.is-ios body.theme-korean .moments-post-card {
+    -webkit-backdrop-filter: none !important;
+    backdrop-filter: none !important;
+}
+
+/* 24d. 情侣空间/日历/账本 */
+html.is-ios body.theme-korean .couple-module-card,
+html.is-ios body.theme-korean .couple-detail-nav,
+html.is-ios body.theme-korean .couple-detail-section,
+html.is-ios body.theme-korean .ca-top-bar,
+html.is-ios body.theme-korean .cl-top-bar,
+html.is-ios body.theme-korean .cl-card {
+    -webkit-backdrop-filter: none !important;
+    backdrop-filter: none !important;
+}
+
+/* 24e. 桌面/底部导航 */
+html.is-ios body.theme-korean .bottom-nav,
+html.is-ios body.theme-korean #desktop,
+html.is-ios body.theme-korean .dock-bar {
+    -webkit-backdrop-filter: none !important;
+    backdrop-filter: none !important;
+}
+
+/* 24f. 商店/外卖/骑手 */
+html.is-ios body.theme-korean #layer-shop > .nav-bar,
+html.is-ios body.theme-korean .shop-tab-bar,
+html.is-ios body.theme-korean .shop-product-card,
+html.is-ios body.theme-korean .food-nav,
+html.is-ios body.theme-korean .food-category-bar,
+html.is-ios body.theme-korean .rider-nav {
+    -webkit-backdrop-filter: none !important;
+    backdrop-filter: none !important;
+}
+
+/* 24g. 同人/书店/论坛 */
+html.is-ios body.theme-korean .ff-header2,
+html.is-ios body.theme-korean .ff-bottom-bar2,
+html.is-ios body.theme-korean .ff-read-header,
+html.is-ios body.theme-korean .ff-write-header,
+html.is-ios body.theme-korean .ff-book-detail-header,
+html.is-ios body.theme-korean .forum-nav,
+html.is-ios body.theme-korean .forum-dm-input-bar {
+    -webkit-backdrop-filter: none !important;
+    backdrop-filter: none !important;
+}
+
+/* 24h. 学习/日程/世界书 */
+html.is-ios body.theme-korean #layer-study > .nav-bar,
+html.is-ios body.theme-korean #layer-schedule > .nav-bar,
+html.is-ios body.theme-korean #layer-worldbook > .nav-bar,
+html.is-ios body.theme-korean .study-lecture-card,
+html.is-ios body.theme-korean .wb-card {
+    -webkit-backdrop-filter: none !important;
+    backdrop-filter: none !important;
+}
+
+/* 24i. 线下模式 */
+html.is-ios body.theme-korean:not(.has-custom-offline-css) .offline-fixed-header,
+html.is-ios body.theme-korean:not(.has-custom-offline-css) .offline-info-bar,
+html.is-ios body.theme-korean:not(.has-custom-offline-css) .offline-input-bar,
+html.is-ios body.theme-korean:not(.has-custom-offline-css) .offline-msg-box {
+    -webkit-backdrop-filter: none !important;
+    backdrop-filter: none !important;
+}
+
+/* 24j. 关系网/相册/直播/游戏等 */
+html.is-ios body.theme-korean .rn-form-panel,
+html.is-ios body.theme-korean .rn-card-panel,
+html.is-ios body.theme-korean .rn-link-panel,
+html.is-ios body.theme-korean #layer-photo-album > .nav-bar,
+html.is-ios body.theme-korean #layer-live > .nav-bar,
+html.is-ios body.theme-korean #layer-games > .nav-bar,
+html.is-ios body.theme-korean .dating-card,
+html.is-ios body.theme-korean .dating-nav,
+html.is-ios body.theme-korean .dating-settings-overlay {
+    -webkit-backdrop-filter: none !important;
+    backdrop-filter: none !important;
+}
+
+/* 24k. 钱包/红包/票务 */
+html.is-ios body.theme-korean #layer-wallet > .nav-bar,
+html.is-ios body.theme-korean .redpacket-overlay,
+html.is-ios body.theme-korean .ticket-card,
+html.is-ios body.theme-korean .ticket-nav {
+    -webkit-backdrop-filter: none !important;
+    backdrop-filter: none !important;
+}
+
+/* 24l. 韩系主题：终极通杀 — 对所有layer内的nav-bar和group-box禁用blur */
+html.is-ios body.theme-korean .layer > .nav-bar,
+html.is-ios body.theme-korean .layer .group-box,
+html.is-ios body.theme-korean .layer .nav-bar {
+    -webkit-backdrop-filter: none !important;
+    backdrop-filter: none !important;
+}
+
+/* ============================================================
+   25. [FIX-美化卡顿-2026-05-04] 可爱主题 box-shadow 简化
+   ============================================================
+   cute-theme.css 含 98 个 box-shadow 声明，多为多层阴影。
+   在 iOS 上，大量 box-shadow 在滚动期间触发 compositing，
+   导致帧率下降。简化为单层轻量阴影。
+   ============================================================ */
+
+/* 25a. 可爱主题聊天气泡 */
+html.is-ios body.theme-cute:not(.has-custom-bubble-css) #layer-chat .bubble {
+    box-shadow: 0 1px 3px rgba(200,190,210,0.15) !important;
+    transition: none !important;
+}
+html.is-ios body.theme-cute:not(.has-custom-bubble-css) #layer-chat .bubble:active {
+    transform: none !important;
+}
+
+/* 25b. 可爱主题导航栏/输入栏 — 禁用 blur */
+html.is-ios body.theme-cute #layer-chat > .nav-bar#chat-nav-bar,
+html.is-ios body.theme-cute #chat-input-bar,
+html.is-ios body.theme-cute #layer-chat .input-bar,
+html.is-ios body.theme-cute #layer-chat .toolbar {
+    -webkit-backdrop-filter: none !important;
+    backdrop-filter: none !important;
+    background: var(--chat-nav-bg, #ffffff) !important;
+    opacity: 1 !important;
+}
+
+/* 25c. 可爱主题所有 nav-bar 简化阴影 */
+html.is-ios body.theme-cute .nav-bar {
+    box-shadow: 0 1px 3px rgba(200,190,210,0.12) !important;
+    -webkit-backdrop-filter: none !important;
+    backdrop-filter: none !important;
+}
+
+/* 25d. 可爱主题卡片/弹窗阴影简化 */
+html.is-ios body.theme-cute .group-box,
+html.is-ios body.theme-cute .spirit-card,
+html.is-ios body.theme-cute .modal-box,
+html.is-ios body.theme-cute .couple-module-card,
+html.is-ios body.theme-cute .dating-card,
+html.is-ios body.theme-cute .list-item,
+html.is-ios body.theme-cute .status-bubble,
+html.is-ios body.theme-cute .status-vital-card {
+    box-shadow: 0 1px 4px rgba(200,190,210,0.12) !important;
+}
+
+/* ============================================================
+   26. [FIX-美化卡顿-2026-05-04] 自定义CSS性能兜底
+   ============================================================
+   用户导入的美化包可能含大量 backdrop-filter / box-shadow / animation。
+   在 iOS 上通过 .has-custom-*-css 类自动降级。
+   ============================================================ */
+
+/* 26a. 自定义全局CSS时，降级非聊天页面的blur */
+html.is-ios body.has-custom-global-css .nav-bar,
+html.is-ios body.has-custom-global-css .bottom-nav,
+html.is-ios body.has-custom-global-css .modal-box,
+html.is-ios body.has-custom-global-css .group-box {
+    -webkit-backdrop-filter: none !important;
+    backdrop-filter: none !important;
+}
+
+/* 26b. 自定义气泡CSS时，聊天页面transition禁用 */
+html.is-ios body.has-custom-bubble-css #layer-chat .bubble {
+    transition: none !important;
+}
+
+/* ============================================================
+   27. [PERF-Overhaul] 生成模式性能优化
+   AI生成消息期间，禁用非必要的动画和transition，
+   减少DOM重排时的GPU/CPU开销
+   ============================================================ */
+
+/* [FIX-2026-05-12-v2] 生成模式下：对聊天容器设置 contain，子元素通过继承禁用动画 */
+body.generating-mode #chat-history {
+    transition: none !important;
+}
+body.generating-mode #chat-history .bubble,
+body.generating-mode #chat-history .msg-row,
+body.generating-mode #chat-history .avatar,
+body.generating-mode #chat-history .bubble-reply-quote {
+    transition: none !important;
+    animation-duration: 0.01ms !important;
+}
+
+/* 生成模式下：聊天容器启用contain优化 */
+body.generating-mode #chat-history {
+    contain: layout style;
+    will-change: scroll-position;
+}
+
+/* 生成模式下：消息气泡禁用box-shadow动画 */
+body.generating-mode .bubble {
+    transition: none !important;
+}
+
+/* 虚拟滚动spacer不参与布局计算 */
+.vs-spacer-top, .vs-spacer-bottom {
+    contain: strict;
+}
+
+/* [FIX-2026-05-12-v2] 低性能模式：不再用 * 通配，针对具体元素降级 */
+body.low-perf-mode .bubble,
+body.low-perf-mode .msg-row,
+body.low-perf-mode .nav-bar,
+body.low-perf-mode .input-bar,
+body.low-perf-mode .toolbar,
+body.low-perf-mode .list-item,
+body.low-perf-mode .avatar,
+body.low-perf-mode .spirit-card,
+body.low-perf-mode .modal-box,
+body.low-perf-mode .bottom-nav {
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+}
+body.low-perf-mode .bubble,
+body.low-perf-mode .msg-row {
+    box-shadow: none !important;
+}
+body.low-perf-mode img:not(.avatar-img) {
+    image-rendering: optimizeSpeed;
+}
+
+/* ============================================================
+   28. [FIX-iOS发热-2026-05-12] 壁纸模式 backdrop-filter 全面禁用
+   ============================================================
+   styles.css 中壁纸模式(.gwp-*)的导航栏/底部栏使用 blur(10px~20px)，
+   之前的通配选择器未覆盖到这些元素。壁纸模式下 blur 叠加背景图片
+   导致 iOS GPU 每帧都要对大面积图片做高斯模糊采样，是发热主因之一。
+   ============================================================ */
+
+/* 28a. 壁纸模式导航栏 */
+html.is-ios .gwp-nav-bar,
+html.is-ios .gwp-bottom-bar,
+html.is-ios .gwp-header {
+    -webkit-backdrop-filter: none !important;
+    backdrop-filter: none !important;
+}
+
+/* 28b. 壁纸模式下的通用导航栏/底部栏 blur 覆盖
+   styles.css 第15964-15976行定义了带 blur 的导航栏样式 */
+html.is-ios body.has-wallpaper .nav-bar,
+html.is-ios body.wallpaper-active .nav-bar,
+html.is-ios body.has-wallpaper .bottom-nav,
+html.is-ios body.wallpaper-active .bottom-nav,
+html.is-ios body.has-wallpaper .bottom-nav {
+    -webkit-backdrop-filter: none !important;
+    backdrop-filter: none !important;
+    background: #f8f8f8 !important;
+    opacity: 1 !important;
+}
+
+/* ============================================================
+   29. [FIX-iOS发热-2026-05-12] 听歌/音乐面板 backdrop-filter 禁用
+   ============================================================
+   styles.css 第4375/4536/4555行：听歌面板使用 blur(12px~20px)
+   这些面板在后台播放时仍然保持 DOM 存在，持续消耗 GPU。
+   ============================================================ */
+html.is-ios .listen-panel,
+html.is-ios .listen-mini-player,
+html.is-ios .listen-playlist-panel,
+html.is-ios .listen-header,
+html.is-ios .listen-nav {
+    -webkit-backdrop-filter: none !important;
+    backdrop-filter: none !important;
+}
+
+/* 听歌面板用深色半透明替代 blur */
+html.is-ios .listen-panel {
+    background: rgba(18, 18, 18, 0.96) !important;
+}
+html.is-ios .listen-mini-player {
+    background: rgba(20, 20, 20, 0.92) !important;
+}
+html.is-ios .listen-playlist-panel {
+    background: rgba(30, 30, 30, 0.98) !important;
+}
+
+/* ============================================================
+   30. [FIX-iOS发热-2026-05-12] 状态/心情页面 backdrop-filter 禁用
+   ============================================================
+   styles.css 第5991-6365行：状态气泡、状态详情面板大量 blur(8px~18px)
+   ============================================================ */
+html.is-ios .status-bubble,
+html.is-ios .status-vital-card,
+html.is-ios .status-detail-panel,
+html.is-ios .status-nav-bar,
+html.is-ios .status-mood-bar {
+    -webkit-backdrop-filter: none !important;
+    backdrop-filter: none !important;
+}
+
+/* ============================================================
+   31. [FIX-iOS发热-2026-05-12] 企鹅视频相关 backdrop-filter 禁用
+   ============================================================
+   styles.css 第11088-11377行：视频播放器控件使用 blur(10px~12px)
+   ============================================================ */
+html.is-ios .p2-player-controls,
+html.is-ios .p2-nav-bar,
+html.is-ios .p2-comment-bar,
+html.is-ios .p2-header,
+html.is-ios .p2-bottom-bar {
+    -webkit-backdrop-filter: none !important;
+    backdrop-filter: none !important;
+}
+
+/* ============================================================
+   32. [FIX-iOS发热-2026-05-12] UNO游戏/桌游 backdrop-filter 禁用
+   ============================================================
+   styles.css 第9764-10234行：UNO游戏界面大量 blur(6px~10px)
+   ============================================================ */
+html.is-ios .uno-seat-bar,
+html.is-ios .uno-hand-area,
+html.is-ios .uno-overlay,
+html.is-ios .uno-result-overlay,
+html.is-ios .uno-card-area,
+html.is-ios .uno-header {
+    -webkit-backdrop-filter: none !important;
+    backdrop-filter: none !important;
+}
+
+/* ============================================================
+   33. [FIX-iOS发热-2026-05-12] 扭蛋/抽卡通知 backdrop-filter 禁用
+   ============================================================ */
+html.is-ios .gacha-notify-inner,
+html.is-ios .gacha-filter-bar,
+html.is-ios .gacha-overlay,
+html.is-ios .gacha-result-panel,
+html.is-ios .gacha-header {
+    -webkit-backdrop-filter: none !important;
+    backdrop-filter: none !important;
+}
+
+/* ============================================================
+   34. [FIX-iOS发热-2026-05-12] 成就系统弹窗 backdrop-filter 禁用
+   ============================================================ */
+html.is-ios .ach-overlay,
+html.is-ios .ach-card,
+html.is-ios .ach-popup,
+html.is-ios .ach-header {
+    -webkit-backdrop-filter: none !important;
+    backdrop-filter: none !important;
+}
+
+/* ============================================================
+   35. [FIX-iOS发热-2026-05-12] 同人系统底部栏/创建菜单 blur 禁用
+   ============================================================ */
+html.is-ios .ff-bottom-bar2,
+html.is-ios .ff-cmenu-bg,
+html.is-ios .ff-mine-abtn,
+html.is-ios .ff-header2,
+html.is-ios .ff-read-header,
+html.is-ios .ff-write-header,
+html.is-ios .ff-book-detail-header,
+html.is-ios .sv-header-action-btn,
+html.is-ios .sv-complete-overlay {
+    -webkit-backdrop-filter: none !important;
+    backdrop-filter: none !important;
+}
+
+/* ============================================================
+   36. [FIX-iOS发热-2026-05-12-v3] iOS 上全局禁用 backdrop-filter
+   ============================================================
+   [FIX-2026-05-12-v3] 彻底删除所有 [class*="xxx"] 属性选择器。
+   属性选择器是 iOS WebKit 样式重计算的性能杀手：每次 DOM 变化
+   都要对所有元素做字符串匹配，复杂度 O(n*m)。
+   改为只列举具体 class 名。遗漏的元素通过 JS 在 DOMContentLoaded
+   时统一添加 .ios-no-blur class 兜底（见 perf-utils.js）。
+   ============================================================ */
+html.is-ios .nav-bar,
+html.is-ios .input-bar,
+html.is-ios .toolbar,
+html.is-ios .bottom-nav,
+html.is-ios .modal-box,
+html.is-ios .modal-mask,
+html.is-ios .pop-menu,
+html.is-ios .pop-opt,
+html.is-ios .wx-tab-bar,
+html.is-ios .dock-bar,
+html.is-ios .action-sheet,
+html.is-ios .heart-popup,
+html.is-ios .chat-search-panel,
+html.is-ios .offline-fixed-header,
+html.is-ios .offline-info-bar,
+html.is-ios .offline-input-bar,
+html.is-ios .spirit-card,
+html.is-ios .spirit-list-nav,
+html.is-ios .spirit-detail-topbar,
+html.is-ios .spirit-detail-nav,
+html.is-ios .couple-module-card,
+html.is-ios .couple-detail-nav,
+html.is-ios .dating-card,
+html.is-ios .dating-nav,
+html.is-ios .listen-panel,
+html.is-ios .listen-mini-player,
+html.is-ios .listen-playlist-panel,
+html.is-ios .gacha-overlay,
+html.is-ios .gacha-notify-inner,
+html.is-ios .gacha-filter-bar,
+html.is-ios .sv-complete-overlay,
+html.is-ios .ff-cmenu-bg,
+html.is-ios .ff-create-menu-overlay,
+html.is-ios .rn-form-overlay,
+html.is-ios .rn-card-overlay,
+html.is-ios .rn-link-overlay,
+html.is-ios .dating-settings-overlay,
+html.is-ios .confirm-modal,
+html.is-ios .alert-modal,
+html.is-ios .pp-modal,
+html.is-ios .pp-settings-modal,
+html.is-ios .pp-overlay,
+html.is-ios .pp-custom-blog,
+html.is-ios .gwp-nav-bar,
+html.is-ios .status-bubble,
+html.is-ios .status-vital-card,
+html.is-ios .status-detail-panel,
+html.is-ios .status-nav-bar,
+html.is-ios .status-mood-bar,
+html.is-ios .p2-player-controls,
+html.is-ios .p2-nav-bar,
+html.is-ios .p2-comment-bar,
+html.is-ios .uno-seat-bar,
+html.is-ios .uno-hand-area,
+html.is-ios .uno-overlay,
+html.is-ios .uno-result-overlay,
+html.is-ios .ach-overlay,
+html.is-ios .ach-card,
+html.is-ios .ff-header2,
+html.is-ios .ff-bottom-bar2,
+html.is-ios .ff-read-header,
+html.is-ios .ff-write-header,
+html.is-ios .ff-book-detail-header,
+html.is-ios .forum-nav,
+html.is-ios .forum-dm-input-bar,
+html.is-ios .redpacket-overlay,
+html.is-ios .layer > .nav-bar,
+html.is-ios .layer .group-box,
+html.is-ios .layer .nav-bar,
+html.is-ios .ios-no-blur {
+    -webkit-backdrop-filter: none !important;
+    backdrop-filter: none !important;
+}
+
+/* ============================================================
+   37. [FIX-iOS发热-2026-05-12] 禁用不可见 layer 内的 infinite 动画
+   ============================================================
+   CSS @keyframes 动画即使元素不可见，只要 animation 属性存在且
+   元素在 DOM 中，iOS WebKit 仍会计算动画帧（不同于 Chrome 的优化）。
+   
+   对所有未显示的 layer 内的元素强制禁用动画。
+   ============================================================ */
+/* [FIX-2026-05-12-v2] 不再用 * 通配子元素（触发全量样式重计算）。
+   对父 layer 设置 visibility:hidden 后，WebKit 自动暂停子元素动画。
+   contain:strict 隔离重绘范围，pointer-events:none 防止误触。 */
+html.is-ios .layer:not(.show) {
+    animation: none !important;
+    transition: none !important;
+    visibility: hidden;
+    pointer-events: none;
+    contain: strict;
+}
+
+/* 桌面上的持续动画也需要在非活跃时禁用 */
+/* [FIX-2026-05-12-v3] 删除 [class*=] 通配，改为具体 class */
+html.is-ios .layer.show .float-anim,
+html.is-ios .layer.show .pulse-anim,
+html.is-ios .layer.show .breathe-anim,
+html.is-ios .layer.show .glow-anim,
+html.is-ios .layer.show .slh-bubbles span,
+html.is-ios .layer.show .sln-title-icon {
+    animation-duration: 4s !important;
+    animation-timing-function: linear !important;
+}
+
+/* ============================================================
+   38. [FIX-iOS发热-2026-05-12] 减少 box-shadow 复杂度
+   ============================================================
+   [FIX-2026-05-12-v2] 删除了 .scroll-y * 通配规则。
+   该规则给所有子元素（包括 span/p/br 等行内元素）加 box-shadow，
+   导致 iOS 上出现大量"长条条"视觉 bug，且是性能杀手。
+   改为只针对具体的卡片/列表项元素简化阴影。
+   ============================================================ */
+html.is-ios .scroll-y .spirit-card,
+html.is-ios .scroll-y .game-card,
+html.is-ios .scroll-y .shop-card,
+html.is-ios .scroll-y .forum-post-card,
+html.is-ios .scroll-y .ff-scard2,
+html.is-ios .scroll-y .sv-task-card,
+html.is-ios .scroll-y .couple-module-card,
+html.is-ios .scroll-y .list-item,
+html.is-ios .scroll-y .msg-row .bubble,
+html.is-ios .scroll-y .moments-post-card,
+html.is-ios .scroll-y .dating-card,
+html.is-ios .scroll-y .status-bubble {
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08) !important;
+}
+
+/* ============================================================
+   39. [FIX-iOS发热-2026-05-12] 快速滚动时禁用所有视觉特效
+   ============================================================
+   由 JS 在快速滚动时添加 .ios-fast-scroll class 到 body
+   ============================================================ */
+/* [FIX-2026-05-12-v2] 不再用 * 通配（性能反模式）。
+   快速滚动时只对滚动容器本身和直接子卡片降级即可。 */
+html.is-ios body.ios-fast-scroll .scroll-y,
+html.is-ios body.ios-fast-scroll #chat-history,
+html.is-ios body.ios-fast-scroll #offline-chat-history,
+html.is-ios body.ios-fast-scroll #moments-feed,
+html.is-ios body.ios-fast-scroll #contact-list {
+    transition: none !important;
+}
+html.is-ios body.ios-fast-scroll .bubble,
+html.is-ios body.ios-fast-scroll .msg-row,
+html.is-ios body.ios-fast-scroll .list-item,
+html.is-ios body.ios-fast-scroll .spirit-card,
+html.is-ios body.ios-fast-scroll .moments-post-card,
+html.is-ios body.ios-fast-scroll .avatar {
+    box-shadow: none !important;
+    text-shadow: none !important;
+    filter: none !important;
+    transition: none !important;
+}
+
+/* ============================================================
+   40. [FIX-iOS发热-2026-05-12] contain 优化：隔离重绘范围
+   ============================================================ */
+
+/* 所有滚动容器启用 content-visibility: auto 减少离屏渲染 */
+html.is-ios .scroll-y,
+html.is-ios #chat-history,
+html.is-ios #offline-chat-history,
+html.is-ios #moments-feed,
+html.is-ios #contact-list,
+html.is-ios .ff-body,
+html.is-ios .ff-body2 {
+    content-visibility: auto;
+    contain-intrinsic-size: auto 500px;
+}
+
+/* 卡片类元素启用 contain: layout style paint 隔离重绘 */
+html.is-ios .spirit-card,
+html.is-ios .game-card,
+html.is-ios .shop-card,
+html.is-ios .forum-post-card,
+html.is-ios .ff-scard2,
+html.is-ios .sv-task-card,
+html.is-ios .couple-module-card {
+    contain: layout style paint;
+}
+
+/* ============================================================
+   41. [FIX-iOS聊天卡顿-2026-05-12] 聊天 layer 进入/退出动画优化
+   ============================================================
+   问题：iOS 上 layer 滑入/滑出动画期间，如果 chat-history 内有大量 DOM，
+   WebKit 需要为整个子树创建合成层快照，导致动画首帧严重掉帧。
+   
+   解决：
+   1. 聊天 layer 使用更短的动画时长（0.2s vs 0.28s）
+   2. 动画期间 chat-history 使用 contain:strict 隔离，不参与合成
+   3. 退出动画使用 translateX(100%) 而非默认值，确保 GPU 只移动一个合成层
+   ============================================================ */
+
+/* 聊天layer专用：已合并到通用 .layer 规则（0.18s），不再需要单独声明 */
+
+/* 聊天layer滑入时，内容区域不参与动画合成（减少合成层大小） */
+html.is-ios #layer-chat.show #chat-history {
+    will-change: auto;
+}
+
+/* 聊天layer退出时（不含show），内容完全隔离 */
+html.is-ios #layer-chat:not(.show) #chat-history {
+    contain: strict;
+    content-visibility: hidden;
+}
+
+/* ============================================================
+   42. [FIX-iOS层级错乱-2026-05-12] 键盘收起后确保正确的层级堆叠
+   ============================================================
+   问题：键盘收起时 restoreLayerHeights 清除所有 inline z-index，
+   导致多个 .layer.show 的 z-index 都回到 CSS 默认的 5000，
+   此时 DOM 顺序决定堆叠，但如果线下模式 layer 在 DOM 中靠后，
+   它会覆盖线上聊天界面。
+   
+   解决：使用 CSS 确保 layer-chat 在有 offline-chat-active 时
+   z-index 低于没有该 class 的 layer.show
+   ============================================================ */
+
+/* 线下模式激活时，确保线下相关UI在正确层级 */
+html.is-ios #layer-chat.show {
+    z-index: 5000;
+}
+
+/* 任何在 layer-chat 之后打开的 layer 都应该在其上方 */
+html.is-ios #layer-chat.show ~ .layer.show {
+    z-index: 5010 !important;
+}
+
+/* ============================================================
+   [FIX-iOS键盘-2026-05-18-v8] iOS 键盘弹起/收起流畅优化
+   ============================================================
+   核心原则：
+   1. iOS 上 layer 始终 position:fixed，绝不跳变 absolute↔fixed
+   2. 键盘弹出时用 padding-bottom 挤压 flex 空间（GPU无reflow）
+   3. 收键盘时用 padding-bottom 过渡（而非 height，因为 auto 无法动画）
+   4. 不用 visibility:hidden 隐藏底层 layer（会闪白），改用背景色全覆盖
+   ============================================================ */
+
+/* iOS layer 默认 fixed 定位（非键盘状态下全屏） */
+html.is-ios .layer {
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    bottom: 0 !important;
+    height: auto !important;
+    width: 100% !important;
+}
+
+/* [FIX-iOS定位统一-v8] 覆盖 styles-part3.css 中 #layer-chat.show 的 position:absolute
+   ID选择器优先级高于 .layer 的 class 选择器，必须用 ID 级别覆盖 */
+html.is-ios #layer-chat.show,
+html.is-ios #layer-offline-mode.show {
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    bottom: 0 !important;
+    height: auto !important;
+    width: 100% !important;
+}
+
+/* [FIX-键盘贴合-v4] iOS 键盘 layer 定位已由 styles-part3.css 统一处理：
+   html.keyboard-active .layer.show { top: var(--vv-offset-top); height: var(--vv-height); }
+   这里仅保留 iOS Safari 特有的 html/body 锁定（防止 Safari 推页面时整体偏移）
+   以及其他 layer（非聊天/线下）的 iOS 键盘适配。 */
+
+/* [FIX-键盘贴合-v4] iOS 上所有 .layer.show 在键盘弹出时都使用精确视口定位 */
+html.is-ios.keyboard-active .layer.show {
+    position: fixed !important;
+    top: var(--vv-offset-top, 0px) !important;
+    left: 0 !important;
+    right: 0 !important;
+    bottom: auto !important;
+    height: var(--vv-height, 100%) !important;
+    min-height: 0 !important;
+    overflow: hidden !important;
+    padding-bottom: 0 !important;
+    box-sizing: border-box !important;
+}
+
+/* [FIX-iOS飞天-v9] 键盘弹出时固定 html/body，阻止 Safari 推页面。
+   必须设置 top:0;left:0 防止 Safari 已经 scroll 导致的偏移被锁定。 */
+html.is-ios.keyboard-active {
+    overflow: hidden !important;
+    position: fixed !important;
+    width: 100% !important;
+    height: 100% !important;
+    top: 0 !important;
+    left: 0 !important;
+}
+html.is-ios.keyboard-active body {
+    overflow: hidden !important;
+    position: fixed !important;
+    width: 100% !important;
+    height: 100% !important;
+    top: 0 !important;
+    left: 0 !important;
+}
+
+/* [FIX-键盘贴合-v4] 键盘弹出时聊天历史 flex 自适应（iOS 高特异性兜底） */
+html.is-ios.keyboard-active #chat-history,
+html.is-ios.keyboard-active #offline-chat-history,
+html.is-ios.keyboard-active .offline-scroll-container {
+    flex: 1 1 0% !important;
+    min-height: 0 !important;
+    overflow-y: auto !important;
+}
+
+/* [FIX-键盘贴合-v4] 收键盘过渡：统一对 height 和 top 做过渡 */
+html.is-ios.keyboard-closing .layer.show {
+    transition: height 0.15s ease-out, top 0.15s ease-out !important;
+}
+
+/* ============================================================
+   43. [FIX-半透明条-2026-05-12] 全局消除半透明背景条
+   ============================================================
+   问题：禁用 backdrop-filter 后，原本依赖 blur 遮盖的 rgba 背景
+   变成了可见的半透明条。解决：所有固定位置的 UI 元素使用完全不透明背景。
+   ============================================================ */
+
+/* 43a. 所有 nav-bar 使用不透明白色背景 */
+html.is-ios .nav-bar {
+    background: var(--nav-bar-bg, #ffffff) !important;
+    opacity: 1 !important;
+}
+
+/* 43b. 所有 input-bar / toolbar 使用不透明背景（悬浮胶囊兼容） */
+html.is-ios .input-bar,
+html.is-ios .toolbar,
+html.is-ios .toolbar .emoji-tab {
+    background: var(--input-bar-bg, rgba(255,255,255,0.98)) !important;
+    opacity: 1 !important;
+}
+
+/* 43c. 弹出菜单使用不透明深色背景 */
+html.is-ios .pop-menu,
+html.is-ios .pop-opt {
+    background: #4c4c4c !important;
+    opacity: 1 !important;
+}
+
+/* 43d. 弹窗遮罩层使用不透明暗色 */
+html.is-ios .modal-mask {
+    background: rgba(0, 0, 0, 0.75) !important;
+}
+html.is-ios .modal-mask .modal-box {
+    background: #ffffff !important;
+    opacity: 1 !important;
+}
+
+/* 43e. 微信 tab 栏 */
+html.is-ios .wx-tab-bar {
+    background: #f7f7f7 !important;
+    opacity: 1 !important;
+}
+
+/* 43f. 线下模式固定栏 */
+html.is-ios .offline-fixed-header,
+html.is-ios .offline-info-bar,
+html.is-ios .offline-input-bar {
+    background: var(--offline-bar-bg, #ffffff) !important;
+    opacity: 1 !important;
+}
+
+/* 43g. 聊天搜索面板 */
+html.is-ios .chat-search-panel {
+    background: #ffffff !important;
+    opacity: 1 !important;
+}
+
+/* 43h. 状态栏/心情栏 */
+html.is-ios .status-nav-bar,
+html.is-ios .status-mood-bar {
+    background: #ffffff !important;
+    opacity: 1 !important;
+}
+
+/* ============================================================
+   44. [FIX-iOS点击卡顿-2026-05-12] 联系人卡片 & 返回按钮零延迟触摸
+   ============================================================
+   问题：iOS上点击联系人卡片进入聊天、点击返回按钮退出聊天有明显卡顿感。
+   根因：
+   1. click事件在touchend后有~80-300ms延迟（即使touch-action:manipulation也不能完全消除）
+   2. 点击时触发的样式重计算与layer动画竞争GPU
+   修复：
+   1. touch-action:manipulation 消除双击等待
+   2. will-change:transform 预创建合成层，点击时无需临时创建
+   3. contain:layout style 隔离重排范围
+   ============================================================ */
+
+/* 44a. 联系人列表项：消除点击延迟（不再用will-change避免GPU内存爆炸） */
+html.is-ios #contact-list .list-item {
+    touch-action: manipulation !important;
+    -webkit-tap-highlight-color: transparent !important;
+    contain: layout style !important;
+    /* [FIX-2026-05-12-v3] 删除 will-change:transform — 每个list-item都创建独立GPU合成层
+       导致iOS GPU内存压力过大，反而造成全局卡顿。contain:layout style 已足够隔离重排 */
+    /* 消除active状态的transition延迟 */
+    transition: background-color 0.05s !important;
+}
+
+/* 44b. 联系人列表项active反馈：立即响应 */
+html.is-ios #contact-list .list-item:active {
+    background-color: #ececec !important;
+    transition: none !important;
+}
+
+/* 44c. 返回按钮：扩大触摸区域（不再预创建合成层） */
+html.is-ios .layer.show > .nav-bar .nav-icon,
+html.is-ios .layer.show > .nav-bar .offline-nav-icon {
+    min-width: 48px !important;
+    min-height: 48px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    touch-action: manipulation !important;
+    -webkit-tap-highlight-color: transparent !important;
+    /* [FIX-2026-05-12-v3] 删除 will-change:opacity — 每个nav-icon都创建合成层无意义
+       返回按钮只在点击瞬间需要动画，不需要常驻GPU层 */
+    transition: opacity 0.05s !important;
+}
+
+/* 44d. 返回按钮active反馈 */
+html.is-ios .layer.show > .nav-bar .nav-icon:active,
+html.is-ios .layer.show > .nav-bar .offline-nav-icon:active {
+    opacity: 0.5 !important;
+    transition: none !important;
+}
+
+/* 44e. layer-chat 打开时：隐藏的聊天历史不参与合成（减少GPU内存压力） */
+html.is-ios #layer-chat:not(.show) #chat-history {
+    content-visibility: hidden !important;
+    contain: strict !important;
+}
+
+/* 44f. layer滑入动画期间：禁止联系人列表的will-change（释放GPU给动画） */
+html.is-ios body.layer-open #contact-list .list-item {
+    will-change: auto !important;
+}
+
+/* ============================================================
+   45. [FIX-iOS情侣联系人不可见-2026-05-15] 确保情侣空间 layer 内容正确布局
+   ============================================================
+   问题：iOS 上 position:fixed 的 .layer 内部 flex 容器高度计算异常，
+   couple-content-area 高度可能为 0，导致 .couple-list-page 被裁切，
+   联系人列表虽存在于 DOM 但完全不可见。
+   
+   解决：强制 couple layer 和内容区域使用正确的 flex 布局，
+   设置 min-height:0 让 flex 子项正确 shrink。
+   ============================================================ */
+html.is-ios #layer-couple.show {
+    display: flex !important;
+    flex-direction: column !important;
+}
+html.is-ios #couple-content-area {
+    flex: 1 !important;
+    overflow-y: auto !important;
+    min-height: 0 !important;
+    display: flex !important;
+    flex-direction: column !important;
+}
+html.is-ios .couple-list-page {
+    flex: 1 !important;
+    overflow-y: auto !important;
+    -webkit-overflow-scrolling: touch !important;
+    min-height: 0 !important;
+}
+
+/* [FIX-iOS键盘透底-v8] 不再用 visibility:hidden 隐藏底层 layer（会导致白色闪烁），
+   当前 layer 已保持全屏覆盖（padding-bottom 挤压方案），底层 layer 自然被遮住。
+   如果 JS 仍设置 data-kb-hidden，仅降低 z-index 使其不干扰，不做可见性切换。 */
+html.is-ios.keyboard-active .layer.show[data-kb-hidden="1"] {
+    z-index: 1 !important;
+    pointer-events: none !important;
+}
+
+/* ============================================================
+   [FIX-iOS键盘背景外露-2026-05-20] iOS 键盘弹出时防止背景外露
+   ============================================================
+   问题：iOS 键盘弹出时 --vv-offset-top 非零，layer 的 top 下移，
+   导致 layer 上方露出底层内容（body/其他layer的背景色），用户看到
+   背景"被顶到b2"的问题。
+   修复：键盘弹出时给 body 和 #device 设置纯色背景遮挡露出的区域。
+   同时确保当前 layer.show 的背景色不透明，完全覆盖。 */
+html.is-ios.keyboard-active body {
+    background-color: #ededed !important;
+}
+html.is-ios.keyboard-active #device {
+    background-color: #ededed !important;
+}
+/* 线下模式layer键盘弹出时确保背景不透明 */
+html.is-ios.keyboard-active #layer-offline-mode.show {
+    background-color: #ededed !important;
+}
+/* 聊天layer键盘弹出时确保背景不透明 */
+html.is-ios.keyboard-active #layer-chat.show {
+    background-color: #ededed !important;
+}
+
+/* [FIX-iOS键盘背景外露-2026-05-20] 额外方案：用 ::before 伪元素在 layer 上方填补空隙
+   当 --vv-offset-top > 0 时，在 layer 上方画一个同色遮罩条 */
+html.is-ios.keyboard-active .layer.show::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: var(--vv-offset-top, 0px);
+    background-color: inherit;
+    z-index: 99999;
+    pointer-events: none;
+}
+
+/* ============================================================
+   50. [FIX-iOS闪退白屏-2026-05-20] 降低内存压力 & 减少 GPU 合成层
+   ============================================================
+   iOS WKWebView 内存上限约 1.5GB，超出后系统直接杀进程导致白屏闪退。
+   以下规则通过多种手段降低内存和 GPU 压力：
+   1. 隐藏 layer 彻底释放渲染资源（display:none 比 visibility:hidden 更彻底）
+   2. 聊天消息使用 content-visibility:auto 实现懒渲染
+   3. 限制图片解码分辨率
+   4. 减少合成层数量
+   ============================================================ */
+
+/* 50a. 未显示的 layer 使用 display:none 彻底释放渲染树
+   visibility:hidden 仍保留渲染树和合成层，display:none 完全移除 */
+html.is-ios .layer:not(.show):not(.closing) {
+    display: none !important;
+}
+
+/* 50b. 聊天消息懒渲染：屏幕外的消息跳过渲染，大幅减少 DOM 渲染开销
+   content-visibility:auto 让浏览器跳过屏幕外元素的布局/绘制
+   contain-intrinsic-size 提供估算高度避免滚动条跳动 */
+html.is-ios #chat-history .msg-row {
+    content-visibility: auto;
+    contain-intrinsic-size: auto 60px;
+}
+
+/* 50c. 线下聊天消息同样懒渲染 */
+html.is-ios .offline-scroll-container .offline-msg-row {
+    content-visibility: auto;
+    contain-intrinsic-size: auto 80px;
+}
+
+/* 50d. 限制图片解码尺寸，防止大图占用过多内存
+   iOS Safari 解码一张 4000x3000 的图片需要 ~48MB 内存 */
+html.is-ios img {
+    image-rendering: auto;
+}
+html.is-ios .msg-row img,
+html.is-ios .bubble img {
+    max-width: 240px !important;
+    max-height: 240px !important;
+    object-fit: cover;
+}
+
+/* 50e. 朋友圈/论坛等列表项也使用 content-visibility 懒渲染 */
+html.is-ios .moments-post-card,
+html.is-ios .forum-post-card,
+html.is-ios .ff-scard2,
+html.is-ios .shop-card {
+    content-visibility: auto;
+    contain-intrinsic-size: auto 200px;
+}
+
+/* 50f. 禁用不必要的 will-change（每个 will-change 创建一个独立合成层）
+   合成层过多会导致 GPU 内存溢出 */
+html.is-ios .bubble,
+html.is-ios .list-item,
+html.is-ios .msg-row,
+html.is-ios .spirit-card,
+html.is-ios .moments-post-card {
+    will-change: auto !important;
+}
+
+/* 50g. 减少复杂渐变和阴影在滚动容器中的开销 */
+html.is-ios .scroll-y {
+    -webkit-transform: translateZ(0);
+    transform: translateZ(0);
+}
+
+/* 50h. 表情包/头像等小图限制尺寸防止超大图渗入 */
+html.is-ios .bubble .sticker-img {
+    max-width: 180px !important;
+    max-height: 180px !important;
+}

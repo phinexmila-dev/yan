@@ -1,0 +1,475 @@
+/* ============================================================
+   styles-reconcile.css — 吵架反思弹窗 / 自动提示条样式
+   色调：温和的米白+粉+浅蓝，低冲突感，减少争执情境下的压迫感
+   ============================================================ */
+
+/* ---------- 弹窗遮罩 ---------- */
+.reconcile-modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(30, 20, 30, 0.45);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 10060;
+    animation: rcFadeIn .24s ease-out;
+}
+
+@keyframes rcFadeIn {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+}
+@keyframes rcSlideUp {
+    from { opacity: 0; transform: translateY(24px) scale(.96); }
+    to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+.reconcile-modal-box {
+    width: 88%;
+    max-width: 420px;
+    max-height: 86vh;
+    background: linear-gradient(180deg, #fdf9f5 0%, #faf2ee 100%);
+    border-radius: 20px;
+    box-shadow: 0 20px 60px rgba(40, 20, 40, .25), 0 0 0 1px rgba(255,255,255,.6) inset;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    animation: rcSlideUp .28s cubic-bezier(.22,.9,.3,1.1);
+}
+
+.reconcile-modal-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 14px 18px 10px;
+    border-bottom: 1px solid rgba(0,0,0,.05);
+}
+.reconcile-modal-title {
+    font-size: 16px;
+    font-weight: 600;
+    color: #5a3e4a;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+}
+.reconcile-modal-title .fas,
+.reconcile-modal-title .fa {
+    color: #d68aa0;
+}
+.reconcile-modal-close {
+    font-size: 24px;
+    line-height: 1;
+    color: #a58898;
+    cursor: pointer;
+    padding: 2px 8px;
+    border-radius: 50%;
+    transition: background .15s;
+}
+.reconcile-modal-close:hover { background: rgba(0,0,0,.05); }
+
+/* [和好反思-设置入口] 右上角齿轮 + 关闭容器 */
+.reconcile-modal-actions {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+}
+.reconcile-modal-setting {
+    font-size: 15px;
+    line-height: 1;
+    color: #a58898;
+    cursor: pointer;
+    padding: 6px 8px;
+    border-radius: 50%;
+    transition: background .15s, color .15s;
+}
+.reconcile-modal-setting:hover { background: rgba(0,0,0,.05); color: #d68aa0; }
+
+/* [和好反思-设置入口] 设置子屏 */
+.reconcile-settings {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+.rc-set-row {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 14px;
+    background: rgba(255,255,255,.65);
+    border: 1px solid rgba(214, 138, 160, .18);
+    border-radius: 14px;
+}
+.rc-set-label { flex: 1; min-width: 0; }
+.rc-set-title {
+    font-size: 14.5px;
+    font-weight: 600;
+    color: #3d2a35;
+    margin-bottom: 6px;
+}
+.rc-set-desc {
+    font-size: 12px;
+    color: #7a6571;
+    line-height: 1.6;
+}
+.rc-switch {
+    position: relative;
+    display: inline-block;
+    width: 44px;
+    height: 24px;
+    flex-shrink: 0;
+}
+.rc-switch input { opacity: 0; width: 0; height: 0; }
+.rc-slider {
+    position: absolute;
+    inset: 0;
+    cursor: pointer;
+    background: #d8d0d4;
+    border-radius: 24px;
+    transition: background .2s;
+}
+.rc-slider::before {
+    content: '';
+    position: absolute;
+    height: 18px;
+    width: 18px;
+    left: 3px;
+    top: 3px;
+    background: #fff;
+    border-radius: 50%;
+    transition: transform .2s;
+    box-shadow: 0 1px 3px rgba(0,0,0,.2);
+}
+.rc-switch input:checked + .rc-slider { background: #d68aa0; }
+.rc-switch input:checked + .rc-slider::before { transform: translateX(20px); }
+
+.reconcile-modal-body {
+    flex: 1;
+    overflow-y: auto;
+    padding: 18px;
+    -webkit-overflow-scrolling: touch;
+}
+
+/* ---------- 步骤 1：介绍 ---------- */
+.reconcile-intro { display: flex; flex-direction: column; gap: 14px; }
+.reconcile-avatar-row {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+    padding: 12px;
+    background: rgba(255,255,255,.65);
+    border-radius: 14px;
+    border: 1px solid rgba(214, 138, 160, .18);
+}
+.reconcile-avatar {
+    width: 54px;
+    height: 54px;
+    border-radius: 50%;
+    object-fit: cover;
+    flex-shrink: 0;
+    background: #eee;
+}
+.reconcile-intro-text { flex: 1; min-width: 0; }
+.reconcile-intro-title {
+    font-size: 15px;
+    font-weight: 600;
+    color: #3d2a35;
+    margin-bottom: 4px;
+}
+.reconcile-intro-desc {
+    font-size: 12.5px;
+    color: #7a6571;
+    line-height: 1.6;
+}
+
+.reconcile-label {
+    font-size: 13px;
+    color: #6d5561;
+    margin-top: 4px;
+}
+.reconcile-textarea {
+    width: 100%;
+    border: 1px solid rgba(0,0,0,.08);
+    border-radius: 12px;
+    padding: 10px 12px;
+    font-size: 14px;
+    font-family: inherit;
+    background: #fff;
+    color: #333;
+    resize: vertical;
+    min-height: 70px;
+    box-sizing: border-box;
+    transition: border-color .15s, box-shadow .15s;
+}
+.reconcile-textarea:focus {
+    outline: none;
+    border-color: #d68aa0;
+    box-shadow: 0 0 0 3px rgba(214, 138, 160, .18);
+}
+
+/* ---------- 按钮 ---------- */
+.reconcile-actions {
+    display: flex;
+    gap: 10px;
+    justify-content: flex-end;
+    margin-top: 6px;
+    flex-wrap: wrap;
+}
+.reconcile-actions-result {
+    position: sticky;
+    bottom: -18px;
+    padding: 12px 0 4px;
+    background: linear-gradient(180deg, rgba(250,242,238,0) 0%, rgba(250,242,238,.95) 30%, #faf2ee 100%);
+}
+.rc-btn {
+    padding: 9px 18px;
+    border-radius: 22px;
+    border: none;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    transition: transform .12s, box-shadow .12s, background .15s;
+    font-family: inherit;
+}
+.rc-btn:active { transform: scale(.96); }
+.rc-btn-primary {
+    background: linear-gradient(135deg, #e89aaf 0%, #d47994 100%);
+    color: #fff;
+    box-shadow: 0 4px 14px rgba(212, 121, 148, .35);
+}
+.rc-btn-primary:hover { box-shadow: 0 6px 20px rgba(212, 121, 148, .45); }
+.rc-btn-secondary {
+    background: #fff;
+    color: #8a6575;
+    border: 1px solid rgba(212, 121, 148, .35);
+}
+.rc-btn-ghost {
+    background: transparent;
+    color: #8a7a84;
+    border: 1px solid rgba(0,0,0,.1);
+}
+.rc-btn-ghost:hover { background: rgba(0,0,0,.03); }
+
+/* ---------- 步骤 2：加载 ---------- */
+.reconcile-loading {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 18px;
+    padding: 40px 10px;
+}
+.reconcile-spinner {
+    width: 38px;
+    height: 38px;
+    border: 3px solid rgba(214, 138, 160, .2);
+    border-top-color: #d68aa0;
+    border-radius: 50%;
+    animation: rcSpin .9s linear infinite;
+}
+@keyframes rcSpin { to { transform: rotate(360deg); } }
+.reconcile-loading-text {
+    font-size: 13.5px;
+    color: #8a7080;
+    animation: rcPulse 1.6s ease-in-out infinite;
+}
+@keyframes rcPulse {
+    0%, 100% { opacity: .6; }
+    50%      { opacity: 1; }
+}
+
+/* ---------- 步骤 3：结果卡片 ---------- */
+.reconcile-result {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+.rc-card {
+    background: #fff;
+    border-radius: 14px;
+    padding: 12px 14px;
+    border: 1px solid rgba(0,0,0,.04);
+    box-shadow: 0 2px 8px rgba(60, 30, 50, .04);
+    animation: rcCardIn .35s ease-out both;
+}
+.rc-card:nth-child(1) { animation-delay: .02s; }
+.rc-card:nth-child(2) { animation-delay: .07s; }
+.rc-card:nth-child(3) { animation-delay: .12s; }
+.rc-card:nth-child(4) { animation-delay: .17s; }
+.rc-card:nth-child(5) { animation-delay: .22s; }
+.rc-card:nth-child(6) { animation-delay: .27s; }
+.rc-card:nth-child(7) { animation-delay: .32s; }
+
+@keyframes rcCardIn {
+    from { opacity: 0; transform: translateY(8px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+.rc-card-title {
+    font-size: 13px;
+    font-weight: 600;
+    color: #a06b7c;
+    margin-bottom: 6px;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+}
+.rc-card-title .fas,
+.rc-card-title .fa { font-size: 12px; }
+.rc-card-text {
+    font-size: 14px;
+    color: #3d2a35;
+    line-height: 1.7;
+    word-break: break-word;
+}
+
+/* 各卡片底色微变化 */
+.rc-card-feelings { background: linear-gradient(135deg, #fff 0%, #fff6f0 100%); }
+.rc-card-reflect  { background: linear-gradient(135deg, #fff 0%, #f4f8ff 100%); }
+.rc-card-empathy  { background: linear-gradient(135deg, #fff 0%, #f4fff4 100%); }
+.rc-card-history  { background: linear-gradient(135deg, #fcf8fd 0%, #f6eef8 100%); }
+.rc-card-history .rc-card-title { color: #8266a0; }
+.rc-card-apology  {
+    background: linear-gradient(135deg, #fff5f8 0%, #ffe8ee 100%);
+    border: 1px solid rgba(212, 121, 148, .25);
+}
+.rc-card-apology .rc-card-title { color: #c85578; }
+.rc-apology-text {
+    font-size: 14.5px;
+    color: #2d1e25;
+    padding: 6px 2px;
+    white-space: pre-wrap;
+}
+.rc-card-solution {
+    background: linear-gradient(135deg, #f6fcfa 0%, #eaf7f1 100%);
+    border: 1px solid rgba(99, 168, 138, .25);
+}
+.rc-card-solution .rc-card-title { color: #4a8870; }
+
+.rc-history-item {
+    padding: 6px 0;
+    border-bottom: 1px dashed rgba(130, 102, 160, .2);
+    font-size: 12.5px;
+    color: #5a4766;
+    line-height: 1.55;
+}
+.rc-history-item:last-child { border-bottom: none; }
+.rc-history-trigger { font-weight: 500; }
+.rc-history-resolution { color: #8c7ca0; margin-top: 2px; }
+
+/* ---------- 自动冲突提示条 ---------- */
+.reconcile-auto-hint {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 9px 10px 9px 14px;
+    margin: 0 10px 6px;
+    background: linear-gradient(90deg, #fff5f8 0%, #fff8f0 100%);
+    border: 1px solid rgba(212, 121, 148, .28);
+    border-radius: 22px;
+    box-shadow: 0 4px 14px rgba(212, 121, 148, .15);
+    font-size: 12.5px;
+    color: #5a3e4a;
+    animation: rcHintIn .35s ease-out;
+    position: relative;
+    z-index: 4;
+}
+@keyframes rcHintIn {
+    from { opacity: 0; transform: translateY(8px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+.rc-hint-icon { font-size: 16px; flex-shrink: 0; }
+.rc-hint-text {
+    flex: 1;
+    min-width: 0;
+    line-height: 1.4;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.rc-hint-text b { color: #c85578; font-weight: 600; }
+.rc-hint-btn {
+    background: linear-gradient(135deg, #e89aaf 0%, #d47994 100%);
+    color: #fff;
+    border: none;
+    border-radius: 14px;
+    padding: 5px 14px;
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    white-space: nowrap;
+    box-shadow: 0 2px 8px rgba(212, 121, 148, .35);
+}
+.rc-hint-btn:active { transform: scale(.95); }
+.rc-hint-close {
+    background: transparent;
+    border: none;
+    color: #a58898;
+    font-size: 20px;
+    line-height: 1;
+    cursor: pointer;
+    padding: 0 4px;
+    flex-shrink: 0;
+}
+.rc-hint-close:hover { color: #c85578; }
+
+/* ---------- 暗色模式适配（可选） ---------- */
+@media (prefers-color-scheme: dark) {
+    .reconcile-modal-box {
+        background: linear-gradient(180deg, #2a2029 0%, #201820 100%);
+        box-shadow: 0 20px 60px rgba(0,0,0,.6), 0 0 0 1px rgba(255,255,255,.05) inset;
+    }
+    .reconcile-modal-title { color: #f0d8e0; }
+    .reconcile-modal-close { color: #a58898; }
+    .reconcile-modal-setting { color: #a58898; }
+    .reconcile-modal-setting:hover { background: rgba(255,255,255,.06); color: #f0d8e0; }
+    .reconcile-modal-header { border-bottom-color: rgba(255,255,255,.06); }
+    .rc-set-row {
+        background: rgba(255,255,255,.04);
+        border-color: rgba(214,138,160,.25);
+    }
+    .rc-set-title { color: #f5e4eb; }
+    .rc-set-desc { color: #b09fab; }
+    .rc-slider { background: #4a3a44; }
+    .reconcile-avatar-row {
+        background: rgba(255,255,255,.04);
+        border-color: rgba(214,138,160,.25);
+    }
+    .reconcile-intro-title { color: #f5e4eb; }
+    .reconcile-intro-desc { color: #b09fab; }
+    .reconcile-label { color: #c0aebc; }
+    .reconcile-textarea {
+        background: rgba(255,255,255,.06);
+        color: #f0e5ec;
+        border-color: rgba(255,255,255,.1);
+    }
+    .rc-card {
+        background: rgba(255,255,255,.04);
+        border-color: rgba(255,255,255,.06);
+    }
+    .rc-card-text { color: #f0e5ec; }
+    .rc-card-feelings, .rc-card-reflect, .rc-card-empathy, .rc-card-history, .rc-card-apology, .rc-card-solution {
+        background: rgba(255,255,255,.04);
+    }
+    .rc-card-apology {
+        background: linear-gradient(135deg, rgba(212,121,148,.14) 0%, rgba(212,121,148,.08) 100%);
+    }
+    .rc-btn-secondary { background: rgba(255,255,255,.06); color: #f0d8e0; }
+    .rc-btn-ghost { color: #b09fab; border-color: rgba(255,255,255,.15); }
+    .reconcile-actions-result {
+        background: linear-gradient(180deg, rgba(32,24,32,0) 0%, rgba(32,24,32,.95) 30%, #201820 100%);
+    }
+    .reconcile-auto-hint {
+        background: linear-gradient(90deg, rgba(212,121,148,.15) 0%, rgba(212,121,148,.08) 100%);
+        color: #f0d8e0;
+    }
+}
+
+/* ---------- 小屏优化 ---------- */
+@media (max-width: 360px) {
+    .reconcile-modal-box { width: 94%; }
+    .reconcile-modal-body { padding: 14px; }
+    .rc-btn { padding: 8px 14px; font-size: 13px; }
+}

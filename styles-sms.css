@@ -1,0 +1,1048 @@
+/* ===== SMS APP - 黑白极简风格 ===== */
+
+/* --- Layer --- */
+#layer-sms {
+    background: #ffffff;
+    color: #1a1a1a;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+/* --- 顶部导航栏 --- */
+.sms-nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px 16px;
+    padding-top: max(12px, env(safe-area-inset-top));
+    background: rgba(255,255,255,0.92);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-bottom: 0.5px solid #e8e8e8;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    min-height: 44px;
+}
+.sms-nav-left {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-shrink: 0;
+}
+.sms-nav-back {
+    font-size: 22px;
+    color: #1a1a1a;
+    cursor: pointer;
+    padding: 4px;
+    display: flex;
+    align-items: center;
+}
+.sms-nav-title {
+    font-size: 17px;
+    font-weight: 600;
+    color: #1a1a1a;
+    flex: 1;
+    text-align: center;
+}
+.sms-nav-right {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-shrink: 0;
+}
+.sms-nav-btn {
+    font-size: 20px;
+    color: #1a1a1a;
+    cursor: pointer;
+    padding: 4px;
+    background: none;
+    border: none;
+}
+
+/* --- 小号切换器 --- */
+.sms-account-switcher {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    cursor: pointer;
+    padding: 4px 10px;
+    border-radius: 20px;
+    background: #f5f5f5;
+    font-size: 13px;
+    font-weight: 500;
+    color: #1a1a1a;
+    transition: background 0.2s;
+}
+.sms-account-switcher:active {
+    background: #e8e8e8;
+}
+.sms-account-switcher .sms-acc-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #1a1a1a;
+}
+.sms-account-switcher .sms-acc-arrow {
+    font-size: 10px;
+    color: #8e8e93;
+}
+
+/* --- 搜索栏 --- */
+.sms-search-bar {
+    padding: 8px 16px;
+    background: #fff;
+}
+.sms-search-input {
+    width: 100%;
+    padding: 10px 14px;
+    border: none;
+    border-radius: 12px;
+    background: #f2f2f7 !important;
+    font-size: 15px;
+    /* [FIX-SMS-INPUT-WHITE] 防止全局主题把文字染白 */
+    color: #1a1a1a !important;
+    -webkit-text-fill-color: #1a1a1a !important;
+    caret-color: #1a1a1a !important;
+    outline: none;
+    box-sizing: border-box;
+}
+.sms-search-input::placeholder {
+    color: #8e8e93;
+}
+
+/* --- 会话列表 --- */
+.sms-conv-list {
+    padding: 4px 0;
+    overflow-y: auto;
+    flex: 1;
+}
+.sms-conv-item {
+    display: flex;
+    align-items: center;
+    padding: 14px 16px;
+    gap: 12px;
+    cursor: pointer;
+    position: relative;
+    transition: background 0.15s;
+}
+.sms-conv-item:active {
+    background: #f5f5f5;
+}
+.sms-conv-item.pinned {
+    background: #fafafa;
+}
+.sms-conv-avatar {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    object-fit: cover;
+    flex-shrink: 0;
+    background: #1a1a1a;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    font-size: 18px;
+    font-weight: 600;
+    overflow: hidden;
+}
+.sms-conv-avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 50%;
+}
+.sms-conv-body {
+    flex: 1;
+    min-width: 0;
+    border-bottom: 0.5px solid #f0f0f0;
+    padding-bottom: 14px;
+}
+.sms-conv-item:last-child .sms-conv-body {
+    border-bottom: none;
+}
+.sms-conv-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 4px;
+}
+.sms-conv-name {
+    font-size: 16px;
+    font-weight: 500;
+    color: #1a1a1a;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    max-width: 200px;
+}
+.sms-conv-time {
+    font-size: 13px;
+    color: #8e8e93;
+    flex-shrink: 0;
+}
+.sms-conv-preview {
+    font-size: 14px;
+    color: #8e8e93;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    line-height: 1.3;
+}
+.sms-conv-unread {
+    position: absolute;
+    top: 12px;
+    left: 52px;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: #1a1a1a;
+}
+.sms-conv-badge {
+    min-width: 20px;
+    height: 20px;
+    border-radius: 10px;
+    background: #1a1a1a;
+    color: #fff;
+    font-size: 12px;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 6px;
+    flex-shrink: 0;
+}
+.sms-conv-muted-icon {
+    color: #c7c7cc;
+    font-size: 14px;
+    margin-left: 4px;
+}
+
+/* --- 空状态 --- */
+.sms-empty {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 80px 20px;
+    color: #c7c7cc;
+}
+.sms-empty i {
+    font-size: 48px;
+    margin-bottom: 16px;
+    opacity: 0.5;
+}
+.sms-empty span {
+    font-size: 15px;
+    color: #8e8e93;
+}
+
+/* --- 聊天详情页 --- */
+.sms-chat-container {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    height: 100dvh; /* [SMS-FIX-键盘遮挡] 动态视口高度，键盘弹出时自动缩短 */
+    max-height: 100%;
+    overflow: hidden;
+}
+.sms-chat-nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px 16px;
+    padding-top: max(12px, env(safe-area-inset-top));
+    background: rgba(255,255,255,0.92);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-bottom: 0.5px solid #e8e8e8;
+    min-height: 44px;
+    flex-shrink: 0;
+}
+.sms-chat-nav-left {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+.sms-chat-nav-center {
+    flex: 1;
+    text-align: center;
+}
+.sms-chat-contact-name {
+    font-size: 17px;
+    font-weight: 600;
+    color: #1a1a1a;
+}
+.sms-chat-account-tag {
+    font-size: 11px;
+    color: #8e8e93;
+    background: #f2f2f7;
+    padding: 2px 8px;
+    border-radius: 10px;
+    margin-top: 2px;
+    display: inline-block;
+}
+.sms-chat-nav-right {
+    flex-shrink: 0;
+}
+
+/* --- 消息区域 --- */
+.sms-messages {
+    flex: 1;
+    overflow-y: auto;
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    -webkit-overflow-scrolling: touch;
+}
+.sms-time-divider {
+    text-align: center;
+    font-size: 12px;
+    color: #8e8e93;
+    padding: 12px 0;
+}
+.sms-msg-row {
+    display: flex;
+    align-items: flex-end;
+    gap: 8px;
+    margin-bottom: 2px;
+}
+.sms-msg-row.out {
+    justify-content: flex-end;
+}
+.sms-msg-row.in {
+    justify-content: flex-start;
+}
+.sms-msg-avatar {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    flex-shrink: 0;
+    object-fit: cover;
+    background: #e5e5ea;
+}
+/* [SMS-FIX-状态外移] wrapper包裹气泡+状态 */
+.sms-msg-wrapper {
+    display: flex;
+    flex-direction: column;
+    max-width: 70%;
+}
+.sms-msg-row.out .sms-msg-wrapper {
+    align-items: flex-end;
+}
+.sms-msg-row.in .sms-msg-wrapper {
+    align-items: flex-start;
+}
+.sms-bubble {
+    padding: 10px 16px;
+    border-radius: 20px;
+    font-size: 15px;
+    line-height: 1.45;
+    word-break: break-word;
+    position: relative;
+}
+.sms-bubble.out {
+    background: #1a1a1a;
+    color: #ffffff;
+    border-bottom-right-radius: 6px;
+}
+.sms-bubble.in {
+    background: #f2f2f7;
+    color: #1a1a1a;
+    border-bottom-left-radius: 6px;
+}
+
+/* --- 消息加载中 --- */
+.sms-typing {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    padding: 10px 16px;
+    background: #f2f2f7;
+    border-radius: 20px;
+    border-bottom-left-radius: 6px;
+    max-width: 80px;
+}
+.sms-typing-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: #8e8e93;
+    animation: smsTypingBounce 1.4s infinite ease-in-out;
+}
+.sms-typing-dot:nth-child(2) { animation-delay: 0.2s; }
+.sms-typing-dot:nth-child(3) { animation-delay: 0.4s; }
+@keyframes smsTypingBounce {
+    0%, 80%, 100% { transform: scale(0.6); opacity: 0.4; }
+    40% { transform: scale(1); opacity: 1; }
+}
+
+/* --- 底部输入栏 --- */
+.sms-input-bar {
+    display: flex;
+    align-items: flex-end;
+    gap: 10px;
+    padding: 10px 16px;
+    padding-bottom: max(10px, env(safe-area-inset-bottom));
+    background: #fff;
+    border-top: 0.5px solid #e8e8e8;
+    flex-shrink: 0;
+}
+.sms-input-field {
+    flex: 1;
+    min-height: 36px;
+    max-height: 120px;
+    padding: 8px 14px;
+    border: 1px solid #e0e0e0;
+    border-radius: 20px;
+    font-size: 15px;
+    /* [FIX-SMS-INPUT-WHITE] 强制指定颜色+背景，防止全局/主题样式导致白字白底 */
+    color: #1a1a1a !important;
+    background: #f8f8f8 !important;
+    -webkit-text-fill-color: #1a1a1a !important;
+    caret-color: #1a1a1a !important;
+    outline: none;
+    resize: none;
+    line-height: 1.4;
+    overflow-y: auto;
+    font-family: inherit;
+}
+.sms-input-field::placeholder {
+    color: #c7c7cc;
+}
+.sms-input-field:focus {
+    border-color: #1a1a1a;
+    background: #fff !important;
+}
+.sms-send-btn {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: #1a1a1a;
+    color: #fff;
+    border: none;
+    font-size: 16px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    transition: opacity 0.2s;
+}
+.sms-send-btn:disabled {
+    opacity: 0.3;
+    cursor: default;
+}
+.sms-send-btn:active:not(:disabled) {
+    opacity: 0.7;
+}
+
+/* [SMS-FEAT-3] 生成按钮 */
+.sms-generate-btn {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: #1a1a1a;
+    color: #fff;
+    border: none;
+    font-size: 14px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    transition: all 0.2s;
+}
+.sms-generate-btn:disabled {
+    opacity: 0.5;
+    cursor: default;
+}
+.sms-generate-btn:active:not(:disabled) {
+    transform: scale(0.92);
+}
+.sms-generate-btn .fa-spinner {
+    animation: smsSpinRotate 1s linear infinite;
+}
+@keyframes smsSpinRotate { 100% { transform: rotate(360deg); } }
+
+/* [SMS-FEAT-4] 消息状态（气泡外部，wrapper内部） */
+.sms-msg-status {
+    font-size: 11px;
+    color: #8e8e93;
+    text-align: right;
+    margin-top: 2px;
+    padding: 0 6px;
+}
+.sms-status-failed {
+    color: #ff3b30 !important;
+    cursor: pointer;
+}
+.sms-status-failed i {
+    margin-right: 2px;
+}
+.sms-bubble.failed {
+    opacity: 0.7;
+    border: 1px dashed #ff3b30;
+}
+
+/* [SMS-FEAT-15] 搜索高亮 */
+.sms-conv-preview mark,
+.sms-conv-name mark {
+    background: #fff3cd;
+    color: #1a1a1a;
+    padding: 0 2px;
+    border-radius: 2px;
+}
+
+/* [SMS-FEAT-16] 展开按钮 */
+.sms-expand-btn {
+    color: #667eea;
+    font-size: 12px;
+    margin-top: 6px;
+    cursor: pointer;
+}
+
+/* 快速回复候选 */
+.sms-quick-replies-wrap {
+    display: flex;
+    background: #fafafa;
+    border-bottom: 0.5px solid #e8e8e8;
+    flex-shrink: 0;
+}
+.sms-quick-replies {
+    display: flex;
+    gap: 8px;
+    padding: 8px 16px;
+    overflow-x: auto;
+    flex: 1;
+}
+.sms-quick-reply-item {
+    padding: 6px 14px;
+    background: #f2f2f7;
+    border-radius: 16px;
+    font-size: 13px;
+    color: #1a1a1a;
+    white-space: nowrap;
+    cursor: pointer;
+    transition: background 0.15s;
+    flex-shrink: 0;
+}
+.sms-quick-reply-item:active {
+    background: #e5e5ea;
+}
+.sms-quick-reply-item.sms-qr-trigger {
+    background: #1a1a1a;
+    color: #fff;
+    font-weight: 500;
+}
+/* 系统提示气泡 */
+.sms-bubble.system-tip {
+    max-width: 85%;
+    margin: 4px auto;
+    text-align: center;
+}
+.sms-msg-row .sms-bubble.system-tip {
+    box-shadow: none;
+}
+
+/* --- 新建短信页 --- */
+.sms-new-container {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+.sms-new-section {
+    padding: 12px 16px;
+    border-bottom: 0.5px solid #f0f0f0;
+}
+.sms-new-section-label {
+    font-size: 13px;
+    color: #8e8e93;
+    margin-bottom: 8px;
+    font-weight: 500;
+}
+.sms-new-account-select {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 14px;
+    background: #f8f8f8;
+    border-radius: 12px;
+    cursor: pointer;
+}
+.sms-new-account-select:active {
+    background: #f0f0f0;
+}
+.sms-new-account-name {
+    font-size: 15px;
+    font-weight: 500;
+    flex: 1;
+}
+.sms-new-account-phone {
+    font-size: 13px;
+    color: #8e8e93;
+}
+.sms-contact-search {
+    width: 100%;
+    padding: 10px 14px;
+    border: none;
+    border-radius: 12px;
+    background: #f2f2f7 !important;
+    font-size: 15px;
+    /* [FIX-SMS-INPUT-WHITE] */
+    color: #1a1a1a !important;
+    -webkit-text-fill-color: #1a1a1a !important;
+    caret-color: #1a1a1a !important;
+    outline: none;
+    box-sizing: border-box;
+}
+.sms-contact-search::placeholder {
+    color: #8e8e93 !important;
+    -webkit-text-fill-color: #8e8e93 !important;
+    opacity: 1;
+}
+
+/* [FIX-SMS-INPUT-WHITE] 兜底规则：短信 App 所有 input/textarea 强制可见 */
+#layer-sms input,
+#layer-sms textarea,
+.sms-modal-overlay input,
+.sms-modal-overlay textarea {
+    color: #1a1a1a !important;
+    -webkit-text-fill-color: #1a1a1a !important;
+    caret-color: #1a1a1a !important;
+}
+#layer-sms input::placeholder,
+#layer-sms textarea::placeholder,
+.sms-modal-overlay input::placeholder,
+.sms-modal-overlay textarea::placeholder {
+    color: #8e8e93 !important;
+    -webkit-text-fill-color: #8e8e93 !important;
+    opacity: 1;
+}
+.sms-contact-list {
+    flex: 1;
+    overflow-y: auto;
+    padding: 4px 0;
+}
+.sms-contact-item {
+    display: flex;
+    align-items: center;
+    padding: 12px 16px;
+    gap: 12px;
+    cursor: pointer;
+    transition: background 0.15s;
+}
+.sms-contact-item:active {
+    background: #f5f5f5;
+}
+.sms-contact-avatar {
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    object-fit: cover;
+    flex-shrink: 0;
+    background: #1a1a1a;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    font-size: 16px;
+    font-weight: 600;
+    overflow: hidden;
+}
+.sms-contact-avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 50%;
+}
+.sms-contact-name {
+    font-size: 16px;
+    color: #1a1a1a;
+    font-weight: 400;
+}
+
+/* --- 小号管理页 --- */
+.sms-accounts-list {
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+.sms-account-card {
+    display: flex;
+    align-items: center;
+    padding: 14px 16px;
+    background: #f8f8f8;
+    border-radius: 14px;
+    gap: 12px;
+    cursor: pointer;
+    transition: background 0.15s;
+    position: relative;
+}
+.sms-account-card:active {
+    background: #f0f0f0;
+}
+.sms-account-card.active {
+    border: 1.5px solid #1a1a1a;
+}
+.sms-account-card-avatar {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: #1a1a1a;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    font-weight: 600;
+    flex-shrink: 0;
+    overflow: hidden;
+}
+.sms-account-card-avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 50%;
+}
+.sms-account-card-info {
+    flex: 1;
+}
+.sms-account-card-name {
+    font-size: 15px;
+    font-weight: 500;
+    color: #1a1a1a;
+}
+.sms-account-card-phone {
+    font-size: 13px;
+    color: #8e8e93;
+    margin-top: 2px;
+}
+.sms-account-card-badge {
+    font-size: 11px;
+    color: #fff;
+    background: #1a1a1a;
+    padding: 2px 8px;
+    border-radius: 10px;
+}
+.sms-account-card-actions {
+    display: flex;
+    gap: 8px;
+}
+.sms-account-card-actions button {
+    background: none;
+    border: none;
+    font-size: 16px;
+    color: #8e8e93;
+    cursor: pointer;
+    padding: 4px;
+}
+.sms-add-account-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 14px;
+    border: 1.5px dashed #d1d1d6;
+    border-radius: 14px;
+    background: transparent;
+    color: #8e8e93;
+    font-size: 15px;
+    cursor: pointer;
+    transition: all 0.2s;
+    width: 100%;
+}
+.sms-add-account-btn:active {
+    background: #f5f5f5;
+    border-color: #1a1a1a;
+    color: #1a1a1a;
+}
+
+/* --- 小号编辑弹窗 --- */
+.sms-modal-overlay {
+    position: fixed !important;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(0,0,0,0.4);
+    /* [FIX-弹窗层级v2] 提高z-index确保在所有layer之上，兼容不同设备 */
+    z-index: 99999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.25s;
+}
+.sms-modal-overlay.show {
+    opacity: 1;
+    pointer-events: auto;
+}
+.sms-modal {
+    background: #fff;
+    border-radius: 20px;
+    width: 100%;
+    max-width: 500px;
+    max-height: 70vh;
+    padding: 20px;
+    padding-bottom: max(20px, env(safe-area-inset-bottom));
+    transform: translateY(30px);
+    transition: transform 0.3s ease;
+    overflow-y: auto;
+}
+.sms-modal-overlay.show .sms-modal {
+    transform: translateY(0);
+}
+.sms-modal-title {
+    font-size: 17px;
+    font-weight: 600;
+    text-align: center;
+    margin-bottom: 20px;
+    color: #1a1a1a;
+}
+.sms-modal-field {
+    margin-bottom: 16px;
+}
+.sms-modal-field label {
+    display: block;
+    font-size: 13px;
+    color: #8e8e93;
+    margin-bottom: 6px;
+    font-weight: 500;
+}
+/* [FIX-SMS-INPUT-WHITE] 强制指定颜色+背景，防止全局/主题样式导致白字白底不可见 */
+#layer-sms .sms-modal-field input,
+.sms-modal-field input {
+    width: 100%;
+    padding: 12px 14px;
+    border: 1px solid #e0e0e0;
+    border-radius: 12px;
+    font-size: 15px;
+    color: #1a1a1a !important;
+    background: #f8f8f8 !important;
+    -webkit-text-fill-color: #1a1a1a !important;
+    caret-color: #1a1a1a !important;
+    outline: none;
+    box-sizing: border-box;
+}
+#layer-sms .sms-modal-field input::placeholder,
+.sms-modal-field input::placeholder {
+    color: #8e8e93 !important;
+    -webkit-text-fill-color: #8e8e93 !important;
+    opacity: 1;
+}
+#layer-sms .sms-modal-field input:focus,
+.sms-modal-field input:focus {
+    border-color: #1a1a1a;
+    background: #fff !important;
+}
+.sms-modal-actions {
+    display: flex;
+    gap: 10px;
+    margin-top: 20px;
+}
+.sms-modal-btn {
+    flex: 1;
+    padding: 14px;
+    border-radius: 14px;
+    font-size: 15px;
+    font-weight: 500;
+    cursor: pointer;
+    border: none;
+    text-align: center;
+    transition: opacity 0.2s;
+}
+.sms-modal-btn:active {
+    opacity: 0.7;
+}
+.sms-modal-btn.primary {
+    background: #1a1a1a;
+    color: #fff;
+}
+.sms-modal-btn.secondary {
+    background: #f2f2f7;
+    color: #1a1a1a;
+}
+.sms-modal-btn.danger {
+    background: #ff3b30;
+    color: #fff;
+}
+
+/* --- 小号切换下拉 --- */
+.sms-account-dropdown {
+    position: absolute;
+    top: 100%;
+    left: 16px;
+    background: #fff;
+    border-radius: 14px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.12);
+    z-index: 100;
+    min-width: 200px;
+    overflow: hidden;
+    opacity: 0;
+    transform: translateY(-8px);
+    pointer-events: none;
+    transition: all 0.2s;
+}
+.sms-account-dropdown.show {
+    opacity: 1;
+    transform: translateY(4px);
+    pointer-events: auto;
+}
+.sms-account-dropdown-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 12px 16px;
+    cursor: pointer;
+    transition: background 0.15s;
+    font-size: 14px;
+}
+.sms-account-dropdown-item:active {
+    background: #f5f5f5;
+}
+.sms-account-dropdown-item.active {
+    font-weight: 600;
+}
+.sms-account-dropdown-item .check {
+    color: #1a1a1a;
+    font-size: 14px;
+    width: 20px;
+}
+
+/* --- 消息长按菜单 --- */
+.sms-context-menu {
+    position: fixed;
+    background: #fff;
+    border-radius: 14px;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.15);
+    z-index: 1000;
+    min-width: 140px;
+    overflow: hidden;
+    opacity: 0;
+    transform: scale(0.9);
+    pointer-events: none;
+    transition: all 0.15s;
+}
+.sms-context-menu.show {
+    opacity: 1;
+    transform: scale(1);
+    pointer-events: auto;
+}
+.sms-context-menu-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 12px 16px;
+    cursor: pointer;
+    font-size: 14px;
+    color: #1a1a1a;
+    transition: background 0.15s;
+}
+.sms-context-menu-item:active {
+    background: #f5f5f5;
+}
+.sms-context-menu-item.danger {
+    color: #ff3b30;
+}
+.sms-context-menu-item i {
+    width: 18px;
+    text-align: center;
+    font-size: 14px;
+}
+
+/* --- 左滑操作 --- */
+.sms-conv-swipe-wrapper {
+    position: relative;
+    overflow: hidden;
+}
+.sms-conv-swipe-actions {
+    position: absolute;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    display: flex;
+    transform: translateX(100%);
+    transition: transform 0.2s;
+}
+.sms-conv-swipe-actions.show {
+    transform: translateX(0);
+}
+.sms-swipe-action {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 72px;
+    color: #fff;
+    font-size: 13px;
+    cursor: pointer;
+}
+.sms-swipe-action.pin {
+    background: #8e8e93;
+}
+.sms-swipe-action.delete {
+    background: #ff3b30;
+}
+
+/* --- 滚动条美化 --- */
+.sms-messages,
+.sms-conv-list,
+.sms-contact-list {
+    scrollbar-width: none; /* Firefox */
+}
+.sms-messages::-webkit-scrollbar,
+.sms-conv-list::-webkit-scrollbar,
+.sms-contact-list::-webkit-scrollbar {
+    width: 0;
+}
+
+/* --- 子页面层 --- */
+.sms-sublayer {
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: #fff;
+    z-index: 20;
+    transform: translateX(100%);
+    transition: transform 0.3s ease;
+    display: flex;
+    flex-direction: column;
+}
+.sms-sublayer.show {
+    transform: translateX(0);
+}
+
+/* [OPT-主题隔离] data-theme="light" 强制覆盖深色主题，确保 SMS 弹窗输入框始终可见 */
+.sms-modal-overlay[data-theme="light"] .sms-modal {
+    background: #fff !important;
+    color: #1a1a1a !important;
+}
+.sms-modal-overlay[data-theme="light"] .sms-modal-title {
+    color: #1a1a1a !important;
+}
+.sms-modal-overlay[data-theme="light"] .sms-modal-field label {
+    color: #8e8e93 !important;
+}
+.sms-modal-overlay[data-theme="light"] .sms-modal-field input {
+    color: #1a1a1a !important;
+    background: #f8f8f8 !important;
+    -webkit-text-fill-color: #1a1a1a !important;
+    caret-color: #1a1a1a !important;
+    border-color: #e0e0e0 !important;
+}
+.sms-modal-overlay[data-theme="light"] .sms-modal-field input:focus {
+    background: #fff !important;
+    border-color: #1a1a1a !important;
+}
+.sms-modal-overlay[data-theme="light"] .sms-modal-field input::placeholder {
+    color: #8e8e93 !important;
+    -webkit-text-fill-color: #8e8e93 !important;
+}
+.sms-modal-overlay[data-theme="light"] .sms-modal-btn.secondary {
+    background: #f2f2f7 !important;
+    color: #1a1a1a !important;
+}
+.sms-modal-overlay[data-theme="light"] .sms-modal-btn.primary {
+    background: #1a1a1a !important;
+    color: #fff !important;
+}

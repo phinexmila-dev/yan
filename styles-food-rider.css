@@ -1,0 +1,1086 @@
+/* ============================================================ */
+/* ========= FOOD RIDER (外卖骑手系统) Styles ================== */
+/* Stage 4 + Stage 5                                           */
+/* ============================================================ */
+
+#layer-rider {
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+#layer-rider.show {
+    z-index: 5200;
+}
+
+.rider-nav {
+    height: 52px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 16px;
+    background: #fff;
+    border-bottom: 1px solid #ececec;
+    flex-shrink: 0;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+}
+
+.rider-nav-back {
+    width: 32px; height: 32px;
+    display: flex; align-items: center; justify-content: center;
+    cursor: pointer;
+    color: #333;
+    font-size: 18px;
+}
+
+.rider-nav-title {
+    font-size: 16px;
+    font-weight: 600;
+    color: #222;
+}
+
+.rider-nav-right { width: 32px; }
+
+.rider-body {
+    flex: 1;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    padding-bottom: 40px;
+}
+
+/* ========== 通用表单/按钮 ========== */
+.rider-form-row {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    padding: 12px 16px;
+    background: #fff;
+    border-bottom: 1px solid #f0f0f0;
+}
+
+.rider-form-row label {
+    font-size: 13px;
+    color: #666;
+    font-weight: 500;
+}
+
+.rider-form-row input,
+.rider-form-row select {
+    width: 100%;
+    border: 1px solid #e5e5e5;
+    border-radius: 8px;
+    padding: 10px 12px;
+    font-size: 14px;
+    background: #fafafa;
+    box-sizing: border-box;
+    outline: none;
+}
+
+.rider-btn-primary {
+    width: calc(100% - 32px);
+    margin: 20px 16px;
+    padding: 13px;
+    background: linear-gradient(135deg, #ff6a00, #ee0979);
+    color: #fff;
+    border: none;
+    border-radius: 10px;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    box-shadow: 0 3px 10px rgba(238,9,121,0.25);
+}
+
+.rider-btn-primary:active { transform: scale(0.98); }
+
+.rider-section-title {
+    padding: 14px 18px 8px;
+    font-size: 13px;
+    font-weight: 600;
+    color: #666;
+}
+
+/* ========== 注册页面 ========== */
+.rider-register { padding: 14px 0 20px; }
+
+.rider-hero {
+    padding: 32px 24px;
+    text-align: center;
+    background: linear-gradient(135deg, #fff5f8 0%, #fff 100%);
+}
+
+.rider-hero-icon {
+    font-size: 56px;
+    margin-bottom: 12px;
+}
+
+.rider-hero-title {
+    font-size: 22px;
+    font-weight: 700;
+    color: #222;
+    margin-bottom: 8px;
+}
+
+.rider-hero-desc {
+    font-size: 13px;
+    color: #888;
+    line-height: 1.7;
+}
+
+.rider-form { margin-top: 12px; }
+
+/* 交通工具选择 */
+.rider-vehicle-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    padding: 4px 0;
+}
+
+.rider-vehicle-option {
+    cursor: pointer;
+}
+
+.rider-vehicle-option input[type="radio"] {
+    display: none;
+}
+
+.rider-vehicle-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    padding: 14px;
+    background: #fafafa;
+    border: 2px solid transparent;
+    border-radius: 10px;
+    transition: .15s;
+}
+
+.rider-vehicle-option input:checked + .rider-vehicle-card {
+    background: #fff0ed;
+    border-color: #ff6a00;
+}
+
+.rider-vehicle-icon {
+    font-size: 30px;
+}
+
+.rider-vehicle-label {
+    font-size: 12px;
+    color: #333;
+}
+
+.rider-tip {
+    text-align: center;
+    padding: 16px 24px 40px;
+    font-size: 12px;
+    color: #999;
+}
+
+/* ========== 工作台 ========== */
+.rider-dashboard { padding: 14px 14px 40px; }
+
+.rider-card {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 16px;
+    background: #fff;
+    border-radius: 14px;
+    margin-bottom: 14px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+}
+
+.rider-card-avatar {
+    width: 52px; height: 52px;
+    border-radius: 50%;
+    overflow: hidden;
+    background: #f5f5f5;
+    flex-shrink: 0;
+}
+
+.rider-card-avatar img { width:100%; height:100%; object-fit:cover; }
+
+.rider-avatar-ph {
+    width: 100%; height: 100%;
+    display: flex; align-items: center; justify-content: center;
+    background: linear-gradient(135deg, #ff6a00, #ee0979);
+    color: #fff;
+    font-size: 18px;
+    font-weight: 600;
+}
+
+.rider-card-info { flex: 1; min-width: 0; }
+
+.rider-card-name {
+    font-size: 16px;
+    font-weight: 700;
+    color: #222;
+    margin-bottom: 4px;
+}
+
+.rider-card-sub {
+    font-size: 12px;
+    color: #888;
+}
+
+.rider-card-edit {
+    width: 32px; height: 32px;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    color: #888;
+    cursor: pointer;
+}
+
+/* 数据统计 */
+.rider-stats {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 8px;
+    margin-bottom: 14px;
+}
+
+.rider-stat {
+    background: #fff;
+    border-radius: 12px;
+    padding: 12px 6px;
+    text-align: center;
+}
+
+.rider-stat-v {
+    font-size: 18px;
+    font-weight: 700;
+    color: #222;
+    margin-bottom: 3px;
+}
+
+.rider-stat-v.rider-income {
+    color: #07c160;
+}
+
+.rider-stat-l {
+    font-size: 11px;
+    color: #888;
+}
+
+/* 当前订单提示 */
+.rider-current-alert {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 14px 16px;
+    background: linear-gradient(135deg, #fff0ed, #fff5f8);
+    border: 1px solid #ffd4bf;
+    border-radius: 12px;
+    margin-bottom: 14px;
+    cursor: pointer;
+}
+
+.rider-current-alert > i:first-child {
+    font-size: 22px;
+    color: #ff6a00;
+}
+
+.rider-current-text { flex: 1; min-width: 0; }
+
+.rider-current-title {
+    font-size: 14px;
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 3px;
+}
+
+.rider-current-sub {
+    font-size: 12px;
+    color: #888;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.rider-current-alert > i:last-child {
+    color: #ccc;
+    font-size: 12px;
+}
+
+/* 菜单 */
+.rider-menu {
+    background: #fff;
+    border-radius: 14px;
+    overflow: hidden;
+}
+
+.rider-menu-item {
+    display: flex;
+    align-items: center;
+    padding: 15px 16px;
+    border-bottom: 1px solid #f5f5f5;
+    cursor: pointer;
+    position: relative;
+}
+
+.rider-menu-item:last-child { border-bottom: none; }
+.rider-menu-item:active { background: #fafafa; }
+
+.rider-menu-item > i:first-child {
+    font-size: 17px;
+    width: 24px;
+    text-align: center;
+    margin-right: 12px;
+}
+
+.rider-menu-item > span {
+    flex: 1;
+    font-size: 14px;
+    color: #222;
+}
+
+.rider-menu-hint {
+    font-size: 12px !important;
+    color: #999 !important;
+    flex: 0 !important;
+    white-space: nowrap;
+    margin-right: 8px;
+}
+
+.rider-chevron {
+    color: #ccc;
+    font-size: 12px;
+}
+
+.rider-badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 20px; height: 20px;
+    padding: 0 6px;
+    background: #fa5151;
+    color: #fff;
+    font-size: 11px;
+    font-style: normal;
+    font-weight: 600;
+    border-radius: 10px;
+    margin-right: 8px;
+}
+
+/* ========== 订单大厅 ========== */
+.rider-pool { padding-bottom: 30px; }
+
+.rider-pool-warn {
+    margin: 12px 14px;
+    padding: 10px 14px;
+    background: #fff8e1;
+    border-left: 3px solid #faad14;
+    border-radius: 8px;
+    font-size: 12px;
+    color: #8b6914;
+}
+
+.rider-btn-refresh {
+    display: block;
+    width: calc(100% - 28px);
+    margin: 12px 14px 6px;
+    padding: 12px;
+    background: linear-gradient(135deg, #ff6a00, #ee0979);
+    color: #fff;
+    border: none;
+    border-radius: 10px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    box-shadow: 0 3px 10px rgba(255,106,0,0.25);
+}
+
+.rider-btn-refresh:disabled { opacity: 0.6; cursor: not-allowed; }
+
+.rider-pool-hint {
+    padding: 0 18px 14px;
+    font-size: 11px;
+    color: #999;
+    text-align: center;
+    line-height: 1.6;
+}
+
+.rider-pool-list {
+    padding: 0 14px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.rider-pool-card {
+    background: #fff;
+    border-radius: 12px;
+    padding: 14px;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.04);
+}
+
+.rider-pool-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 8px;
+}
+
+.rider-pool-shop {
+    font-size: 14px;
+    font-weight: 600;
+    color: #222;
+}
+
+.rider-pool-contact-badge {
+    background: linear-gradient(135deg, #ff6a00, #ee0979);
+    color: #fff;
+    font-size: 11px;
+    padding: 3px 10px;
+    border-radius: 10px;
+    font-weight: 500;
+}
+
+.rider-pool-items {
+    font-size: 13px;
+    color: #555;
+    margin-bottom: 8px;
+    line-height: 1.5;
+}
+
+.rider-pool-row {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 6px;
+}
+
+.rider-pool-customer {
+    font-size: 12px;
+    color: #888;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    flex: 1;
+}
+
+.rider-pool-note {
+    padding: 6px 10px;
+    background: #fffaf0;
+    border-radius: 6px;
+    font-size: 12px;
+    color: #8b6914;
+    margin-bottom: 8px;
+}
+
+.rider-pool-foot {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 10px;
+    padding-top: 10px;
+    border-top: 1px solid #f5f5f5;
+}
+
+.rider-pool-fee {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.rider-pool-price {
+    font-size: 18px;
+    font-weight: 700;
+    color: #07c160;
+}
+
+.rider-pool-detail {
+    font-size: 10px;
+    color: #999;
+}
+
+.rider-pool-distance {
+    font-size: 12px;
+    color: #666;
+    padding: 3px 8px;
+    background: #f5f5f5;
+    border-radius: 10px;
+    margin-left: auto;
+}
+
+.rider-pool-accept {
+    padding: 8px 18px;
+    background: linear-gradient(135deg, #ff6a00, #ee0979);
+    color: #fff;
+    border: none;
+    border-radius: 16px;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    white-space: nowrap;
+}
+
+.rider-pool-accept:disabled {
+    background: #ddd;
+    cursor: not-allowed;
+}
+
+/* ========== 空状态 ========== */
+.rider-empty {
+    padding: 60px 20px;
+    text-align: center;
+    color: #999;
+}
+
+.rider-empty i { display: block; margin: 0 auto 12px; }
+.rider-empty p { margin: 6px 0; font-size: 14px; }
+
+/* ========== 当前订单页 ========== */
+.rider-current { padding: 14px 14px 30px; }
+
+.rider-cur-card {
+    background: #fff;
+    border-radius: 12px;
+    padding: 14px;
+    margin-bottom: 12px;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.04);
+}
+
+.rider-cur-shop {
+    font-size: 15px;
+    font-weight: 600;
+    color: #222;
+    margin-bottom: 10px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #f5f5f5;
+}
+
+.rider-cur-items {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    margin-bottom: 10px;
+}
+
+.rider-cur-item {
+    display: flex;
+    justify-content: space-between;
+    font-size: 13px;
+    color: #555;
+}
+
+.rider-cur-fees {
+    padding-top: 10px;
+    border-top: 1px solid #f5f5f5;
+    font-size: 12px;
+    color: #888;
+    display: flex;
+    justify-content: space-between;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+.rider-cur-customer {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 14px;
+    background: #fff;
+    border-radius: 12px;
+    margin-bottom: 12px;
+}
+
+.rider-cur-customer-avatar {
+    width: 44px; height: 44px;
+    border-radius: 50%;
+    overflow: hidden;
+    background: #f5f5f5;
+    flex-shrink: 0;
+}
+
+.rider-cur-customer-avatar img {
+    width: 100%; height: 100%;
+    object-fit: cover;
+}
+
+.rider-cur-customer-info { flex: 1; min-width: 0; }
+
+.rider-cur-customer-name {
+    font-size: 14px;
+    font-weight: 600;
+    color: #222;
+    margin-bottom: 4px;
+}
+
+.rider-contact-tag {
+    background: #fff0ed;
+    color: #ff6a00;
+    font-size: 10px;
+    padding: 1px 6px;
+    border-radius: 6px;
+    margin-left: 4px;
+    vertical-align: middle;
+}
+
+.rider-cur-customer-addr {
+    font-size: 12px;
+    color: #888;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.rider-cur-distance {
+    font-size: 12px;
+    color: #666;
+    padding: 4px 10px;
+    background: #f0f0f0;
+    border-radius: 10px;
+    flex-shrink: 0;
+}
+
+.rider-cur-note {
+    padding: 10px 14px;
+    background: #fffaf0;
+    border-left: 3px solid #faad14;
+    border-radius: 8px;
+    font-size: 13px;
+    color: #8b6914;
+    margin-bottom: 12px;
+}
+
+/* 配送进度 */
+.rider-progress {
+    background: #fff;
+    border-radius: 12px;
+    padding: 16px 14px;
+    margin-bottom: 12px;
+}
+
+.rider-progress-bar {
+    height: 4px;
+    background: #f0f0f0;
+    border-radius: 2px;
+    overflow: hidden;
+    margin-bottom: 16px;
+}
+
+.rider-progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #ff6a00, #ee0979);
+    transition: width .4s;
+    border-radius: 2px;
+}
+
+.rider-steps {
+    display: flex;
+    justify-content: space-between;
+    gap: 4px;
+}
+
+.rider-step {
+    flex: 1;
+    text-align: center;
+    font-size: 10px;
+    color: #bbb;
+}
+
+.rider-step.done {
+    color: #ff6a00;
+}
+
+.rider-step.active {
+    color: #ee0979;
+    font-weight: 600;
+}
+
+.rider-step-dot {
+    width: 10px; height: 10px;
+    border-radius: 50%;
+    background: #e0e0e0;
+    margin: 0 auto 5px;
+    transition: .2s;
+}
+
+.rider-step.done .rider-step-dot {
+    background: #ff6a00;
+}
+
+.rider-step.active .rider-step-dot {
+    background: #ee0979;
+    box-shadow: 0 0 0 4px rgba(238,9,121,0.2);
+    animation: rider-pulse 1.4s infinite;
+}
+
+@keyframes rider-pulse {
+    0%, 100% { box-shadow: 0 0 0 4px rgba(238,9,121,0.2); }
+    50%      { box-shadow: 0 0 0 8px rgba(238,9,121,0.1); }
+}
+
+/* 催单列表 */
+.rider-urges {
+    background: #fff;
+    border-radius: 12px;
+    padding: 12px 14px;
+    margin-bottom: 12px;
+}
+
+.rider-urges-title {
+    font-size: 13px;
+    font-weight: 600;
+    color: #fa5151;
+    margin-bottom: 10px;
+}
+
+.rider-urge-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 8px 12px;
+    background: #fff8f8;
+    border-radius: 8px;
+    margin-bottom: 6px;
+    font-size: 13px;
+    color: #333;
+    line-height: 1.4;
+}
+
+.rider-urge-item:last-child { margin-bottom: 0; }
+
+.rider-urge-time {
+    font-size: 11px;
+    color: #999;
+    white-space: nowrap;
+    flex-shrink: 0;
+}
+
+/* 操作按钮 */
+.rider-cur-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 4px;
+}
+
+.rider-cur-action {
+    width: 100%;
+    padding: 14px;
+    background: linear-gradient(135deg, #ff6a00, #ee0979);
+    color: #fff;
+    border: none;
+    border-radius: 12px;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    box-shadow: 0 3px 10px rgba(238,9,121,0.25);
+}
+
+.rider-cur-action:active { transform: scale(0.98); }
+
+.rider-cur-action-done {
+    background: linear-gradient(135deg, #07c160, #13c2c2);
+    box-shadow: 0 3px 10px rgba(7,193,96,0.25);
+}
+
+.rider-urge-btn {
+    width: 100%;
+    padding: 9px;
+    background: #fff;
+    color: #999;
+    border: 1px dashed #ddd;
+    border-radius: 10px;
+    font-size: 12px;
+    cursor: pointer;
+}
+
+/* 评价卡 */
+.rider-review-box {
+    margin-top: 16px;
+}
+
+.rider-review-card {
+    background: #fff;
+    border-radius: 12px;
+    padding: 14px;
+}
+
+.rider-review-stars {
+    display: flex;
+    gap: 4px;
+    font-size: 18px;
+    margin-bottom: 10px;
+}
+
+.rider-review-tags {
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+    margin-bottom: 10px;
+}
+
+.rider-review-tag {
+    font-size: 11px;
+    padding: 3px 10px;
+    background: #f0f8ff;
+    color: #1890ff;
+    border-radius: 10px;
+}
+
+.rider-review-comment {
+    font-size: 14px;
+    color: #333;
+    line-height: 1.6;
+}
+
+/* ========== 订单历史 ========== */
+.rider-history {
+    padding: 14px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.rider-hist-card {
+    background: #fff;
+    border-radius: 12px;
+    padding: 14px;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.04);
+}
+
+.rider-hist-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 8px;
+}
+
+.rider-hist-shop {
+    font-size: 14px;
+    font-weight: 600;
+    color: #222;
+}
+
+.rider-hist-time {
+    font-size: 11px;
+    color: #999;
+}
+
+.rider-hist-items {
+    font-size: 13px;
+    color: #666;
+    margin-bottom: 6px;
+}
+
+.rider-hist-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 8px;
+    border-top: 1px solid #f5f5f5;
+    font-size: 12px;
+    color: #888;
+}
+
+.rider-hist-income {
+    font-size: 14px;
+    font-weight: 700;
+    color: #07c160;
+}
+
+.rider-hist-review {
+    margin-top: 8px;
+    padding: 6px 10px;
+    background: #fafafa;
+    border-radius: 8px;
+    font-size: 12px;
+    color: #666;
+}
+
+/* ========== 收入统计 ========== */
+.rider-income-page { padding-bottom: 30px; }
+
+.rider-income-hero {
+    margin: 14px;
+    padding: 28px 20px;
+    background: linear-gradient(135deg, #ff6a00, #ee0979);
+    border-radius: 14px;
+    color: #fff;
+    text-align: center;
+}
+
+.rider-income-label {
+    font-size: 13px;
+    opacity: 0.85;
+    margin-bottom: 8px;
+}
+
+.rider-income-big {
+    font-size: 36px;
+    font-weight: 700;
+    margin-bottom: 6px;
+}
+
+.rider-income-sub {
+    font-size: 12px;
+    opacity: 0.85;
+}
+
+.rider-income-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+    padding: 0 14px;
+    margin-bottom: 14px;
+}
+
+.rider-income-cell {
+    background: #fff;
+    border-radius: 12px;
+    padding: 18px 12px;
+    text-align: center;
+}
+
+.rider-income-cell-v {
+    font-size: 22px;
+    font-weight: 700;
+    color: #222;
+    margin-bottom: 4px;
+}
+
+.rider-income-cell-l {
+    font-size: 11px;
+    color: #888;
+}
+
+.rider-review-list {
+    padding: 0 14px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.rider-review-item {
+    background: #fff;
+    border-radius: 10px;
+    padding: 12px 14px;
+}
+
+.rider-review-item-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 6px;
+}
+
+.rider-review-item-name {
+    font-size: 13px;
+    font-weight: 500;
+    color: #333;
+}
+
+.rider-review-item-stars { display: flex; gap: 2px; font-size: 12px; }
+
+.rider-review-item-comment {
+    font-size: 13px;
+    color: #555;
+    line-height: 1.5;
+    margin-top: 6px;
+}
+
+/* ========== 外卖"我的"页面·骑手入口 ========== */
+.fd-rider-entry {
+    background: linear-gradient(135deg, #fff0ed, #fff) !important;
+    position: relative;
+    overflow: hidden;
+}
+
+.fd-rider-entry-badge {
+    font-size: 11px;
+    padding: 2px 8px;
+    background: #ee0979;
+    color: #fff;
+    border-radius: 10px;
+    margin-left: auto;
+    margin-right: 8px;
+}
+
+/* ==================== [外卖补丁-2026] ==================== */
+
+/* [补丁2] 加成标签条 */
+.rider-pool-bonus {
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+    margin: 6px 0 2px 0;
+}
+.rider-pool-bonus-tag {
+    font-size: 10px;
+    font-weight: 600;
+    padding: 2px 7px;
+    border-radius: 8px;
+    letter-spacing: 0.2px;
+}
+
+/* [补丁3] 订单池排序切换 */
+.rider-pool-sort {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 4px 4px;
+    margin-top: 4px;
+}
+.rider-pool-sort-label {
+    font-size: 12px;
+    color: #999;
+}
+.rider-pool-sort-btn {
+    flex: 1;
+    padding: 6px 10px;
+    border: 1px solid #e5e5e5;
+    background: #fff;
+    color: #666;
+    font-size: 12px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.15s;
+}
+.rider-pool-sort-btn.active {
+    background: linear-gradient(135deg, #ff6b35, #ff4500);
+    color: #fff;
+    border-color: transparent;
+    box-shadow: 0 2px 6px rgba(255,107,53,0.3);
+}
+
+/* [补丁5] 差评申诉按钮 */
+.rider-review-item-foot {
+    margin-top: 8px;
+    display: flex;
+    justify-content: flex-end;
+}
+.rider-appeal-btn {
+    background: #fff;
+    color: #ff9500;
+    border: 1px solid #ffb867;
+    padding: 4px 12px;
+    border-radius: 14px;
+    font-size: 12px;
+    cursor: pointer;
+    font-weight: 500;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+}
+.rider-appeal-btn:hover { background: #fff7e6; }
+.rider-appeal-tag {
+    font-size: 11px;
+    padding: 3px 10px;
+    border-radius: 10px;
+    font-weight: 500;
+}
+.rider-appeal-tag.approved { background:#e6f7eb; color:#07c160; }
+.rider-appeal-tag.rejected { background:#ffe6e6; color:#fa5151; }
+.rider-appeal-tag.pending  { background:#fff7e6; color:#ff9500; }
+
+/* [补丁4] 加小费催单高亮 */
+.rider-urge-item.is-tip {
+    background: linear-gradient(90deg, #fff3e6, transparent);
+    border-left: 3px solid #ff9500;
+    padding-left: 10px;
+}

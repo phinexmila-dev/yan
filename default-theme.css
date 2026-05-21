@@ -1,0 +1,1303 @@
+﻿/* ===== 聊天界面 黑白二次元动漫便签风格 ===== */
+
+/* 聊天导航栏：黑白手绘风 — 支持CSS变量自定义 */
+#layer-chat > .nav-bar#chat-nav-bar {
+    background: var(--chat-nav-bg, #fff) !important;
+    border-bottom: var(--chat-nav-border, 2.5px solid #1a1a1a) !important;
+    box-shadow: var(--chat-nav-shadow, 0 3px 0px #1a1a1a) !important;
+}
+#layer-chat > .nav-bar#chat-nav-bar .nav-title {
+    font-family: var(--chat-nav-font, 'Courier New', monospace) !important;
+    font-weight: var(--chat-nav-font-weight, 900) !important;
+    letter-spacing: 1.5px !important;
+    color: var(--chat-nav-color, #1a1a1a) !important;
+    font-size: var(--chat-nav-font-size, 17px) !important;
+}
+#layer-chat > .nav-bar#chat-nav-bar .nav-icon {
+    color: var(--chat-nav-icon-color, #1a1a1a) !important;
+}
+#layer-chat > .nav-bar#chat-nav-bar .nav-icon:active {
+    opacity: 0.5 !important;
+    transform: scale(0.9) !important;
+}
+
+/* 聊天历史背景：淡灰手绘纸质感 */
+/* [FIX-聊天背景上传] 使用:not(.has-custom-bg)选择器，确保自定义背景图能覆盖默认网格纹理 */
+#chat-history:not(.has-custom-bg) {
+    background: #f5f3ef !important;
+    background-image:
+        linear-gradient(0deg, transparent 95%, rgba(0,0,0,0.03) 95%),
+        linear-gradient(90deg, transparent 95%, rgba(0,0,0,0.03) 95%) !important;
+    background-size: 20px 20px !important;
+}
+/* [FIX-悬浮底栏白色] 让layer-chat背景与chat-history同步，用户做悬浮底栏时底部不露白 */
+#layer-chat {
+    background: #f5f3ef !important;
+}
+/* [FIX-聊天背景上传] 有自定义背景时，移除默认网格纹理
+   注意：不能用 background 简写 + !important，会覆盖 JS 设置的 inline background-image
+   只清除 background-color，让 JS 的 inline style 正常工作 */
+#chat-history.has-custom-bg {
+    background-color: transparent !important;
+    background-image: none;
+    background-size: initial;
+}
+
+/* 聊天气泡：黑白便签风格（支持CSS变量自定义边框和圆角） */
+#layer-chat .bubble {
+    border: var(--bubble-border, 2px solid #1a1a1a);
+    border-radius: var(--bubble-radius, 2px);
+    box-shadow: 3px 3px 0px #1a1a1a;
+    font-family: inherit;
+    color: #1a1a1a;
+    position: relative;
+    transition: transform 0.1s, box-shadow 0.1s;
+    overflow: visible !important;
+}
+
+/* 对方气泡（支持自定义边框） */
+#layer-chat .msg-row:not(.me) .bubble {
+    background: var(--bubble-left, #fff);
+    border: var(--bubble-border-other, var(--bubble-border, 2px solid #1a1a1a));
+}
+/* 清除对方气泡小三角 */
+#layer-chat .msg-row:not(.me) .bubble::before {
+    border-right-color: var(--bubble-left, #fff) !important;
+}
+
+/* 自己气泡（支持自定义边框） */
+#layer-chat .msg-row.me .bubble {
+    background: var(--bubble-right, #f0f0f0);
+    border: var(--bubble-border-me, var(--bubble-border, 2px solid #1a1a1a));
+}
+/* 清除自己气泡小三角 */
+#layer-chat .msg-row.me .bubble::after {
+    border-left-color: var(--bubble-right, #f0f0f0) !important;
+}
+
+/* 气泡按压效果 */
+#layer-chat .bubble:active {
+    transform: translate(1px, 1px);
+    box-shadow: 1px 1px 0px #1a1a1a;
+}
+
+/* 气泡内图片边框 */
+#layer-chat .bubble img:not(.emoji-img) {
+    border: 1.5px solid #1a1a1a;
+    border-radius: 0;
+    filter: grayscale(5%);
+}
+/* 图片气泡特殊处理 */
+#layer-chat .bubble:has(img:not(.emoji-img)):not(.voice) {
+    background: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+    padding: 0 !important;
+}
+/* [FIX-表情包距离] 图片/表情包气泡与头像保持安全距离，防止被头像框遮挡 */
+#layer-chat .msg-row:not(.me) .bubble:has(img):not(.voice) {
+    margin-left: 6px;
+}
+#layer-chat .msg-row.me .bubble:has(img):not(.voice) {
+    margin-right: 6px;
+}
+
+/* 头像：黑白风粗边框 */
+body.theme-default #layer-chat .avatar-wrapper-chat .avatar,
+body.theme-default #layer-chat .msg-row .avatar {
+    border: 2.5px solid #1a1a1a;
+    box-shadow: 2px 2px 0px #1a1a1a;
+    filter: grayscale(15%);
+}
+
+/* 消息间距 - 使用CSS变量支持用户自定义，默认14px */
+#layer-chat .msg-row {
+    margin-bottom: var(--bubble-gap, 14px);
+}
+
+/* 时间分隔线 */
+#layer-chat .time-divider,
+#layer-chat .msg-row .time-label {
+    font-family: 'Courier New', monospace;
+    color: #999;
+    letter-spacing: 1px;
+    font-size: 11px;
+}
+
+/* 时间戳标签 */
+#layer-chat .avatar-time-label,
+#layer-chat .bubble-time-label {
+    font-family: 'Courier New', monospace;
+    color: #888;
+    letter-spacing: 0.5px;
+    font-size: 10px;
+}
+
+/* 聊天输入栏：黑白风 悬浮胶囊 — 支持CSS变量自定义 */
+#layer-chat .input-bar,
+#chat-input-bar {
+    background: var(--chat-input-bg, #fff) !important;
+    border-top: none !important;
+    border: var(--chat-input-border, 2.5px solid #1a1a1a) !important;
+    border-radius: var(--chat-input-radius, 24px) !important;
+    box-shadow: var(--chat-input-shadow, 0 2px 12px rgba(0,0,0,0.08), 0 0 0 2px #1a1a1a) !important;
+}
+
+/* 输入框 */
+#layer-chat .input-field,
+#chat-input {
+    border: 1.5px solid #1a1a1a !important;
+    border-radius: 18px !important;
+    background: #f9f9f9 !important;
+    font-family: inherit !important;
+    color: #1a1a1a !important;
+}
+#layer-chat .input-field:focus,
+#chat-input:focus {
+    outline: none !important;
+    background: #fff !important;
+    box-shadow: 2px 2px 0px #1a1a1a !important;
+    border-color: #1a1a1a !important;
+}
+
+/* 输入栏按钮 */
+#layer-chat .btn-act {
+    color: #1a1a1a !important;
+    transition: transform 0.15s !important;
+}
+#layer-chat .btn-act:active {
+    transform: scale(0.85) !important;
+    color: #555 !important;
+}
+
+/* 发送按钮 */
+#layer-chat .btn-send {
+    color: #1a1a1a !important;
+    font-weight: 700 !important;
+}
+#layer-chat .btn-send:active {
+    transform: scale(0.85) !important;
+}
+
+/* AI生成按钮 */
+#layer-chat .btn-gen {
+    color: #1a1a1a !important;
+}
+
+/* 心声按钮 */
+#layer-chat .btn-thought {
+    color: #555 !important;
+}
+
+/* 工具栏 */
+#layer-chat .toolbar {
+    background: #fafafa !important;
+    border-top: 1px dashed #ccc !important;
+}
+#layer-chat .toolbar i {
+    color: #1a1a1a !important;
+    transition: all 0.15s !important;
+}
+#layer-chat .toolbar i:active {
+    transform: scale(0.85) !important;
+    color: #555 !important;
+}
+
+/* 引用预览条 */
+#layer-chat .quote-preview {
+    background: #f5f3ef !important;
+    border: 1.5px solid #1a1a1a !important;
+    border-left: 3px solid #1a1a1a !important;
+    border-radius: 0 !important;
+    color: #555 !important;
+    font-family: 'Courier New', monospace !important;
+    font-size: 12px !important;
+}
+
+/* 消息弹出菜单：黑白风 */
+#layer-chat .pop-menu {
+    background: #fff !important;
+    border: 2px solid #1a1a1a !important;
+    box-shadow: 4px 4px 0px #1a1a1a !important;
+    border-radius: 0 !important;
+}
+#layer-chat .pop-opt {
+    color: #1a1a1a !important;
+    font-family: 'Courier New', monospace !important;
+    font-weight: 700 !important;
+    border-bottom: 1px dashed #ccc !important;
+}
+#layer-chat .pop-opt:last-child {
+    border-bottom: none !important;
+}
+#layer-chat .pop-opt:active {
+    background: #1a1a1a !important;
+    color: #fff !important;
+}
+
+/* 语音气泡 */
+#layer-chat .bubble.voice {
+    min-width: 90px;
+}
+#layer-chat .bubble.voice .voice-wave-anim span {
+    background: #1a1a1a !important;
+}
+#layer-chat .msg-row.me .bubble.voice .voice-wave-anim span {
+    background: #555 !important;
+}
+#layer-chat .bubble.voice .voice-sec {
+    font-family: 'Courier New', monospace;
+    color: #888;
+}
+
+/* 撤回消息 */
+#layer-chat .bubble.recalled {
+    background: transparent !important;
+    border: 1.5px dashed #999 !important;
+    box-shadow: none !important;
+    color: #888 !important;
+    font-family: 'Courier New', monospace !important;
+    font-size: 12px !important;
+}
+
+/* 多选模式 */
+#chat-select-bar {
+    background: #fff !important;
+    border-bottom: 2px solid #1a1a1a !important;
+    font-family: 'Courier New', monospace !important;
+    color: #1a1a1a !important;
+}
+
+/* 转账气泡 */
+#layer-chat .bubble-transfer {
+    border: 2px solid #1a1a1a !important;
+    border-radius: 2px !important;
+    box-shadow: 3px 3px 0px #1a1a1a !important;
+    background: #fff !important;
+}
+#layer-chat .bubble-transfer .transfer-top {
+    background: #f5f3ef !important;
+    border-bottom: 1.5px dashed #ccc !important;
+}
+#layer-chat .bubble-transfer .transfer-amt {
+    color: #1a1a1a !important;
+    font-family: 'Courier New', monospace !important;
+    font-weight: 900 !important;
+}
+#layer-chat .bubble-transfer .transfer-desc {
+    color: #666 !important;
+}
+#layer-chat .bubble-transfer .transfer-bottom {
+    background: #fafafa !important;
+    color: #888 !important;
+    border-top: none !important;
+    font-family: 'Courier New', monospace !important;
+    font-size: 11px !important;
+}
+
+/* 红包气泡 - 黑白便签风格 */
+#layer-chat .bubble-redpacket {
+    border: 2px solid #1a1a1a !important;
+    border-radius: 2px !important;
+    box-shadow: 3px 3px 0px #1a1a1a !important;
+    background: #fff !important;
+}
+#layer-chat .bubble-redpacket .rp-top {
+    background: #c0392b !important;
+    border-bottom: 1.5px dashed rgba(255,255,255,0.2) !important;
+}
+#layer-chat .bubble-redpacket .rp-greeting {
+    color: #fff !important;
+    font-family: 'Courier New', monospace !important;
+    font-weight: 700 !important;
+}
+#layer-chat .bubble-redpacket .rp-status {
+    color: rgba(255,255,255,0.6) !important;
+    font-family: 'Courier New', monospace !important;
+}
+#layer-chat .bubble-redpacket .rp-bottom {
+    background: #a93226 !important;
+    color: rgba(255,255,255,0.5) !important;
+    font-family: 'Courier New', monospace !important;
+    font-size: 11px !important;
+}
+#layer-chat .bubble-redpacket.rp-done .rp-top {
+    background: #888 !important;
+}
+#layer-chat .bubble-redpacket.rp-done .rp-bottom {
+    background: #777 !important;
+}
+
+/* 共享帖子气泡 */
+#layer-chat .bubble-shared-post {
+    border: 2px solid #1a1a1a !important;
+    border-radius: 2px !important;
+    box-shadow: 3px 3px 0px #1a1a1a !important;
+    background: #fff !important;
+}
+
+/* 滚动到底部按钮 */
+#chat-scroll-bottom-btn {
+    background: #fff !important;
+    border: 2px solid #1a1a1a !important;
+    border-radius: 0 !important;
+    box-shadow: 2px 2px 0px #1a1a1a !important;
+    color: #1a1a1a !important;
+}
+#chat-scroll-bottom-btn:active {
+    transform: translate(1px, 1px) !important;
+    box-shadow: 0 0 0 #1a1a1a !important;
+}
+
+/* 共读状态栏 */
+#chat-read-banner {
+    background: #f5f3ef !important;
+    border-bottom: 1.5px solid #1a1a1a !important;
+    color: #1a1a1a !important;
+    font-family: 'Courier New', monospace !important;
+    letter-spacing: 0.5px !important;
+}
+
+/* 气泡引用样式 - 上下结构 */
+#layer-chat .bubble-quote {
+    background: #f5f3ef !important;
+    border-left: none !important;
+    color: #555 !important;
+    border-radius: 4px !important;
+    font-size: 12px !important;
+}
+
+/* 心声气泡 */
+#layer-chat .thought-bubble {
+    border: 1.5px dashed #888 !important;
+    background: #fafafa !important;
+    border-radius: 0 !important;
+    box-shadow: 2px 2px 0px #ccc !important;
+    color: #666 !important;
+    font-style: italic !important;
+}
+
+/* 表情面板 */
+#layer-chat .sticker-panel {
+    background: #fff !important;
+    border-top: 2px solid #1a1a1a !important;
+}
+
+/* 聊天设置页面 */
+#layer-chat-settings .nav-bar {
+    background: #fff !important;
+    border-bottom: 2.5px solid #1a1a1a !important;
+    box-shadow: 0 3px 0px #1a1a1a !important;
+}
+#layer-chat-settings .group-box {
+    border: 2px solid #1a1a1a !important;
+    border-radius: 2px !important;
+    box-shadow: 3px 3px 0px #1a1a1a !important;
+    margin: 14px 12px !important;
+}
+#layer-chat-settings .form-cell {
+    border-bottom: 1.5px dashed #ccc !important;
+}
+#layer-chat-settings .form-cell:last-child {
+    border-bottom: none !important;
+}
+#layer-chat-settings .form-label {
+    font-family: 'Courier New', monospace !important;
+    font-weight: 700 !important;
+    color: #1a1a1a !important;
+}
+
+/* ===== 添加联系人弹窗 黑白二次元动漫便签风格 ===== */
+
+#modal-contact .modal-box {
+    background: #fff !important;
+    border: 2.5px solid #1a1a1a !important;
+    border-radius: 2px !important;
+    box-shadow: 6px 6px 0px #1a1a1a !important;
+    position: relative !important;
+    padding: 24px 20px !important;
+}
+
+/* 标题：手绘风 */
+#modal-contact .modal-box h3 {
+    font-family: 'Courier New', monospace !important;
+    font-weight: 900 !important;
+    letter-spacing: 2px !important;
+    color: #1a1a1a !important;
+    font-size: 18px !important;
+    text-align: center !important;
+    position: relative !important;
+    padding-bottom: 12px !important;
+    margin-bottom: 16px !important;
+}
+/* 标题下方装饰虚线 */
+#modal-contact .modal-box h3::after {
+    content: '\25C6 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \25C6';
+    display: block;
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 8px;
+    color: #bbb;
+    letter-spacing: 2px;
+    white-space: nowrap;
+    pointer-events: none;
+}
+
+/* 头像上传区域 */
+#modal-contact .upload-box {
+    border: 2.5px solid #1a1a1a;
+    box-shadow: 3px 3px 0px #1a1a1a;
+    background: #f7f7f7;
+}
+#modal-contact .upload-box i {
+    color: #999 !important;
+}
+#modal-contact .upload-box img {
+    filter: grayscale(15%) !important;
+}
+
+/* 输入框：黑白手绘风 */
+#modal-contact #new-contact-name,
+#modal-contact #new-contact-remark,
+#modal-contact #new-contact-remark-for-me,
+#modal-contact #new-contact-signature,
+#modal-contact #new-contact-persona {
+    border: 1.5px solid #1a1a1a !important;
+    border-radius: 0 !important;
+    background: #fafafa !important;
+    font-family: inherit !important;
+    color: #1a1a1a !important;
+    box-shadow: none !important;
+    transition: box-shadow 0.15s !important;
+}
+#modal-contact #new-contact-name:focus,
+#modal-contact #new-contact-remark:focus,
+#modal-contact #new-contact-remark-for-me:focus,
+#modal-contact #new-contact-signature:focus,
+#modal-contact #new-contact-persona:focus {
+    outline: none !important;
+    background: #fff !important;
+    box-shadow: 2px 2px 0px #1a1a1a !important;
+}
+
+/* placeholder 样式 */
+#modal-contact #new-contact-name::placeholder,
+#modal-contact #new-contact-remark::placeholder,
+#modal-contact #new-contact-remark-for-me::placeholder,
+#modal-contact #new-contact-signature::placeholder,
+#modal-contact #new-contact-persona::placeholder {
+    color: #aaa !important;
+    font-family: 'Courier New', monospace !important;
+    letter-spacing: 0.5px !important;
+}
+
+/* 按钮：黑白风 */
+#modal-contact .modal-box button {
+    border: 2px solid #1a1a1a !important;
+    border-radius: 0 !important;
+    font-family: 'Courier New', monospace !important;
+    font-weight: 700 !important;
+    letter-spacing: 1px !important;
+    cursor: pointer !important;
+    transition: all 0.15s !important;
+}
+/* 取消按钮 */
+#modal-contact .modal-btn-cancel {
+    background: #fff !important;
+    color: #1a1a1a !important;
+    border: 2px solid #1a1a1a !important;
+    border-radius: 0 !important;
+    box-shadow: 2px 2px 0px #1a1a1a !important;
+}
+#modal-contact .modal-btn-cancel:hover {
+    background: #f0f0f0 !important;
+}
+#modal-contact .modal-btn-cancel:active {
+    box-shadow: 1px 1px 0px #1a1a1a !important;
+    transform: translate(1px, 1px) !important;
+}
+/* 保存按钮 */
+#modal-contact .modal-btn-save {
+    background: #1a1a1a !important;
+    color: #fff !important;
+    border: 2px solid #1a1a1a !important;
+    border-radius: 0 !important;
+    box-shadow: 2px 2px 0px #555 !important;
+}
+#modal-contact .modal-btn-save:hover {
+    background: #333 !important;
+}
+#modal-contact .modal-btn-save:active {
+    box-shadow: 1px 1px 0px #555 !important;
+    transform: translate(1px, 1px) !important;
+}
+
+/* 弹窗遮罩 */
+#modal-contact.modal-mask {
+    background: rgba(0,0,0,0.4) !important;
+}
+
+/* 便签左上角装饰标签 */
+#modal-contact .modal-box::before {
+    content: '\270E NEW';
+    position: absolute;
+    top: -2px;
+    left: -2px;
+    background: #1a1a1a;
+    color: #fff;
+    font-size: 9px;
+    font-weight: 900;
+    font-family: 'Courier New', monospace;
+    padding: 2px 8px;
+    letter-spacing: 1px;
+    z-index: 10;
+    pointer-events: none;
+}
+
+/* 便签右上角折角效果 */
+#modal-contact .modal-box::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 0;
+    height: 0;
+    border-style: solid;
+    border-width: 0 24px 24px 0;
+    border-color: transparent #f5f3ef transparent transparent;
+    filter: drop-shadow(-1px 1px 0px rgba(0,0,0,0.15));
+    pointer-events: none;
+}
+
+/* ===== 联系人列表界面 黑白二次元动漫便签风格 ===== */
+
+/* 联系人页面导航栏 */
+#tab-contacts > .nav-bar {
+    background: #fff !important;
+    border-bottom: 2.5px solid #1a1a1a !important;
+    box-shadow: 0 3px 0px #1a1a1a !important;
+}
+#tab-contacts > .nav-bar .nav-title {
+    font-family: 'Courier New', monospace !important;
+    font-weight: 900 !important;
+    letter-spacing: 2px !important;
+    color: #1a1a1a !important;
+    font-size: 17px !important;
+}
+#tab-contacts > .nav-bar .nav-icon {
+    color: #1a1a1a !important;
+}
+
+/* 联系人列表容器背景 */
+#contact-list {
+    background: #f5f3ef !important;
+    background-image:
+        linear-gradient(0deg, transparent 95%, rgba(0,0,0,0.03) 95%),
+        linear-gradient(90deg, transparent 95%, rgba(0,0,0,0.03) 95%) !important;
+    background-size: 20px 20px !important;
+    padding-left: 12px !important;
+    padding-right: 12px !important;
+}
+
+/* 联系人列表项：便签卡片风 */
+#contact-list .list-item {
+    background: #fff !important;
+    border: 2px solid #1a1a1a !important;
+    border-radius: 2px !important;
+    box-shadow: 3px 3px 0px #1a1a1a !important;
+    margin-bottom: 12px !important;
+    padding: 14px 15px !important;
+    position: relative !important;
+    transition: transform 0.1s, box-shadow 0.1s !important;
+}
+#contact-list .list-item:active {
+    transform: translate(1px, 1px) !important;
+    box-shadow: 1px 1px 0px #1a1a1a !important;
+}
+
+/* 置顶联系人：加粗边框+特殊标记 */
+#contact-list .list-item[style*="background: rgb(240, 240, 255)"],
+#contact-list .list-item[style*="background:#f0f0ff"] {
+    background: #f7f7f7 !important;
+    border-width: 2.5px !important;
+    border-style: solid !important;
+    border-color: #1a1a1a !important;
+}
+
+/* 联系人头像：黑白粗边框 */
+body.theme-default #contact-list .list-item .avatar {
+    border: 2.5px solid #1a1a1a;
+    box-shadow: 2px 2px 0px #1a1a1a;
+    filter: grayscale(15%);
+    width: var(--avatar-size);
+    height: var(--avatar-size);
+}
+
+/* 联系人名字 */
+#contact-list .list-item .list-title {
+    font-family: 'Courier New', monospace !important;
+    font-weight: 900 !important;
+    color: #1a1a1a !important;
+    letter-spacing: 0.5px !important;
+}
+
+/* 联系人副标题（最后消息） */
+#contact-list .list-item .list-sub {
+    font-family: inherit !important;
+    color: #777 !important;
+    font-size: 12px !important;
+    letter-spacing: 0.3px !important;
+}
+
+/* 联系人列表项之间的间距 */
+#contact-list .list-item + .list-item {
+    margin-top: 0 !important;
+}
+
+/* 联系人右箭头/图标 */
+#contact-list .list-item > i {
+    color: #1a1a1a !important;
+}
+
+/* 群组图标 */
+#contact-list .list-item .fa-users {
+    color: #888 !important;
+}
+
+/* 置顶图标 */
+#contact-list .list-item .fa-thumbtack {
+    color: #1a1a1a !important;
+}
+
+/* 联系人右键菜单 */
+.contact-menu {
+    background: #fff !important;
+    border: 2px solid #1a1a1a !important;
+    border-radius: 0 !important;
+    box-shadow: 4px 4px 0px #1a1a1a !important;
+}
+.contact-menu-item {
+    color: #1a1a1a !important;
+    font-family: 'Courier New', monospace !important;
+    border-bottom-color: #ddd !important;
+}
+.contact-menu-item:active {
+    background: #1a1a1a !important;
+    color: #fff !important;
+}
+.contact-menu-item[style*="color:#fa5151"],
+.contact-menu-item[style*="color: rgb(250, 81, 81)"] {
+    color: #1a1a1a !important;
+    font-weight: 700 !important;
+}
+
+/* 顶部添加菜单按钮 */
+#tab-contacts .nav-icon .fa-plus-circle {
+    color: #1a1a1a !important;
+}
+
+/* ===== 微信底部Tab栏 黑白二次元动漫便签风格 ===== */
+
+/* 微信底部Tab栏整体 */
+#layer-wechat > .wx-tab-bar,
+.wx-tab-bar {
+    background: #fff !important;
+    border-top: 2.5px solid #1a1a1a !important;
+    box-shadow: 0 -3px 0px #1a1a1a !important;
+}
+
+/* Tab项 */
+#layer-wechat > .wx-tab-bar .nav-tab,
+.wx-tab-bar .nav-tab {
+    color: #999 !important;
+    font-family: 'Courier New', monospace !important;
+    font-weight: 700 !important;
+    letter-spacing: 0.5px !important;
+}
+
+/* Tab图标 */
+#layer-wechat > .wx-tab-bar .nav-tab i,
+.wx-tab-bar .nav-tab i {
+    color: inherit !important;
+}
+
+/* 选中Tab */
+#layer-wechat > .wx-tab-bar .nav-tab.active,
+.wx-tab-bar .nav-tab.active {
+    color: #1a1a1a !important;
+}
+#layer-wechat > .wx-tab-bar .nav-tab.active i,
+.wx-tab-bar .nav-tab.active i {
+    transform: scale(1.1) !important;
+    color: #1a1a1a !important;
+}
+
+/* 精灵Tab */
+#layer-wechat > .wx-tab-bar .nav-tab:last-child,
+.wx-tab-bar .nav-tab:last-child {
+    color: #888 !important;
+}
+#layer-wechat > .wx-tab-bar .nav-tab:last-child.active,
+.wx-tab-bar .nav-tab:last-child.active {
+    color: #1a1a1a !important;
+}
+
+/* 点击效果 */
+.wx-tab-bar .nav-tab:active {
+    opacity: 0.6 !important;
+    transform: scale(0.9) !important;
+}
+
+/* ===== 世界书 黑白二次元动漫便签风格 ===== */
+
+/* 世界书导航栏 */
+#layer-worldbook > .nav-bar {
+    background: #fff !important;
+    border-bottom: 2.5px solid #1a1a1a !important;
+    box-shadow: 0 3px 0px #1a1a1a !important;
+}
+#layer-worldbook > .nav-bar .nav-title {
+    font-family: 'Courier New', monospace !important;
+    font-weight: 900 !important;
+    letter-spacing: 2px !important;
+    color: #1a1a1a !important;
+}
+#layer-worldbook > .nav-bar .nav-icon {
+    color: #1a1a1a !important;
+}
+
+/* 世界书列表背景 */
+#layer-worldbook > .scroll-y {
+    background: #f5f3ef !important;
+    background-image:
+        linear-gradient(0deg, transparent 95%, rgba(0,0,0,0.03) 95%),
+        linear-gradient(90deg, transparent 95%, rgba(0,0,0,0.03) 95%) !important;
+    background-size: 20px 20px !important;
+}
+
+/* 分类栏 */
+#layer-worldbook .wb-category-bar {
+    background: #fff !important;
+    border-bottom: 2px solid #1a1a1a !important;
+    box-shadow: 0 2px 0px #1a1a1a !important;
+    padding: 10px !important;
+}
+
+/* 分类标签 */
+#layer-worldbook .wb-cate-chip {
+    border: 1.5px solid #1a1a1a !important;
+    border-radius: 0 !important;
+    background: #fff !important;
+    color: #1a1a1a !important;
+    font-family: 'Courier New', monospace !important;
+    font-weight: 700 !important;
+    font-size: 12px !important;
+    letter-spacing: 0.5px !important;
+    padding: 5px 14px !important;
+    box-shadow: 2px 2px 0px #1a1a1a !important;
+    transition: all 0.1s !important;
+}
+#layer-worldbook .wb-cate-chip.active {
+    background: #1a1a1a !important;
+    color: #fff !important;
+    box-shadow: 1px 1px 0px #555 !important;
+}
+#layer-worldbook .wb-cate-chip:active {
+    transform: translate(1px, 1px) !important;
+    box-shadow: 1px 1px 0px #1a1a1a !important;
+}
+
+/* 添加菜单 */
+#layer-worldbook .add-menu {
+    background: #fff !important;
+    border: 2px solid #1a1a1a !important;
+    border-radius: 0 !important;
+    box-shadow: 4px 4px 0px #1a1a1a !important;
+}
+#layer-worldbook .add-item {
+    color: #1a1a1a !important;
+    font-family: 'Courier New', monospace !important;
+    border-bottom-color: #ddd !important;
+}
+#layer-worldbook .add-item:active {
+    background: #1a1a1a !important;
+    color: #fff !important;
+}
+
+/* 世界书列表项（便签卡片） */
+#wb-list .group-box.wb-item {
+    background: #fff !important;
+    border: 2px solid #1a1a1a !important;
+    border-radius: 2px !important;
+    box-shadow: 3px 3px 0px #1a1a1a !important;
+    margin-bottom: 14px !important;
+    position: relative !important;
+    overflow: visible !important;
+}
+#wb-list .group-box.wb-item:active {
+    transform: translate(1px, 1px) !important;
+    box-shadow: 1px 1px 0px #1a1a1a !important;
+}
+
+/* 世界书标题 */
+#wb-list .group-box.wb-item b,
+#wb-list .group-box.wb-item strong {
+    font-family: 'Courier New', monospace !important;
+    color: #1a1a1a !important;
+    letter-spacing: 0.5px !important;
+}
+
+/* 世界书折叠箭头 */
+#wb-list .wb-collapse-arrow {
+    color: #1a1a1a !important;
+}
+
+/* 世界书内容区 */
+#wb-list .wb-content {
+    color: #333 !important;
+    border-top: 2px dashed #bbb !important;
+    font-size: 13px !important;
+    line-height: 1.7 !important;
+}
+
+/* 世界书编辑区域 */
+#wb-list .wb-edit-area textarea {
+    border: 1.5px solid #1a1a1a !important;
+    border-radius: 0 !important;
+    background: #fafafa !important;
+    color: #1a1a1a !important;
+    font-family: inherit !important;
+}
+#wb-list .wb-edit-area textarea:focus {
+    outline: none !important;
+    background: #fff !important;
+    box-shadow: 2px 2px 0px #1a1a1a !important;
+    border-color: #1a1a1a !important;
+}
+#wb-list .wb-edit-area input,
+#wb-list .wb-edit-area select {
+    border: 1.5px solid #1a1a1a !important;
+    border-radius: 0 !important;
+    background: #fafafa !important;
+    color: #1a1a1a !important;
+    font-family: inherit !important;
+}
+#wb-list .wb-edit-area input:focus,
+#wb-list .wb-edit-area select:focus {
+    outline: none !important;
+    background: #fff !important;
+    box-shadow: 2px 2px 0px #1a1a1a !important;
+}
+
+/* 世界书按钮 */
+#wb-list .wb-btn {
+    border: 1.5px solid #1a1a1a !important;
+    border-radius: 0 !important;
+    font-family: 'Courier New', monospace !important;
+    font-weight: 700 !important;
+    letter-spacing: 0.5px !important;
+    transition: all 0.1s !important;
+}
+#wb-list .wb-btn.edit {
+    background: #fff !important;
+    color: #1a1a1a !important;
+    box-shadow: 2px 2px 0px #1a1a1a !important;
+}
+#wb-list .wb-btn.del {
+    background: #fff !important;
+    color: #1a1a1a !important;
+    box-shadow: 2px 2px 0px #1a1a1a !important;
+}
+#wb-list .wb-btn.save {
+    background: #1a1a1a !important;
+    color: #fff !important;
+    box-shadow: 2px 2px 0px #555 !important;
+}
+#wb-list .wb-btn.cancel {
+    background: #fff !important;
+    color: #1a1a1a !important;
+    box-shadow: 2px 2px 0px #1a1a1a !important;
+}
+#wb-list .wb-btn:active {
+    transform: translate(1px, 1px) !important;
+    box-shadow: 0px 0px 0px #1a1a1a !important;
+}
+
+/* 世界书空状态 */
+#wb-list > div[style*="text-align:center"] {
+    color: #999 !important;
+    font-family: 'Courier New', monospace !important;
+}
+
+/* ===== 世界书弹窗 黑白便签风格 ===== */
+
+/* 新建世界书/分类/选择弹窗 */
+#modal-wb .modal-box,
+#modal-category .modal-box,
+#modal-wb-select .modal-box {
+    background: #fff !important;
+    border: 2.5px solid #1a1a1a !important;
+    border-radius: 2px !important;
+    box-shadow: 6px 6px 0px #1a1a1a !important;
+    position: relative !important;
+}
+
+/* 弹窗标题 */
+#modal-wb .modal-box h3,
+#modal-category .modal-box h3,
+#modal-wb-select .modal-box h3 {
+    font-family: 'Courier New', monospace !important;
+    font-weight: 900 !important;
+    letter-spacing: 2px !important;
+    color: #1a1a1a !important;
+    font-size: 17px !important;
+    text-align: center !important;
+    position: relative !important;
+    padding-bottom: 12px !important;
+}
+#modal-wb .modal-box h3::after,
+#modal-category .modal-box h3::after,
+#modal-wb-select .modal-box h3::after {
+    content: '\25C6 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \2500 \25C6';
+    display: block;
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 8px;
+    color: #bbb;
+    letter-spacing: 2px;
+    white-space: nowrap;
+    pointer-events: none;
+}
+
+/* 弹窗输入框 */
+#modal-wb input,
+#modal-wb textarea,
+#modal-wb select,
+#modal-category input {
+    border: 1.5px solid #1a1a1a !important;
+    border-radius: 0 !important;
+    background: #fafafa !important;
+    color: #1a1a1a !important;
+    font-family: inherit !important;
+}
+#modal-wb input:focus,
+#modal-wb textarea:focus,
+#modal-wb select:focus,
+#modal-category input:focus {
+    outline: none !important;
+    background: #fff !important;
+    box-shadow: 2px 2px 0px #1a1a1a !important;
+}
+
+/* 弹窗 placeholder */
+#modal-wb input::placeholder,
+#modal-wb textarea::placeholder,
+#modal-category input::placeholder {
+    color: #aaa !important;
+    font-family: 'Courier New', monospace !important;
+}
+
+/* HTML弹窗设置折叠区 */
+#modal-wb .wb-html-toggle-section {
+    border-top: 2px dashed #bbb !important;
+}
+#modal-wb .wb-html-toggle-section i {
+    color: #1a1a1a !important;
+}
+#modal-wb .wb-html-toggle-section span {
+    color: #1a1a1a !important;
+    font-family: 'Courier New', monospace !important;
+}
+#modal-wb .wb-html-hint {
+    color: #888 !important;
+    font-family: 'Courier New', monospace !important;
+}
+
+/* 世界书弹窗按钮 */
+.wb-modal-btn-cancel {
+    background: #fff !important;
+    color: #1a1a1a !important;
+    border: 2px solid #1a1a1a !important;
+    border-radius: 0 !important;
+    font-family: 'Courier New', monospace !important;
+    font-weight: 700 !important;
+    letter-spacing: 1px !important;
+    box-shadow: 2px 2px 0px #1a1a1a !important;
+    cursor: pointer !important;
+    transition: all 0.15s !important;
+}
+.wb-modal-btn-cancel:hover {
+    background: #f0f0f0 !important;
+}
+.wb-modal-btn-cancel:active {
+    box-shadow: 1px 1px 0px #1a1a1a !important;
+    transform: translate(1px, 1px) !important;
+}
+
+.wb-modal-btn-save {
+    background: #1a1a1a !important;
+    color: #fff !important;
+    border: 2px solid #1a1a1a !important;
+    border-radius: 0 !important;
+    font-family: 'Courier New', monospace !important;
+    font-weight: 700 !important;
+    letter-spacing: 1px !important;
+    box-shadow: 2px 2px 0px #555 !important;
+    cursor: pointer !important;
+    transition: all 0.15s !important;
+}
+.wb-modal-btn-save:hover {
+    background: #333 !important;
+}
+.wb-modal-btn-save:active {
+    box-shadow: 1px 1px 0px #555 !important;
+    transform: translate(1px, 1px) !important;
+}
+
+/* 世界书选择列表项 */
+#wb-select-list .list-item,
+#wb-select-list > div {
+    border: 1.5px solid #1a1a1a !important;
+    border-radius: 0 !important;
+    background: #fff !important;
+    margin-bottom: 8px !important;
+    font-family: inherit !important;
+}
+
+/* 左上角装饰标签 */
+#modal-wb .modal-box::before {
+    content: '\270E BOOK';
+    position: absolute;
+    top: -2px;
+    left: -2px;
+    background: #1a1a1a;
+    color: #fff;
+    font-size: 9px;
+    font-weight: 900;
+    font-family: 'Courier New', monospace;
+    padding: 2px 8px;
+    letter-spacing: 1px;
+    z-index: 10;
+    pointer-events: none;
+}
+#modal-category .modal-box::before {
+    content: '\270E CATE';
+    position: absolute;
+    top: -2px;
+    left: -2px;
+    background: #1a1a1a;
+    color: #fff;
+    font-size: 9px;
+    font-weight: 900;
+    font-family: 'Courier New', monospace;
+    padding: 2px 8px;
+    letter-spacing: 1px;
+    z-index: 10;
+    pointer-events: none;
+}
+#modal-wb-select .modal-box::before {
+    content: '\270E SELECT';
+    position: absolute;
+    top: -2px;
+    left: -2px;
+    background: #1a1a1a;
+    color: #fff;
+    font-size: 9px;
+    font-weight: 900;
+    font-family: 'Courier New', monospace;
+    padding: 2px 8px;
+    letter-spacing: 1px;
+    z-index: 10;
+    pointer-events: none;
+}
+
+/* 世界书HTML弹窗也改成黑白风 */
+.wb-html-popup-container {
+    border: 2.5px solid #1a1a1a !important;
+    border-radius: 2px !important;
+    box-shadow: 6px 6px 0px #1a1a1a !important;
+}
+.wb-html-popup-header {
+    border-bottom: 2px solid #1a1a1a !important;
+    background: #fff !important;
+}
+.wb-html-popup-header span {
+    font-family: 'Courier New', monospace !important;
+    font-weight: 900 !important;
+    color: #1a1a1a !important;
+}
+.wb-html-popup-close {
+    border: 1.5px solid #1a1a1a !important;
+    border-radius: 0 !important;
+    background: #fff !important;
+    color: #1a1a1a !important;
+}
+.wb-html-popup-close:hover {
+    background: #1a1a1a !important;
+    color: #fff !important;
+}
+
+/* ===== 微信"我的"界面 黑白二次元动漫便签风格 ===== */
+
+/* "我的"页面整体背景：便签纸网格 */
+#tab-me {
+    background: #f5f3ef !important;
+    background-image:
+        linear-gradient(0deg, transparent 95%, rgba(0,0,0,0.03) 95%),
+        linear-gradient(90deg, transparent 95%, rgba(0,0,0,0.03) 95%) !important;
+    background-size: 20px 20px !important;
+}
+#tab-me > .scroll-y {
+    background: transparent !important;
+}
+
+/* 个人信息卡片：便签风 */
+#tab-me > .scroll-y > div:first-child {
+    background: #fff !important;
+    border: 2.5px solid #1a1a1a !important;
+    border-radius: 2px !important;
+    box-shadow: 4px 4px 0px #1a1a1a !important;
+    margin: 20px 12px 0 !important;
+    padding: 24px 20px !important;
+    position: relative !important;
+}
+/* 便签钉装饰 */
+#tab-me > .scroll-y > div:first-child::before {
+    content: '\uD83D\uDCCC';
+    position: absolute;
+    top: -12px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 20px;
+    z-index: 1;
+    pointer-events: none;
+}
+
+/* 个人头像：黑白粗边框 */
+#tab-me #my-avatar {
+    border: 2.5px solid #1a1a1a;
+    box-shadow: 2px 2px 0px #1a1a1a;
+    filter: grayscale(15%);
+}
+
+/* 个人名字 */
+#tab-me #my-name {
+    font-family: 'Courier New', monospace !important;
+    font-weight: 900 !important;
+    color: #1a1a1a !important;
+    letter-spacing: 1px !important;
+}
+
+/* 微信号 */
+#tab-me #my-wxid {
+    font-family: 'Courier New', monospace !important;
+    color: #888 !important;
+    letter-spacing: 0.5px !important;
+}
+
+/* 箭头图标 */
+#tab-me > .scroll-y > div:first-child > i {
+    color: #1a1a1a !important;
+}
+
+/* group-box 区块：便签卡片风 */
+#tab-me .group-box {
+    background: #fff !important;
+    border: 2px solid #1a1a1a !important;
+    border-radius: 2px !important;
+    box-shadow: 3px 3px 0px #1a1a1a !important;
+    margin: 14px 12px !important;
+    overflow: hidden !important;
+    position: relative !important;
+}
+
+/* group-box 内的列表项 */
+#tab-me .group-box .list-item {
+    background: #fff !important;
+    border-bottom: 1.5px dashed #ccc !important;
+    padding: 14px 15px !important;
+    transition: all 0.1s !important;
+}
+#tab-me .group-box .list-item:last-child {
+    border-bottom: none !important;
+}
+#tab-me .group-box .list-item:active {
+    background: #f5f5f5 !important;
+    transform: translate(1px, 1px) !important;
+}
+
+/* 列表项图标 */
+#tab-me .group-box .list-item > i,
+#tab-me .group-box .list-item .fas,
+#tab-me .group-box .list-item .far {
+    color: #1a1a1a !important;
+}
+
+/* 列表项标题 */
+#tab-me .group-box .list-item .list-title {
+    font-family: 'Courier New', monospace !important;
+    font-weight: 700 !important;
+    color: #1a1a1a !important;
+    letter-spacing: 0.5px !important;
+}
+
+/* 列表项副标题 */
+#tab-me .group-box .list-item .list-sub {
+    color: #888 !important;
+    font-size: 12px !important;
+}
+
+/* form-cell 样式 */
+#tab-me .group-box .form-cell {
+    border-bottom: 1.5px dashed #ccc !important;
+    padding: 14px 15px !important;
+}
+#tab-me .group-box .form-cell:last-child {
+    border-bottom: none !important;
+}
+#tab-me .group-box .form-cell .form-label {
+    font-family: 'Courier New', monospace !important;
+    font-weight: 700 !important;
+    color: #1a1a1a !important;
+}
+
+/* 开关：黑白风 */
+#tab-me .group-box .switch .slider {
+    border: 1.5px solid #1a1a1a !important;
+    border-radius: 0 !important;
+    background: #eee !important;
+}
+#tab-me .group-box .switch .slider::before {
+    border-radius: 0 !important;
+    border: 1px solid #1a1a1a !important;
+}
+#tab-me .group-box .switch input:checked + .slider {
+    background: #1a1a1a !important;
+}
+
+/* 钱包余额 */
+#tab-me #wallet-balance {
+    font-family: 'Courier New', monospace !important;
+    color: #1a1a1a !important;
+    font-weight: 700 !important;
+}
+
+/* 便签折角装饰（第一个group-box） */
+#tab-me .group-box::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 0;
+    height: 0;
+    border-style: solid;
+    border-width: 0 20px 20px 0;
+    border-color: transparent #f5f3ef transparent transparent;
+    filter: drop-shadow(-1px 1px 0px rgba(0,0,0,0.1));
+    pointer-events: none;
+}
+

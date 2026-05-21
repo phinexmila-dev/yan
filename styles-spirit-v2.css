@@ -1,0 +1,1480 @@
+/* ========== 精灵养成系统 V2 新增样式 ========== */
+
+/* === 行动点显示条 === */
+.spirit-ap-bar {
+    margin: 0 14px;
+    padding: 10px 16px;
+    background: linear-gradient(135deg, #FFF5E0, #FFFAF0);
+    border: 1.5px solid #F0DFC0;
+    border-radius: 14px;
+    font-size: 14px;
+    color: #A07840;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    box-shadow: 0 2px 8px rgba(200,160,96,0.08);
+}
+.spirit-ap-icon {
+    font-size: 18px;
+}
+.spirit-ap-bar b {
+    color: #D48000;
+    font-size: 16px;
+}
+.spirit-ap-month {
+    margin-left: auto;
+    font-size: 12px;
+    color: #C0A070;
+}
+
+/* === 生病提示条 === */
+.spirit-sick-banner {
+    margin: 8px 14px 0;
+    padding: 10px 16px;
+    background: linear-gradient(135deg, #FFF0F0, #FFE8E8);
+    border: 1.5px solid #F0C0C0;
+    border-radius: 14px;
+    font-size: 13px;
+    color: #C06060;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+}
+.spirit-heal-btn {
+    padding: 6px 14px;
+    border: none;
+    border-radius: 20px;
+    background: #FF8080;
+    color: #fff;
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    white-space: nowrap;
+    box-shadow: 0 2px 8px rgba(255,128,128,0.3);
+}
+.spirit-heal-btn:active { transform: scale(0.95); }
+
+/* === 性格维度面板 === */
+.spirit-personality-dim {
+    margin-bottom: 10px;
+}
+.spd-header {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin-bottom: 4px;
+}
+.spd-icon {
+    font-size: 14px;
+}
+.spd-label {
+    font-size: 13px;
+    font-weight: 600;
+    color: #8B6530;
+}
+.spd-bar {
+    height: 8px;
+    background: #F0E8D8;
+    border-radius: 4px;
+    overflow: hidden;
+}
+.spd-fill {
+    height: 100%;
+    border-radius: 4px;
+    transition: width 0.5s ease;
+}
+.spd-range {
+    display: flex;
+    justify-content: space-between;
+    font-size: 10px;
+    color: #C0A080;
+    margin-top: 2px;
+}
+
+/* === 亲密度面板 === */
+.spirit-intimacy-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 10px;
+    font-size: 13px;
+    color: #8B6530;
+}
+.spirit-intimacy-row > span:first-child {
+    min-width: 80px;
+    font-weight: 600;
+}
+.spirit-intimacy-bar {
+    flex: 1;
+    height: 10px;
+    background: #F0E8D8;
+    border-radius: 5px;
+    overflow: hidden;
+}
+.spirit-intimacy-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #FFB6C1, #FF69B4);
+    border-radius: 5px;
+    transition: width 0.5s ease;
+}
+.spirit-intimacy-fill.sif-partner {
+    background: linear-gradient(90deg, #87CEEB, #4169E1);
+}
+.spirit-intimacy-row > span:last-child {
+    min-width: 30px;
+    text-align: right;
+    font-weight: 700;
+    color: #D48000;
+}
+
+/* === 行动按钮消耗标签 === */
+.sab-cost {
+    display: block;
+    font-size: 10px;
+    color: #C0A070;
+    margin-top: 2px;
+}
+.spirit-action-btn.spirit-action-disabled {
+    opacity: 0.4;
+    pointer-events: none;
+}
+.spirit-action-disabled .sab-cost {
+    color: #ddd;
+}
+
+/* === 列表页行动点标记 === */
+.spirit-card-ap {
+    font-size: 12px;
+    font-weight: 700;
+    color: #D48000;
+    background: #FFF5E0;
+    padding: 3px 8px;
+    border-radius: 12px;
+    border: 1px solid #F0DFC0;
+    white-space: nowrap;
+}
+.spirit-card-emotion {
+    font-size: 14px;
+}
+
+/* === 快捷功能按钮网格 === */
+.spirit-extra-buttons-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+.spirit-extra-btn {
+    flex: 1;
+    min-width: 70px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    padding: 12px 8px;
+    background: #FFF9F0;
+    border: 1.5px solid #F0DFC0;
+    border-radius: 14px;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+.spirit-extra-btn:active {
+    transform: scale(0.95);
+    background: #FFF0D0;
+}
+.seb-icon {
+    font-size: 22px;
+}
+.spirit-extra-btn > span:last-child {
+    font-size: 12px;
+    font-weight: 600;
+    color: #8B6530;
+}
+
+/* === 通用弹窗面板 === */
+.spirit-modal-panel {
+    background: #fff;
+    border-radius: 24px;
+    overflow: hidden;
+    max-width: 420px;
+    width: 92%;
+    max-height: 65vh;
+    box-shadow: 0 16px 48px rgba(180,150,100,0.2);
+    border: 2px solid #F5E8D0;
+    display: flex;
+    flex-direction: column;
+}
+.spirit-modal-tall {
+    max-height: 80vh;
+}
+.spirit-modal-panel-head {
+    background: #FFD060;
+    padding: 16px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-shrink: 0;
+    font-size: 17px;
+    font-weight: 800;
+    color: #fff;
+    text-shadow: 0 1px 4px rgba(0,0,0,0.1);
+}
+.spirit-modal-panel-body {
+    padding: 16px;
+    flex: 1;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    background: #FFF9F0;
+}
+.spirit-modal-scroll {
+    max-height: calc(80vh - 60px);
+}
+
+/* === 群聊成员头像栏 === */
+.spirit-chat-members {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 10px 20px;
+    background: #FFFAF0;
+    border-bottom: 1px solid #F0E0C8;
+    flex-shrink: 0;
+    justify-content: center;
+}
+.scm-member {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 3px;
+}
+.scm-member img {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid #FFD060;
+    background: #FFF5E6;
+}
+.scm-member span {
+    font-size: 10px;
+    color: #A08060;
+    font-weight: 600;
+}
+
+/* === 群聊消息改造 === */
+.spirit-chat-msg {
+    margin-bottom: 14px;
+    display: flex;
+    gap: 8px;
+    animation: msgSlideIn 0.3s ease-out;
+}
+.spirit-chat-msg.user {
+    flex-direction: row-reverse;
+}
+.spirit-chat-msg.partner {
+    flex-direction: row;
+}
+
+.scm-avatar {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    flex-shrink: 0;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.scm-avatar-img {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+.scm-avatar-fallback {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: #FFD060;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    color: #fff;
+}
+
+.scm-content {
+    max-width: 70%;
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+}
+.scm-name {
+    font-size: 11px;
+    color: #A08060;
+    font-weight: 600;
+    padding: 0 4px;
+}
+.spirit-chat-msg.user .scm-name {
+    text-align: right;
+}
+.scm-bubble {
+    padding: 10px 14px;
+    border-radius: 18px;
+    font-size: 14px;
+    line-height: 1.5;
+    word-wrap: break-word;
+}
+.spirit-chat-msg.spirit .scm-bubble {
+    background: #FFFFFF;
+    color: #6B5030;
+    border: 1.5px solid #F0DFC0;
+    box-shadow: 0 2px 6px rgba(200,160,96,0.06);
+}
+.spirit-chat-msg.user .scm-bubble {
+    background: #FFD060;
+    color: #fff;
+    box-shadow: 0 2px 6px rgba(255,208,96,0.25);
+}
+.spirit-chat-msg.partner .scm-bubble {
+    background: #E8F0FF;
+    color: #405080;
+    border: 1.5px solid #C8D8F0;
+    box-shadow: 0 2px 6px rgba(100,130,200,0.06);
+}
+
+/* === 系统消息 === */
+.spirit-chat-system-msg {
+    text-align: center;
+    padding: 6px 14px;
+    margin: 8px 20px;
+    font-size: 12px;
+    color: #B0A090;
+    background: rgba(240,230,210,0.5);
+    border-radius: 12px;
+}
+
+/* === 礼物面板 === */
+.spirit-gift-tabs {
+    display: flex;
+    gap: 6px;
+    padding: 0 0 12px;
+    overflow-x: auto;
+    flex-wrap: nowrap;
+    -webkit-overflow-scrolling: touch;
+}
+.spirit-gift-tab {
+    padding: 6px 14px;
+    border-radius: 20px;
+    font-size: 13px;
+    font-weight: 600;
+    background: #F5EDE0;
+    color: #A08060;
+    cursor: pointer;
+    white-space: nowrap;
+    border: 1.5px solid transparent;
+    transition: all 0.2s;
+}
+.spirit-gift-tab.active {
+    background: #FFD060;
+    color: #fff;
+    border-color: #E0B040;
+    box-shadow: 0 2px 8px rgba(255,208,96,0.3);
+}
+
+.spirit-gift-sender {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 0;
+    margin-bottom: 10px;
+    border-bottom: 1px dashed #F0DFC0;
+    font-size: 13px;
+    color: #8B6530;
+}
+.spirit-gift-sender-option {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    cursor: pointer;
+    font-size: 13px;
+}
+.spirit-gift-sender-option input[type="radio"] {
+    accent-color: #FFD060;
+}
+
+.spirit-gift-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+}
+.spirit-gift-grid.hidden {
+    display: none;
+}
+.spirit-gift-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 12px 6px;
+    background: #fff;
+    border: 1.5px solid #F0DFC0;
+    border-radius: 14px;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+.spirit-gift-item:active {
+    transform: scale(0.95);
+    border-color: #FFD060;
+    background: #FFF5E0;
+}
+.sgi-icon {
+    font-size: 28px;
+    margin-bottom: 4px;
+}
+.sgi-name {
+    font-size: 12px;
+    font-weight: 700;
+    color: #8B6530;
+}
+.sgi-desc {
+    font-size: 10px;
+    color: #B0A080;
+    text-align: center;
+    margin-top: 2px;
+}
+
+/* === 剧情弹窗 === */
+.spirit-story-modal {
+    background: #fff;
+    border-radius: 24px;
+    overflow: hidden;
+    max-width: 380px;
+    width: 90%;
+    box-shadow: 0 16px 48px rgba(180,150,100,0.25);
+    border: 2px solid #F5E8D0;
+}
+.spirit-story-header {
+    background: linear-gradient(135deg, #FFD060, #FFB020);
+    padding: 20px;
+    text-align: center;
+}
+.ssh-deco {
+    font-size: 20px;
+    margin-bottom: 6px;
+}
+.ssh-title {
+    font-size: 18px;
+    font-weight: 800;
+    color: #fff;
+    text-shadow: 0 1px 4px rgba(0,0,0,0.1);
+}
+.spirit-story-desc {
+    padding: 18px 20px;
+    font-size: 14px;
+    line-height: 1.7;
+    color: #6B5030;
+    background: #FFF9F0;
+}
+.spirit-story-choices {
+    padding: 0 16px 18px;
+    background: #FFF9F0;
+}
+.spirit-story-choice {
+    padding: 14px 18px;
+    margin-bottom: 10px;
+    background: #fff;
+    border: 2px solid #F0DFC0;
+    border-radius: 16px;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-size: 14px;
+    color: #8B6530;
+    font-weight: 600;
+}
+.spirit-story-choice:active {
+    transform: scale(0.97);
+    border-color: #FFD060;
+    background: #FFF5E0;
+    box-shadow: 0 2px 10px rgba(255,208,96,0.2);
+}
+.spirit-story-choice:last-child {
+    margin-bottom: 0;
+}
+
+/* === 日记条目 === */
+.spirit-diary-empty {
+    text-align: center;
+    padding: 40px 20px;
+    color: #B0A080;
+    font-size: 14px;
+    line-height: 1.8;
+}
+.spirit-diary-entry {
+    margin-bottom: 16px;
+    background: #fff;
+    border-radius: 16px;
+    border: 1.5px solid #F0DFC0;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(200,160,96,0.06);
+}
+.spirit-diary-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 16px;
+    background: linear-gradient(135deg, #FFF5E0, #FFFAF0);
+    border-bottom: 1px solid #F0E8D0;
+}
+.sdh-month {
+    font-size: 14px;
+    font-weight: 700;
+    color: #A07840;
+}
+.sdh-date {
+    font-size: 11px;
+    color: #C0A080;
+}
+.spirit-diary-text {
+    padding: 14px 16px;
+    font-size: 14px;
+    line-height: 1.8;
+    color: #6B5030;
+}
+.spirit-diary-events {
+    padding: 10px 16px 14px;
+    background: #FEFAF4;
+    border-top: 1px dashed #F0E0C8;
+}
+.sde-title {
+    font-size: 12px;
+    font-weight: 700;
+    color: #A08060;
+    margin-bottom: 6px;
+}
+.sde-item {
+    font-size: 12px;
+    color: #8B6530;
+    padding: 2px 0;
+    padding-left: 10px;
+    border-left: 2px solid #FFD060;
+    margin-bottom: 4px;
+}
+
+/* === 成就列表 === */
+.spirit-achievement-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 14px;
+    margin-bottom: 8px;
+    background: #F5EDE0;
+    border-radius: 14px;
+    border: 1.5px solid #E8D8C0;
+    opacity: 0.5;
+}
+.spirit-achievement-item.unlocked {
+    background: #fff;
+    border-color: #FFD060;
+    opacity: 1;
+    box-shadow: 0 2px 8px rgba(255,208,96,0.15);
+}
+.sai-icon {
+    font-size: 28px;
+    flex-shrink: 0;
+}
+.sai-info {
+    flex: 1;
+}
+.sai-title {
+    font-size: 14px;
+    font-weight: 700;
+    color: #8B6530;
+}
+.sai-desc {
+    font-size: 12px;
+    color: #A08060;
+    margin-top: 2px;
+}
+
+/* === 考试成绩 === */
+.spirit-exam-entry {
+    margin-bottom: 16px;
+    background: #fff;
+    border-radius: 16px;
+    border: 1.5px solid #F0DFC0;
+    overflow: hidden;
+    padding: 14px 16px;
+}
+.spirit-exam-title {
+    font-size: 15px;
+    font-weight: 700;
+    color: #A07840;
+    margin-bottom: 6px;
+}
+.spirit-exam-name {
+    font-size: 13px;
+    color: #B0A080;
+    margin-bottom: 12px;
+}
+.spirit-exam-scores {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+.spirit-exam-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 6px 12px;
+    background: #FEFAF4;
+    border-radius: 10px;
+}
+.ser-subject {
+    font-size: 14px;
+    font-weight: 600;
+    color: #8B6530;
+}
+.ser-score {
+    font-size: 16px;
+    font-weight: 800;
+    border-radius: 8px;
+    padding: 2px 10px;
+}
+.ser-excellent {
+    color: #FFD060;
+    background: #FFF5E0;
+}
+.ser-good {
+    color: #66BB6A;
+    background: #F0F8F0;
+}
+.ser-pass {
+    color: #42A5F5;
+    background: #E8F4FF;
+}
+.ser-fail {
+    color: #EF5350;
+    background: #FFF0F0;
+}
+
+/* === 故事历史 === */
+.spirit-story-entry {
+    margin-bottom: 10px;
+    background: #fff;
+    border-radius: 14px;
+    border: 1.5px solid #F0DFC0;
+    padding: 12px 14px;
+}
+.sse-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 6px;
+}
+.sse-title {
+    font-size: 14px;
+    font-weight: 700;
+    color: #A07840;
+}
+.sse-month {
+    font-size: 11px;
+    color: #C0A080;
+    background: #FFF5E0;
+    padding: 2px 8px;
+    border-radius: 10px;
+}
+.sse-choice {
+    font-size: 13px;
+    color: #8B6530;
+    padding: 6px 10px;
+    background: #FEFAF4;
+    border-radius: 10px;
+    border-left: 3px solid #FFD060;
+}
+
+/* === modal-mask 确保居中 === */
+.modal-mask {
+    display: none;
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(0,0,0,0.4);
+    z-index: 9999;
+    align-items: center;
+    justify-content: center;
+}
+
+/* === 精灵详情页action面板中的动态action grid修复 === */
+#spirit-action-grid-v2 {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+}
+#spirit-action-grid-v2 .spirit-action-btn {
+    text-align: center;
+}
+
+/* ========================================== */
+/* === 趣事记录 - 时间轴样式 === */
+/* ========================================== */
+.spirit-anecdote-container {
+    position: relative;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+/* 年份翻页导航 */
+.anecdote-year-nav {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    padding: 14px 16px;
+    background: linear-gradient(135deg, #FFF8EE, #FFF2E0);
+    border-bottom: 1.5px solid #F0DFC0;
+    flex-shrink: 0;
+}
+.anecdote-year-btn {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    border: 1.5px solid #E8D0B0;
+    background: #fff;
+    color: #A08060;
+    font-size: 16px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s;
+}
+.anecdote-year-btn:active {
+    transform: scale(0.92);
+    background: #FFD060;
+    color: #fff;
+    border-color: #FFD060;
+}
+.anecdote-year-btn:disabled {
+    opacity: 0.3;
+    cursor: not-allowed;
+}
+.anecdote-year-label {
+    font-size: 18px;
+    font-weight: 800;
+    color: #8B6530;
+    min-width: 100px;
+    text-align: center;
+}
+.anecdote-year-sub {
+    font-size: 11px;
+    color: #C0A070;
+    font-weight: 400;
+}
+
+/* 时间轴主体 */
+.anecdote-timeline {
+    flex: 1;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    padding: 20px 16px 20px 40px;
+    position: relative;
+    background: #FFFBF5;
+}
+.anecdote-timeline::before {
+    content: '';
+    position: absolute;
+    left: 30px;
+    top: 0;
+    bottom: 0;
+    width: 3px;
+    background: linear-gradient(to bottom, #FFD060 0%, #F0C040 50%, #E8B830 100%);
+    border-radius: 2px;
+}
+
+/* 时间轴节点 */
+.anecdote-node {
+    position: relative;
+    margin-bottom: 24px;
+    padding-left: 24px;
+    animation: anecdoteFadeIn 0.4s ease-out;
+}
+@keyframes anecdoteFadeIn {
+    from { opacity: 0; transform: translateX(-10px); }
+    to { opacity: 1; transform: translateX(0); }
+}
+.anecdote-node::before {
+    content: '';
+    position: absolute;
+    left: -16px;
+    top: 14px;
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    background: #FFD060;
+    border: 3px solid #fff;
+    box-shadow: 0 2px 8px rgba(255,208,96,0.4);
+    z-index: 1;
+}
+.anecdote-node.system-event::before {
+    background: #FF9EC6;
+    box-shadow: 0 2px 8px rgba(255,158,198,0.4);
+}
+.anecdote-node.user-event::before {
+    background: #7EC8E3;
+    box-shadow: 0 2px 8px rgba(126,200,227,0.4);
+}
+
+/* 事件卡片 */
+.anecdote-card {
+    background: #fff;
+    border-radius: 16px;
+    border: 1.5px solid #F0DFC0;
+    overflow: hidden;
+    box-shadow: 0 3px 12px rgba(200,160,96,0.08);
+    transition: transform 0.2s;
+}
+.anecdote-card:active {
+    transform: scale(0.98);
+}
+.anecdote-card-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 14px;
+    background: linear-gradient(135deg, #FFF8EE, #FFFAF0);
+    border-bottom: 1px solid #F0E8D0;
+}
+.anecdote-date {
+    font-size: 12px;
+    font-weight: 700;
+    color: #A07840;
+}
+.anecdote-location {
+    font-size: 11px;
+    color: #C0A070;
+    display: flex;
+    align-items: center;
+    gap: 3px;
+}
+.anecdote-card-body {
+    padding: 12px 14px;
+}
+.anecdote-title {
+    font-size: 14px;
+    font-weight: 700;
+    color: #6B5030;
+    margin-bottom: 6px;
+}
+.anecdote-desc {
+    font-size: 13px;
+    line-height: 1.7;
+    color: #8B7050;
+}
+.anecdote-card-footer {
+    padding: 8px 14px;
+    border-top: 1px dashed #F0E0C8;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.anecdote-tag {
+    font-size: 10px;
+    padding: 2px 8px;
+    border-radius: 10px;
+    font-weight: 600;
+}
+.anecdote-tag.user {
+    background: #E0F4FF;
+    color: #3A9BD5;
+}
+.anecdote-tag.system {
+    background: #FFE8F0;
+    color: #D5609A;
+}
+.anecdote-effects {
+    font-size: 10px;
+    color: #C0A070;
+}
+
+/* 时间轴连接线上的月份标记 */
+.anecdote-month-marker {
+    position: relative;
+    margin-bottom: 16px;
+    padding-left: 24px;
+}
+.anecdote-month-marker::before {
+    content: '';
+    position: absolute;
+    left: -13px;
+    top: 8px;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #E8D8C0;
+    z-index: 1;
+}
+.anecdote-month-label {
+    font-size: 13px;
+    font-weight: 700;
+    color: #B0956A;
+    padding: 4px 12px;
+    background: linear-gradient(135deg, #FFF5E0, #FFF0D8);
+    border-radius: 20px;
+    display: inline-block;
+    border: 1px solid #F0DFC0;
+}
+
+/* 趣事为空提示 */
+.anecdote-empty {
+    text-align: center;
+    padding: 60px 30px;
+    color: #B0A080;
+}
+.anecdote-empty-icon {
+    font-size: 48px;
+    margin-bottom: 12px;
+}
+.anecdote-empty-text {
+    font-size: 14px;
+    line-height: 1.8;
+}
+
+/* 用户添加趣事按钮 */
+.anecdote-add-btn {
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+    width: 52px;
+    height: 52px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #FFD060, #FFC040);
+    color: #fff;
+    border: none;
+    font-size: 24px;
+    box-shadow: 0 4px 16px rgba(255,192,64,0.4);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s;
+    z-index: 10;
+}
+.anecdote-add-btn:active {
+    transform: scale(0.9);
+}
+
+/* 添加趣事表单 */
+.anecdote-form-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0,0,0,0.3);
+    z-index: 20;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+}
+.anecdote-form {
+    background: #fff;
+    border-radius: 24px 24px 0 0;
+    width: 100%;
+    padding: 24px 20px 32px;
+    box-shadow: 0 -8px 30px rgba(0,0,0,0.15);
+    animation: anecdoteFormSlideUp 0.3s ease-out;
+}
+@keyframes anecdoteFormSlideUp {
+    from { transform: translateY(100%); }
+    to { transform: translateY(0); }
+}
+.anecdote-form-title {
+    font-size: 16px;
+    font-weight: 700;
+    color: #8B6530;
+    text-align: center;
+    margin-bottom: 18px;
+}
+.anecdote-form-field {
+    margin-bottom: 14px;
+}
+.anecdote-form-label {
+    font-size: 12px;
+    font-weight: 600;
+    color: #A08060;
+    margin-bottom: 6px;
+    display: block;
+}
+.anecdote-form-input {
+    width: 100%;
+    box-sizing: border-box;
+    border: 1.5px solid #F0DFC0;
+    border-radius: 12px;
+    padding: 10px 14px;
+    font-size: 14px;
+    outline: none;
+    background: #FFF9F0;
+    color: #333;
+    transition: border-color 0.2s;
+}
+.anecdote-form-input:focus {
+    border-color: #FFD060;
+}
+.anecdote-form-textarea {
+    width: 100%;
+    box-sizing: border-box;
+    border: 1.5px solid #F0DFC0;
+    border-radius: 12px;
+    padding: 10px 14px;
+    font-size: 14px;
+    outline: none;
+    background: #FFF9F0;
+    color: #333;
+    min-height: 80px;
+    resize: none;
+    font-family: inherit;
+    line-height: 1.6;
+}
+.anecdote-form-textarea:focus {
+    border-color: #FFD060;
+}
+.anecdote-form-actions {
+    display: flex;
+    gap: 12px;
+    margin-top: 18px;
+}
+.anecdote-form-cancel {
+    flex: 1;
+    padding: 12px;
+    border: 1.5px solid #ddd;
+    border-radius: 12px;
+    background: #fff;
+    color: #999;
+    font-size: 14px;
+    cursor: pointer;
+}
+.anecdote-form-submit {
+    flex: 1;
+    padding: 12px;
+    border: none;
+    border-radius: 12px;
+    background: linear-gradient(135deg, #FFD060, #FFC040);
+    color: #fff;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    box-shadow: 0 3px 10px rgba(255,208,96,0.3);
+}
+.anecdote-form-submit:active {
+    transform: scale(0.97);
+}
+
+/* ========================================== */
+/* === 精灵日记 - 信纸UI样式 === */
+/* ========================================== */
+
+/* 日记全屏容器 */
+.spirit-letter-diary {
+    position: relative;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    background: #F5EDE0;
+}
+
+/* 日记顶部导航 */
+.letter-diary-nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 14px 18px;
+    background: linear-gradient(135deg, #FFF8EE, #FFF2E0);
+    border-bottom: 1.5px solid #E8D0B0;
+    flex-shrink: 0;
+}
+.letter-diary-title {
+    font-size: 17px;
+    font-weight: 800;
+    color: #8B6530;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+.letter-diary-history-btn {
+    padding: 6px 14px;
+    border: 1.5px solid #E8D0B0;
+    border-radius: 20px;
+    background: #fff;
+    color: #A08060;
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    transition: all 0.2s;
+}
+.letter-diary-history-btn:active {
+    background: #FFD060;
+    color: #fff;
+    border-color: #FFD060;
+}
+
+/* 信纸主体 */
+.letter-paper {
+    flex: 1;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    padding: 12px 10px;
+    display: flex;
+    justify-content: center;
+}
+.letter-paper-inner {
+    background-color: #FFFFF8;
+    border-radius: 4px;
+    width: 100%;
+    max-width: 100%;
+    min-height: 500px;
+    padding: 32px 28px 40px;
+    position: relative;
+    box-shadow:
+        0 2px 8px rgba(180,150,100,0.1),
+        0 8px 24px rgba(180,150,100,0.06),
+        inset 0 0 60px rgba(245,237,224,0.5);
+    border: 1px solid #E8DCC8;
+    /* 信纸横线效果 */
+    background-image:
+        repeating-linear-gradient(
+            transparent,
+            transparent 31px,
+            #E8DCC8 31px,
+            #E8DCC8 32px
+        );
+    background-position: 0 44px;
+    background-attachment: local;
+}
+/* 信纸左侧红线 */
+.letter-paper-inner::before {
+    content: '';
+    position: absolute;
+    left: 24px;
+    top: 0;
+    bottom: 0;
+    width: 1.5px;
+    background: #FFB0B0;
+    opacity: 0.5;
+}
+/* 信纸右下角折角 */
+.letter-paper-inner::after {
+    content: '';
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    width: 30px;
+    height: 30px;
+    background: linear-gradient(135deg, #FFFFF8 45%, #E8DCC8 50%, #F5EDE0 55%);
+}
+
+/* 日记头部信息 */
+.letter-header {
+    margin-bottom: 20px;
+    padding-bottom: 16px;
+    border-bottom: 1px dashed #E0D4C0;
+}
+.letter-date-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 10px;
+}
+.letter-date {
+    font-size: 15px;
+    font-weight: 700;
+    color: #8B6530;
+    font-family: 'Georgia', serif;
+}
+.letter-weather {
+    font-size: 13px;
+    color: #A08060;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+.letter-meta-row {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    flex-wrap: wrap;
+}
+.letter-meta-item {
+    font-size: 12px;
+    color: #B09060;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+.letter-mood-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 3px 10px;
+    border-radius: 12px;
+    font-size: 12px;
+    font-weight: 600;
+}
+.letter-mood-happy {
+    background: #FFF5E0;
+    color: #D48000;
+}
+.letter-mood-calm {
+    background: #E8F4FF;
+    color: #3A9BD5;
+}
+.letter-mood-sad {
+    background: #FFE8F0;
+    color: #D5609A;
+}
+.letter-mood-excited {
+    background: #E8FFE8;
+    color: #4CAF50;
+}
+
+/* 日记正文 */
+.letter-body {
+    font-size: 14px;
+    line-height: 2.0;
+    color: #4A3820;
+    font-family: 'Georgia', 'SimSun', 'STSong', serif;
+    text-indent: 2em;
+    min-height: 300px;
+    word-break: break-word;
+    white-space: pre-wrap;
+    position: relative;
+    padding-left: 6px;
+}
+
+/* 签名 */
+.letter-signature {
+    text-align: right;
+    margin-top: 24px;
+    padding-top: 16px;
+    border-top: 1px dashed #E0D4C0;
+}
+.letter-sign-name {
+    font-size: 16px;
+    font-weight: 700;
+    color: #8B6530;
+    font-family: 'Georgia', 'KaiTi', cursive;
+    font-style: italic;
+}
+.letter-sign-date {
+    font-size: 11px;
+    color: #C0A080;
+    margin-top: 4px;
+}
+
+/* 精灵印章 */
+.letter-stamp {
+    position: absolute;
+    bottom: 50px;
+    right: 30px;
+    width: 60px;
+    height: 60px;
+    opacity: 0.15;
+    transform: rotate(-15deg);
+    border: 3px solid #c0392b;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 28px;
+    color: #c0392b;
+}
+
+/* 日记为空 */
+.letter-diary-empty {
+    text-align: center;
+    padding: 60px 30px;
+    color: #B0A080;
+}
+.letter-diary-empty-icon {
+    font-size: 56px;
+    margin-bottom: 16px;
+}
+.letter-diary-empty-text {
+    font-size: 14px;
+    line-height: 1.8;
+    color: #A09070;
+}
+
+/* 日记生成中 */
+.letter-diary-loading {
+    text-align: center;
+    padding: 60px 30px;
+}
+.letter-diary-loading-icon {
+    font-size: 48px;
+    margin-bottom: 16px;
+    animation: letterPenAnim 1.5s ease-in-out infinite;
+}
+@keyframes letterPenAnim {
+    0%, 100% { transform: rotate(-5deg); }
+    50% { transform: rotate(5deg) translateX(3px); }
+}
+.letter-diary-loading-text {
+    font-size: 14px;
+    color: #A09070;
+}
+
+/* 历史日记列表 */
+.letter-history-list {
+    padding: 16px;
+    background: #FFFBF5;
+}
+.letter-history-item {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 14px 16px;
+    margin-bottom: 10px;
+    background: #fff;
+    border-radius: 16px;
+    border: 1.5px solid #F0DFC0;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+.letter-history-item:active {
+    transform: scale(0.98);
+    background: #FFF8EE;
+}
+.letter-history-emoji {
+    font-size: 28px;
+    flex-shrink: 0;
+}
+.letter-history-info {
+    flex: 1;
+}
+.letter-history-date {
+    font-size: 14px;
+    font-weight: 700;
+    color: #8B6530;
+}
+.letter-history-preview {
+    font-size: 12px;
+    color: #A08060;
+    margin-top: 3px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    max-width: 200px;
+}
+.letter-history-mood {
+    font-size: 20px;
+    flex-shrink: 0;
+}
+.letter-history-back-btn {
+    padding: 10px 18px;
+    border: 1.5px solid #E8D0B0;
+    border-radius: 14px;
+    background: #fff;
+    color: #A08060;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    margin: 10px 16px;
+    text-align: center;
+}
+.letter-history-back-btn:active {
+    background: #FFD060;
+    color: #fff;
+}
+
+/* 信纸翻页动画 */
+@keyframes letterPageTurn {
+    0% { transform: perspective(800px) rotateY(0deg); opacity: 1; }
+    50% { transform: perspective(800px) rotateY(-90deg); opacity: 0.5; }
+    100% { transform: perspective(800px) rotateY(0deg); opacity: 1; }
+}
+.letter-page-turning {
+    animation: letterPageTurn 0.5s ease-in-out;
+}
+
+/* 信纸装饰元素 */
+.letter-deco-top {
+    text-align: center;
+    font-size: 11px;
+    color: #D0C0A0;
+    margin-bottom: 8px;
+    letter-spacing: 8px;
+}
+.letter-deco-flower {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    font-size: 20px;
+    opacity: 0.3;
+}
+
+/* === 精灵状态气泡 === */
+.spirit-status-bubble {
+    position: absolute;
+    top: -8px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #fff;
+    border: 1.5px solid #e0d0c0;
+    border-radius: 10px;
+    padding: 4px 12px;
+    font-size: 12px;
+    color: #8B6530;
+    white-space: nowrap;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+    animation: spiritBubbleBounce 2s ease-in-out infinite;
+    z-index: 2;
+}
+.spirit-status-bubble::after {
+    content: '';
+    position: absolute;
+    bottom: -6px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 0;
+    height: 0;
+    border-left: 6px solid transparent;
+    border-right: 6px solid transparent;
+    border-top: 6px solid #fff;
+}
+@keyframes spiritBubbleBounce {
+    0%, 100% { transform: translateX(-50%) translateY(0); }
+    50% { transform: translateX(-50%) translateY(-4px); }
+}
+
+/* === 行动按钮wrap（含partner标签） === */
+.spirit-action-btn-wrap {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+}
+.sab-partner-tag {
+    margin-top: 2px;
+    padding: 3px 0;
+    text-align: center;
+    font-size: 10px;
+    color: #888;
+    background: #f5f5f5;
+    border: 1px solid #e8e8e8;
+    border-radius: 0 0 8px 8px;
+    cursor: pointer;
+    transition: background 0.15s, color 0.15s;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.sab-partner-tag:active {
+    background: #e8e8e8;
+    color: #555;
+}
+.sab-partner-tag i {
+    margin-right: 2px;
+    font-size: 9px;
+}

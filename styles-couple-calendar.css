@@ -1,0 +1,187 @@
+/* ====== 情侣日历 & 情侣账本 样式 ====== */
+
+/* === 情侣日历 === */
+.cc-container { display:flex; flex-direction:column; height:100vh; background:#f5f5f7; }
+.cc-nav { display:flex; align-items:center; padding:12px 16px; background:#fff; border-bottom:1px solid #eee; gap:12px; }
+.cc-nav-back { width:32px; height:32px; display:flex; align-items:center; justify-content:center; cursor:pointer; color:#333; }
+.cc-nav-title { flex:1; font-size:17px; font-weight:600; color:#1a1a1a; }
+.cc-nav-actions { display:flex; gap:8px; }
+.cc-nav-btn { width:32px; height:32px; display:flex; align-items:center; justify-content:center; cursor:pointer; color:#666; border-radius:50%; }
+.cc-nav-btn:active { background:#f0f0f0; }
+
+.cc-month-bar { display:flex; align-items:center; justify-content:center; padding:10px 16px; background:#fff; gap:20px; }
+.cc-month-arrow { width:28px; height:28px; display:flex; align-items:center; justify-content:center; cursor:pointer; color:#999; border-radius:50%; }
+.cc-month-arrow:active { background:#f0f0f0; }
+.cc-month-title { font-size:15px; font-weight:600; color:#333; min-width:100px; text-align:center; }
+
+.cc-weekdays { display:grid; grid-template-columns:repeat(7,1fr); background:#fff; padding:4px 8px; border-bottom:1px solid #f0f0f0; }
+.cc-weekdays > div { text-align:center; font-size:12px; color:#999; padding:4px 0; }
+
+.cc-grid { display:grid; grid-template-columns:repeat(7,1fr); background:#fff; padding:4px 8px 8px; gap:2px; }
+.cc-day { position:relative; text-align:center; padding:8px 0 12px; font-size:14px; color:#333; cursor:pointer; border-radius:8px; transition:background .15s; }
+.cc-day:active { background:#f5f5f5; }
+.cc-day.cc-other { color:#ccc; }
+.cc-day.cc-today { font-weight:700; color:#5b8def; }
+.cc-day.cc-selected { background:#5b8def; color:#fff; font-weight:600; border-radius:10px; }
+.cc-day.cc-selected .cc-dot { border:1px solid #fff; }
+
+.cc-dots { display:flex; justify-content:center; gap:3px; position:absolute; bottom:3px; left:50%; transform:translateX(-50%); }
+.cc-dot { width:5px; height:5px; border-radius:50%; }
+
+.cc-filters { display:flex; gap:6px; padding:10px 16px; overflow-x:auto; background:#fff; border-top:1px solid #f0f0f0; }
+.cc-filter-tag { display:flex; align-items:center; gap:4px; padding:4px 10px; border-radius:14px; font-size:12px; color:#999; background:#f5f5f5; cursor:pointer; white-space:nowrap; transition:all .15s; }
+.cc-filter-tag.active { color:var(--tag-color); background:color-mix(in srgb, var(--tag-color) 10%, white); border:1px solid color-mix(in srgb, var(--tag-color) 30%, white); }
+.cc-filter-tag:not(.active) { border:1px solid transparent; opacity:.6; }
+.cc-filter-dot { width:6px; height:6px; border-radius:50%; flex-shrink:0; }
+
+.cc-events-header { display:flex; align-items:center; padding:12px 16px 6px; gap:8px; }
+.cc-events-date { font-size:15px; font-weight:600; color:#333; }
+.cc-events-count { font-size:12px; color:#999; flex:1; }
+.cc-add-btn { width:28px; height:28px; border-radius:50%; border:none; background:#5b8def; color:#fff; font-size:13px; cursor:pointer; display:flex; align-items:center; justify-content:center; }
+
+.cc-events-list { flex:1; overflow-y:auto; padding:0 16px 16px; }
+.cc-no-events { text-align:center; padding:40px 0; color:#bbb; font-size:14px; }
+.cc-no-events i { display:block; margin-bottom:8px; }
+
+.cc-event-item { display:flex; background:#fff; border-radius:10px; margin-bottom:8px; overflow:hidden; box-shadow:0 1px 3px rgba(0,0,0,.04); }
+.cc-ev-stripe { width:4px; flex-shrink:0; }
+.cc-ev-body { flex:1; padding:10px 12px; }
+.cc-ev-head { display:flex; align-items:center; gap:6px; }
+.cc-ev-emoji { font-size:16px; }
+.cc-ev-title { font-size:14px; font-weight:500; color:#333; flex:1; }
+.cc-ev-time { font-size:11px; color:#999; }
+.cc-ev-del { width:20px; height:20px; display:flex; align-items:center; justify-content:center; color:#ccc; cursor:pointer; font-size:11px; }
+.cc-ev-del:hover { color:#ff4d4f; }
+.cc-ev-desc { font-size:12px; color:#999; margin-top:3px; }
+.cc-ev-tag { font-size:11px; margin-top:4px; display:flex; align-items:center; gap:4px; }
+.cc-ev-tag i { font-size:10px; }
+
+.cc-add-form { background:#fff; border-radius:12px; margin:8px 16px 16px; padding:14px; box-shadow:0 2px 8px rgba(0,0,0,.06); }
+.cc-add-title { font-size:14px; font-weight:600; color:#333; margin-bottom:10px; display:flex; align-items:center; gap:6px; }
+.cc-add-form input[type="text"], .cc-add-form input[type="time"] { width:100%; padding:8px 10px; border:1px solid #e0e0e0; border-radius:8px; font-size:14px; margin-bottom:8px; box-sizing:border-box; }
+.cc-add-row { display:flex; gap:8px; }
+.cc-add-row input { flex:1; }
+.cc-add-actions { display:flex; gap:8px; justify-content:flex-end; margin-top:8px; }
+.cc-btn { padding:8px 18px; border-radius:8px; border:none; font-size:13px; cursor:pointer; }
+.cc-btn-cancel { background:#f0f0f0; color:#666; }
+.cc-btn-save { background:#5b8def; color:#fff; }
+
+/* === 情侣账本 === */
+.cl-container { display:flex; flex-direction:column; height:100vh; background:#f5f5f7; }
+.cl-nav { display:flex; align-items:center; padding:12px 16px; background:#fff; border-bottom:1px solid #eee; gap:12px; }
+.cl-nav-back { width:32px; height:32px; display:flex; align-items:center; justify-content:center; cursor:pointer; color:#333; }
+.cl-nav-title { flex:1; font-size:17px; font-weight:600; color:#1a1a1a; }
+.cl-nav-actions { display:flex; gap:8px; }
+.cl-nav-btn { width:32px; height:32px; display:flex; align-items:center; justify-content:center; cursor:pointer; color:#5b8def; border-radius:50%; background:#eef3ff; }
+
+.cl-month-bar { display:flex; align-items:center; justify-content:center; padding:8px 16px; background:#fff; gap:20px; }
+.cl-month-arrow { width:28px; height:28px; display:flex; align-items:center; justify-content:center; cursor:pointer; color:#999; border-radius:50%; }
+.cl-month-title { font-size:15px; font-weight:600; color:#333; min-width:100px; text-align:center; }
+
+.cl-tabs { display:flex; background:#fff; border-bottom:1px solid #eee; padding:0 16px; }
+.cl-tab { flex:1; text-align:center; padding:10px 0; font-size:13px; color:#999; cursor:pointer; border-bottom:2px solid transparent; transition:all .15s; }
+.cl-tab.active { color:#5b8def; border-bottom-color:#5b8def; font-weight:600; }
+.cl-tab i { margin-right:4px; }
+
+.cl-body { flex:1; overflow-y:auto; padding:12px 16px 80px; }
+
+.cl-empty { text-align:center; padding:60px 0; color:#bbb; }
+.cl-empty i { display:block; margin-bottom:10px; }
+.cl-empty-hint { font-size:12px; margin-top:6px; color:#ccc; }
+
+.cl-summary { display:flex; background:#fff; border-radius:12px; padding:14px; margin-bottom:12px; gap:8px; box-shadow:0 1px 3px rgba(0,0,0,.04); }
+.cl-summary-item { flex:1; text-align:center; }
+.cl-summary-label { font-size:11px; color:#999; margin-bottom:4px; }
+.cl-summary-val { font-size:16px; font-weight:600; color:#333; }
+.cl-expense { color:#ff4d4f; }
+.cl-income { color:#07c160; }
+
+.cl-day-header { display:flex; justify-content:space-between; padding:10px 4px 4px; font-size:12px; color:#999; }
+.cl-day-total { color:#ff4d4f; }
+
+.cl-record { display:flex; align-items:center; background:#fff; border-radius:10px; padding:10px 12px; margin-bottom:6px; gap:10px; cursor:pointer; box-shadow:0 1px 2px rgba(0,0,0,.03); }
+.cl-record:active { background:#fafafa; }
+.cl-rec-icon { width:38px; height:38px; border-radius:10px; display:flex; align-items:center; justify-content:center; font-size:18px; flex-shrink:0; }
+.cl-rec-info { flex:1; min-width:0; }
+.cl-rec-title { font-size:14px; color:#333; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+.cl-rec-meta { font-size:11px; color:#999; margin-top:2px; }
+.cl-rec-amount { font-size:15px; font-weight:600; white-space:nowrap; }
+
+/* 统计 */
+.cl-stats-section { background:#fff; border-radius:12px; padding:14px; margin-bottom:12px; box-shadow:0 1px 3px rgba(0,0,0,.04); }
+.cl-section-title { font-size:14px; font-weight:600; color:#333; margin-bottom:12px; display:flex; align-items:center; gap:6px; }
+.cl-section-title i { color:#5b8def; }
+
+.cl-stat-row { display:flex; align-items:center; gap:8px; margin-bottom:8px; }
+.cl-stat-cat { font-size:13px; color:#666; min-width:60px; white-space:nowrap; }
+.cl-stat-bar-wrap { flex:1; height:8px; background:#f0f0f0; border-radius:4px; overflow:hidden; }
+.cl-stat-bar { height:100%; border-radius:4px; transition:width .3s; }
+.cl-stat-val { font-size:12px; color:#333; min-width:80px; text-align:right; }
+.cl-stat-pct { color:#999; }
+
+.cl-compare { margin-top:8px; }
+.cl-compare-item { display:flex; align-items:center; gap:8px; margin-bottom:8px; }
+.cl-compare-name { font-size:13px; color:#666; min-width:40px; }
+.cl-compare-bar-wrap { flex:1; height:10px; background:#f0f0f0; border-radius:5px; overflow:hidden; }
+.cl-compare-bar { height:100%; border-radius:5px; transition:width .3s; }
+.cl-compare-val { font-size:13px; font-weight:600; color:#333; min-width:60px; text-align:right; }
+.cl-compare-diff { text-align:center; font-size:13px; color:#666; margin-top:8px; padding:8px; background:#fafafa; border-radius:8px; }
+
+/* 预算 */
+.cl-budget-section { background:#fff; border-radius:12px; padding:14px; box-shadow:0 1px 3px rgba(0,0,0,.04); }
+.cl-budget-toggle { display:flex; justify-content:space-between; align-items:center; margin-bottom:12px; }
+.cl-budget-toggle label { font-size:14px; color:#333; }
+.cl-switch { position:relative; width:44px; height:24px; display:inline-block; }
+.cl-switch input { opacity:0; width:0; height:0; }
+.cl-switch span { position:absolute; inset:0; background:#ddd; border-radius:12px; cursor:pointer; transition:.2s; }
+.cl-switch span::before { content:''; position:absolute; width:20px; height:20px; left:2px; top:2px; background:#fff; border-radius:50%; transition:.2s; }
+.cl-switch input:checked + span { background:#5b8def; }
+.cl-switch input:checked + span::before { transform:translateX(20px); }
+
+.cl-budget-input-row { display:flex; justify-content:space-between; align-items:center; margin-bottom:12px; }
+.cl-budget-input-row label { font-size:14px; color:#333; }
+.cl-budget-input-wrap { display:flex; align-items:center; gap:4px; font-size:15px; color:#333; }
+.cl-budget-input-wrap input { width:100px; padding:6px 8px; border:1px solid #e0e0e0; border-radius:8px; font-size:15px; text-align:right; }
+
+.cl-budget-ring-area { display:flex; align-items:center; gap:20px; padding:16px 0; justify-content:center; }
+.cl-budget-ring { position:relative; width:100px; height:100px; }
+.cl-budget-ring svg { width:100%; height:100%; }
+.cl-budget-ring-text { position:absolute; inset:0; display:flex; flex-direction:column; align-items:center; justify-content:center; }
+.cl-budget-pct { font-size:22px; font-weight:700; color:#333; }
+.cl-budget-used { font-size:11px; color:#999; }
+.cl-budget-info { font-size:13px; color:#666; line-height:2; }
+.cl-budget-warn { color:#ff4d4f; font-weight:500; }
+.cl-budget-hint { text-align:center; padding:30px 0; color:#ccc; font-size:13px; }
+
+/* 添加表单 */
+.cl-add-overlay { position:fixed; inset:0; background:rgba(0,0,0,.4); z-index:9999; display:flex; align-items:flex-end; justify-content:center; overflow:hidden; touch-action:pan-y; }
+.cl-add-sheet { background:#fff; border-radius:16px 16px 0 0; width:100%; max-width:500px; padding:20px 16px 30px; max-height:85vh; overflow-y:auto; overflow-x:hidden; box-sizing:border-box; touch-action:pan-y; -webkit-overflow-scrolling:touch; overscroll-behavior:contain; }
+.cl-add-title { font-size:16px; font-weight:600; color:#333; text-align:center; margin-bottom:14px; }
+
+.cl-type-toggle { display:flex; background:#f0f0f0; border-radius:10px; padding:3px; margin-bottom:14px; }
+.cl-type-btn { flex:1; text-align:center; padding:8px; border-radius:8px; font-size:14px; color:#999; cursor:pointer; transition:all .15s; }
+.cl-type-btn.active { color:#fff; font-weight:600; }
+.cl-expense-bg { background:#ff4d4f; }
+.cl-income-bg { background:#07c160; }
+
+.cl-amount-input { display:flex; align-items:center; gap:4px; margin-bottom:14px; }
+.cl-amount-input span { font-size:24px; font-weight:700; color:#333; }
+.cl-amount-input input { flex:1; font-size:28px; font-weight:700; border:none; outline:none; color:#333; }
+
+.cl-cat-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:8px; margin-bottom:14px; }
+.cl-cat-btn { display:flex; flex-direction:column; align-items:center; gap:4px; padding:10px 4px; border-radius:10px; background:#f8f8f8; cursor:pointer; font-size:12px; color:#666; transition:all .15s; border:2px solid transparent; }
+.cl-cat-btn.active { border-color:var(--cat-color); background:color-mix(in srgb, var(--cat-color) 8%, white); color:var(--cat-color); }
+
+.cl-payer-row { display:flex; align-items:center; gap:10px; margin-bottom:12px; }
+.cl-payer-row label { font-size:14px; color:#333; white-space:nowrap; }
+.cl-payer-btns { display:flex; gap:6px; flex:1; }
+.cl-payer-btn { flex:1; text-align:center; padding:8px; border-radius:8px; background:#f0f0f0; font-size:13px; color:#666; cursor:pointer; transition:all .15s; }
+.cl-payer-btn.active { background:#5b8def; color:#fff; }
+
+.cl-add-sheet input[type="text"], .cl-add-sheet input[type="date"] { width:100%; padding:10px 12px; border:1px solid #e0e0e0; border-radius:10px; font-size:14px; margin-bottom:10px; box-sizing:border-box; }
+
+.cl-add-actions { display:flex; gap:8px; justify-content:flex-end; margin-top:10px; }
+.cl-btn { padding:10px 20px; border-radius:10px; border:none; font-size:14px; cursor:pointer; }
+.cl-btn-cancel { background:#f0f0f0; color:#666; }
+.cl-btn-save { background:#5b8def; color:#fff; font-weight:600; }
+.cl-btn-del { background:#fff0f0; color:#ff4d4f; padding:10px 14px; }

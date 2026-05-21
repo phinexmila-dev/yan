@@ -1,0 +1,582 @@
+/* ============================================================
+   WEB-PERF.CSS — 网页版 (Desktop/Mobile Browser) 专用性能优化
+   ============================================================
+   核心策略：
+   1. 禁用 backdrop-filter: blur() — 最大的 GPU 杀手
+   2. 降级无限 CSS 动画（改为有限次数或静态）
+   3. 减少 box-shadow 层数和复杂度
+   4. 对滚动容器使用 contain 优化布局
+   5. 提供 .low-perf-mode 类供用户手动启用极致省电模式
+   
+   依赖：device-adapter.js 在非 APK/iOS 环境下加载此文件
+   ============================================================ */
+
+/* ============================================================
+   1. 全局：禁用 backdrop-filter (blur效果)
+   ============================================================
+   backdrop-filter 在浏览器中会触发实时高斯模糊计算，
+   每一帧都需要读取下层像素并模糊渲染，极其消耗GPU。
+   用高不透明度纯色背景替代，视觉差异极小但性能提升巨大。
+   ============================================================ */
+
+/* 导航栏 */
+.nav-bar,
+#chat-nav-bar,
+#layer-chat > .nav-bar,
+#layer-chat > .nav-bar#chat-nav-bar {
+    -webkit-backdrop-filter: none !important;
+    backdrop-filter: none !important;
+    background: var(--chat-nav-bg, rgba(255, 255, 255, 0.97)) !important;
+}
+
+/* 聊天输入栏 */
+#chat-input-bar,
+.input-bar,
+#layer-chat .input-bar {
+    -webkit-backdrop-filter: none !important;
+    backdrop-filter: none !important;
+    background: var(--chat-input-bg, rgba(255, 255, 255, 0.98)) !important;
+}
+
+/* 底部导航 */
+.bottom-nav {
+    -webkit-backdrop-filter: none !important;
+    backdrop-filter: none !important;
+    background: rgba(245, 245, 245, 0.97) !important;
+}
+
+/* 工具栏、弹出菜单 */
+#layer-chat .toolbar,
+#layer-chat .toolbar .emoji-tab,
+#layer-chat .pop-menu,
+#layer-chat .pop-opt {
+    -webkit-backdrop-filter: none !important;
+    backdrop-filter: none !important;
+}
+
+/* 弹窗遮罩层 */
+.modal-mask,
+.gacha-overlay,
+.sv-complete-overlay,
+.ff-cmenu-bg,
+.ff-create-menu-overlay .ff-cmenu-bg {
+    -webkit-backdrop-filter: none !important;
+    backdrop-filter: none !important;
+    background: rgba(0, 0, 0, 0.7) !important;
+}
+
+/* 浮动球相关弹窗 */
+.fb-assist-overlay,
+.fb-note-overlay,
+.fb-settings-overlay,
+.fb-emoji-overlay {
+    -webkit-backdrop-filter: none !important;
+    backdrop-filter: none !important;
+}
+
+/* 线下模式 */
+#layer-offline-mode .nav-bar,
+#layer-offline-mode .offline-fixed-header,
+#layer-offline-mode .offline-info-bar,
+#layer-offline-mode .offline-input-bar,
+#chat-offline-header,
+#chat-offline-private-bar,
+#chat-offline-group-bar {
+    -webkit-backdrop-filter: none !important;
+    backdrop-filter: none !important;
+}
+
+/* 韩系主题覆盖 */
+body.theme-korean #layer-chat > .nav-bar#chat-nav-bar,
+body.theme-korean #chat-input-bar,
+body.theme-korean #layer-chat .input-bar,
+body.theme-korean #layer-chat .toolbar,
+body.theme-korean #layer-chat .toolbar .emoji-tab,
+body.theme-korean #layer-chat .pop-menu,
+body.theme-korean #layer-chat .pop-opt,
+body.theme-korean #layer-chat .bubble .bubble-reply-quote,
+body.theme-korean:not(.has-custom-bubble-css) #layer-chat .msg-row:not(.me) .bubble,
+body.theme-korean:not(.has-custom-bubble-css) #layer-chat .msg-row.me .bubble,
+body.theme-korean #chat-scroll-bottom-btn,
+body.theme-korean #layer-chat .typing-indicator,
+body.theme-korean #layer-chat .chat-notice,
+body.theme-korean #layer-chat-settings > .nav-bar,
+body.theme-korean #layer-chat-settings .group-box,
+body.theme-korean #tab-contacts > .nav-bar,
+body.theme-korean #contact-list .list-item,
+body.theme-korean #layer-wechat > .wx-tab-bar,
+body.theme-korean #layer-wechat > .nav-bar {
+    -webkit-backdrop-filter: none !important;
+    backdrop-filter: none !important;
+}
+
+/* ============================================================
+   2. 减少 box-shadow 复杂度
+   ============================================================ */
+
+/* 聊天气泡：简化阴影 */
+body:not(.has-custom-bubble-css) #layer-chat .bubble {
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.06) !important;
+}
+
+/* 精灵卡片 */
+.spirit-card,
+.spirit-card-avatar,
+.sln-back,
+.sln-add {
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1) !important;
+}
+
+/* 线下模式消息卡片 */
+.offline-msg-box {
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08) !important;
+}
+
+/* ============================================================
+   3. 减少 transition 时长
+   ============================================================ */
+.bubble,
+.nav-bar,
+.bottom-nav,
+.input-bar,
+#chat-input-bar,
+.list-item,
+.modal-box,
+.pop-menu,
+.pop-opt,
+.toolbar,
+.btn,
+button,
+.tab-btn,
+.avatar,
+.msg-row {
+    transition-duration: 0.15s !important;
+}
+
+/* ============================================================
+   4. 降级无限 CSS 动画
+   ============================================================
+   将 infinite 动画改为有限次数或直接禁用
+   这些动画在视觉上是装饰性的，禁用不影响功能
+   ============================================================ */
+
+/* 精灵系统：浮动动画降级为静态 */
+.slh-bubbles span {
+    animation: none !important;
+}
+.sln-title-icon {
+    animation: none !important;
+}
+
+/* 打字指示器：减缓动画频率 */
+.typing-dots span,
+.typing-indicator .dot {
+    animation-duration: 2s !important;
+}
+
+/* 心跳动画：减慢 */
+.heart-indicator,
+.ow-heartbeat {
+    animation-duration: 3s !important;
+}
+
+/* 脉冲动画：减慢或禁用 */
+.ow-new-pulse,
+.ow-plaque-pulse {
+    animation-duration: 4s !important;
+}
+
+/* 游戏页装饰动画：禁用 */
+.games-hero-emoji,
+.games-footer-deco {
+    animation: none !important;
+}
+
+/* UNO 游戏：降级动画 */
+.uno-setup-emoji,
+.uno-turn-indicator,
+.uno-btn-pulse,
+.uno-say-btn,
+.uno-timer-blink {
+    animation: none !important;
+}
+
+/* 自习室星星闪烁：禁用 */
+.sv-studyroom::before {
+    animation: none !important;
+}
+
+/* 成就系统：禁用闪光 */
+.ach-float-btn,
+.ach-sparkle,
+.ach-dot {
+    animation: none !important;
+}
+
+/* 漂流瓶：禁用浮动 */
+.drift-ocean-bottle,
+.drift-ocean-wave {
+    animation: none !important;
+}
+
+/* 同人创作心跳：禁用 */
+.ff-cp-heart3 {
+    animation: none !important;
+}
+
+/* 地图游戏骰子：缩短动画 */
+.mgs-dice.rolling {
+    animation-duration: 0.2s !important;
+    animation-iteration-count: 3 !important;
+}
+
+/* ============================================================
+   5. 布局优化：contain 隔离
+   ============================================================ */
+
+/* 消息行：布局隔离 */
+.msg-row {
+    contain: layout style;
+}
+
+/* 聊天历史容器：优化滚动 */
+#chat-history {
+    contain: layout style;
+    -webkit-overflow-scrolling: touch;
+}
+
+/* 线下模式滚动容器 */
+#offline-chat-history {
+    contain: layout style;
+    -webkit-overflow-scrolling: touch;
+}
+
+/* ============================================================
+   6. 头像优化
+   ============================================================ */
+
+/* 禁用复杂 filter（如模糊、阴影） */
+body:not(.has-custom-bubble-css) #layer-chat .avatar,
+body:not(.has-custom-bubble-css) #layer-chat .avatar-wrapper-chat .avatar {
+    filter: none !important;
+}
+
+/* ============================================================
+   7. 离屏元素优化
+   ============================================================ */
+
+/* 未显示的 layer 使用 contain 减少渲染开销 */
+.layer:not(.show) {
+    contain: layout style paint;
+    contain-intrinsic-size: 100vw 100vh;
+}
+
+/* [FIX-信箱布局-2026-05-09] 已显示的 layer 移除 contain，与 ios-perf.css 保持一致
+   contain: layout style（来自 .layer 基础样式）+ .scroll-y 的 contain: content
+   会在桌面浏览器中破坏 flex 布局和 sticky 定位，导致信箱等页面布局错位。
+   APK 中不加载 web-perf.css 所以不受影响，iOS 在 ios-perf.css 中已有同样修复 */
+.layer.show {
+    contain: none;
+}
+
+/* ============================================================
+   8. 低性能模式 (用户可手动启用)
+   ============================================================
+   当用户感觉卡顿时，可在设置中开启此模式。
+   JS 会添加 body.low-perf-mode 类。
+   ============================================================ */
+
+body.low-perf-mode *,
+body.low-perf-mode *::before,
+body.low-perf-mode *::after {
+    animation: none !important;
+    transition: none !important;
+    -webkit-backdrop-filter: none !important;
+    backdrop-filter: none !important;
+}
+
+body.low-perf-mode .bubble,
+body.low-perf-mode .spirit-card,
+body.low-perf-mode .modal-box,
+body.low-perf-mode .list-item {
+    box-shadow: none !important;
+}
+
+body.low-perf-mode .layer {
+    transition: none !important;
+}
+
+/* 低性能模式下页面切换改为瞬切（使用transform替代left） */
+body.low-perf-mode .layer.show {
+    transform: translateX(0) !important;
+}
+body.low-perf-mode .layer:not(.show) {
+    transform: translateX(100%) !important;
+    /* [FIX-白屏v3] 移除content-visibility:hidden，这会导致第二次进入layer白屏 */
+    /* content-visibility: hidden; */
+}
+
+/* [OPT-返回按钮] nav-icon触摸优化 */
+.nav-icon {
+    touch-action: manipulation !important;
+    -webkit-tap-highlight-color: transparent !important;
+}
+
+/* ============================================================
+   9. 减少重绘：prefers-reduced-motion 媒体查询
+   ============================================================
+   尊重用户系统级的减少动画偏好设置
+   ============================================================ */
+
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+}
+
+/* ============================================================
+   10. 扭蛋机优化（避免持续旋转）
+   ============================================================ */
+
+/* 扭蛋光芒：改为只旋转一圈 */
+.gacha-reveal-card::before {
+    animation: gachaShine 3s linear 1 !important;
+}
+
+/* 扭蛋机晃动：缩短 */
+.gacha-capsule-machine.drawing {
+    animation-duration: 0.3s !important;
+}
+
+/* ============================================================
+   11. [FIX-美化卡顿-2026-05-04] 韩系主题：全面覆盖 backdrop-filter
+   ============================================================
+   korean-theme.css 含 80+ 个 backdrop-filter: blur()。
+   web-perf.css 之前仅覆盖聊天页面约 20 元素，
+   其余 60+ blur 仍在各页面持续消耗 GPU。
+   ============================================================ */
+
+/* 11a. 设置/美化页面 */
+body.theme-korean #layer-settings > .nav-bar,
+body.theme-korean #layer-settings .group-box,
+body.theme-korean #layer-settings .settings-subpage,
+body.theme-korean #layer-beauty > .nav-bar,
+body.theme-korean #layer-beauty .group-box,
+body.theme-korean #layer-beauty .beauty-subpage,
+body.theme-korean #layer-beauty .beauty-menu-item {
+    -webkit-backdrop-filter: none !important;
+    backdrop-filter: none !important;
+}
+
+/* 11b. 精灵系统 */
+body.theme-korean .spirit-card,
+body.theme-korean .spirit-list-nav,
+body.theme-korean .spirit-detail-topbar,
+body.theme-korean .spirit-detail-nav,
+body.theme-korean .spirit-detail-section,
+body.theme-korean .spirit-action-btn,
+body.theme-korean .sln-card,
+body.theme-korean .sdt-section {
+    -webkit-backdrop-filter: none !important;
+    backdrop-filter: none !important;
+}
+
+/* 11c. 朋友圈/状态 */
+body.theme-korean #tab-moments > .nav-bar,
+body.theme-korean .status-nav-bar,
+body.theme-korean .status-mood-bar,
+body.theme-korean .status-bubble,
+body.theme-korean .status-vital-card,
+body.theme-korean .status-detail-panel,
+body.theme-korean .moments-post-card {
+    -webkit-backdrop-filter: none !important;
+    backdrop-filter: none !important;
+}
+
+/* 11d. 情侣空间/日历/账本 */
+body.theme-korean .couple-module-card,
+body.theme-korean .couple-detail-nav,
+body.theme-korean .couple-detail-section,
+body.theme-korean .ca-top-bar,
+body.theme-korean .cl-top-bar,
+body.theme-korean .cl-card {
+    -webkit-backdrop-filter: none !important;
+    backdrop-filter: none !important;
+}
+
+/* 11e. 桌面/底部导航（已有 .bottom-nav，补充 korean 覆盖） */
+body.theme-korean #desktop,
+body.theme-korean .dock-bar {
+    -webkit-backdrop-filter: none !important;
+    backdrop-filter: none !important;
+}
+
+/* 11f. 商店/外卖/骑手 */
+body.theme-korean #layer-shop > .nav-bar,
+body.theme-korean .shop-tab-bar,
+body.theme-korean .shop-product-card,
+body.theme-korean .food-nav,
+body.theme-korean .food-category-bar,
+body.theme-korean .rider-nav {
+    -webkit-backdrop-filter: none !important;
+    backdrop-filter: none !important;
+}
+
+/* 11g. 同人/书店/论坛 */
+body.theme-korean .ff-header2,
+body.theme-korean .ff-bottom-bar2,
+body.theme-korean .ff-read-header,
+body.theme-korean .ff-write-header,
+body.theme-korean .ff-book-detail-header,
+body.theme-korean .forum-nav,
+body.theme-korean .forum-dm-input-bar {
+    -webkit-backdrop-filter: none !important;
+    backdrop-filter: none !important;
+}
+
+/* 11h. 学习/日程/世界书 */
+body.theme-korean #layer-study > .nav-bar,
+body.theme-korean #layer-schedule > .nav-bar,
+body.theme-korean #layer-worldbook > .nav-bar,
+body.theme-korean .study-lecture-card,
+body.theme-korean .wb-card {
+    -webkit-backdrop-filter: none !important;
+    backdrop-filter: none !important;
+}
+
+/* 11i. 线下模式 */
+body.theme-korean:not(.has-custom-offline-css) .offline-fixed-header,
+body.theme-korean:not(.has-custom-offline-css) .offline-info-bar,
+body.theme-korean:not(.has-custom-offline-css) .offline-input-bar,
+body.theme-korean:not(.has-custom-offline-css) .offline-msg-box {
+    -webkit-backdrop-filter: none !important;
+    backdrop-filter: none !important;
+}
+
+/* 11j. 关系网/相册/直播/游戏等 */
+body.theme-korean .rn-form-panel,
+body.theme-korean .rn-card-panel,
+body.theme-korean .rn-link-panel,
+body.theme-korean #layer-photo-album > .nav-bar,
+body.theme-korean #layer-live > .nav-bar,
+body.theme-korean #layer-games > .nav-bar,
+body.theme-korean .dating-card,
+body.theme-korean .dating-nav,
+body.theme-korean .dating-settings-overlay {
+    -webkit-backdrop-filter: none !important;
+    backdrop-filter: none !important;
+}
+
+/* 11k. 钱包/红包/票务 */
+body.theme-korean #layer-wallet > .nav-bar,
+body.theme-korean .redpacket-overlay,
+body.theme-korean .ticket-card,
+body.theme-korean .ticket-nav {
+    -webkit-backdrop-filter: none !important;
+    backdrop-filter: none !important;
+}
+
+/* 11l. 韩系主题终极通杀 — 对所有 layer 内的 nav-bar 和 group-box 禁用 blur */
+body.theme-korean .layer > .nav-bar,
+body.theme-korean .layer .group-box,
+body.theme-korean .layer .nav-bar {
+    -webkit-backdrop-filter: none !important;
+    backdrop-filter: none !important;
+}
+
+/* ============================================================
+   12. [FIX-美化卡顿-2026-05-04] 可爱主题 box-shadow 简化
+   ============================================================ */
+
+/* 12a. 可爱主题聊天气泡 */
+body.theme-cute:not(.has-custom-bubble-css) #layer-chat .bubble {
+    box-shadow: 0 1px 3px rgba(200,190,210,0.15) !important;
+    transition: none !important;
+}
+body.theme-cute:not(.has-custom-bubble-css) #layer-chat .bubble:active {
+    transform: none !important;
+}
+
+/* 12b. 可爱主题导航栏/输入栏 blur 禁用 */
+body.theme-cute #layer-chat > .nav-bar#chat-nav-bar,
+body.theme-cute #chat-input-bar,
+body.theme-cute #layer-chat .input-bar,
+body.theme-cute #layer-chat .toolbar {
+    -webkit-backdrop-filter: none !important;
+    backdrop-filter: none !important;
+}
+
+/* 12c. 可爱主题全局 nav-bar 简化 */
+body.theme-cute .nav-bar {
+    box-shadow: 0 1px 3px rgba(200,190,210,0.12) !important;
+    -webkit-backdrop-filter: none !important;
+    backdrop-filter: none !important;
+}
+
+/* 12d. 可爱主题卡片/弹窗阴影简化 */
+body.theme-cute .group-box,
+body.theme-cute .spirit-card,
+body.theme-cute .modal-box,
+body.theme-cute .couple-module-card,
+body.theme-cute .dating-card,
+body.theme-cute .list-item,
+body.theme-cute .status-bubble,
+body.theme-cute .status-vital-card {
+    box-shadow: 0 1px 4px rgba(200,190,210,0.12) !important;
+}
+
+/* ============================================================
+   13. [FIX-美化卡顿-2026-05-04] 自定义CSS性能兜底
+   ============================================================ */
+
+/* 13a. 自定义全局CSS时降级blur */
+body.has-custom-global-css .nav-bar,
+body.has-custom-global-css .bottom-nav,
+body.has-custom-global-css .modal-box,
+body.has-custom-global-css .group-box {
+    -webkit-backdrop-filter: none !important;
+    backdrop-filter: none !important;
+}
+
+/* 13b. 自定义气泡CSS时禁用聊天transition */
+body.has-custom-bubble-css #layer-chat .bubble {
+    transition: none !important;
+}
+
+/* ============================================================
+   14. [FIX-安卓输入框飞天-2026-05-19] 安卓浏览器键盘保护性修复
+   ============================================================
+   部分安卓浏览器（特别是某些OEM定制WebView）键盘弹出时，
+   visualViewport API 行为异常或不可用，导致 layer 高度不缩小，
+   input-bar 被推出可见区域（"飞天"）。
+   
+   保护策略：
+   1. keyboard-active 时，用 CSS 变量 --vv-height 限制 layer 最大高度
+   2. 确保 input-bar 始终可见并吸底
+   3. 仅在 keyboard-active 时生效，不影响正常状态
+   ============================================================ */
+
+/* [FIX-键盘贴合-v4] Web 端键盘适配已由 styles-part3.css 统一处理：
+   html.keyboard-active .layer.show { height: var(--vv-height); top: var(--vv-offset-top); }
+   这里仅保留兜底的 flex 保护 */
+
+/* 14a. 键盘激活时：确保输入栏不被压缩 */
+html.keyboard-active #layer-chat .input-bar {
+    flex-shrink: 0 !important;
+}
+
+/* 14b. 键盘激活时：聊天历史区域 flex 自适应 */
+html.keyboard-active #layer-chat #chat-history {
+    min-height: 0 !important;
+    flex: 1 1 0% !important;
+    overflow-y: auto !important;
+}
+
+/* 14c. 键盘关闭过渡期：平滑恢复 */
+html.keyboard-closing #layer-chat.show {
+    transition: height 0.15s ease-out, top 0.15s ease-out !important;
+}

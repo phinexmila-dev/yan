@@ -1,0 +1,535 @@
+/* ============================================
+   LIVE STREAMING MODULE STYLES - V2
+   黑白灰主色调，无渐变，SVG图标适配
+   ============================================ */
+
+/* ===== SVG图标通用 ===== */
+.live-svg-icon { display:inline-flex; align-items:center; justify-content:center; vertical-align:middle; }
+.live-svg-icon svg { width:100%; height:100%; }
+
+/* ===== 直播广场 ===== */
+#layer-live .nav-bar { background:#111 !important; border-bottom:1px solid #222 !important; backdrop-filter:none !important; -webkit-backdrop-filter:none !important; }
+#layer-live .nav-bar .nav-title { color:#f0f0f0 !important; }
+#layer-live .nav-bar .nav-icon { color:#f0f0f0 !important; }
+
+#live-plaza-scroll { background:#111 !important; padding:0 8px 80px; }
+
+.live-plaza-tabs { display:flex; padding:10px 8px 6px; gap:12px; position:sticky; top:0; z-index:3; background:#111; align-items:center; }
+.live-plaza-tab { color:#888; font-size:14px; padding:6px 12px; cursor:pointer; border-radius:16px; transition:all 0.2s; display:flex; align-items:center; gap:4px; }
+.live-plaza-tab.active { color:#f0f0f0; background:rgba(255,255,255,0.08); font-weight:600; }
+.live-plaza-tab svg { width:10px; height:10px; }
+
+.live-tabs { display:flex; padding:10px 8px 6px; gap:16px; position:sticky; top:44px; z-index:2; background:#111; }
+.live-tab { color:#888; font-size:15px; padding:4px 0; cursor:pointer; position:relative; white-space:nowrap; }
+.live-tab.active { color:#f0f0f0; font-weight:600; }
+.live-tab.active::after { content:''; position:absolute; bottom:-2px; left:50%; transform:translateX(-50%); width:20px; height:3px; background:#ff4d6a; border-radius:2px; }
+
+.live-search-bar { display:none; padding:8px 8px 4px; background:#111; }
+.live-search-bar.show { display:block; }
+.live-search-bar input { width:100%; padding:10px 14px; border-radius:20px; border:none; background:#1e1e1e; color:#f0f0f0; font-size:14px; box-sizing:border-box; outline:none; }
+.live-search-bar input::placeholder { color:#555; }
+
+.live-grid { display:grid; grid-template-columns:1fr 1fr; gap:8px; padding:8px 0; }
+
+.live-card { position:relative; border-radius:10px; overflow:hidden; cursor:pointer; aspect-ratio:3/4; background:#1e1e1e; }
+.live-card:active { opacity:0.9; transform:scale(0.98); }
+.live-card-bg { position:absolute; top:0; left:0; right:0; bottom:0; background-size:cover; background-position:center; }
+.live-card-gradient { position:absolute; top:0; left:0; right:0; bottom:0; display:flex; flex-direction:column; align-items:center; justify-content:center; padding:20px; text-align:center; }
+.live-card-gradient .live-card-desc { color:rgba(255,255,255,0.9); font-size:16px; font-weight:600; line-height:1.5; word-break:break-all; }
+.live-card-top { position:absolute; top:8px; left:8px; right:8px; display:flex; justify-content:space-between; align-items:center; z-index:1; }
+.live-badge { display:flex; align-items:center; gap:4px; background:rgba(255,60,80,0.85); color:#fff; font-size:11px; padding:2px 8px; border-radius:10px; font-weight:500; }
+.live-badge svg { width:8px; height:8px; }
+.live-viewers { display:flex; align-items:center; gap:3px; background:rgba(0,0,0,0.5); color:#fff; font-size:11px; padding:2px 8px; border-radius:10px; }
+.live-viewers svg { width:12px; height:12px; }
+.live-card-bottom { position:absolute; bottom:0; left:0; right:0; padding:30px 10px 10px; background:linear-gradient(transparent, rgba(0,0,0,0.7)); z-index:1; }
+.live-card-host { display:flex; align-items:center; gap:8px; }
+.live-card-avatar { width:28px; height:28px; border-radius:50%; object-fit:cover; border:1.5px solid rgba(255,255,255,0.3); flex-shrink:0; }
+.live-card-avatar-placeholder { width:28px; height:28px; border-radius:50%; background:#333; display:flex; align-items:center; justify-content:center; color:#aaa; font-size:13px; font-weight:600; flex-shrink:0; border:1.5px solid #444; }
+.live-card-name { color:#fff; font-size:13px; font-weight:500; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+.live-card-title { color:rgba(255,255,255,0.85); font-size:12px; margin-top:4px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+.live-card-category { display:inline-block; background:rgba(255,255,255,0.12); color:rgba(255,255,255,0.7); font-size:10px; padding:1px 6px; border-radius:6px; margin-top:4px; }
+
+/* 开播按钮 */
+.live-start-btn { position:fixed; bottom:30px; left:50%; transform:translateX(-50%); background:#ff4d6a; color:#fff; padding:12px 32px; border-radius:25px; font-size:15px; font-weight:600; cursor:pointer; box-shadow:0 4px 15px rgba(255,45,85,0.3); z-index:10; display:flex; align-items:center; gap:8px; border:none; }
+.live-start-btn:active { transform:translateX(-50%) scale(0.95); }
+.live-start-btn svg { width:10px; height:10px; }
+
+/* ===== 直播间房间 ===== */
+#layer-live-room { background:#000 !important; padding:0 !important; }
+#layer-live-room > #live-room-content { flex:1 1 auto; width:100%; min-height:0; position:relative; overflow:hidden; }
+.live-room { position:relative; width:100%; height:100%; overflow:hidden; contain:layout style; }
+.live-room-bg { position:absolute; top:0; left:0; right:0; bottom:0; background-size:cover; background-position:center; }
+.live-room-bg-overlay { position:absolute; top:0; left:0; right:0; bottom:0; background:rgba(0,0,0,0.3); }
+.live-room-bg-default { position:absolute; top:0; left:0; right:0; bottom:0; }
+
+/* 顶部信息栏 */
+.live-room-header { position:absolute; top:0; left:0; right:0; padding:12px 14px; display:flex; justify-content:space-between; align-items:center; z-index:10; padding-top:max(12px, env(safe-area-inset-top)); }
+.live-room-host-info { display:flex; align-items:center; gap:8px; background:rgba(0,0,0,0.5); padding:4px 12px 4px 4px; border-radius:20px; max-width:60%; }
+.live-room-host-avatar { width:36px; height:36px; border-radius:50%; object-fit:cover; flex-shrink:0; }
+.live-room-host-name { color:#f0f0f0; font-size:14px; font-weight:500; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+.live-room-host-sub { color:rgba(255,255,255,0.5); font-size:11px; }
+.live-room-viewers { display:flex; align-items:center; gap:4px; background:rgba(0,0,0,0.5); padding:6px 12px; border-radius:16px; color:#f0f0f0; font-size:13px; cursor:pointer; }
+.live-room-viewers svg { width:14px; height:14px; }
+.live-room-close { width:32px; height:32px; border-radius:50%; background:rgba(0,0,0,0.5); display:flex; align-items:center; justify-content:center; color:#f0f0f0; cursor:pointer; }
+.live-room-close svg { width:14px; height:14px; }
+
+/* NPC头像圆 */
+.live-npc-avatar-circle { width:36px; height:36px; border-radius:50%; background:#2a2a2a; border:1.5px solid #444; display:flex; align-items:center; justify-content:center; color:#ccc; font-size:16px; font-weight:600; flex-shrink:0; }
+
+/* 公告 */
+.live-announcement { position:absolute; left:14px; right:14px; top:calc(56px + max(0px, env(safe-area-inset-top))); background:rgba(255,200,0,0.1); color:#c0a040; font-size:12px; padding:6px 12px; border-radius:8px; z-index:9; display:flex; align-items:center; gap:6px; }
+.live-announcement svg { width:14px; height:14px; flex-shrink:0; }
+
+/* 粉丝信息条 */
+.live-fan-bar { position:absolute; left:14px; top:calc(56px + max(0px, env(safe-area-inset-top))); display:flex; align-items:center; gap:8px; z-index:9; }
+.live-announcement + .live-fan-bar, .live-room:has(.live-announcement) .live-fan-bar { top:calc(84px + max(0px, env(safe-area-inset-top))); }
+.live-fan-badge-big { font-size:11px; font-weight:600; background:rgba(0,0,0,0.5); padding:3px 10px; border-radius:12px; }
+.live-fan-badge { display:inline-flex; align-items:center; gap:2px; font-size:10px; padding:1px 6px; border-radius:8px; font-weight:600; flex-shrink:0; margin-right:2px; }
+
+/* ===== 主播行为状态条 ===== */
+.live-host-activity-bar { position:absolute; left:14px; right:14px; top:calc(80px + max(0px, env(safe-area-inset-top))); background:rgba(0,0,0,0.4); padding:5px 12px; border-radius:10px; z-index:9; display:flex; align-items:center; gap:6px; font-size:12px; color:rgba(255,255,255,0.6); }
+.live-room:has(.live-announcement) .live-host-activity-bar { top:calc(108px + max(0px, env(safe-area-inset-top))); }
+.live-room:has(.live-fan-bar) .live-host-activity-bar { top:calc(100px + max(0px, env(safe-area-inset-top))); }
+.live-host-activity-dot { width:6px; height:6px; border-radius:50%; background:#66ff66; flex-shrink:0; animation:liveActivityPulse 2s ease infinite; }
+@keyframes liveActivityPulse { 0%,100%{opacity:0.5;} 50%{opacity:1;} }
+
+/* 弹幕区域 */
+.live-danmaku-area { position:absolute; bottom:70px; left:0; right:0; max-height:40%; padding:0 14px; overflow-y:auto; z-index:5; display:flex; flex-direction:column; gap:6px; mask-image:linear-gradient(transparent 0%, black 20%); -webkit-mask-image:linear-gradient(transparent 0%, black 20%); scrollbar-width:none; contain:layout; will-change:transform; }
+.live-danmaku-area::-webkit-scrollbar { display:none; }
+.live-danmaku-item { display:inline-flex; align-items:flex-start; gap:6px; background:rgba(0,0,0,0.4); padding:6px 10px; border-radius:14px; max-width:85%; animation:liveDanmakuIn 0.3s ease; align-self:flex-start; }
+@keyframes liveDanmakuIn { from{opacity:0;transform:translateY(10px);} to{opacity:1;transform:translateY(0);} }
+.live-danmaku-name { font-size:12px; font-weight:600; white-space:nowrap; flex-shrink:0; }
+.live-danmaku-text { font-size:13px; color:#f0f0f0; line-height:1.4; word-break:break-all; }
+.live-danmaku-system { color:rgba(255,255,255,0.4); font-size:12px; padding:4px 10px; align-self:center; background:none; }
+.live-danmaku-system svg { width:12px; height:12px; vertical-align:middle; }
+.live-danmaku-host .live-danmaku-name { color:#c0a040; }
+.live-danmaku-user .live-danmaku-name { color:#5bf; }
+.live-danmaku-virtual .live-danmaku-name { color:#666; }
+.live-danmaku-entry-effect { background:rgba(255,215,0,0.08); border:1px solid rgba(255,215,0,0.15); align-self:center; font-weight:600; font-size:13px; animation:liveEntryEffect 0.5s ease; }
+@keyframes liveEntryEffect { 0%{opacity:0;transform:scale(0.5);} 50%{transform:scale(1.1);} 100%{opacity:1;transform:scale(1);} }
+
+/* 超级弹幕层 */
+.live-super-danmaku-layer { position:absolute; top:35%; left:0; right:0; z-index:15; pointer-events:none; display:flex; justify-content:center; }
+.live-super-danmaku { background:rgba(255,77,106,0.15); padding:10px 30px; animation:liveSuperDanmaku 4s ease forwards; white-space:nowrap; display:flex; align-items:center; gap:10px; }
+.live-super-danmaku-name { color:#c0a040; font-size:14px; font-weight:600; }
+.live-super-danmaku-text { color:#fff; font-size:18px; font-weight:700; text-shadow:0 0 10px var(--sd-color, #ff4d6a); }
+@keyframes liveSuperDanmaku { 0%{opacity:0;transform:translateX(100%);} 10%{opacity:1;transform:translateX(0);} 80%{opacity:1;transform:translateX(0);} 100%{opacity:0;transform:translateX(-100%);} }
+
+/* 底部工具栏 */
+.live-room-toolbar { position:absolute; bottom:0; left:0; right:0; padding:10px; padding-left:max(10px, env(safe-area-inset-left)); padding-right:max(10px, env(safe-area-inset-right)); padding-bottom:max(10px, env(safe-area-inset-bottom)); display:flex; align-items:center; gap:6px; z-index:20; overflow-x:auto; overscroll-behavior-x:contain; -webkit-overflow-scrolling:touch; scrollbar-width:none; flex-wrap:nowrap; touch-action:pan-x; background:linear-gradient(transparent, rgba(0,0,0,0.4)); }
+.live-room-toolbar::-webkit-scrollbar { display:none; }
+.live-room-input { flex:0 1 180px; min-width:120px; background:rgba(255,255,255,0.1); border:1px solid rgba(255,255,255,0.08); border-radius:20px; padding:10px 14px; color:#f0f0f0; font-size:14px; outline:none; }
+.live-room-input::placeholder { color:rgba(255,255,255,0.3); }
+.live-room-tool-btn { width:36px; height:36px; border-radius:50%; background:rgba(255,255,255,0.1); display:flex; align-items:center; justify-content:center; color:#f0f0f0; cursor:pointer; flex-shrink:0; }
+.live-room-tool-btn:active { background:rgba(255,255,255,0.2); }
+.live-room-tool-btn svg { width:16px; height:16px; }
+
+/* 点赞动画 */
+.live-like-float { position:absolute; bottom:calc(80px + env(safe-area-inset-bottom)); right:14px; animation:liveLikeFloat 1.5s ease forwards; pointer-events:none; z-index:8; }
+.live-like-float svg { width:24px; height:24px; }
+@keyframes liveLikeFloat { 0%{opacity:1;transform:translateY(0) scale(1);} 50%{opacity:1;transform:translateY(-60px) scale(1.2);} 100%{opacity:0;transform:translateY(-120px) scale(0.8);} }
+
+/* 礼物面板 */
+.live-gift-panel { position:absolute; bottom:0; left:0; right:0; background:#1e1e1e; border-radius:16px 16px 0 0; padding:16px 14px; padding-bottom:max(16px, env(safe-area-inset-bottom)); z-index:20; transform:translateY(100%); transition:transform 0.3s ease; border-top:1px solid #333; }
+.live-gift-panel.show { transform:translateY(0); }
+.live-gift-panel-title { color:#f0f0f0; font-size:15px; font-weight:600; margin-bottom:14px; display:flex; justify-content:space-between; align-items:center; }
+.live-gift-panel-title svg { width:14px; height:14px; }
+.live-gift-panel-close { color:#666; cursor:pointer; padding:4px; display:flex; align-items:center; }
+.live-gift-grid { display:grid; grid-template-columns:repeat(4, 1fr); gap:10px; }
+.live-gift-item { display:flex; flex-direction:column; align-items:center; gap:4px; cursor:pointer; padding:8px 4px; border-radius:12px; transition:background 0.2s; }
+.live-gift-item:active { background:rgba(255,255,255,0.06); }
+.live-gift-item.selected { background:rgba(255,77,106,0.12); border:1px solid rgba(255,77,106,0.3); }
+.live-gift-icon { display:flex; align-items:center; justify-content:center; }
+.live-gift-icon svg { width:30px; height:30px; }
+.live-gift-name { color:#ccc; font-size:11px; }
+.live-gift-cost { color:#c0a040; font-size:10px; }
+.live-gift-send-btn { margin-top:12px; width:100%; padding:12px; background:#ff4d6a; color:#fff; border:none; border-radius:22px; font-size:15px; font-weight:600; cursor:pointer; }
+
+/* 礼物全屏动画 */
+.live-gift-fullscreen { position:absolute; top:0; left:0; right:0; bottom:0; display:flex; align-items:center; justify-content:center; z-index:30; pointer-events:none; animation:liveGiftFullscreen 2.2s ease forwards; }
+.live-gift-fullscreen-inner svg { width:80px; height:80px; }
+.live-gift-fullscreen-text { color:#fff; font-size:18px; font-weight:600; margin-top:10px; text-align:center; }
+@keyframes liveGiftFullscreen { 0%{opacity:0;transform:scale(0.3);} 20%{opacity:1;transform:scale(1.2);} 40%{transform:scale(1);} 80%{opacity:1;} 100%{opacity:0;transform:scale(0.8) translateY(-30px);} }
+
+/* 礼物连击combo */
+.live-combo-area { position:absolute; left:14px; bottom:130px; z-index:12; pointer-events:none; transition:opacity 0.3s ease; }
+.live-combo-area.fade-out { opacity:0; }
+.live-combo { display:flex; align-items:center; gap:8px; background:rgba(0,0,0,0.5); padding:8px 16px; border-radius:20px; animation:liveComboIn 0.3s ease; }
+.live-combo-glow { box-shadow:0 0 15px rgba(255,77,106,0.3); background:rgba(255,77,106,0.15); }
+.live-combo-sender { color:#5bf; font-size:13px; font-weight:600; }
+.live-combo-gift svg { width:28px; height:28px; }
+.live-combo-count { color:#ff4d6a; font-weight:900; font-style:italic; text-shadow:0 0 8px rgba(255,77,106,0.4); animation:liveComboCount 0.3s ease; }
+@keyframes liveComboIn { from{opacity:0;transform:translateX(-20px);} to{opacity:1;transform:translateX(0);} }
+@keyframes liveComboCount { 0%{transform:scale(1.5);} 100%{transform:scale(1);} }
+
+/* 排行榜面板 */
+.live-rank-panel { position:absolute; bottom:0; left:0; right:0; background:#1e1e1e; border-radius:16px 16px 0 0; padding:16px 14px 30px; z-index:20; transform:translateY(100%); transition:transform 0.3s ease; max-height:50vh; overflow-y:auto; border-top:1px solid #333; }
+.live-rank-panel.show { transform:translateY(0); }
+.live-rank-item { display:flex; align-items:center; gap:10px; padding:10px 8px; border-bottom:1px solid rgba(255,255,255,0.04); }
+.live-rank-medal { font-size:14px; width:30px; text-align:center; font-weight:700; }
+.live-rank-name { flex:1; color:#f0f0f0; font-size:14px; }
+.live-rank-value { color:#c0a040; font-size:13px; font-weight:600; }
+
+/* 装修面板 */
+.live-decor-panel { position:absolute; bottom:0; left:0; right:0; background:#1e1e1e; border-radius:16px 16px 0 0; padding:16px 14px 30px; z-index:20; transform:translateY(100%); transition:transform 0.3s ease; max-height:60vh; overflow-y:auto; border-top:1px solid #333; }
+.live-decor-panel.show { transform:translateY(0); }
+.live-decor-title { color:#f0f0f0; font-size:15px; font-weight:600; margin-bottom:14px; display:flex; justify-content:space-between; align-items:center; }
+.live-decor-close { color:#666; cursor:pointer; display:flex; align-items:center; }
+.live-decor-close svg { width:14px; height:14px; }
+.live-decor-section { margin-bottom:16px; }
+.live-decor-label { color:#888; font-size:13px; margin-bottom:8px; }
+.live-decor-themes { display:flex; gap:10px; overflow-x:auto; padding-bottom:4px; }
+.live-decor-theme-item { width:56px; height:56px; border-radius:12px; flex-shrink:0; cursor:pointer; border:2px solid transparent; position:relative; }
+.live-decor-theme-item.active { border-color:#ff4d6a; }
+.live-decor-theme-item.active::after { content:''; position:absolute; bottom:2px; right:2px; background:#ff4d6a; width:16px; height:16px; border-radius:50%; }
+.live-decor-upload-btn { display:flex; align-items:center; justify-content:center; gap:8px; padding:12px; background:rgba(255,255,255,0.06); border-radius:12px; color:#ccc; font-size:14px; cursor:pointer; }
+.live-decor-upload-btn svg { width:16px; height:16px; }
+.live-decor-input { width:100%; padding:10px 14px; background:rgba(255,255,255,0.06); border:1px solid #333; border-radius:10px; color:#f0f0f0; font-size:14px; box-sizing:border-box; outline:none; }
+.live-decor-input::placeholder { color:#555; }
+
+/* 氛围特效层 */
+.live-atmosphere-layer { position:absolute; top:0; left:0; right:0; bottom:0; z-index:1; pointer-events:none; overflow:hidden; }
+.live-atmo-particle { position:absolute; top:-30px; animation:liveAtmoFall linear forwards; pointer-events:none; color:rgba(255,255,255,0.4); }
+@keyframes liveAtmoFall { 0%{transform:translateY(0) rotate(0deg);opacity:1;} 100%{transform:translateY(110vh) rotate(360deg);opacity:0.2;} }
+
+/* 互动区域容器 */
+#live-interactive-area { position:absolute; bottom:60px; left:0; right:0; z-index:15; pointer-events:none; }
+#live-interactive-area > * { pointer-events:auto; }
+
+/* 投票面板 */
+.live-vote-panel { position:relative; margin:0 14px; background:rgba(0,0,0,0.7); border-radius:12px; padding:12px; z-index:15; backdrop-filter:blur(8px); animation:liveDanmakuIn 0.3s ease; border:1px solid rgba(255,255,255,0.06); }
+.live-vote-title { color:#f0f0f0; font-size:14px; font-weight:600; margin-bottom:10px; display:flex; align-items:center; gap:6px; }
+.live-vote-title svg { width:14px; height:14px; }
+.live-vote-option { position:relative; padding:10px 12px; margin-bottom:6px; border-radius:8px; background:rgba(255,255,255,0.05); cursor:pointer; overflow:hidden; display:flex; justify-content:space-between; align-items:center; }
+.live-vote-option:active { background:rgba(255,255,255,0.1); }
+.live-vote-bar { position:absolute; top:0; left:0; bottom:0; background:rgba(91,187,255,0.15); border-radius:8px; transition:width 0.3s ease; }
+.live-vote-label { color:#f0f0f0; font-size:13px; position:relative; z-index:1; }
+.live-vote-pct { color:#5bf; font-size:13px; font-weight:600; position:relative; z-index:1; }
+
+/* 小游戏面板 */
+.live-game-panel { position:relative; margin:0 14px; background:rgba(0,0,0,0.7); border-radius:12px; padding:12px; z-index:15; backdrop-filter:blur(8px); animation:liveDanmakuIn 0.3s ease; border:1px solid rgba(255,255,255,0.06); }
+.live-game-title { color:#66ff66; font-size:14px; font-weight:600; margin-bottom:6px; display:flex; align-items:center; gap:6px; }
+.live-game-title svg { width:14px; height:14px; }
+.live-game-hint { color:#888; font-size:12px; }
+
+/* 红包雨 */
+.live-redpacket { position:absolute; top:-40px; cursor:pointer; animation:liveRedpacketFall 3s linear forwards; z-index:25; transition:transform 0.2s; color:#ff4444; }
+.live-redpacket svg { width:32px; height:32px; }
+.live-redpacket:active { transform:scale(1.3); }
+.live-redpacket.grabbed { color:#c0a040; font-size:18px; font-weight:700; animation:liveRedpacketGrab 0.8s ease forwards; }
+@keyframes liveRedpacketFall { 0%{transform:translateY(0);opacity:1;} 100%{transform:translateY(100vh);opacity:0.5;} }
+@keyframes liveRedpacketGrab { 0%{opacity:1;transform:scale(1.3);} 100%{opacity:0;transform:scale(2) translateY(-30px);} }
+
+/* 历史回放列表 */
+.live-history-list { padding:8px 0; }
+.live-history-item { display:flex; align-items:center; gap:12px; padding:12px 8px; border-bottom:1px solid rgba(255,255,255,0.04); cursor:pointer; }
+.live-history-item:active { background:rgba(255,255,255,0.03); }
+.live-history-item.past { opacity:0.5; }
+.live-history-avatar { width:44px; height:44px; border-radius:50%; background:#2a2a2a; display:flex; align-items:center; justify-content:center; color:#aaa; font-size:18px; font-weight:600; flex-shrink:0; }
+.live-history-avatar svg { width:16px; height:16px; }
+.live-history-info { flex:1; min-width:0; }
+.live-history-name { color:#f0f0f0; font-size:14px; font-weight:500; }
+.live-history-title { color:rgba(255,255,255,0.5); font-size:12px; margin-top:2px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+.live-history-meta { color:#666; font-size:11px; margin-top:2px; }
+
+/* 预告添加按钮 */
+.live-schedule-add { display:flex; align-items:center; justify-content:center; gap:8px; padding:14px; background:rgba(255,255,255,0.04); border-radius:12px; color:#ff4d6a; font-size:14px; cursor:pointer; border:1px dashed rgba(255,77,106,0.2); }
+.live-schedule-add svg { width:14px; height:14px; }
+.live-schedule-add:active { background:rgba(255,77,106,0.06); }
+
+/* 回放标记条 */
+.live-replay-bar { position:absolute; top:0; left:0; right:0; background:rgba(255,77,106,0.85); color:#fff; font-size:12px; font-weight:600; text-align:center; padding:6px 14px; padding-top:max(6px, env(safe-area-inset-top)); z-index:20; display:flex; align-items:center; justify-content:center; gap:6px; }
+.live-replay-bar svg { width:14px; height:14px; }
+
+/* 超级弹幕按钮 */
+.live-super-danmaku-btn { background:#ff4d6a !important; box-shadow:0 2px 8px rgba(255,77,106,0.3); }
+.live-super-danmaku-btn:active { transform:scale(0.92); }
+
+/* 开播设置面板 */
+.live-stream-setup { position:fixed; top:0; left:0; right:0; bottom:0; background:rgba(0,0,0,0.6); z-index:10003; display:flex; align-items:flex-end; justify-content:center; }
+.live-stream-setup-panel { background:#1e1e1e; border-radius:16px 16px 0 0; padding:20px 16px 30px; width:100%; max-width:420px; max-height:80vh; overflow-y:auto; animation:liveSlideUp 0.3s ease; border-top:1px solid #333; }
+@keyframes liveSlideUp { from{transform:translateY(100%);} to{transform:translateY(0);} }
+.live-setup-title { color:#f0f0f0; font-size:17px; font-weight:600; text-align:center; margin-bottom:20px; }
+.live-setup-field { margin-bottom:16px; }
+.live-setup-label { color:#888; font-size:13px; margin-bottom:6px; }
+.live-setup-input { width:100%; padding:12px 14px; background:rgba(255,255,255,0.05); border:1px solid #333; border-radius:10px; color:#f0f0f0; font-size:14px; box-sizing:border-box; outline:none; }
+.live-setup-input::placeholder { color:#555; }
+.live-setup-types { display:flex; gap:10px; }
+.live-setup-type { flex:1; padding:14px 10px; background:rgba(255,255,255,0.04); border-radius:12px; text-align:center; cursor:pointer; border:2px solid transparent; transition:all 0.2s; }
+.live-setup-type.active { border-color:#ff4d6a; background:rgba(255,77,106,0.08); }
+.live-setup-type svg { width:24px; height:24px; color:#ccc; display:block; margin:0 auto 6px; }
+.live-setup-type span { color:#aaa; font-size:12px; }
+.live-setup-contacts { display:flex; flex-wrap:wrap; gap:8px; max-height:150px; overflow-y:auto; }
+.live-setup-contact { display:flex; align-items:center; gap:6px; padding:6px 12px; background:rgba(255,255,255,0.04); border-radius:20px; cursor:pointer; border:1.5px solid transparent; }
+.live-setup-contact.selected { border-color:#ff4d6a; background:rgba(255,77,106,0.1); }
+.live-setup-contact img { width:24px; height:24px; border-radius:50%; object-fit:cover; }
+.live-setup-contact span { color:#ccc; font-size:13px; }
+.live-setup-go-btn { width:100%; padding:14px; background:#ff4d6a; color:#fff; border:none; border-radius:25px; font-size:16px; font-weight:600; cursor:pointer; margin-top:10px; display:flex; align-items:center; justify-content:center; gap:8px; }
+.live-setup-go-btn svg { width:10px; height:10px; }
+.live-setup-cancel { width:100%; padding:12px; background:none; color:#666; border:none; font-size:14px; cursor:pointer; margin-top:6px; }
+
+/* 空状态 */
+.live-empty { text-align:center; padding:60px 20px; color:#555; }
+.live-empty svg { width:48px; height:48px; margin-bottom:16px; color:#333; }
+.live-empty p { font-size:14px; line-height:1.6; }
+
+/* ===== NPC资料卡 ===== */
+.live-npc-profile-overlay { position:fixed; top:0; left:0; right:0; bottom:0; background:rgba(0,0,0,0.7); z-index:10004; display:flex; align-items:center; justify-content:center; animation:liveFadeIn 0.2s ease; }
+@keyframes liveFadeIn { from{opacity:0;} to{opacity:1;} }
+.live-npc-profile { background:#1e1e1e; border-radius:16px; width:90%; max-width:380px; max-height:80vh; overflow-y:auto; border:1px solid #333; animation:liveSlideUp 0.3s ease; }
+.live-npc-profile-header { text-align:center; padding:20px 16px 16px; position:relative; border-bottom:1px solid #2a2a2a; }
+.live-npc-profile-close { position:absolute; top:12px; right:12px; color:#666; cursor:pointer; width:28px; height:28px; display:flex; align-items:center; justify-content:center; border-radius:50%; background:rgba(255,255,255,0.05); }
+.live-npc-profile-close svg { width:14px; height:14px; }
+.live-npc-avatar-big { width:64px; height:64px; border-radius:50%; background:#2a2a2a; border:2px solid #444; display:flex; align-items:center; justify-content:center; color:#ccc; font-size:28px; font-weight:600; margin:0 auto 10px; }
+.live-npc-profile-name { color:#f0f0f0; font-size:18px; font-weight:600; }
+.live-npc-profile-rel { font-size:13px; margin-top:4px; font-weight:500; }
+.live-npc-profile-bar { width:80%; max-width:200px; height:6px; background:#2a2a2a; border-radius:3px; margin:10px auto 4px; overflow:hidden; }
+.live-npc-profile-bar-fill { height:100%; background:#ff4d6a; border-radius:3px; transition:width 0.3s ease; }
+.live-npc-profile-bar-label { color:#666; font-size:11px; }
+
+.live-npc-info-section { padding:12px 16px; border-bottom:1px solid #2a2a2a; }
+.live-npc-info-section:last-of-type { border-bottom:none; }
+.live-npc-info-title { color:#aaa; font-size:13px; font-weight:600; margin-bottom:8px; display:flex; align-items:center; gap:6px; }
+.live-npc-info-title svg { width:12px; height:12px; }
+.live-npc-info-row { display:flex; justify-content:space-between; padding:4px 0; }
+.live-npc-info-key { color:#888; font-size:13px; }
+.live-npc-info-val { color:#f0f0f0; font-size:13px; }
+.live-npc-info-locked { color:#444; font-size:13px; font-style:italic; padding:4px 0; }
+
+.live-npc-profile-actions { display:flex; gap:10px; padding:16px; }
+.live-npc-action-btn { flex:1; padding:10px; border-radius:10px; text-align:center; cursor:pointer; font-size:13px; font-weight:500; display:flex; align-items:center; justify-content:center; gap:6px; transition:all 0.2s; background:rgba(255,255,255,0.06); color:#ccc; border:1px solid #333; }
+.live-npc-action-btn:active { background:rgba(255,255,255,0.1); }
+.live-npc-action-btn svg { width:14px; height:14px; }
+.live-npc-action-wechat { background:rgba(76,175,80,0.1); color:#4caf50; border-color:rgba(76,175,80,0.3); }
+.live-npc-action-done { background:rgba(76,175,80,0.08); color:#4caf50; border-color:rgba(76,175,80,0.2); opacity:0.7; cursor:default; }
+.live-npc-action-disabled { color:#555; cursor:default; opacity:0.5; }
+
+/* ===== NPC私聊 ===== */
+.live-npc-chat-overlay { position:fixed; top:0; left:0; right:0; bottom:0; background:rgba(0,0,0,0.7); z-index:10005; display:flex; align-items:center; justify-content:center; animation:liveFadeIn 0.2s ease; }
+.live-npc-chat { background:#1a1a1a; border-radius:16px; width:90%; max-width:400px; height:70vh; max-height:500px; display:flex; flex-direction:column; border:1px solid #333; animation:liveSlideUp 0.3s ease; overflow:hidden; }
+.live-npc-chat-header { display:flex; align-items:center; gap:8px; padding:12px 16px; background:#1e1e1e; border-bottom:1px solid #2a2a2a; color:#f0f0f0; font-size:15px; font-weight:500; flex-shrink:0; }
+.live-npc-avatar-sm { width:28px; height:28px; border-radius:50%; background:#2a2a2a; border:1px solid #444; display:flex; align-items:center; justify-content:center; color:#ccc; font-size:13px; font-weight:600; flex-shrink:0; }
+.live-npc-chat-close { margin-left:auto; color:#666; cursor:pointer; display:flex; align-items:center; }
+.live-npc-chat-close svg { width:14px; height:14px; }
+.live-npc-chat-messages { flex:1; overflow-y:auto; padding:12px 16px; display:flex; flex-direction:column; gap:10px; }
+.live-npc-msg { display:flex; }
+.live-npc-msg-user { justify-content:flex-end; }
+.live-npc-msg-npc { justify-content:flex-start; }
+.live-npc-msg-bubble { max-width:75%; padding:8px 12px; border-radius:12px; font-size:14px; line-height:1.5; word-break:break-all; }
+.live-npc-msg-user .live-npc-msg-bubble { background:#333; color:#f0f0f0; border-bottom-right-radius:4px; }
+.live-npc-msg-npc .live-npc-msg-bubble { background:#2a2a2a; color:#ddd; border-bottom-left-radius:4px; }
+.live-npc-chat-input-bar { display:flex; align-items:center; gap:8px; padding:10px 16px; background:#1e1e1e; border-top:1px solid #2a2a2a; flex-shrink:0; }
+.live-npc-chat-input { flex:1; padding:10px 14px; background:rgba(255,255,255,0.06); border:1px solid #333; border-radius:20px; color:#f0f0f0; font-size:14px; outline:none; }
+.live-npc-chat-input::placeholder { color:#555; }
+.live-npc-chat-send { width:36px; height:36px; border-radius:50%; background:#ff4d6a; display:flex; align-items:center; justify-content:center; cursor:pointer; color:#fff; flex-shrink:0; }
+.live-npc-chat-send svg { width:14px; height:14px; }
+
+/* ===== 回放摘要 ===== */
+.live-history-summary { color:#999; font-size:11px; line-height:1.4; margin-top:3px; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden; }
+
+/* ===== 热度指示 ===== */
+.live-heat-indicator { position:absolute; top:8px; right:60px; display:flex; align-items:center; gap:4px; background:rgba(0,0,0,0.5); padding:2px 8px; border-radius:10px; font-size:11px; z-index:1; }
+.live-heat-fire { color:#ff6b35; }
+.live-heat-hot { color:#ff9800; }
+.live-heat-warm { color:#ffc107; }
+.live-heat-cold { color:#666; }
+
+/* ===== 关注标签 ===== */
+.live-card-follow-tag { position:absolute; top:8px; left:8px; background:rgba(255,77,106,0.85); color:#fff; font-size:10px; padding:2px 8px; border-radius:8px; font-weight:600; z-index:2; }
+
+/* ===== 弹幕表情包 ===== */
+.live-emoji { font-size:1.3em; vertical-align:middle; display:inline; line-height:1; }
+
+/* ===== 金币余额显示 ===== */
+.live-coins-display { display:inline-flex; align-items:center; gap:4px; background:rgba(192,160,64,0.12); color:#c0a040; font-size:12px; padding:3px 10px; border-radius:12px; font-weight:600; }
+
+/* ===== 改进的氛围粒子 ===== */
+.live-atmo-particle { position:absolute; top:-30px; animation:liveAtmoFall linear forwards; pointer-events:none; text-shadow:0 0 6px rgba(255,255,255,0.3); user-select:none; }
+
+/* ===== NPC直播间状态描述 ===== */
+.live-card-desc { color:rgba(255,255,255,0.9); font-size:15px; font-weight:600; line-height:1.5; word-break:break-all; text-shadow:0 1px 3px rgba(0,0,0,0.5); }
+
+/* ===== 礼物面板金币不足样式 ===== */
+.live-gift-item.cant-afford { opacity:0.5; }
+.live-gift-item.cant-afford .live-gift-cost { color:#ff4d6a; }
+
+/* ===== 刷新按钮动画 ===== */
+#live-refresh-icon.spinning { animation:liveSpin 1s linear; }
+@keyframes liveSpin { from{transform:rotate(0deg);} to{transform:rotate(360deg);} }
+
+/* ===== 关注按钮高亮 ===== */
+.live-room-tool-btn.followed { background:rgba(255,77,106,0.2) !important; }
+
+/* ===== 弹幕输入框表情提示 ===== */
+.live-room-input::placeholder { font-size:13px; }
+
+/* ===== NPC 资料卡关注按钮 ===== */
+.live-npc-action-follow { background:rgba(255,77,106,0.1); color:#ff4d6a; border-color:rgba(255,77,106,0.3); }
+.live-npc-action-followed { background:rgba(255,77,106,0.06); color:#ff4d6a; border-color:rgba(255,77,106,0.15); opacity:0.8; }
+
+/* ============================================
+   充值系统样式 - RECHARGE SYSTEM
+   ============================================ */
+
+/* 充值面板（从底部弹出） */
+.live-recharge-overlay { position:fixed; top:0; left:0; right:0; bottom:0; background:rgba(0,0,0,0.6); z-index:10006; display:flex; align-items:flex-end; justify-content:center; animation:liveFadeIn 0.2s ease; }
+.live-recharge-panel { background:#1a1a1a; border-radius:20px 20px 0 0; width:100%; max-width:420px; max-height:85vh; overflow-y:auto; animation:liveSlideUp 0.3s ease; border-top:1px solid #333; }
+
+/* 充值面板头部 */
+.live-recharge-header { padding:16px 16px 12px; border-bottom:1px solid #2a2a2a; display:flex; justify-content:space-between; align-items:center; position:sticky; top:0; background:#1a1a1a; z-index:2; border-radius:20px 20px 0 0; }
+.live-recharge-title { color:#f0f0f0; font-size:17px; font-weight:600; }
+.live-recharge-close { color:#666; cursor:pointer; width:32px; height:32px; display:flex; align-items:center; justify-content:center; border-radius:50%; background:rgba(255,255,255,0.06); }
+.live-recharge-close svg { width:14px; height:14px; }
+
+/* 当前余额卡片 */
+.live-recharge-balance { margin:16px; padding:20px; background:linear-gradient(135deg, #2a2000 0%, #1a1500 100%); border-radius:16px; border:1px solid rgba(192,160,64,0.2); position:relative; overflow:hidden; }
+.live-recharge-balance::before { content:''; position:absolute; top:-30px; right:-30px; width:100px; height:100px; border-radius:50%; background:rgba(192,160,64,0.06); }
+.live-recharge-balance-label { color:rgba(192,160,64,0.7); font-size:12px; margin-bottom:6px; }
+.live-recharge-balance-amount { color:#c0a040; font-size:32px; font-weight:700; display:flex; align-items:baseline; gap:4px; }
+.live-recharge-balance-amount small { font-size:14px; font-weight:400; color:rgba(192,160,64,0.6); }
+.live-recharge-balance-wallet { color:rgba(255,255,255,0.4); font-size:11px; margin-top:8px; display:flex; align-items:center; gap:4px; }
+.live-recharge-balance-wallet svg { width:12px; height:12px; }
+
+/* 充值档位网格 */
+.live-recharge-section-title { color:#888; font-size:13px; padding:0 16px; margin-bottom:10px; display:flex; align-items:center; gap:6px; }
+.live-recharge-grid { display:grid; grid-template-columns:repeat(3, 1fr); gap:10px; padding:0 16px; margin-bottom:16px; }
+
+/* 单个充值档位卡片 */
+.live-recharge-card { position:relative; background:#222; border-radius:14px; padding:16px 10px; text-align:center; cursor:pointer; border:2px solid transparent; transition:all 0.2s; overflow:hidden; }
+.live-recharge-card:active { transform:scale(0.97); }
+.live-recharge-card.selected { border-color:#c0a040; background:#2a2400; }
+.live-recharge-card.popular { border-color:rgba(255,77,106,0.4); }
+.live-recharge-card.popular::before { content:'热门'; position:absolute; top:0; right:0; background:#ff4d6a; color:#fff; font-size:9px; padding:2px 8px; border-radius:0 12px 0 8px; font-weight:600; }
+.live-recharge-card.first-buy::before { content:'首充双倍'; position:absolute; top:0; right:0; background:#c0a040; color:#1a1a1a; font-size:9px; padding:2px 8px; border-radius:0 12px 0 8px; font-weight:600; }
+.live-recharge-card-coins { color:#c0a040; font-size:22px; font-weight:700; margin-bottom:2px; display:flex; align-items:center; justify-content:center; gap:4px; }
+.live-recharge-card-coins svg { width:16px; height:16px; }
+.live-recharge-card-coins-unit { font-size:12px; font-weight:400; color:rgba(192,160,64,0.6); }
+.live-recharge-card-price { color:#f0f0f0; font-size:15px; font-weight:600; margin-top:4px; }
+.live-recharge-card-bonus { color:#ff4d6a; font-size:10px; margin-top:3px; font-weight:500; }
+.live-recharge-card-original { color:#666; font-size:10px; text-decoration:line-through; margin-top:2px; }
+
+/* 自定义金额 */
+.live-recharge-custom { margin:0 16px 16px; }
+.live-recharge-custom-btn { display:flex; align-items:center; justify-content:center; gap:8px; padding:12px; background:rgba(255,255,255,0.04); border-radius:12px; color:#888; font-size:14px; cursor:pointer; border:1px dashed #333; }
+.live-recharge-custom-btn:active { background:rgba(255,255,255,0.08); }
+.live-recharge-custom-input-row { display:flex; align-items:center; gap:10px; }
+.live-recharge-custom-input { flex:1; padding:12px 14px; background:#222; border:1px solid #333; border-radius:10px; color:#f0f0f0; font-size:16px; outline:none; box-sizing:border-box; text-align:center; }
+.live-recharge-custom-input::placeholder { color:#555; }
+.live-recharge-custom-hint { color:#888; font-size:12px; text-align:center; margin-top:6px; }
+.live-recharge-custom-coins { color:#c0a040; font-size:14px; text-align:center; margin-top:4px; font-weight:600; }
+
+/* 支付方式选择 */
+.live-recharge-pay-section { padding:0 16px; margin-bottom:16px; }
+.live-recharge-pay-method { display:flex; align-items:center; gap:12px; padding:14px; background:#222; border-radius:12px; cursor:pointer; border:2px solid transparent; transition:all 0.2s; }
+.live-recharge-pay-method.active { border-color:#07c160; }
+.live-recharge-pay-icon { width:32px; height:32px; border-radius:8px; display:flex; align-items:center; justify-content:center; flex-shrink:0; }
+.live-recharge-pay-icon.wechat { background:#07c160; color:#fff; }
+.live-recharge-pay-icon.wechat svg { width:20px; height:20px; }
+.live-recharge-pay-icon.wallet { background:#1a1a1a; border:1px solid #333; color:#c0a040; }
+.live-recharge-pay-icon.wallet svg { width:18px; height:18px; }
+.live-recharge-pay-info { flex:1; }
+.live-recharge-pay-name { color:#f0f0f0; font-size:14px; font-weight:500; }
+.live-recharge-pay-desc { color:#888; font-size:11px; margin-top:2px; }
+.live-recharge-pay-check { width:20px; height:20px; border-radius:50%; border:2px solid #444; display:flex; align-items:center; justify-content:center; flex-shrink:0; }
+.live-recharge-pay-check.checked { border-color:#07c160; background:#07c160; }
+.live-recharge-pay-check.checked svg { width:12px; height:12px; color:#fff; }
+
+/* 充值确认按钮 */
+.live-recharge-confirm-area { padding:10px 16px 20px; padding-bottom:max(20px, env(safe-area-inset-bottom)); position:sticky; bottom:0; background:#1a1a1a; border-top:1px solid #2a2a2a; }
+.live-recharge-confirm-btn { width:100%; padding:14px; border:none; border-radius:25px; font-size:16px; font-weight:600; cursor:pointer; display:flex; align-items:center; justify-content:center; gap:8px; transition:all 0.2s; background:#c0a040; color:#1a1a1a; }
+.live-recharge-confirm-btn:active { transform:scale(0.98); opacity:0.9; }
+.live-recharge-confirm-btn:disabled { background:#333; color:#666; cursor:not-allowed; }
+.live-recharge-confirm-btn .price-tag { background:rgba(0,0,0,0.15); padding:2px 10px; border-radius:12px; font-size:13px; }
+
+/* 充值记录入口 */
+.live-recharge-history-link { text-align:center; padding:10px; color:#666; font-size:12px; cursor:pointer; }
+.live-recharge-history-link:active { color:#888; }
+
+/* ============================================
+   模拟微信支付弹窗
+   ============================================ */
+.live-pay-dialog-overlay { position:fixed; top:0; left:0; right:0; bottom:0; background:rgba(0,0,0,0.7); z-index:10007; display:flex; align-items:center; justify-content:center; animation:liveFadeIn 0.15s ease; }
+.live-pay-dialog { background:#fff; border-radius:12px; width:85%; max-width:320px; overflow:hidden; animation:livePayDialogIn 0.3s ease; }
+@keyframes livePayDialogIn { from{opacity:0;transform:scale(0.9);} to{opacity:1;transform:scale(1);} }
+
+.live-pay-dialog-header { background:#07c160; padding:20px 16px; text-align:center; position:relative; }
+.live-pay-dialog-header-title { color:#fff; font-size:16px; font-weight:600; }
+.live-pay-dialog-header-close { position:absolute; top:10px; right:10px; color:rgba(255,255,255,0.7); cursor:pointer; width:28px; height:28px; display:flex; align-items:center; justify-content:center; }
+.live-pay-dialog-header-close svg { width:14px; height:14px; }
+.live-pay-dialog-amount { color:#fff; font-size:36px; font-weight:700; margin-top:8px; }
+.live-pay-dialog-amount small { font-size:16px; font-weight:400; }
+.live-pay-dialog-merchant { color:rgba(255,255,255,0.7); font-size:12px; margin-top:4px; }
+
+.live-pay-dialog-body { padding:20px 16px; }
+.live-pay-dialog-label { color:#999; font-size:13px; text-align:center; margin-bottom:16px; }
+.live-pay-dialog-dots { display:flex; justify-content:center; gap:10px; margin-bottom:20px; }
+.live-pay-dialog-dot { width:40px; height:40px; border-radius:8px; border:1.5px solid #ddd; display:flex; align-items:center; justify-content:center; }
+.live-pay-dialog-dot.filled { background:#333; }
+.live-pay-dialog-dot.filled::after { content:''; width:10px; height:10px; border-radius:50%; background:#333; }
+.live-pay-dialog-dot.active { border-color:#07c160; }
+
+/* 数字键盘 */
+.live-pay-keypad { display:grid; grid-template-columns:repeat(3, 1fr); gap:1px; background:#e5e5e5; border-top:1px solid #e5e5e5; }
+.live-pay-key { padding:16px; text-align:center; font-size:22px; font-weight:500; color:#333; background:#fff; cursor:pointer; user-select:none; -webkit-user-select:none; }
+.live-pay-key:active { background:#e5e5e5; }
+.live-pay-key.empty { background:#e5e5e5; cursor:default; }
+.live-pay-key.delete { font-size:14px; background:#e5e5e5; display:flex; align-items:center; justify-content:center; }
+.live-pay-key.delete svg { width:22px; height:22px; }
+
+/* ============================================
+   支付处理中 & 支付成功动画
+   ============================================ */
+.live-pay-processing { text-align:center; padding:40px 20px; }
+.live-pay-processing-spinner { width:48px; height:48px; border:3px solid #e5e5e5; border-top-color:#07c160; border-radius:50%; animation:livePaySpin 0.8s linear infinite; margin:0 auto 16px; }
+@keyframes livePaySpin { to{transform:rotate(360deg);} }
+.live-pay-processing-text { color:#666; font-size:14px; }
+
+.live-pay-success { text-align:center; padding:30px 20px 20px; }
+.live-pay-success-icon { width:64px; height:64px; border-radius:50%; background:#07c160; display:flex; align-items:center; justify-content:center; margin:0 auto 16px; animation:livePaySuccessPop 0.5s ease; }
+@keyframes livePaySuccessPop { 0%{transform:scale(0);} 60%{transform:scale(1.2);} 100%{transform:scale(1);} }
+.live-pay-success-icon svg { width:32px; height:32px; color:#fff; }
+.live-pay-success-text { color:#333; font-size:18px; font-weight:600; margin-bottom:4px; }
+.live-pay-success-detail { color:#999; font-size:13px; margin-bottom:4px; }
+.live-pay-success-coins { color:#c0a040; font-size:24px; font-weight:700; margin:12px 0; display:flex; align-items:center; justify-content:center; gap:6px; animation:livePayCoinsIn 0.6s ease 0.3s both; }
+@keyframes livePayCoinsIn { from{opacity:0;transform:translateY(20px);} to{opacity:1;transform:translateY(0);} }
+.live-pay-success-btn { width:100%; padding:12px; border:none; border-radius:25px; background:#07c160; color:#fff; font-size:15px; font-weight:600; cursor:pointer; margin-top:16px; }
+.live-pay-success-btn:active { opacity:0.9; }
+
+/* 金币飘落动画 */
+.live-coin-rain { position:fixed; top:0; left:0; right:0; bottom:0; pointer-events:none; z-index:10008; overflow:hidden; }
+.live-coin-particle { position:absolute; top:-30px; color:#c0a040; animation:liveCoinFall 1.5s ease forwards; font-size:20px; }
+@keyframes liveCoinFall { 0%{transform:translateY(0) rotate(0deg);opacity:1;} 70%{opacity:1;} 100%{transform:translateY(80vh) rotate(720deg);opacity:0;} }
+
+/* ============================================
+   充值记录面板
+   ============================================ */
+.live-recharge-records { padding:16px; }
+.live-recharge-record-item { display:flex; align-items:center; gap:12px; padding:12px 0; border-bottom:1px solid #2a2a2a; }
+.live-recharge-record-item:last-child { border-bottom:none; }
+.live-recharge-record-icon { width:36px; height:36px; border-radius:50%; display:flex; align-items:center; justify-content:center; flex-shrink:0; }
+.live-recharge-record-icon.income { background:rgba(192,160,64,0.1); color:#c0a040; }
+.live-recharge-record-icon.spend { background:rgba(255,77,106,0.1); color:#ff4d6a; }
+.live-recharge-record-info { flex:1; min-width:0; }
+.live-recharge-record-desc { color:#f0f0f0; font-size:13px; }
+.live-recharge-record-time { color:#666; font-size:11px; margin-top:2px; }
+.live-recharge-record-amount { font-size:14px; font-weight:600; }
+.live-recharge-record-amount.income { color:#c0a040; }
+.live-recharge-record-amount.spend { color:#ff4d6a; }
+
+/* 礼物面板中的充值按钮 */
+.live-gift-recharge-btn { display:flex; align-items:center; justify-content:center; gap:6px; padding:8px 16px; background:rgba(192,160,64,0.12); border:1px solid rgba(192,160,64,0.25); border-radius:20px; color:#c0a040; font-size:12px; font-weight:600; cursor:pointer; margin-left:auto; transition:all 0.2s; }
+.live-gift-recharge-btn:active { background:rgba(192,160,64,0.2); }
+.live-gift-recharge-btn svg { width:12px; height:12px; }
+
+/* 金币不足提示条 */
+.live-gift-insufficient { background:rgba(255,77,106,0.08); color:#ff4d6a; font-size:12px; padding:8px 14px; border-radius:10px; margin-bottom:10px; display:flex; align-items:center; justify-content:space-between; gap:8px; animation:liveDanmakuIn 0.3s ease; }
+.live-gift-insufficient-btn { background:#ff4d6a; color:#fff; border:none; padding:4px 14px; border-radius:12px; font-size:11px; font-weight:600; cursor:pointer; flex-shrink:0; }
+.live-gift-insufficient-btn:active { opacity:0.8; }
+
+/* 广场金币余额栏 */
+.live-plaza-coins-bar { display:flex; align-items:center; justify-content:space-between; padding:10px 16px; margin:0 0 4px; }
+.live-plaza-coins-info { display:flex; align-items:center; gap:8px; }
+.live-plaza-coins-amount { color:#c0a040; font-size:16px; font-weight:700; }
+.live-plaza-coins-label { color:#888; font-size:12px; }
+.live-plaza-recharge-btn { padding:6px 16px; background:rgba(192,160,64,0.15); border:1px solid rgba(192,160,64,0.3); border-radius:16px; color:#c0a040; font-size:12px; font-weight:600; cursor:pointer; display:flex; align-items:center; gap:4px; }
+.live-plaza-recharge-btn:active { background:rgba(192,160,64,0.25); }

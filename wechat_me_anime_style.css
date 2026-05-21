@@ -1,0 +1,323 @@
+/* ========================================
+   微信"我的"界面 - 二次元动漫黑白便签风格
+   ======================================== */
+
+/* 整体背景 - 便签纸质感 */
+#tab-me .scroll-y {
+    background: #f5f5f0 !important;
+    background-image: 
+        repeating-linear-gradient(
+            0deg,
+            transparent,
+            transparent 29px,
+            rgba(0,0,0,0.08) 29px,
+            rgba(0,0,0,0.08) 30px
+        ),
+        linear-gradient(90deg, 
+            rgba(255,255,255,0.3) 0%,
+            rgba(240,240,235,0.5) 100%
+        );
+    position: relative;
+}
+
+/* 便签纸左侧红线装饰 */
+#tab-me .scroll-y::before {
+    content: '';
+    position: absolute;
+    left: 25px;
+    top: 0;
+    bottom: 0;
+    width: 2px;
+    background: rgba(220,50,50,0.3);
+    z-index: 0;
+}
+
+/* 用户信息卡片 - 手绘便签风格 */
+#tab-me .scroll-y > div:first-child {
+    background: #fff !important;
+    border: 2px solid #000 !important;
+    border-radius: 0 !important;
+    box-shadow: 
+        3px 3px 0 rgba(0,0,0,0.2),
+        inset 0 0 0 1px rgba(0,0,0,0.05) !important;
+    margin: 20px 12px 15px !important;
+    padding: 25px 20px !important;
+    position: relative;
+    transform: rotate(-0.5deg);
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+}
+
+/* 便签纸纹理 */
+#tab-me .scroll-y > div:first-child::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: 
+        repeating-linear-gradient(
+            0deg,
+            transparent,
+            transparent 24px,
+            rgba(0,0,0,0.02) 24px,
+            rgba(0,0,0,0.02) 25px
+        );
+    pointer-events: none;
+    z-index: 0;
+}
+
+/* 头像 - 手绘边框（使用全局变量，支持美化调整） */
+#tab-me #my-avatar {
+    border: 3px solid #000 !important;
+    border-radius: var(--avatar-radius, 50%) !important;
+    box-shadow: 2px 2px 0 rgba(0,0,0,0.3) !important;
+    filter: grayscale(0.7) contrast(1.1);
+    position: relative;
+    z-index: 1;
+}
+
+/* 用户名 - 手写风格 */
+#tab-me #my-name {
+    color: #000 !important;
+    font-weight: 700 !important;
+    font-size: 22px !important;
+    text-shadow: 1px 1px 0 rgba(0,0,0,0.1);
+    letter-spacing: 1px;
+    position: relative;
+    z-index: 1;
+}
+
+/* 微信号 */
+#tab-me #my-wxid {
+    color: #666 !important;
+    font-size: 13px !important;
+    font-family: 'Courier New', monospace;
+}
+
+/* 右侧箭头图标 */
+#tab-me .scroll-y > div:first-child .fa-chevron-right {
+    color: #000 !important;
+    opacity: 0.6;
+}
+
+/* 功能分组卡片 - 便签纸片 */
+#tab-me .group-box {
+    background: #fff !important;
+    border: 2px solid #000 !important;
+    border-radius: 0 !important;
+    margin: 0 12px 15px !important;
+    padding: 0 !important;
+    box-shadow: 
+        3px 3px 0 rgba(0,0,0,0.15),
+        inset 0 0 0 1px rgba(0,0,0,0.03) !important;
+    position: relative;
+    transform: rotate(0.3deg);
+}
+
+/* 便签纸纹理 */
+#tab-me .group-box::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: 
+        repeating-linear-gradient(
+            0deg,
+            transparent,
+            transparent 24px,
+            rgba(0,0,0,0.015) 24px,
+            rgba(0,0,0,0.015) 25px
+        );
+    pointer-events: none;
+}
+
+/* 列表项 - 手绘分隔线 */
+#tab-me .list-item {
+    border-bottom: 1px dashed rgba(0,0,0,0.15) !important;
+    padding: 16px 18px !important;
+    position: relative;
+    transition: background 0.2s;
+}
+
+#tab-me .list-item:last-child {
+    border-bottom: none !important;
+}
+
+#tab-me .list-item:active {
+    background: rgba(0,0,0,0.03) !important;
+}
+
+/* 列表项图标 - 黑白线条风格 */
+#tab-me .list-item i {
+    color: #000 !important;
+    opacity: 0.8;
+    font-size: 24px !important;
+    filter: drop-shadow(1px 1px 0 rgba(0,0,0,0.1));
+}
+
+/* 列表项文字 */
+#tab-me .list-title {
+    color: #000 !important;
+    font-weight: 600 !important;
+    font-size: 16px !important;
+    letter-spacing: 0.5px;
+}
+
+#tab-me .list-sub {
+    color: #666 !important;
+    font-size: 13px !important;
+}
+
+/* 开关按钮 - 手绘风格 */
+#tab-me .switch {
+    border: 2px solid #000 !important;
+    background: #fff !important;
+    box-shadow: inset 1px 1px 2px rgba(0,0,0,0.1) !important;
+}
+
+#tab-me .switch .slider {
+    background: #ddd !important;
+    border: 1px solid #000 !important;
+}
+
+#tab-me .switch input:checked + .slider {
+    background: #000 !important;
+}
+
+#tab-me .switch .slider::before {
+    background: #fff !important;
+    border: 2px solid #000 !important;
+    box-shadow: 1px 1px 0 rgba(0,0,0,0.2) !important;
+}
+
+/* 表单单元格 */
+#tab-me .form-cell {
+    padding: 16px 18px !important;
+    border-bottom: 1px dashed rgba(0,0,0,0.15) !important;
+}
+
+#tab-me .form-cell:last-child {
+    border-bottom: none !important;
+}
+
+#tab-me .form-label {
+    color: #000 !important;
+    font-weight: 600 !important;
+}
+
+/* 装饰元素 - 手绘涂鸦 */
+#tab-me .scroll-y::after {
+    content: '✦';
+    position: absolute;
+    top: 15px;
+    right: 20px;
+    font-size: 20px;
+    color: rgba(0,0,0,0.15);
+    transform: rotate(15deg);
+    z-index: 0;
+    pointer-events: none;
+}
+
+/* 添加随机装饰贴纸效果 */
+#tab-me .group-box:nth-child(2)::after {
+    content: '★';
+    position: absolute;
+    top: -8px;
+    right: 15px;
+    font-size: 16px;
+    color: rgba(0,0,0,0.2);
+    transform: rotate(-20deg);
+    pointer-events: none;
+}
+
+#tab-me .group-box:nth-child(3)::after {
+    content: '♪';
+    position: absolute;
+    bottom: -6px;
+    left: 20px;
+    font-size: 14px;
+    color: rgba(0,0,0,0.15);
+    transform: rotate(10deg);
+    pointer-events: none;
+}
+
+#tab-me .group-box:nth-child(4)::after {
+    content: '✿';
+    position: absolute;
+    top: -7px;
+    left: 25px;
+    font-size: 15px;
+    color: rgba(0,0,0,0.18);
+    transform: rotate(-15deg);
+    pointer-events: none;
+}
+
+/* 钱包余额文字 */
+#tab-me #wallet-balance {
+    color: #000 !important;
+    font-weight: 700 !important;
+    font-family: 'Courier New', monospace;
+}
+
+/* 胶带效果（可选装饰） */
+#tab-me .group-box:first-of-type::before {
+    content: '';
+    position: absolute;
+    top: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 60px;
+    height: 20px;
+    background: rgba(255,255,200,0.4);
+    border: 1px solid rgba(0,0,0,0.1);
+    border-left: none;
+    border-right: none;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.1);
+    z-index: 2;
+    pointer-events: none;
+}
+
+/* 响应式调整 */
+@media (max-width: 375px) {
+    #tab-me #my-name {
+        font-size: 20px !important;
+    }
+    
+    #tab-me .list-title {
+        font-size: 15px !important;
+    }
+}
+
+/* 添加纸张边缘撕裂效果（顶部） */
+#tab-me .scroll-y > div:first-child::after {
+    content: '';
+    position: absolute;
+    top: -2px;
+    left: 0;
+    right: 0;
+    height: 8px;
+    background:
+        linear-gradient(45deg, transparent 33.33%, #fff 33.33%, #fff 66.66%, transparent 66.66%),
+        linear-gradient(-45deg, transparent 33.33%, #fff 33.33%, #fff 66.66%, transparent 66.66%);
+    background-size: 8px 8px;
+    background-position: 0 0, 4px 0;
+    z-index: 1;
+    pointer-events: none;
+}
+
+/* 手写标注效果 */
+#tab-me .list-item:first-child::before {
+    content: '→';
+    position: absolute;
+    left: 2px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 12px;
+    color: rgba(0,0,0,0.2);
+    font-weight: bold;
+    pointer-events: none;
+}

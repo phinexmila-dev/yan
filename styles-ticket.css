@@ -1,0 +1,883 @@
+/* ===== 票夹功能样式 - 黑白灰简约风 ===== */
+
+/* --- 票夹主界面 Layer --- */
+#layer-ticket-wallet {
+    position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+    background: #f7f7f7;
+    z-index: 5200;
+    display: none;
+    flex-direction: column;
+    overflow: hidden;
+}
+#layer-ticket-wallet.show { display: flex; }
+
+.ticket-wallet-nav {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 12px 16px;
+    background: #fff;
+    border-bottom: 1px solid #e0e0e0;
+    flex-shrink: 0;
+    position: relative;
+    padding-top: env(safe-area-inset-top, 12px);
+}
+.ticket-wallet-nav .tw-back {
+    font-size: 15px; color: #333; cursor: pointer;
+    display: flex; align-items: center; gap: 6px;
+}
+.ticket-wallet-nav .tw-title {
+    position: absolute; left: 50%; transform: translateX(-50%);
+    font-size: 17px; font-weight: 600; color: #1a1a1a;
+}
+.ticket-wallet-nav .tw-add-btn {
+    font-size: 14px; color: #333; cursor: pointer;
+    display: flex; align-items: center; gap: 4px;
+    padding: 4px 10px; border-radius: 16px;
+    background: #f0f0f0;
+}
+.ticket-wallet-nav .tw-add-btn:active { opacity: 0.7; }
+
+/* --- 筛选标签栏 --- */
+.ticket-filter-bar {
+    display: flex; align-items: center; gap: 8px;
+    padding: 10px 16px;
+    background: #fff;
+    overflow-x: auto;
+    flex-shrink: 0;
+    -webkit-overflow-scrolling: touch;
+}
+.ticket-filter-bar::-webkit-scrollbar { display: none; }
+.ticket-filter-tag {
+    flex-shrink: 0;
+    padding: 5px 14px;
+    border-radius: 16px;
+    font-size: 13px;
+    color: #888;
+    background: #f0f0f0;
+    cursor: pointer;
+    transition: all 0.2s;
+    white-space: nowrap;
+}
+.ticket-filter-tag.active {
+    color: #fff;
+    background: #333;
+}
+
+/* --- 联系人分组标签 --- */
+.ticket-contact-filter {
+    display: flex; align-items: center; gap: 8px;
+    padding: 6px 16px 10px;
+    background: #fff;
+    border-bottom: 1px solid #eee;
+    overflow-x: auto;
+    flex-shrink: 0;
+}
+.ticket-contact-chip {
+    flex-shrink: 0;
+    display: flex; align-items: center; gap: 4px;
+    padding: 4px 12px 4px 4px;
+    border-radius: 20px;
+    font-size: 12px;
+    color: #666;
+    background: #f5f5f5;
+    cursor: pointer;
+    border: 1.5px solid transparent;
+    transition: all 0.2s;
+}
+.ticket-contact-chip.active {
+    border-color: #333;
+    background: rgba(0,0,0,0.04);
+    color: #333;
+}
+.ticket-contact-chip img {
+    width: 22px; height: 22px; border-radius: 50%; object-fit: cover;
+}
+
+/* --- 票据列表容器 --- */
+.ticket-list-container {
+    flex: 1; overflow-y: auto; padding: 16px;
+    -webkit-overflow-scrolling: touch;
+}
+
+/* --- 空状态 --- */
+.ticket-empty-state {
+    display: flex; flex-direction: column; align-items: center;
+    justify-content: center; padding: 60px 20px; color: #bbb;
+}
+.ticket-empty-state i {
+    font-size: 48px; margin-bottom: 16px; opacity: 0.4;
+}
+.ticket-empty-state p {
+    font-size: 14px; text-align: center; line-height: 1.6;
+}
+
+/* --- 统计卡片 --- */
+.ticket-stats-card {
+    background: #1a1a1a;
+    border-radius: 14px;
+    padding: 18px 20px;
+    margin-bottom: 18px;
+    color: #fff;
+    position: relative;
+    overflow: hidden;
+}
+.ticket-stats-card::after {
+    content: '';
+    position: absolute; right: 15px; top: 50%;
+    transform: translateY(-50%);
+    width: 60px; height: 60px;
+    border: 2px solid rgba(255,255,255,0.08);
+    border-radius: 50%;
+}
+.ticket-stats-row {
+    display: flex; justify-content: space-around; text-align: center;
+}
+.ticket-stat-item .stat-num {
+    font-size: 26px; font-weight: 700; line-height: 1.2;
+}
+.ticket-stat-item .stat-label {
+    font-size: 11px; opacity: 0.6; margin-top: 2px;
+}
+
+/* ============================================================
+   票据卡片 - 简约票样式
+   ============================================================ */
+
+.ticket-card {
+    background: #fff;
+    border-radius: 12px;
+    margin-bottom: 16px;
+    overflow: hidden;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+    position: relative;
+    cursor: pointer;
+    transition: transform 0.15s, box-shadow 0.15s;
+    border: 1px solid #eee;
+}
+.ticket-card:active {
+    transform: scale(0.98);
+    box-shadow: 0 1px 2px rgba(0,0,0,0.04);
+}
+
+/* 锯齿边 (票据撕裂效果) */
+.ticket-card::before,
+.ticket-card::after {
+    content: '';
+    position: absolute;
+    left: 0; right: 0;
+    height: 8px;
+    background: radial-gradient(circle, #f7f7f7 4px, transparent 4px);
+    background-size: 16px 8px;
+    z-index: 2;
+}
+.ticket-card::before { top: -4px; }
+.ticket-card::after { bottom: -4px; }
+
+/* --- 票据头部 --- */
+.ticket-header {
+    padding: 10px 16px 6px;
+    display: flex; align-items: center; justify-content: space-between;
+    border-bottom: 1px dashed #e0e0e0;
+}
+.ticket-header-left {
+    display: flex; align-items: center; gap: 8px;
+}
+.ticket-transport-icon {
+    width: 32px; height: 32px;
+    border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 14px;
+    color: #fff;
+    background: #333;
+}
+.ticket-transport-icon.plane,
+.ticket-transport-icon.highspeed,
+.ticket-transport-icon.train,
+.ticket-transport-icon.car,
+.ticket-transport-icon.bus,
+.ticket-transport-icon.subway,
+.ticket-transport-icon.walk {
+    background: #333;
+}
+
+.ticket-transport-label {
+    font-size: 13px; font-weight: 600; color: #333;
+}
+.ticket-no {
+    font-size: 12px; color: #aaa; font-family: 'Courier New', monospace;
+}
+
+/* --- 票据主体 --- */
+.ticket-body {
+    padding: 14px 16px;
+}
+.ticket-route {
+    display: flex; align-items: center; justify-content: space-between;
+    margin-bottom: 10px;
+}
+.ticket-city {
+    text-align: center; flex: 1;
+}
+.ticket-city-name {
+    font-size: 20px; font-weight: 700; color: #1a1a1a;
+    line-height: 1.2;
+}
+.ticket-station {
+    font-size: 11px; color: #aaa; margin-top: 2px;
+}
+.ticket-time {
+    font-size: 14px; color: #333; font-weight: 600; margin-top: 4px;
+}
+
+.ticket-route-line {
+    flex: 1;
+    display: flex; flex-direction: column; align-items: center;
+    padding: 0 8px;
+    position: relative;
+}
+.ticket-route-line .route-line {
+    width: 100%;
+    height: 1px;
+    background: #999;
+    position: relative;
+}
+.ticket-route-line .route-line::after {
+    content: '';
+    position: absolute;
+    right: -3px; top: -3px;
+    width: 0; height: 0;
+    border-left: 6px solid #999;
+    border-top: 3px solid transparent;
+    border-bottom: 3px solid transparent;
+}
+.ticket-route-line .route-duration {
+    font-size: 10px; color: #aaa; margin-top: 4px;
+    white-space: nowrap;
+}
+.ticket-route-line .route-transport-mini {
+    font-size: 12px; margin-bottom: 4px; color: #666;
+}
+
+/* --- 票据乘客信息 --- */
+.ticket-info-row {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 6px 0;
+    border-top: 1px dashed #f0f0f0;
+}
+.ticket-info-item {
+    display: flex; flex-direction: column;
+}
+.ticket-info-label {
+    font-size: 10px; color: #bbb; margin-bottom: 1px;
+}
+.ticket-info-value {
+    font-size: 13px; color: #333; font-weight: 500;
+}
+
+/* --- 条形码装饰 --- */
+.ticket-barcode {
+    padding: 8px 16px;
+    display: flex; align-items: center; gap: 1px;
+    justify-content: center;
+    opacity: 0.3;
+}
+.ticket-barcode span {
+    display: inline-block;
+    width: 2px;
+    background: #333;
+    height: 24px;
+}
+
+/* --- 票据底部 --- */
+.ticket-footer {
+    padding: 10px 16px;
+    background: #fafafa;
+    border-top: 1px dashed #e0e0e0;
+    display: flex; align-items: center; justify-content: space-between;
+}
+.ticket-meeting-info {
+    font-size: 12px; color: #666;
+    display: flex; align-items: center; gap: 4px;
+}
+.ticket-diary-btn {
+    font-size: 12px; color: #aaa;
+    display: flex; align-items: center; gap: 4px;
+    cursor: pointer;
+}
+.ticket-diary-btn:hover { color: #333; }
+
+/* --- 票据主题 (简约版) --- */
+.ticket-card.theme-pink { border-left: 3px solid #ccc; }
+.ticket-card.theme-blue { border-left: 3px solid #999; }
+.ticket-card.theme-vintage {
+    background: #faf8f5;
+    border: 1px solid #e0ddd5;
+}
+.ticket-card.theme-vintage .ticket-footer { background: #f5f3ee; }
+.ticket-card.theme-golden {
+    border-left: 3px solid #b8a070;
+}
+
+/* ============================================================
+   购票界面
+   ============================================================ */
+
+#layer-ticket-purchase {
+    position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+    background: #f7f7f7;
+    z-index: 5210;
+    display: none;
+    flex-direction: column;
+    overflow: hidden;
+}
+#layer-ticket-purchase.show { display: flex; }
+
+.ticket-purchase-nav {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 12px 16px;
+    background: #fff;
+    border-bottom: 1px solid #e0e0e0;
+    flex-shrink: 0;
+    padding-top: env(safe-area-inset-top, 12px);
+}
+.ticket-purchase-nav .tw-back {
+    font-size: 15px; color: #333; cursor: pointer;
+    display: flex; align-items: center; gap: 6px;
+}
+.ticket-purchase-nav .tw-title {
+    position: absolute; left: 50%; transform: translateX(-50%);
+    font-size: 17px; font-weight: 600; color: #1a1a1a;
+}
+.ticket-purchase-body {
+    flex: 1; overflow-y: auto; padding: 16px;
+    -webkit-overflow-scrolling: touch;
+}
+
+/* --- 交通工具选择 --- */
+.tp-section { margin-bottom: 20px; }
+.tp-section-title {
+    font-size: 14px; font-weight: 600; color: #333;
+    margin-bottom: 10px;
+    display: flex; align-items: center; gap: 6px;
+}
+.tp-transport-grid {
+    display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px;
+}
+.tp-transport-item {
+    display: flex; flex-direction: column; align-items: center;
+    padding: 12px 8px; border-radius: 10px;
+    background: #fff; border: 2px solid transparent;
+    cursor: pointer; transition: all 0.2s;
+}
+.tp-transport-item.selected {
+    border-color: #333; background: rgba(0,0,0,0.02);
+}
+.tp-transport-item:active { transform: scale(0.95); }
+.tp-transport-item .tp-icon { font-size: 24px; margin-bottom: 4px; color: #555; }
+.tp-transport-item .tp-label { font-size: 12px; color: #888; }
+.tp-transport-item.selected .tp-label { color: #333; font-weight: 600; }
+
+/* --- 地点输入 --- */
+.tp-location-card {
+    background: #fff; border-radius: 12px; padding: 16px; position: relative;
+}
+.tp-loc-row {
+    display: flex; align-items: center; gap: 12px; padding: 10px 0;
+}
+.tp-loc-row + .tp-loc-row { border-top: 1px solid #f0f0f0; }
+.tp-loc-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
+.tp-loc-dot.from { background: #555; }
+.tp-loc-dot.to { background: #999; }
+.tp-loc-input {
+    flex: 1; border: none; font-size: 15px; color: #333;
+    outline: none; background: transparent;
+}
+.tp-loc-input::placeholder { color: #ccc; }
+.tp-loc-swap {
+    position: absolute; right: 16px; top: 50%; transform: translateY(-50%);
+    width: 28px; height: 28px; border-radius: 50%; background: #f0f0f0;
+    display: flex; align-items: center; justify-content: center;
+    cursor: pointer; font-size: 12px; color: #999;
+}
+.tp-loc-swap:active { background: #e5e5e5; }
+
+/* --- 时间输入 --- */
+.tp-time-row { display: flex; gap: 10px; }
+.tp-time-input-wrap {
+    flex: 1; background: #fff; border-radius: 10px; padding: 10px 14px;
+}
+.tp-time-label { font-size: 11px; color: #aaa; margin-bottom: 4px; }
+.tp-time-input {
+    width: 100%; border: none; font-size: 14px; color: #333;
+    outline: none; background: transparent;
+}
+
+/* --- 乘客选择 --- */
+.tp-passenger-list { background: #fff; border-radius: 10px; padding: 6px 14px; }
+.tp-passenger-item {
+    display: flex; align-items: center; gap: 10px; padding: 10px 0;
+}
+.tp-passenger-item + .tp-passenger-item { border-top: 1px solid #f5f5f5; }
+.tp-passenger-item input[type="checkbox"] { width: 18px; height: 18px; accent-color: #333; }
+.tp-passenger-avatar { width: 28px; height: 28px; border-radius: 50%; object-fit: cover; }
+.tp-passenger-name { font-size: 14px; color: #333; }
+
+/* --- 票面样式选择 --- */
+.tp-theme-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 8px; }
+.tp-theme-item {
+    aspect-ratio: 1; border-radius: 10px;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    cursor: pointer; border: 2px solid transparent; transition: all 0.2s;
+    font-size: 11px; color: #888;
+}
+.tp-theme-item.selected { border-color: #333; }
+.tp-theme-item .tp-theme-preview { width: 32px; height: 20px; border-radius: 4px; margin-bottom: 4px; }
+.tp-theme-default .tp-theme-preview { background: #fff; border: 1px solid #ddd; }
+.tp-theme-pink .tp-theme-preview { background: #f0f0f0; border: 1px solid #ccc; }
+.tp-theme-blue .tp-theme-preview { background: #e8e8e8; border: 1px solid #bbb; }
+.tp-theme-vintage .tp-theme-preview { background: #f5f3ee; border: 1px solid #d5d0c5; }
+.tp-theme-golden .tp-theme-preview { background: #eee8d5; border: 1px solid #c5b898; }
+
+/* --- 选项开关 --- */
+.tp-options { background: #fff; border-radius: 10px; padding: 4px 14px; }
+.tp-option-row {
+    display: flex; align-items: center; justify-content: space-between; padding: 12px 0;
+}
+.tp-option-row + .tp-option-row { border-top: 1px solid #f5f5f5; }
+.tp-option-label { font-size: 14px; color: #333; }
+.tp-option-desc { font-size: 11px; color: #aaa; margin-top: 2px; }
+
+.tp-toggle {
+    position: relative; width: 44px; height: 24px;
+    background: #ddd; border-radius: 12px; cursor: pointer;
+    transition: background 0.2s; flex-shrink: 0;
+}
+.tp-toggle.on { background: #333; }
+.tp-toggle::after {
+    content: ''; position: absolute; top: 2px; left: 2px;
+    width: 20px; height: 20px; background: #fff; border-radius: 50%;
+    transition: left 0.2s; box-shadow: 0 1px 3px rgba(0,0,0,0.15);
+}
+.tp-toggle.on::after { left: 22px; }
+
+/* --- 备注 & 提交 --- */
+.tp-remark-input {
+    width: 100%; border: none; background: #fff; border-radius: 10px;
+    padding: 12px 14px; font-size: 14px; color: #333;
+    outline: none; resize: none; min-height: 60px;
+}
+.tp-remark-input::placeholder { color: #ccc; }
+.tp-submit-btn {
+    width: 100%; padding: 14px; border: none; border-radius: 12px;
+    background: #1a1a1a; color: #fff; font-size: 16px; font-weight: 600;
+    cursor: pointer; margin-top: 10px;
+    display: flex; align-items: center; justify-content: center; gap: 8px;
+    transition: opacity 0.2s;
+}
+.tp-submit-btn:active { opacity: 0.8; }
+
+/* ============================================================
+   票据详情弹窗
+   ============================================================ */
+.ticket-detail-overlay {
+    position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(0,0,0,0.45); z-index: 5220;
+    display: none; align-items: center; justify-content: center; padding: 30px 20px;
+}
+.ticket-detail-overlay.show { display: flex; }
+.ticket-detail-card {
+    background: #fff; border-radius: 16px; max-width: 360px; width: 100%;
+    max-height: 80vh; overflow-y: auto; position: relative;
+    animation: ticketDetailIn 0.3s ease;
+}
+@keyframes ticketDetailIn {
+    from { transform: scale(0.85); opacity: 0; }
+    to { transform: scale(1); opacity: 1; }
+}
+.ticket-detail-close {
+    position: absolute; top: 12px; right: 12px;
+    width: 28px; height: 28px; border-radius: 50%; background: #f0f0f0;
+    display: flex; align-items: center; justify-content: center;
+    cursor: pointer; font-size: 14px; color: #999; z-index: 5;
+}
+.ticket-detail-ticket { padding: 24px 20px 16px; }
+.ticket-detail-transport {
+    display: flex; align-items: center; gap: 10px; margin-bottom: 16px;
+}
+.ticket-detail-transport .td-icon {
+    width: 40px; height: 40px; border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 20px; color: #fff; background: #333;
+}
+.ticket-detail-transport .td-label { font-size: 16px; font-weight: 700; color: #1a1a1a; }
+.ticket-detail-transport .td-no { font-size: 13px; color: #aaa; font-family: 'Courier New', monospace; }
+.ticket-detail-route {
+    display: flex; align-items: flex-start; justify-content: space-between;
+    padding: 16px 0; border-top: 1px dashed #e0e0e0; border-bottom: 1px dashed #e0e0e0;
+}
+.td-city { text-align: center; width: 80px; }
+.td-city-name { font-size: 24px; font-weight: 700; color: #1a1a1a; }
+.td-station { font-size: 12px; color: #aaa; margin-top: 2px; }
+.td-time { font-size: 16px; color: #333; font-weight: 600; margin-top: 6px; }
+.td-route-middle {
+    flex: 1; display: flex; flex-direction: column; align-items: center; padding: 0 10px;
+}
+.td-route-icon { font-size: 20px; margin-bottom: 4px; color: #666; }
+.td-route-line-wrap { width: 100%; display: flex; align-items: center; }
+.td-route-dash { flex: 1; height: 1px; border-top: 2px dashed #ccc; }
+.td-route-arrow { color: #999; font-size: 10px; }
+.td-duration { font-size: 11px; color: #aaa; margin-top: 4px; }
+.ticket-detail-info {
+    padding: 14px 0; display: grid; grid-template-columns: 1fr 1fr; gap: 10px;
+}
+.td-info-item { display: flex; flex-direction: column; }
+.td-info-label { font-size: 10px; color: #bbb; text-transform: uppercase; margin-bottom: 2px; }
+.td-info-value { font-size: 14px; color: #333; font-weight: 500; }
+.ticket-detail-actions {
+    padding: 16px 20px; background: #fafafa; border-top: 1px solid #eee;
+    border-radius: 0 0 16px 16px; display: flex; flex-direction: column; gap: 8px;
+}
+.td-action-btn {
+    display: flex; align-items: center; justify-content: center; gap: 6px;
+    padding: 10px; border-radius: 8px; font-size: 14px;
+    cursor: pointer; border: none; transition: opacity 0.2s;
+}
+.td-action-btn:active { opacity: 0.7; }
+.td-action-btn.primary { background: #1a1a1a; color: #fff; }
+.td-action-btn.secondary { background: #f0f0f0; color: #333; }
+.td-action-btn.danger { background: #fff; color: #999; border: 1px solid #ddd; }
+
+/* --- 旅行日记弹窗 --- */
+.ticket-diary-overlay {
+    position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(0,0,0,0.45); z-index: 5230;
+    display: none; align-items: center; justify-content: center; padding: 30px 20px;
+}
+.ticket-diary-overlay.show { display: flex; }
+.ticket-diary-card {
+    background: #fff; border-radius: 16px; max-width: 360px; width: 100%;
+    max-height: 75vh; overflow-y: auto; animation: ticketDetailIn 0.3s ease;
+}
+.ticket-diary-header {
+    padding: 20px 20px 12px; display: flex; align-items: center; justify-content: space-between;
+}
+.ticket-diary-header h3 {
+    font-size: 17px; font-weight: 600; color: #1a1a1a;
+    display: flex; align-items: center; gap: 6px;
+}
+.ticket-diary-header .diary-close { font-size: 18px; color: #aaa; cursor: pointer; }
+.ticket-diary-content {
+    padding: 0 20px 20px; font-size: 14px; color: #333; line-height: 1.8; white-space: pre-wrap;
+}
+.ticket-diary-loading { padding: 30px 20px; text-align: center; color: #aaa; font-size: 14px; }
+.ticket-diary-meta {
+    padding: 10px 20px 16px; font-size: 11px; color: #bbb;
+    border-top: 1px solid #f0f0f0; display: flex; justify-content: space-between;
+}
+
+/* --- 线下模式见面状态 --- */
+.offline-meeting-badge {
+    display: none; align-items: center; gap: 6px;
+    padding: 6px 14px; background: rgba(0,0,0,0.04); border-radius: 20px;
+    margin: 6px auto; font-size: 12px; color: #555; font-weight: 500;
+}
+.offline-meeting-badge.show { display: inline-flex; }
+
+/* --- 城市选择 --- */
+.tp-city-suggest {
+    background: #fff; border-radius: 8px; margin-top: 4px;
+    max-height: 150px; overflow-y: auto;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08); display: none;
+}
+.tp-city-suggest.show { display: block; }
+.tp-city-item {
+    padding: 10px 14px; font-size: 13px; color: #333;
+    cursor: pointer; border-bottom: 1px solid #f5f5f5;
+}
+.tp-city-item:active { background: #f5f5f5; }
+.tp-city-item:last-child { border-bottom: none; }
+
+/* --- DIY编辑入口 --- */
+.ticket-diy-btn {
+    position: absolute; top: 8px; right: 8px;
+    width: 24px; height: 24px; border-radius: 50%;
+    background: rgba(0,0,0,0.04);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 11px; color: #bbb; cursor: pointer; z-index: 3;
+    opacity: 0; transition: opacity 0.2s;
+}
+.ticket-card:hover .ticket-diy-btn,
+.ticket-card:active .ticket-diy-btn { opacity: 1; }
+
+/* --- 见面次数徽章 --- */
+.ticket-meet-count {
+    display: inline-flex; align-items: center; gap: 3px;
+    background: #333; color: #fff; font-size: 10px;
+    padding: 2px 8px; border-radius: 10px; font-weight: 600;
+}
+
+/* --- IP地址切换标识 --- */
+.ticket-ip-badge {
+    display: inline-flex; align-items: center; gap: 4px;
+    background: rgba(0,0,0,0.04); color: #555; font-size: 11px;
+    padding: 2px 8px; border-radius: 8px; margin-top: 4px;
+}
+.ticket-ip-badge i { font-size: 10px; }
+
+/* --- 响应式 --- */
+@media (max-width: 380px) {
+    .ticket-city-name { font-size: 18px; }
+    .tp-transport-grid { grid-template-columns: repeat(3, 1fr); }
+    .td-city-name { font-size: 20px; }
+}
+
+/* ===== 惊喜票据气泡 - 黑白灰高级艺术感 ===== */
+.ticket-surprise-bubble {
+    position: relative;
+    width: 220px;
+    background: #1a1a1a;
+    border: 1px solid #333;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.25), 0 2px 8px rgba(0,0,0,0.15);
+    text-align: center;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+}
+
+/* 顶部装饰线 — 渐变灰色条 */
+.tsb-accent {
+    height: 3px;
+    background: linear-gradient(90deg, transparent, #555 20%, #888 50%, #555 80%, transparent);
+    opacity: 0.6;
+}
+
+/* 礼物图标区 */
+.tsb-icon-area {
+    padding: 20px 0 8px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.tsb-gift-icon {
+    width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid #444;
+    border-radius: 50%;
+    padding: 6px;
+    background: rgba(255,255,255,0.03);
+}
+.tsb-gift-icon svg {
+    width: 22px;
+    height: 22px;
+    stroke: #999;
+    opacity: 0.85;
+}
+
+/* 主标题 */
+.tsb-title {
+    font-size: 14px;
+    font-weight: 600;
+    color: #e8e8e8;
+    letter-spacing: 1.5px;
+    padding: 6px 16px 2px;
+    line-height: 1.5;
+}
+
+/* 副标题 */
+.tsb-subtitle {
+    font-size: 11px;
+    color: #777;
+    letter-spacing: 2px;
+    padding: 0 16px 12px;
+    font-style: italic;
+}
+
+/* 模糊行程提示 */
+.tsb-hint {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    padding: 10px 16px;
+    border-top: 1px solid #2a2a2a;
+    border-bottom: 1px solid #2a2a2a;
+    background: rgba(255,255,255,0.015);
+}
+.tsb-transport {
+    color: #888;
+    font-size: 16px;
+}
+.tsb-date {
+    font-size: 12px;
+    color: #666;
+    letter-spacing: 1px;
+    font-variant-numeric: tabular-nums;
+}
+
+/* 底部装饰省略号 */
+.tsb-footer {
+    padding: 10px 0 14px;
+    color: #555;
+    font-size: 14px;
+    letter-spacing: 6px;
+    opacity: 0.6;
+}
+
+/* 微妙的呼吸动画 */
+@keyframes tsb-breathe {
+    0%, 100% { opacity: 0.5; }
+    50% { opacity: 0.9; }
+}
+.tsb-gift-icon {
+    animation: tsb-breathe 3s ease-in-out infinite;
+}
+
+/* 响应式适配 */
+@media (max-width: 380px) {
+    .ticket-surprise-bubble { width: 200px; }
+    .tsb-title { font-size: 13px; letter-spacing: 1px; }
+}
+
+/* ===== 告知票据卡片气泡 - 黑白灰高级艺术感 ===== */
+.ticket-notify-bubble {
+    position: relative;
+    width: 240px;
+    background: #1a1a1a;
+    border: 1px solid #333;
+    border-radius: 14px;
+    overflow: hidden;
+    box-shadow: 0 6px 24px rgba(0,0,0,0.22), 0 2px 6px rgba(0,0,0,0.12);
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+}
+
+/* 顶部装饰线 */
+.tnb-accent {
+    height: 2px;
+    background: linear-gradient(90deg, transparent, #666 25%, #999 50%, #666 75%, transparent);
+    opacity: 0.5;
+}
+
+/* 标题行 */
+.tnb-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px 14px 4px;
+}
+.tnb-transport {
+    font-size: 12px;
+    color: #aaa;
+    letter-spacing: 0.5px;
+}
+.tnb-transport i {
+    margin-right: 4px;
+    font-size: 13px;
+    color: #999;
+}
+.tnb-ticket-no {
+    font-size: 11px;
+    color: #666;
+    font-variant-numeric: tabular-nums;
+    letter-spacing: 0.5px;
+}
+
+/* 城市路线行 */
+.tnb-route {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 8px 14px 6px;
+    gap: 6px;
+}
+.tnb-city-block {
+    text-align: center;
+    flex: 1;
+    min-width: 0;
+}
+.tnb-city {
+    font-size: 18px;
+    font-weight: 700;
+    color: #f0f0f0;
+    letter-spacing: 1px;
+    line-height: 1.2;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.tnb-station {
+    font-size: 10px;
+    color: #666;
+    margin-top: 2px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* 箭头区域 */
+.tnb-arrow-area {
+    flex-shrink: 0;
+    width: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding-bottom: 10px;
+}
+.tnb-arrow-svg {
+    width: 44px;
+    height: 10px;
+}
+
+/* 信息行（日期时间） */
+.tnb-info-row {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding: 6px 14px;
+    border-top: 1px solid #2a2a2a;
+}
+.tnb-date {
+    font-size: 12px;
+    color: #888;
+    letter-spacing: 0.5px;
+}
+.tnb-time {
+    font-size: 12px;
+    color: #aaa;
+    font-variant-numeric: tabular-nums;
+}
+
+/* 详情行（乘客+座位） */
+.tnb-detail-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 5px 14px;
+    border-top: 1px solid #222;
+}
+.tnb-passengers {
+    font-size: 11px;
+    color: #777;
+}
+.tnb-seat {
+    font-size: 11px;
+    color: #666;
+    font-variant-numeric: tabular-nums;
+}
+
+/* 备注 */
+.tnb-remark {
+    padding: 5px 14px 10px;
+    font-size: 11px;
+    color: #555;
+    font-style: italic;
+    border-top: 1px solid #222;
+}
+
+/* 响应式适配 */
+@media (max-width: 380px) {
+    .ticket-notify-bubble { width: 210px; }
+    .tnb-city { font-size: 16px; }
+}
